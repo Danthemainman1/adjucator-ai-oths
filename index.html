@@ -68,7 +68,8 @@
             X, 
             Plus, 
             Square, 
-            Activity 
+            Activity,
+            HelpCircle
         } from 'lucide-react';
 
         // --- Components ---
@@ -123,6 +124,15 @@
             const [loading, setLoading] = useState(false);
             const [result, setResult] = useState(null);
             const [error, setError] = useState('');
+            const [showHelp, setShowHelp] = useState(false);
+
+            useEffect(() => {
+                const hasVisited = localStorage.getItem('hasVisited');
+                if (!hasVisited) {
+                    setShowHelp(true);
+                    localStorage.setItem('hasVisited', 'true');
+                }
+            }, []);
             
             // Speech Form State
             const [speechType, setSpeechType] = useState('Public Forum (PF)');
@@ -299,6 +309,9 @@
                                 </h1>
                             </div>
                             <div className="flex items-center text-sm text-slate-500 dark:text-slate-400">
+                                <button onClick={() => setShowHelp(true)} className="mr-2 sm:mr-4 p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-colors" aria-label="Help">
+                                    <HelpCircle className="w-5 h-5" />
+                                </button>
                                 <span className="hidden sm:inline">Powered by Gemini</span>
                                 <Award className="w-4 h-4 ml-1" />
                             </div>
@@ -315,6 +328,9 @@
                             <div className="p-6">
                                 <label className="block text-sm font-medium mb-2">Gemini API Key</label>
                                 <input type="password" placeholder="Paste your API key here..." className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" value={apiKey} onChange={(e) => setApiKey(e.target.value)} />
+                                <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
+                                    Need a key? <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-indigo-600 dark:text-indigo-400 hover:underline">Get a free Gemini API key here</a>.
+                                </p>
                             </div>
                         </div>
 
@@ -466,6 +482,62 @@
                             </div>
                         </div>
                     </main>
+
+                    {/* Help Modal */}
+                    {showHelp && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in">
+                            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-200 dark:border-slate-700 flex flex-col max-h-[90vh]">
+                                <div className="p-6 overflow-y-auto">
+                                    <div className="flex justify-between items-center mb-4">
+                                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">Welcome to Adjudicator AI</h3>
+                                        <button onClick={() => setShowHelp(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                                            <X className="w-6 h-6" />
+                                        </button>
+                                    </div>
+                                    <div className="space-y-4 text-slate-600 dark:text-slate-300 text-sm">
+                                        <p>Your personal AI debate coach and adjudicator. Here's how to use it:</p>
+                                        <ul className="space-y-3">
+                                            <li className="flex items-start">
+                                                <div className="bg-indigo-100 dark:bg-indigo-900/30 p-2 rounded-lg mr-3 mt-0.5 flex-shrink-0">
+                                                    <Mic className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                                                </div>
+                                                <div>
+                                                    <strong className="block text-slate-800 dark:text-slate-200">Judge Text</strong>
+                                                    Paste your speech transcript to get a score and detailed feedback.
+                                                </div>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <div className="bg-purple-100 dark:bg-purple-900/30 p-2 rounded-lg mr-3 mt-0.5 flex-shrink-0">
+                                                    <Layout className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                                                </div>
+                                                <div>
+                                                    <strong className="block text-slate-800 dark:text-slate-200">Evaluate Board</strong>
+                                                    Upload photos of your flow/board for strategy and organization tips.
+                                                </div>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <div className="bg-pink-100 dark:bg-pink-900/30 p-2 rounded-lg mr-3 mt-0.5 flex-shrink-0">
+                                                    <Activity className="w-4 h-4 text-pink-600 dark:text-pink-400" />
+                                                </div>
+                                                <div>
+                                                    <strong className="block text-slate-800 dark:text-slate-200">Live Coach</strong>
+                                                    Record your speech audio for delivery and content analysis.
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div className="mt-4 p-3 bg-slate-100 dark:bg-slate-900 rounded-lg text-xs text-slate-500">
+                                            <strong>Note:</strong> You'll need a Gemini API key to start. Enter it in the Configuration section.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="p-4 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-700 flex justify-end flex-shrink-0">
+                                    <button onClick={() => setShowHelp(false)} className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors w-full sm:w-auto">
+                                        Get Started
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             );
         }
