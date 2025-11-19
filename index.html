@@ -42,6 +42,42 @@
         textarea::-webkit-scrollbar { width: 8px; }
         textarea::-webkit-scrollbar-track { background: transparent; }
         textarea::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 20px; }
+
+        /* Neon Theme Overrides */
+        .theme-neon body { background-color: #050505 !important; color: #00ff41 !important; font-family: 'Courier New', monospace; }
+        .theme-neon .bg-white, .theme-neon .bg-slate-50, .theme-neon .bg-slate-100, .theme-neon .bg-slate-200, .theme-neon .bg-slate-800, .theme-neon .bg-slate-900 {
+            background-color: #0a0a0a !important;
+            border-color: #ff00ff !important;
+            color: #00ff41 !important;
+        }
+        .theme-neon header, .theme-neon .bg-white { background-color: #000 !important; border-bottom: 1px solid #00ff41 !important; }
+        .theme-neon .text-slate-900, .theme-neon .text-slate-700, .theme-neon .text-slate-500, .theme-neon .text-slate-400 {
+            color: #00ff41 !important;
+        }
+        .theme-neon .text-indigo-600, .theme-neon .text-indigo-500, .theme-neon .text-purple-600 {
+            color: #ff00ff !important;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+        .theme-neon button {
+            border: 1px solid #00ff41 !important;
+            box-shadow: 0 0 5px #00ff41;
+        }
+        .theme-neon input, .theme-neon select, .theme-neon textarea {
+            background-color: #000 !important;
+            border: 1px solid #00ff41 !important;
+            color: #00ff41 !important;
+        }
+        .theme-neon .bg-indigo-600 {
+            background-color: #000 !important;
+            border: 1px solid #ff00ff !important;
+            color: #ff00ff !important;
+            box-shadow: 0 0 10px #ff00ff;
+        }
+        .theme-neon .bg-gradient-to-r {
+            background: #000 !important;
+            border: 1px solid #00ff41 !important;
+            box-shadow: 0 0 10px #00ff41;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100">
@@ -69,7 +105,12 @@
             Plus, 
             Square, 
             Activity,
-            HelpCircle
+            HelpCircle,
+            Palette,
+            Lightbulb,
+            Moon,
+            Sun,
+            Zap
         } from 'lucide-react';
 
         // --- Components ---
@@ -125,6 +166,30 @@
             const [result, setResult] = useState(null);
             const [error, setError] = useState('');
             const [showHelp, setShowHelp] = useState(false);
+            const [theme, setTheme] = useState('light'); // light, dark, neon
+
+            useEffect(() => {
+                const savedTheme = localStorage.getItem('theme') || 'light';
+                setTheme(savedTheme);
+            }, []);
+
+            useEffect(() => {
+                const root = document.documentElement;
+                const body = document.body;
+                
+                // Reset
+                root.classList.remove('dark');
+                body.classList.remove('theme-neon');
+                
+                if (theme === 'dark') {
+                    root.classList.add('dark');
+                } else if (theme === 'neon') {
+                    root.classList.add('dark'); // Neon builds on dark
+                    body.classList.add('theme-neon');
+                }
+                
+                localStorage.setItem('theme', theme);
+            }, [theme]);
 
             useEffect(() => {
                 const hasVisited = localStorage.getItem('hasVisited');
@@ -248,11 +313,13 @@
                 setError('');
             };
 
-            const handleAnalyze = async () => {
+            const handleAnalyze = async (isBoardGen = false) => {
                 if (!apiKey) { setError('Please enter a valid Gemini API Key.'); return; }
-                if (activeTab === 'speech' && !transcript) { setError('Please enter speech text.'); return; }
-                if (activeTab === 'board' && !boardDescription && boardImages.length === 0) { setError('Please provide images or description.'); return; }
-                if (activeTab === 'listen' && !audioData) { setError('Please record audio first.'); return; }
+                if (!isBoardGen) {
+                    if (activeTab === 'speech' && !transcript) { setError('Please enter speech text.'); return; }
+                    if (activeTab === 'board' && !boardDescription && boardImages.length === 0) { setError('Please provide images or description.'); return; }
+                    if (activeTab === 'listen' && !audioData) { setError('Please record audio first.'); return; }
+                }
                 
                 setLoading(true);
                 setError('');
@@ -263,7 +330,16 @@
                     let systemPrompt = '';
                     
                     // Prompt Construction
-                    if (activeTab === 'speech') {
+                    if (isBoardGen) {
+                         systemPrompt = `Act as an expert Debate Coach. For the topic "${topic}" and side "${side}" in ${speechType} format, describe an ideal debate board/flow layout. 
+                         Include:
+                         1. Strategic grouping of arguments.
+                         2. How to use colors/columns effectively.
+                         3. A text-based outline of the main content blocks.
+                         4. Key "win conditions" to highlight on the board.
+                         Do NOT generate an image, just a detailed text description.`;
+                         payloadParts = [{ text: systemPrompt }];
+                    } else if (activeTab === 'speech') {
                         systemPrompt = `You are an expert Debate Adjudicator. Context: ${speechType}, ${side}, Topic: ${topic}. Evaluate the speech text. Provide Score (0-100), Summary, Strengths, Weaknesses, Advice. SPEECH: ${transcript}`;
                         payloadParts = [{ text: systemPrompt }];
                     } else if (activeTab === 'board') {
@@ -309,6 +385,11 @@
                                 </h1>
                             </div>
                             <div className="flex items-center text-sm text-slate-500 dark:text-slate-400">
+                                <div className="flex items-center mr-4 bg-slate-100 dark:bg-slate-700 rounded-full p-1">
+                                    <button onClick={() => setTheme('light')} className={`p-1.5 rounded-full transition-all ${theme === 'light' ? 'bg-white shadow text-yellow-500' : 'text-slate-400 hover:text-slate-600'}`} title="Light Mode"><Sun className="w-4 h-4" /></button>
+                                    <button onClick={() => setTheme('dark')} className={`p-1.5 rounded-full transition-all ${theme === 'dark' ? 'bg-slate-600 shadow text-indigo-300' : 'text-slate-400 hover:text-slate-600'}`} title="Dark Mode"><Moon className="w-4 h-4" /></button>
+                                    <button onClick={() => setTheme('neon')} className={`p-1.5 rounded-full transition-all ${theme === 'neon' ? 'bg-black shadow text-green-400 border border-green-500' : 'text-slate-400 hover:text-slate-600'}`} title="Neon Mode"><Zap className="w-4 h-4" /></button>
+                                </div>
                                 <button onClick={() => setShowHelp(true)} className="mr-2 sm:mr-4 p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-colors" aria-label="Help">
                                     <HelpCircle className="w-5 h-5" />
                                 </button>
@@ -422,6 +503,11 @@
                                                 )}
                                                 <input type="file" multiple ref={fileInputRef} className="hidden" accept="image/*" onChange={handleImageUpload} />
                                                 <textarea className="w-full h-32 p-3 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 resize-none outline-none text-sm" placeholder="Describe board strategy..." value={boardDescription} onChange={(e) => setBoardDescription(e.target.value)} />
+                                                <div className="flex justify-end">
+                                                    <button onClick={() => handleAnalyze(true)} className="text-xs flex items-center text-indigo-600 dark:text-indigo-400 hover:underline">
+                                                        <Lightbulb className="w-3 h-3 mr-1" /> Need ideas? Generate a board strategy
+                                                    </button>
+                                                </div>
                                             </div>
                                         )}
 
@@ -456,7 +542,7 @@
                                     </div>
 
                                     <div className="p-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 rounded-b-xl flex justify-end">
-                                        <button onClick={handleAnalyze} disabled={loading} className={`flex items-center px-6 py-2.5 rounded-lg font-medium text-white shadow-md transition-all ${loading ? 'bg-slate-400 cursor-not-allowed' : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700'}`}>
+                                        <button onClick={() => handleAnalyze(false)} disabled={loading} className={`flex items-center px-6 py-2.5 rounded-lg font-medium text-white shadow-md transition-all ${loading ? 'bg-slate-400 cursor-not-allowed' : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700'}`}>
                                             {loading ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Analyzing...</> : <><Send className="w-4 h-4 mr-2" /> Analyze</>}
                                         </button>
                                     </div>
