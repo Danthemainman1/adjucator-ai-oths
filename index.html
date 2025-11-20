@@ -267,7 +267,8 @@
             Menu,
             Droplets,
             CloudSun,
-            Star
+            Star,
+            Mail
         } from 'lucide-react';
 
         // --- Components ---
@@ -332,7 +333,6 @@
             ],
             'Policy Debate (CX)': [
                 { name: 'Constructive', time: 480 },
-                { name: 'Rebuttal', time: 300 },
                 { name: 'Cross-Ex', time: 180 }
             ],
             'World Schools Debate': [
@@ -741,6 +741,7 @@
                 { id: 'coach', label: 'Judge Tools', icon: Gavel },
                 { id: 'history', label: 'History', icon: History },
                 { id: 'settings', label: 'Configuration', icon: Settings },
+                { id: 'contact', label: 'Contact Us', icon: Mail },
             ];
 
             // Storage Usage Logic
@@ -1350,6 +1351,12 @@
                 
                 if (!authUsername) {
                     setAuthError('Please enter a username');
+                    return;
+                }
+
+                const offensiveWords = ['admin', 'root', 'system', 'support', 'moderator', 'staff', 'bitch', 'fuck', 'shit', 'ass', 'nigger', 'faggot', 'cunt', 'whore', 'slut', 'dick', 'pussy', 'cock', 'bastard'];
+                if (offensiveWords.some(word => authUsername.toLowerCase().includes(word))) {
+                    setAuthError('Username contains restricted words.');
                     return;
                 }
 
@@ -2126,6 +2133,34 @@
                                     history={history} 
                                     setActiveTab={setActiveTab} 
                                 />
+                            )}
+
+                            {activeTab === 'contact' && (
+                                <div className="max-w-2xl mx-auto">
+                                    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+                                        <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+                                            <h3 className="text-lg font-semibold">Contact Us</h3>
+                                            <p className="text-sm text-slate-500">Get in touch with the team</p>
+                                        </div>
+                                        <div className="p-8 text-center space-y-6">
+                                            <div className="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center mx-auto text-indigo-600 dark:text-indigo-400">
+                                                <Mail className="w-8 h-8" />
+                                            </div>
+                                            <div>
+                                                <h4 className="text-xl font-bold text-slate-900 dark:text-white mb-2">We'd love to hear from you!</h4>
+                                                <p className="text-slate-600 dark:text-slate-400 max-w-md mx-auto">
+                                                    Have questions, feedback, or need support? Reach out to us directly via email.
+                                                </p>
+                                            </div>
+                                            <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-700 inline-flex items-center space-x-3">
+                                                <Mail className="w-5 h-5 text-slate-400" />
+                                                <a href="mailto:adjucatorai@gmail.com" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">
+                                                    adjucatorai@gmail.com
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             )}
 
                             {activeTab === 'settings' && (
