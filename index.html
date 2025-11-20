@@ -282,10 +282,38 @@
                 { name: 'Consolidation', time: 180 },
                 { name: 'Rationale', time: 180 }
             ],
-            'Original Oratory (OO)': [{ name: 'Speech', time: 600 }],
-            'Informative Speaking (INFO)': [{ name: 'Speech', time: 600 }],
-            'United States Extemp (USX)': [{ name: 'Speech', time: 420 }],
-            'International Extemp (IX)': [{ name: 'Speech', time: 420 }],
+            'United States Extemp (USX)': [
+                { name: 'AGD', time: 45 },
+                { name: 'Background', time: 45 },
+                { name: 'Umbrella/Sig', time: 30 },
+                { name: 'Point 1', time: 90 },
+                { name: 'Point 2', time: 90 },
+                { name: 'Point 3', time: 90 },
+                { name: 'Conclusion', time: 30 }
+            ],
+            'International Extemp (IX)': [
+                { name: 'AGD', time: 45 },
+                { name: 'Background', time: 45 },
+                { name: 'Umbrella/Sig', time: 30 },
+                { name: 'Point 1', time: 90 },
+                { name: 'Point 2', time: 90 },
+                { name: 'Point 3', time: 90 },
+                { name: 'Conclusion', time: 30 }
+            ],
+            'Original Oratory (OO)': [
+                { name: 'Intro', time: 90 },
+                { name: 'Body 1', time: 150 },
+                { name: 'Body 2', time: 150 },
+                { name: 'Body 3', time: 150 },
+                { name: 'Conclusion', time: 60 }
+            ],
+            'Informative Speaking (INFO)': [
+                { name: 'Intro', time: 90 },
+                { name: 'Body 1', time: 150 },
+                { name: 'Body 2', time: 150 },
+                { name: 'Body 3', time: 150 },
+                { name: 'Conclusion', time: 60 }
+            ],
             'Dramatic Interpretation (DI)': [{ name: 'Performance', time: 600 }],
             'Humorous Interpretation (HI)': [{ name: 'Performance', time: 600 }],
             'Duo Interpretation': [{ name: 'Performance', time: 600 }],
@@ -1396,7 +1424,10 @@
                             body: JSON.stringify({ contents: [{ parts: payloadParts }] })
                         });
 
-                        if (!response.ok) throw new Error(`Gemini API Error: ${response.statusText}`);
+                        if (!response.ok) {
+                            const errorData = await response.json().catch(() => ({}));
+                            throw new Error(`Gemini API Error: ${errorData.error?.message || response.statusText || response.status}`);
+                        }
                         const data = await response.json();
                         generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
