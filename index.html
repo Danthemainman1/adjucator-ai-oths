@@ -222,6 +222,36 @@
                 { name: 'Sponsorship/Auth', time: 180 },
                 { name: 'Questioning', time: 120 }
             ],
+            'Big Questions Debate': [
+                { name: 'Constructive', time: 300 },
+                { name: 'Rebuttal', time: 180 },
+                { name: 'Consolidation', time: 180 },
+                { name: 'Rationale', time: 180 }
+            ],
+            'Original Oratory (OO)': [{ name: 'Speech', time: 600 }],
+            'Informative Speaking (INFO)': [{ name: 'Speech', time: 600 }],
+            'United States Extemp (USX)': [{ name: 'Speech', time: 420 }],
+            'International Extemp (IX)': [{ name: 'Speech', time: 420 }],
+            'Dramatic Interpretation (DI)': [{ name: 'Performance', time: 600 }],
+            'Humorous Interpretation (HI)': [{ name: 'Performance', time: 600 }],
+            'Duo Interpretation': [{ name: 'Performance', time: 600 }],
+            'Program Oral Interpretation (POI)': [{ name: 'Performance', time: 600 }],
+            'Impromptu': [{ name: 'Speech', time: 300 }], // Usually 7 min total, 5 speaking
+            'Extemporaneous Commentary': [{ name: 'Speech', time: 420 }], // 7 min
+            'Expository': [{ name: 'Speech', time: 300 }], // 5 min
+            'Storytelling': [{ name: 'Performance', time: 300 }], // 5 min
+            'Prose/Poetry': [{ name: 'Performance', time: 300 }], // 5 min
+            'Parliamentary (British)': [
+                { name: 'Constructive', time: 420 }, // 7 min
+                { name: 'Rebuttal', time: 240 } // 4 min
+            ],
+            'Parliamentary (Asian)': [
+                { name: 'Constructive', time: 420 }, // 7 min
+                { name: 'Reply', time: 240 } // 4 min
+            ],
+            'Model UN Speech': [{ name: 'Speech', time: 90 }], // 1.5 min typical
+            'After Dinner Speaking': [{ name: 'Speech', time: 360 }], // 6 min
+            'Toast/Ceremonial': [{ name: 'Speech', time: 180 }], // 3 min
             'default': [
                 { name: 'Speech', time: 600 }
             ]
@@ -970,27 +1000,45 @@
 
                                         {activeTab === 'listen' && (
                                             <div className="h-full flex flex-col items-center justify-center space-y-6 py-4">
-                                                {/* Speedrun Timer */}
+                                                {/* Speedrun Timer & Roadmap */}
                                                 <div className="w-full max-w-md bg-slate-100 dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-700">
+                                                    {/* Roadmap */}
+                                                    <div className="flex space-x-1 mb-4 overflow-x-auto pb-2 scrollbar-hide">
+                                                        {(speechTimes[speechType] || speechTimes['default']).map((s, idx) => (
+                                                            <button 
+                                                                key={s.name}
+                                                                onClick={() => {
+                                                                    setSelectedSection(s);
+                                                                    setRecordingTime(0);
+                                                                    setIsRecording(false);
+                                                                    setAudioData(null);
+                                                                }}
+                                                                className={`flex-shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap ${
+                                                                    selectedSection?.name === s.name 
+                                                                        ? 'bg-indigo-600 text-white shadow-md' 
+                                                                        : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-indigo-300'
+                                                                }`}
+                                                            >
+                                                                {s.name}
+                                                                <span className="ml-1.5 opacity-70 text-[10px]">{formatTime(s.time)}</span>
+                                                            </button>
+                                                        ))}
+                                                    </div>
+
                                                     <div className="flex justify-between items-center mb-2">
-                                                        <select 
-                                                            className="bg-transparent text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                                                            value={selectedSection?.name || ''}
-                                                            onChange={(e) => {
-                                                                const sections = speechTimes[speechType] || speechTimes['default'];
-                                                                setSelectedSection(sections.find(s => s.name === e.target.value));
-                                                            }}
-                                                        >
-                                                            {(speechTimes[speechType] || speechTimes['default']).map(s => (
-                                                                <option key={s.name} value={s.name}>{s.name}</option>
-                                                            ))}
-                                                        </select>
-                                                        <span className={`text-xs font-mono px-2 py-1 rounded ${recordingTime > (selectedSection?.time || 0) ? 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' : 'bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-400'}`}>
-                                                            Target: {formatTime(selectedSection?.time || 0)}
-                                                        </span>
+                                                        <div className="flex flex-col">
+                                                            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Current Section</span>
+                                                            <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">{selectedSection?.name}</span>
+                                                        </div>
+                                                        <div className="text-right">
+                                                            <span className={`text-xl font-mono font-bold ${recordingTime > (selectedSection?.time || 0) ? 'text-red-500' : 'text-slate-700 dark:text-slate-200'}`}>
+                                                                {formatTime(recordingTime)}
+                                                            </span>
+                                                            <span className="text-xs text-slate-400 block">/ {formatTime(selectedSection?.time || 0)}</span>
+                                                        </div>
                                                     </div>
                                                     
-                                                    <div className="relative h-4 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                                                    <div className="relative h-3 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
                                                         <div 
                                                             className={`absolute top-0 left-0 h-full transition-all duration-1000 ease-linear ${
                                                                 recordingTime > (selectedSection?.time || 0) 
@@ -1001,11 +1049,6 @@
                                                             }`}
                                                             style={{ width: `${Math.min((recordingTime / (selectedSection?.time || 1)) * 100, 100)}%` }}
                                                         ></div>
-                                                    </div>
-                                                    
-                                                    <div className="flex justify-between mt-2 text-xs text-slate-500 font-mono">
-                                                        <span>{formatTime(recordingTime)}</span>
-                                                        <span>{Math.round((recordingTime / (selectedSection?.time || 1)) * 100)}%</span>
                                                     </div>
                                                 </div>
 
