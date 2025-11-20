@@ -69,28 +69,6 @@
         textarea::-webkit-scrollbar-track { background: transparent; }
         textarea::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 20px; }
 
-        /* Neon Theme Overrides */
-        .theme-neon body { background-color: #000000 !important; color: #00ff41 !important; }
-        .theme-neon .bg-white, .theme-neon .bg-slate-50, .theme-neon .bg-slate-100, .theme-neon .bg-slate-200, .theme-neon .bg-slate-800, .theme-neon .bg-slate-900 {
-            background-color: #0a0a0a !important;
-            border-color: #333 !important;
-            color: #00ff41 !important;
-        }
-        .theme-neon header { border-bottom: 1px solid #00ff41 !important; }
-        .theme-neon .text-slate-900, .theme-neon .text-slate-700, .theme-neon .text-slate-500, .theme-neon .text-slate-400 { color: #00ff41 !important; }
-        .theme-neon .text-indigo-600, .theme-neon .text-indigo-500, .theme-neon .text-purple-600 { color: #d900ff !important; text-shadow: 0 0 2px #d900ff; }
-        .theme-neon button, .theme-neon input, .theme-neon select, .theme-neon textarea {
-            background-color: #050505 !important;
-            border: 1px solid #00ff41 !important;
-            color: #00ff41 !important;
-        }
-        .theme-neon .bg-indigo-600, .theme-neon .bg-gradient-to-r {
-            background: #d900ff !important;
-            color: #fff !important;
-            box-shadow: 0 0 10px #d900ff;
-            border: none !important;
-        }
-
         /* Theme: Forest */
         .theme-forest body { background-color: #1c2321 !important; color: #e8f5e9 !important; }
         .theme-forest .bg-white, .theme-forest .bg-slate-50, .theme-forest .bg-slate-100, .theme-forest .bg-slate-200, .theme-forest .bg-slate-800, .theme-forest .bg-slate-900 {
@@ -160,7 +138,6 @@
             Lightbulb,
             Moon,
             Sun,
-            Zap,
             Coffee,
             Leaf,
             History,
@@ -429,13 +406,10 @@
                 
                 // Reset
                 root.classList.remove('dark');
-                body.classList.remove('theme-neon', 'theme-forest', 'theme-coffee');
+                body.classList.remove('theme-forest', 'theme-coffee');
                 
                 if (theme === 'dark') {
                     root.classList.add('dark');
-                } else if (theme === 'neon') {
-                    root.classList.add('dark');
-                    body.classList.add('theme-neon');
                 } else if (theme === 'forest') {
                     root.classList.add('dark');
                     body.classList.add('theme-forest');
@@ -718,7 +692,6 @@
                                 <div className="flex items-center mr-4 bg-slate-100 dark:bg-slate-700 rounded-full p-1">
                                     <button onClick={() => setTheme('light')} className={`p-1.5 rounded-full transition-all ${theme === 'light' ? 'bg-white shadow text-yellow-500' : 'text-slate-400 hover:text-slate-600'}`} title="Light Mode"><Sun className="w-4 h-4" /></button>
                                     <button onClick={() => setTheme('dark')} className={`p-1.5 rounded-full transition-all ${theme === 'dark' ? 'bg-slate-600 shadow text-indigo-300' : 'text-slate-400 hover:text-slate-600'}`} title="Dark Mode"><Moon className="w-4 h-4" /></button>
-                                    <button onClick={() => setTheme('neon')} className={`p-1.5 rounded-full transition-all ${theme === 'neon' ? 'bg-black shadow text-green-400 border border-green-500' : 'text-slate-400 hover:text-slate-600'}`} title="Neon Mode"><Zap className="w-4 h-4" /></button>
                                     <button onClick={() => setTheme('forest')} className={`p-1.5 rounded-full transition-all ${theme === 'forest' ? 'bg-[#1c2321] shadow text-green-300 border border-green-800' : 'text-slate-400 hover:text-slate-600'}`} title="Forest Mode"><Leaf className="w-4 h-4" /></button>
                                     <button onClick={() => setTheme('coffee')} className={`p-1.5 rounded-full transition-all ${theme === 'coffee' ? 'bg-[#2b2118] shadow text-orange-300 border border-orange-800' : 'text-slate-400 hover:text-slate-600'}`} title="Coffee Mode"><Coffee className="w-4 h-4" /></button>
                                 </div>
@@ -942,8 +915,8 @@
                     {showLogin && (
                         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm animate-in fade-in">
                             <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-200 dark:border-slate-700 relative">
-                                <button onClick={() => setShowLogin(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors" aria-label="Close">
-                                    <X className="w-6 h-6" />
+                                <button onClick={() => setShowLogin(false)} className="absolute top-4 right-4 p-2 bg-slate-100 dark:bg-slate-700 rounded-full text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors z-10" aria-label="Close">
+                                    <X className="w-5 h-5" />
                                 </button>
                                 <div className="p-8">
                                     <div className="flex justify-center mb-6">
@@ -954,9 +927,13 @@
                                     <h2 className="text-2xl font-bold text-center text-slate-900 dark:text-white mb-2">
                                         {authMode === 'login' ? 'Welcome Back' : 'Create Account'}
                                     </h2>
-                                    <p className="text-center text-slate-500 dark:text-slate-400 mb-8 text-sm">
-                                        {authMode === 'login' ? 'Sign in to access your debate history' : 'Sign up to start tracking your progress'}
-                                    </p>
+                                    
+                                    <div className="mb-6 text-center">
+                                        <p className="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 p-2 rounded border border-amber-100 dark:border-amber-800/30">
+                                            <AlertCircle className="w-3 h-3 inline mr-1 mb-0.5" />
+                                            Note: You can skip login, but history won't be saved to the cloud.
+                                        </p>
+                                    </div>
 
                                     <form onSubmit={handleAuth} className="space-y-4">
                                         <div>
@@ -1014,12 +991,6 @@
                                         </svg>
                                         Sign in with Google
                                     </button>
-
-                                    <div className="mt-4 text-center">
-                                        <p className="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 p-2 rounded">
-                                            Note: If you don't sign in, you won't be able to save your history to the cloud.
-                                        </p>
-                                    </div>
 
                                     <div className="mt-6 text-center text-sm text-slate-500">
                                         {authMode === 'login' ? (
