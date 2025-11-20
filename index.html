@@ -178,24 +178,6 @@
         .theme-ocean input, .theme-ocean select, .theme-ocean textarea { background-color: #0f172a !important; border-color: #334155 !important; color: #e2e8f0 !important; }
         .theme-ocean button:not([class*="bg-indigo-"]):not([class*="bg-red-"]):not([class*="bg-gradient-"]) { background-color: #1e293b !important; border-color: #334155 !important; color: #e2e8f0 !important; }
 
-        /* --- Theme: Sunset --- */
-        .theme-sunset body { background-color: #4a0404 !important; color: #fed7aa !important; }
-        .theme-sunset .bg-white, .theme-sunset .bg-slate-50, .theme-sunset .bg-slate-100, .theme-sunset .bg-slate-200, .theme-sunset .bg-slate-800, .theme-sunset .bg-slate-900 {
-            background-color: #7f1d1d !important;
-            border-color: #991b1b !important;
-            color: #fed7aa !important;
-        }
-        .theme-sunset .text-slate-900, .theme-sunset .text-slate-800, .theme-sunset .text-slate-700, .theme-sunset .text-slate-600, .theme-sunset .text-slate-500, .theme-sunset .text-slate-400 { color: #fdba74 !important; }
-        .theme-sunset .text-indigo-600, .theme-sunset .text-indigo-500, .theme-sunset .text-indigo-700 { color: #fbbf24 !important; } /* Amber */
-        .theme-sunset .bg-indigo-600 { background-color: #ea580c !important; } /* Orange */
-        .theme-sunset .hover\:bg-indigo-700:hover { background-color: #c2410c !important; }
-        .theme-sunset .from-indigo-600 { --tw-gradient-from: #ea580c !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
-        .theme-sunset .to-purple-600 { --tw-gradient-to: #db2777 !important; } /* Pink */
-        .theme-sunset .bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-from), var(--tw-gradient-to)) !important; }
-        .theme-sunset .border-slate-100, .theme-sunset .border-slate-200, .theme-sunset .border-slate-300, .theme-sunset .border-slate-700, .theme-sunset .border-indigo-100 { border-color: #991b1b !important; }
-        .theme-sunset input, .theme-sunset select, .theme-sunset textarea { background-color: #4a0404 !important; border-color: #991b1b !important; color: #fed7aa !important; }
-        .theme-sunset button:not([class*="bg-indigo-"]):not([class*="bg-red-"]):not([class*="bg-gradient-"]) { background-color: #7f1d1d !important; border-color: #991b1b !important; color: #fed7aa !important; }
-
         /* --- Theme: Midnight --- */
         .theme-midnight body { background-color: #000000 !important; color: #e5e5e5 !important; }
         .theme-midnight .bg-white, .theme-midnight .bg-slate-50, .theme-midnight .bg-slate-100, .theme-midnight .bg-slate-200, .theme-midnight .bg-slate-800, .theme-midnight .bg-slate-900 {
@@ -628,6 +610,7 @@
                 { id: 'speech', label: 'Judge Text', icon: Mic },
                 { id: 'board', label: 'Evaluate Board', icon: ImageIcon },
                 { id: 'listen', label: 'Live Coach', icon: Activity },
+                { id: 'coach', label: 'Judge Tools', icon: Gavel },
                 { id: 'history', label: 'History', icon: History },
                 { id: 'settings', label: 'Configuration', icon: Settings },
             ];
@@ -688,7 +671,6 @@
                                         { id: 'forest', icon: Leaf, color: 'text-emerald-500' },
                                         { id: 'coffee', icon: Coffee, color: 'text-orange-400' },
                                         { id: 'ocean', icon: Droplets, color: 'text-blue-500' },
-                                        { id: 'sunset', icon: CloudSun, color: 'text-red-500' },
                                         { id: 'midnight', icon: Star, color: 'text-slate-400' }
                                     ].map(t => (
                                         <button 
@@ -1263,7 +1245,7 @@
                 
                 // Reset
                 root.classList.remove('dark');
-                body.classList.remove('theme-forest', 'theme-coffee', 'theme-ocean', 'theme-sunset', 'theme-midnight');
+                body.classList.remove('theme-forest', 'theme-coffee', 'theme-ocean', 'theme-midnight');
                 
                 if (theme === 'dark') {
                     root.classList.add('dark');
@@ -1276,9 +1258,6 @@
                 } else if (theme === 'ocean') {
                     root.classList.add('dark');
                     body.classList.add('theme-ocean');
-                } else if (theme === 'sunset') {
-                    root.classList.add('dark');
-                    body.classList.add('theme-sunset');
                 } else if (theme === 'midnight') {
                     root.classList.add('dark');
                     body.classList.add('theme-midnight');
@@ -1456,6 +1435,230 @@
                 if (confirm('Are you sure you want to clear all history?')) {
                     setHistory([]);
                 }
+            };
+
+            // --- Coach Tools Component ---
+            const CoachTools = ({ speechTimes, rubrics }) => {
+                const [format, setFormat] = useState('Public Forum (PF)');
+                const [activeSpeech, setActiveSpeech] = useState(null);
+                
+                // Main Speech Timer
+                const [mainTimer, setMainTimer] = useState(0);
+                const [isMainRunning, setIsMainRunning] = useState(false);
+                const mainInterval = useRef(null);
+
+                // Prep Timers
+                const [prepA, setPrepA] = useState(180); // 3 mins default
+                const [isPrepARunning, setIsPrepARunning] = useState(false);
+                const prepAInterval = useRef(null);
+
+                const [prepB, setPrepB] = useState(180);
+                const [isPrepBRunning, setIsPrepBRunning] = useState(false);
+                const prepBInterval = useRef(null);
+
+                // Grace Timers
+                const [graceA, setGraceA] = useState(120); // 2 mins default
+                const [isGraceARunning, setIsGraceARunning] = useState(false);
+                const graceAInterval = useRef(null);
+
+                const [graceB, setGraceB] = useState(120);
+                const [isGraceBRunning, setIsGraceBRunning] = useState(false);
+                const graceBInterval = useRef(null);
+
+                useEffect(() => {
+                    if (speechTimes[format]) {
+                        setActiveSpeech(speechTimes[format][0]);
+                        setMainTimer(speechTimes[format][0].time);
+                    }
+                }, [format]);
+
+                useEffect(() => {
+                    if (activeSpeech) {
+                        setMainTimer(activeSpeech.time);
+                        setIsMainRunning(false);
+                        clearInterval(mainInterval.current);
+                    }
+                }, [activeSpeech]);
+
+                const toggleTimer = (timerState, setTimerState, intervalRef, setTime) => {
+                    if (timerState) {
+                        clearInterval(intervalRef.current);
+                        setTimerState(false);
+                    } else {
+                        setTimerState(true);
+                        intervalRef.current = setInterval(() => {
+                            setTime(prev => {
+                                if (prev <= 0) {
+                                    clearInterval(intervalRef.current);
+                                    setTimerState(false);
+                                    return 0;
+                                }
+                                return prev - 1;
+                            });
+                        }, 1000);
+                    }
+                };
+
+                const resetTimer = (setTime, initialValue, setRunning, intervalRef) => {
+                    clearInterval(intervalRef.current);
+                    setRunning(false);
+                    setTime(initialValue);
+                };
+
+                const formatTime = (seconds) => {
+                    const mins = Math.floor(seconds / 60);
+                    const secs = seconds % 60;
+                    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                };
+
+                return (
+                    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
+                        {/* Header & Format Selection */}
+                        <div className="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                                <div>
+                                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Judge & Coach Tools</h2>
+                                    <p className="text-slate-500 dark:text-slate-400 text-sm">Comprehensive timer suite and resources for adjudication.</p>
+                                </div>
+                                <div className="w-full md:w-64">
+                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Debate Format</label>
+                                    <div className="relative">
+                                        <select 
+                                            className="w-full appearance-none bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 py-2.5 px-4 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+                                            value={format}
+                                            onChange={(e) => setFormat(e.target.value)}
+                                        >
+                                            {Object.keys(speechTimes).filter(k => k !== 'default').map(k => (
+                                                <option key={k} value={k}>{k}</option>
+                                            ))}
+                                        </select>
+                                        <ChevronDown className="absolute right-3 top-3.5 w-4 h-4 text-slate-400 pointer-events-none" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Main Speech Timer */}
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div className="lg:col-span-2 bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col">
+                                <div className="flex justify-between items-center mb-6">
+                                    <h3 className="font-bold text-lg text-slate-800 dark:text-slate-200 flex items-center">
+                                        <Mic className="w-5 h-5 mr-2 text-indigo-500" /> Speech Timer
+                                    </h3>
+                                    <div className="flex space-x-2">
+                                        {speechTimes[format]?.map((s, idx) => (
+                                            <button 
+                                                key={idx}
+                                                onClick={() => setActiveSpeech(s)}
+                                                className={`px-3 py-1 text-xs rounded-full transition-all ${activeSpeech?.name === s.name ? 'bg-indigo-600 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600'}`}
+                                            >
+                                                {s.name}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                                
+                                <div className="flex-1 flex flex-col items-center justify-center py-8">
+                                    <div className="text-center mb-2">
+                                        <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">{activeSpeech?.name || 'Select Speech'}</span>
+                                    </div>
+                                    <div className={`text-8xl font-mono font-bold tracking-tighter mb-8 tabular-nums ${mainTimer < 30 ? 'text-red-500 animate-pulse' : 'text-slate-900 dark:text-white'}`}>
+                                        {formatTime(mainTimer)}
+                                    </div>
+                                    <div className="flex space-x-4">
+                                        <button 
+                                            onClick={() => toggleTimer(isMainRunning, setIsMainRunning, mainInterval, setMainTimer)}
+                                            className={`w-32 py-3 rounded-xl font-bold text-white shadow-lg transition-transform active:scale-95 ${isMainRunning ? 'bg-amber-500 hover:bg-amber-600' : 'bg-indigo-600 hover:bg-indigo-700'}`}
+                                        >
+                                            {isMainRunning ? 'Pause' : 'Start'}
+                                        </button>
+                                        <button 
+                                            onClick={() => resetTimer(setMainTimer, activeSpeech?.time || 0, setIsMainRunning, mainInterval)}
+                                            className="w-32 py-3 rounded-xl font-bold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                                        >
+                                            Reset
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Prep & Grace Timers */}
+                            <div className="space-y-6">
+                                {/* Prep Time */}
+                                <div className="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                                    <h3 className="font-bold text-sm text-slate-500 uppercase tracking-wider mb-4 flex items-center">
+                                        <History className="w-4 h-4 mr-2" /> Prep Time
+                                    </h3>
+                                    <div className="space-y-4">
+                                        {/* Team A */}
+                                        <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
+                                            <div className="flex justify-between items-center mb-2">
+                                                <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">Aff / Pro / Team A</span>
+                                                <span className={`font-mono font-bold text-xl ${prepA < 30 ? 'text-red-500' : 'text-slate-800 dark:text-slate-200'}`}>{formatTime(prepA)}</span>
+                                            </div>
+                                            <div className="flex space-x-2">
+                                                <button onClick={() => toggleTimer(isPrepARunning, setIsPrepARunning, prepAInterval, setPrepA)} className={`flex-1 py-1 text-xs rounded font-medium text-white ${isPrepARunning ? 'bg-amber-500' : 'bg-indigo-500 hover:bg-indigo-600'}`}>{isPrepARunning ? 'Pause' : 'Start'}</button>
+                                                <button onClick={() => resetTimer(setPrepA, 180, setIsPrepARunning, prepAInterval)} className="px-3 py-1 text-xs rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300">Reset</button>
+                                            </div>
+                                        </div>
+                                        {/* Team B */}
+                                        <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
+                                            <div className="flex justify-between items-center mb-2">
+                                                <span className="text-xs font-bold text-purple-600 dark:text-purple-400">Neg / Con / Team B</span>
+                                                <span className={`font-mono font-bold text-xl ${prepB < 30 ? 'text-red-500' : 'text-slate-800 dark:text-slate-200'}`}>{formatTime(prepB)}</span>
+                                            </div>
+                                            <div className="flex space-x-2">
+                                                <button onClick={() => toggleTimer(isPrepBRunning, setIsPrepBRunning, prepBInterval, setPrepB)} className={`flex-1 py-1 text-xs rounded font-medium text-white ${isPrepBRunning ? 'bg-amber-500' : 'bg-purple-500 hover:bg-purple-600'}`}>{isPrepBRunning ? 'Pause' : 'Start'}</button>
+                                                <button onClick={() => resetTimer(setPrepB, 180, setIsPrepBRunning, prepBInterval)} className="px-3 py-1 text-xs rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300">Reset</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Grace / Tech Time */}
+                                <div className="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                                    <h3 className="font-bold text-sm text-slate-500 uppercase tracking-wider mb-4 flex items-center">
+                                        <AlertCircle className="w-4 h-4 mr-2" /> Grace / Tech Time
+                                    </h3>
+                                    <div className="space-y-4">
+                                        {/* Team A */}
+                                        <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
+                                            <div className="flex justify-between items-center mb-2">
+                                                <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">Aff / Pro Grace</span>
+                                                <span className={`font-mono font-bold text-xl ${graceA < 30 ? 'text-red-500' : 'text-slate-800 dark:text-slate-200'}`}>{formatTime(graceA)}</span>
+                                            </div>
+                                            <div className="flex space-x-2">
+                                                <button onClick={() => toggleTimer(isGraceARunning, setIsGraceARunning, graceAInterval, setGraceA)} className={`flex-1 py-1 text-xs rounded font-medium text-white ${isGraceARunning ? 'bg-amber-500' : 'bg-indigo-500 hover:bg-indigo-600'}`}>{isGraceARunning ? 'Pause' : 'Start'}</button>
+                                                <button onClick={() => resetTimer(setGraceA, 120, setIsGraceARunning, graceAInterval)} className="px-3 py-1 text-xs rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300">Reset</button>
+                                            </div>
+                                        </div>
+                                        {/* Team B */}
+                                        <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
+                                            <div className="flex justify-between items-center mb-2">
+                                                <span className="text-xs font-bold text-purple-600 dark:text-purple-400">Neg / Con Grace</span>
+                                                <span className={`font-mono font-bold text-xl ${graceB < 30 ? 'text-red-500' : 'text-slate-800 dark:text-slate-200'}`}>{formatTime(graceB)}</span>
+                                            </div>
+                                            <div className="flex space-x-2">
+                                                <button onClick={() => toggleTimer(isGraceBRunning, setIsGraceBRunning, graceBInterval, setGraceB)} className={`flex-1 py-1 text-xs rounded font-medium text-white ${isGraceBRunning ? 'bg-amber-500' : 'bg-purple-500 hover:bg-purple-600'}`}>{isGraceBRunning ? 'Pause' : 'Start'}</button>
+                                                <button onClick={() => resetTimer(setGraceB, 120, setIsGraceBRunning, graceBInterval)} className="px-3 py-1 text-xs rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300">Reset</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Resources / Rubric */}
+                        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+                            <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50">
+                                <h3 className="font-bold text-lg text-slate-800 dark:text-slate-200">Judging Resources: {format}</h3>
+                            </div>
+                            <div className="p-6">
+                                <MarkdownRenderer content={rubrics[format] || rubrics['default']} />
+                            </div>
+                        </div>
+                    </div>
+                );
             };
 
             const handleAnalyze = async (isBoardGen = false) => {
@@ -1657,7 +1860,6 @@
                                     <button onClick={() => setTheme('forest')} className={`p-1.5 rounded-full transition-all ${theme === 'forest' ? 'bg-[#1c2321] shadow text-green-300 border border-green-800' : 'text-slate-400 hover:text-slate-600'}`} title="Forest"><Leaf className="w-4 h-4" /></button>
                                     <button onClick={() => setTheme('coffee')} className={`p-1.5 rounded-full transition-all ${theme === 'coffee' ? 'bg-[#2b2118] shadow text-orange-300 border border-orange-800' : 'text-slate-400 hover:text-slate-600'}`} title="Coffee"><Coffee className="w-4 h-4" /></button>
                                     <button onClick={() => setTheme('ocean')} className={`p-1.5 rounded-full transition-all ${theme === 'ocean' ? 'bg-[#0f172a] shadow text-blue-300 border border-blue-800' : 'text-slate-400 hover:text-slate-600'}`} title="Ocean"><Droplets className="w-4 h-4" /></button>
-                                    <button onClick={() => setTheme('sunset')} className={`p-1.5 rounded-full transition-all ${theme === 'sunset' ? 'bg-[#4a0404] shadow text-red-300 border border-red-800' : 'text-slate-400 hover:text-slate-600'}`} title="Sunset"><CloudSun className="w-4 h-4" /></button>
                                     <button onClick={() => setTheme('midnight')} className={`p-1.5 rounded-full transition-all ${theme === 'midnight' ? 'bg-[#000000] shadow text-slate-300 border border-slate-700' : 'text-slate-400 hover:text-slate-600'}`} title="Midnight"><Star className="w-4 h-4" /></button>
                                 </div>
                                 {user ? (
@@ -1786,6 +1988,10 @@
                                         ))
                                     )}
                                 </div>
+                            )}
+
+                            {activeTab === 'coach' && (
+                                <CoachTools speechTimes={speechTimes} rubrics={rubrics} />
                             )}
 
                             {['speech', 'board', 'listen'].includes(activeTab) && (
