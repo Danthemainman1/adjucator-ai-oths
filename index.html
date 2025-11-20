@@ -72,12 +72,18 @@
         /* --- Theme: Forest --- */
         .theme-forest body { background-color: #1c2321 !important; color: #e8f5e9 !important; }
         
-        /* Backgrounds */
-        .theme-forest .bg-white, .theme-forest .bg-slate-50, .theme-forest .bg-slate-100, .theme-forest .bg-slate-200, .theme-forest .bg-slate-800, .theme-forest .bg-slate-900 {
+        /* Backgrounds - Surface */
+        .theme-forest .bg-white, .theme-forest .bg-slate-50, .theme-forest .bg-slate-800, .theme-forest .bg-slate-900 {
             background-color: #2d3b36 !important;
             border-color: #4a5d55 !important;
             color: #e8f5e9 !important;
         }
+        /* Backgrounds - Tracks/Inputs (Darker/Distinct) */
+        .theme-forest .bg-slate-100, .theme-forest .bg-slate-200 {
+            background-color: #222d29 !important;
+            border-color: #4a5d55 !important;
+        }
+
         .theme-forest .bg-indigo-50 { background-color: rgba(46, 125, 50, 0.1) !important; }
         .theme-forest .bg-indigo-100 { background-color: rgba(46, 125, 50, 0.2) !important; }
         .theme-forest .bg-purple-100 { background-color: rgba(0, 105, 92, 0.2) !important; }
@@ -118,12 +124,18 @@
         /* --- Theme: Coffee --- */
         .theme-coffee body { background-color: #2b2118 !important; color: #dcc8b3 !important; }
         
-        /* Backgrounds */
-        .theme-coffee .bg-white, .theme-coffee .bg-slate-50, .theme-coffee .bg-slate-100, .theme-coffee .bg-slate-200, .theme-coffee .bg-slate-800, .theme-coffee .bg-slate-900 {
+        /* Backgrounds - Surface */
+        .theme-coffee .bg-white, .theme-coffee .bg-slate-50, .theme-coffee .bg-slate-800, .theme-coffee .bg-slate-900 {
             background-color: #3d2f24 !important;
             border-color: #5c4738 !important;
             color: #dcc8b3 !important;
         }
+        /* Backgrounds - Tracks/Inputs */
+        .theme-coffee .bg-slate-100, .theme-coffee .bg-slate-200 {
+            background-color: #2e231b !important;
+            border-color: #5c4738 !important;
+        }
+
         .theme-coffee .bg-indigo-50 { background-color: rgba(210, 105, 30, 0.1) !important; }
         .theme-coffee .bg-indigo-100 { background-color: rgba(210, 105, 30, 0.2) !important; }
         .theme-coffee .bg-purple-100 { background-color: rgba(160, 82, 45, 0.2) !important; }
@@ -162,11 +174,19 @@
 
         /* --- Theme: Ocean --- */
         .theme-ocean body { background-color: #0f172a !important; color: #e2e8f0 !important; }
-        .theme-ocean .bg-white, .theme-ocean .bg-slate-50, .theme-ocean .bg-slate-100, .theme-ocean .bg-slate-200, .theme-ocean .bg-slate-800, .theme-ocean .bg-slate-900 {
+        
+        /* Backgrounds - Surface */
+        .theme-ocean .bg-white, .theme-ocean .bg-slate-50, .theme-ocean .bg-slate-800, .theme-ocean .bg-slate-900 {
             background-color: #1e293b !important;
             border-color: #334155 !important;
             color: #e2e8f0 !important;
         }
+        /* Backgrounds - Tracks/Inputs */
+        .theme-ocean .bg-slate-100, .theme-ocean .bg-slate-200 {
+            background-color: #0f172a !important;
+            border-color: #334155 !important;
+        }
+
         .theme-ocean .text-slate-900, .theme-ocean .text-slate-800, .theme-ocean .text-slate-700, .theme-ocean .text-slate-600, .theme-ocean .text-slate-500, .theme-ocean .text-slate-400 { color: #94a3b8 !important; }
         .theme-ocean .text-indigo-600, .theme-ocean .text-indigo-500, .theme-ocean .text-indigo-700 { color: #38bdf8 !important; } /* Sky Blue */
         .theme-ocean .bg-indigo-600 { background-color: #0ea5e9 !important; }
@@ -180,11 +200,19 @@
 
         /* --- Theme: Midnight --- */
         .theme-midnight body { background-color: #000000 !important; color: #e5e5e5 !important; }
-        .theme-midnight .bg-white, .theme-midnight .bg-slate-50, .theme-midnight .bg-slate-100, .theme-midnight .bg-slate-200, .theme-midnight .bg-slate-800, .theme-midnight .bg-slate-900 {
+        
+        /* Backgrounds - Surface */
+        .theme-midnight .bg-white, .theme-midnight .bg-slate-50, .theme-midnight .bg-slate-800, .theme-midnight .bg-slate-900 {
             background-color: #171717 !important;
             border-color: #404040 !important;
             color: #e5e5e5 !important;
         }
+        /* Backgrounds - Tracks/Inputs (Lighter than black) */
+        .theme-midnight .bg-slate-100, .theme-midnight .bg-slate-200 {
+            background-color: #262626 !important;
+            border-color: #404040 !important;
+        }
+
         .theme-midnight .text-slate-900, .theme-midnight .text-slate-800, .theme-midnight .text-slate-700, .theme-midnight .text-slate-600, .theme-midnight .text-slate-500, .theme-midnight .text-slate-400 { color: #a3a3a3 !important; }
         .theme-midnight .text-indigo-600, .theme-midnight .text-indigo-500, .theme-midnight .text-indigo-700 { color: #818cf8 !important; } /* Indigo */
         .theme-midnight .bg-indigo-600 { background-color: #4f46e5 !important; }
@@ -1726,6 +1754,17 @@
                                     <div className={`text-8xl font-mono font-bold tracking-tighter mb-8 tabular-nums ${mainTimer < 30 ? 'text-red-500 animate-pulse' : 'text-slate-900 dark:text-white'}`}>
                                         {formatTime(mainTimer)}
                                     </div>
+                                    
+                                    {/* Progress Bar */}
+                                    {activeSpeech && (
+                                        <div className="w-full max-w-md h-3 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mb-8 border border-slate-300 dark:border-slate-600">
+                                            <div 
+                                                className={`h-full transition-all duration-1000 ease-linear ${mainTimer < 30 ? 'bg-red-500' : 'bg-indigo-500'}`}
+                                                style={{ width: `${(mainTimer / activeSpeech.time) * 100}%` }}
+                                            />
+                                        </div>
+                                    )}
+
                                     <div className="flex space-x-4">
                                         <button 
                                             onClick={() => toggleTimer(isMainRunning, setIsMainRunning, mainInterval, setMainTimer)}
