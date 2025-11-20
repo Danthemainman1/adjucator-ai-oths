@@ -715,6 +715,26 @@
                 { id: 'settings', label: 'Configuration', icon: Settings },
             ];
 
+            // Storage Usage Logic
+            const [storageUsage, setStorageUsage] = useState(0);
+            
+            useEffect(() => {
+                const checkStorage = () => {
+                    let total = 0;
+                    for(let key in localStorage) {
+                        if(localStorage.hasOwnProperty(key)) {
+                            total += (localStorage[key].length + key.length);
+                        }
+                    }
+                    // Approx 5 million characters (5MB)
+                    setStorageUsage((total / 5000000) * 100);
+                };
+                
+                checkStorage();
+                const interval = setInterval(checkStorage, 5000); // Check every 5s
+                return () => clearInterval(interval);
+            }, []);
+
             return (
                 <>
                     {/* Mobile Overlay */}
@@ -762,6 +782,25 @@
 
                         {/* Footer Controls */}
                         <div className="p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
+                            {/* Storage Meter */}
+                            <div className="px-2 pb-4">
+                                <div className="flex justify-between text-[10px] text-slate-400 mb-1">
+                                    <span>Storage</span>
+                                    <span>{Math.round(storageUsage)}%</span>
+                                </div>
+                                <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                                    <div 
+                                        className={`h-full rounded-full transition-all duration-500 ${storageUsage > 90 ? 'bg-red-500' : storageUsage > 75 ? 'bg-amber-500' : 'bg-indigo-500'}`}
+                                        style={{ width: `${Math.min(storageUsage, 100)}%` }}
+                                    ></div>
+                                </div>
+                                {storageUsage > 75 && (
+                                    <p className="text-[10px] text-red-500 mt-1 font-bold animate-pulse">
+                                        Storage full! Clear history.
+                                    </p>
+                                )}
+                            </div>
+
                             <div className="flex items-center justify-between mb-4 px-2">
                                 <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Theme</span>
                                 <div className="flex bg-white dark:bg-slate-800 rounded-lg p-1 border border-slate-200 dark:border-slate-700 shadow-sm">
