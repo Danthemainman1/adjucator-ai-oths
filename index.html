@@ -36,6 +36,31 @@
     <!-- Babel for JSX translation -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
+    <!-- Firebase SDKs (Modular) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // --- PASTE YOUR FIREBASE CONFIG HERE ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyAgGkHhRcdGatNvRsm5BQv_RerjG8qt70M",
+            authDomain: "adjucator-ai.firebaseapp.com",
+            projectId: "adjucator-ai",
+            storageBucket: "adjucator-ai.firebasestorage.app",
+            messagingSenderId: "82725691768",
+            appId: "1:82725691768:web:6186a5b41b8a0aa1e7688d",
+            measurementId: "G-N92VEHSKDE"
+        };
+        // ---------------------------------------
+
+        const app = initializeApp(firebaseConfig);
+        window.auth = getAuth(app);
+        window.db = getFirestore(app);
+        window.firebaseAuth = { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged };
+        window.firebaseDb = { doc, setDoc, getDoc, updateDoc, arrayUnion };
+    </script>
+
     <style>
         body { font-family: 'Inter', sans-serif; }
         /* Hide scrollbar for cleaner UI */
@@ -212,47 +237,100 @@
             const [authEmail, setAuthEmail] = useState('');
             const [authPassword, setAuthPassword] = useState('');
             const [authError, setAuthError] = useState('');
+            const [isFirebaseReady, setIsFirebaseReady] = useState(false);
 
             useEffect(() => {
                 const savedTheme = localStorage.getItem('theme') || 'light';
                 setTheme(savedTheme);
                 
-                // Check for active session
-                const sessionUser = localStorage.getItem('activeUser');
-                if (sessionUser) {
-                    const userData = JSON.parse(sessionUser);
-                    setUser(userData);
-                    setShowLogin(false);
-                    loadUserHistory(userData.email);
+                // Check if Firebase is initialized
+                if (window.auth && window.firebaseAuth) {
+                    setIsFirebaseReady(true);
+                    const unsubscribe = window.firebaseAuth.onAuthStateChanged(window.auth, (currentUser) => {
+                        if (currentUser) {
+                            setUser(currentUser);
+                            setShowLogin(false);
+                            loadUserHistory(currentUser.uid);
+                        } else {
+                            setUser(null);
+                            setShowLogin(true);
+                        }
+                    });
+                    return () => unsubscribe();
+                } else {
+                    // Fallback for when config is missing
+                    console.warn("Firebase not configured. Using local storage fallback.");
+                    const sessionUser = localStorage.getItem('activeUser');
+                    if (sessionUser) {
+                        const userData = JSON.parse(sessionUser);
+                        setUser(userData);
+                        setShowLogin(false);
+                        loadUserHistory(userData.email); // Fallback uses email as ID
+                    }
                 }
             }, []);
 
-            // Load history when user changes
-            const loadUserHistory = (email) => {
-                const savedHistory = localStorage.getItem(`debateHistory_${email}`);
-                if (savedHistory) setHistory(JSON.parse(savedHistory));
-                else setHistory([]);
+            // Load history
+            const loadUserHistory = async (userId) => {
+                if (window.db && window.firebaseDb) {
+                    try {
+                        const docRef = window.firebaseDb.doc(window.db, "users", userId);
+                        const docSnap = await window.firebaseDb.getDoc(docRef);
+                        if (docSnap.exists()) {
+                            setHistory(docSnap.data().history || []);
+                        } else {
+                            setHistory([]);
+                        }
+                    } catch (e) {
+                        console.error("Error loading history:", e);
+                    }
+                } else {
+                    // Fallback
+                    const savedHistory = localStorage.getItem(`debateHistory_${userId}`);
+                    if (savedHistory) setHistory(JSON.parse(savedHistory));
+                    else setHistory([]);
+                }
             };
 
-            // Save history when it changes (only if logged in)
+            // Save history
+            const saveHistoryToCloud = async (newHistory, userId) => {
+                if (window.db && window.firebaseDb) {
+                    try {
+                        const userRef = window.firebaseDb.doc(window.db, "users", userId);
+                        await window.firebaseDb.setDoc(userRef, { history: newHistory }, { merge: true });
+                    } catch (e) {
+                        console.error("Error saving history:", e);
+                    }
+                }
+            };
+
+            // Effect to sync history changes
             useEffect(() => {
-                if (user && user.email) {
-                    localStorage.setItem(`debateHistory_${user.email}`, JSON.stringify(history));
+                if (user) {
+                    const userId = user.uid || user.email;
+                    // Local backup
+                    localStorage.setItem(`debateHistory_${userId}`, JSON.stringify(history));
+                    
+                    // Cloud sync
+                    if (user.uid && window.db) {
+                        saveHistoryToCloud(history, user.uid);
+                    }
                 }
             }, [history, user]);
 
-            // Help Popup Logic - Only show after login
+            // Help Popup Logic
             useEffect(() => {
                 if (user && !showLogin) {
-                    const hasVisited = localStorage.getItem(`hasVisited_${user.email}`);
+                    const userId = user.uid || user.email;
+                    const hasVisited = localStorage.getItem(`hasVisited_${userId}`);
                     if (!hasVisited) {
                         setShowHelp(true);
-                        localStorage.setItem(`hasVisited_${user.email}`, 'true');
+                        localStorage.setItem(`hasVisited_${userId}`, 'true');
                     }
                 }
             }, [user, showLogin]);
 
-            const handleAuth = (e) => {
+            const handleAuth = async (e) => {
                 e.preventDefault();
                 setAuthError('');
                 
@@ -261,28 +339,44 @@
                     return;
                 }
 
-                // Simple LocalStorage Auth System
-                const users = JSON.parse(localStorage.getItem('registeredUsers') || '{}');
-
-                if (authMode === 'signup') {
-                    if (users[authEmail]) {
-                        setAuthError('User already exists');
-                        return;
+                if (window.auth && window.firebaseAuth && window.auth.app.options.apiKey !== "YOUR_API_KEY_HERE") {
+                    // Firebase Auth
+                    try {
+                        if (authMode === 'signup') {
+                            await window.firebaseAuth.createUserWithEmailAndPassword(window.auth, authEmail, authPassword);
+                            // User is automatically signed in by Firebase
+                        } else {
+                            await window.firebaseAuth.signInWithEmailAndPassword(window.auth, authEmail, authPassword);
+                        }
+                        setAuthEmail('');
+                        setAuthPassword('');
+                    } catch (error) {
+                        let msg = error.message;
+                        if (error.code === 'auth/invalid-credential') msg = 'Invalid email or password.';
+                        if (error.code === 'auth/email-already-in-use') msg = 'Email already in use.';
+                        if (error.code === 'auth/weak-password') msg = 'Password should be at least 6 characters.';
+                        setAuthError(msg);
                     }
-                    users[authEmail] = authPassword; // In a real app, never store plain passwords!
-                    localStorage.setItem('registeredUsers', JSON.stringify(users));
-                    loginUser(authEmail);
                 } else {
-                    if (users[authEmail] && users[authEmail] === authPassword) {
-                        loginUser(authEmail);
+                    // Local Storage Fallback (Demo Mode)
+                    const users = JSON.parse(localStorage.getItem('registeredUsers') || '{}');
+                    if (authMode === 'signup') {
+                        if (users[authEmail]) { setAuthError('User already exists'); return; }
+                        users[authEmail] = authPassword;
+                        localStorage.setItem('registeredUsers', JSON.stringify(users));
+                        loginUserLocal(authEmail);
                     } else {
-                        setAuthError('Invalid email or password');
+                        if (users[authEmail] && users[authEmail] === authPassword) {
+                            loginUserLocal(authEmail);
+                        } else {
+                            setAuthError('Invalid email or password (Demo Mode)');
+                        }
                     }
                 }
             };
 
-            const loginUser = (email) => {
-                const userData = { email };
+            const loginUserLocal = (email) => {
+                const userData = { email, uid: null }; // No UID for local users
                 setUser(userData);
                 localStorage.setItem('activeUser', JSON.stringify(userData));
                 setShowLogin(false);
@@ -291,7 +385,12 @@
                 setAuthPassword('');
             };
 
-            const logout = () => {
+            const logout = async () => {
+                if (window.auth && window.firebaseAuth) {
+                    try {
+                        await window.firebaseAuth.signOut(window.auth);
+                    } catch (e) { console.error(e); }
+                }
                 setUser(null);
                 localStorage.removeItem('activeUser');
                 setShowLogin(true);
@@ -885,7 +984,7 @@
                                     
                                     <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-700 text-center">
                                         <p className="text-xs text-slate-400">
-                                            Note: This is a demo account system. Data is stored locally on your device.
+                                            {isFirebaseReady ? 'Secure Cloud Authentication' : 'Demo Mode: Data stored locally'}
                                         </p>
                                     </div>
                                 </div>
