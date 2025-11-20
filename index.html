@@ -1195,6 +1195,7 @@
 
             // Render UI
             return (
+                <div className="flex h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans selection:bg-indigo-100 dark:selection:bg-indigo-900 transition-colors duration-200 overflow-hidden">
                     {/* Sidebar */}
                     <Sidebar 
                         activeTab={activeTab} 
@@ -1206,7 +1207,10 @@
                         setShowLogin={setShowLogin}
                         isOpen={isSidebarOpen}
                         setIsOpen={setIsSidebarOpen}
-                    />  setShowLogin={setShowLogin}
+                    />
+
+                    {/* Main Content */}
+                    <main className="flex-1 overflow-y-auto h-full relative">
                         {/* Top Bar */}
                         <header className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-20 px-6 py-3 flex items-center justify-between">
                              <div className="flex items-center">
@@ -1216,10 +1220,6 @@
                                 >
                                     <Menu className="w-6 h-6" />
                                 </button>
-                                <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-200 capitalize">
-                        {/* Top Bar */}
-                        <header className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-20 px-6 py-3 flex items-center justify-between">
-                             <div className="flex items-center">
                                 <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-200 capitalize">
                                     {activeTab === 'speech' ? 'Judge Text' : 
                                      activeTab === 'board' ? 'Evaluate Board' : 
