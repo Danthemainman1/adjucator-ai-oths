@@ -1520,13 +1520,15 @@
                 setError('');
             };
 
-            const addToHistory = (text, type) => {
+            const addToHistory = (generatedText, type, inputData) => {
                 const newItem = {
                     id: Date.now(),
                     date: new Date().toLocaleString(),
                     type,
                     topic: topic || 'Untitled',
-                    content: text
+                    result: generatedText,
+                    input: inputData,
+                    preview: generatedText.substring(0, 150) + '...'
                 };
                 setHistory(prev => [newItem, ...prev]);
             };
@@ -1950,7 +1952,12 @@
 
                     if (generatedText) {
                         setResult(generatedText);
-                        addToHistory(generatedText, isBoardGen ? 'Strategy Gen' : activeTab);
+                        let inputData = null;
+                        if (activeTab === 'speech') inputData = transcript;
+                        else if (activeTab === 'listen') inputData = audioData;
+                        else if (activeTab === 'board') inputData = { description: boardDescription, images: boardImages };
+                        
+                        addToHistory(generatedText, isBoardGen ? 'Strategy Gen' : activeTab, inputData);
                     } else {
                         throw new Error('No analysis returned.');
                     }
@@ -2121,12 +2128,28 @@
                                         <div className="text-center py-12 text-slate-500">No history yet. Start analyzing!</div>
                                     ) : (
                                         history.map((item) => (
-                                            <div key={item.id} className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow cursor-pointer" onClick={() => { setResult(item.result); setActiveTab('speech'); }}>
+                                            <div key={item.id} className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow cursor-pointer" onClick={() => { 
+                                                setResult(item.result || item.content); 
+                                                setTopic(item.topic);
+                                                if (item.type === 'speech' || item.type === 'Judge Text') {
+                                                    setTranscript(typeof item.input === 'string' ? item.input : '');
+                                                    setActiveTab('speech');
+                                                } else if (item.type === 'listen' || item.type === 'Live Coach') {
+                                                    if (item.input && item.input.raw) setAudioData(item.input);
+                                                    setActiveTab('listen');
+                                                } else if (item.type === 'board' || item.type === 'Evaluate Board') {
+                                                    if (item.input) {
+                                                        setBoardDescription(item.input.description || '');
+                                                        setBoardImages(item.input.images || []);
+                                                    }
+                                                    setActiveTab('board');
+                                                }
+                                            }}>
                                                 <div className="flex justify-between items-start mb-2">
                                                     <span className="px-2 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-xs rounded-full font-medium uppercase">{item.type}</span>
-                                                    <span className="text-xs text-slate-400">{new Date(item.timestamp).toLocaleString()}</span>
+                                                    <span className="text-xs text-slate-400">{new Date(item.date).toLocaleString()}</span>
                                                 </div>
-                                                <p className="text-sm text-slate-600 dark:text-slate-300 line-clamp-2">{item.preview}</p>
+                                                <p className="text-sm text-slate-600 dark:text-slate-300 line-clamp-2">{item.preview || (item.content ? item.content.substring(0, 100) + '...' : 'No preview')}</p>
                                             </div>
                                         ))
                                     )}
