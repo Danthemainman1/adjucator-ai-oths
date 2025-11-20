@@ -69,42 +69,95 @@
         textarea::-webkit-scrollbar-track { background: transparent; }
         textarea::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 20px; }
 
-        /* Theme: Forest */
+        /* --- Theme: Forest --- */
         .theme-forest body { background-color: #1c2321 !important; color: #e8f5e9 !important; }
+        
+        /* Backgrounds */
         .theme-forest .bg-white, .theme-forest .bg-slate-50, .theme-forest .bg-slate-100, .theme-forest .bg-slate-200, .theme-forest .bg-slate-800, .theme-forest .bg-slate-900 {
             background-color: #2d3b36 !important;
             border-color: #4a5d55 !important;
             color: #e8f5e9 !important;
         }
-        .theme-forest .text-slate-900, .theme-forest .text-slate-700, .theme-forest .text-slate-500, .theme-forest .text-slate-400 { color: #b8cbb8 !important; }
-        .theme-forest .text-indigo-600, .theme-forest .text-indigo-500, .theme-forest .text-purple-600 { color: #76c893 !important; }
-        .theme-forest button, .theme-forest input, .theme-forest select, .theme-forest textarea {
+        .theme-forest .bg-indigo-50 { background-color: rgba(46, 125, 50, 0.1) !important; }
+        .theme-forest .bg-indigo-100 { background-color: rgba(46, 125, 50, 0.2) !important; }
+        .theme-forest .bg-purple-100 { background-color: rgba(0, 105, 92, 0.2) !important; }
+        .theme-forest .bg-amber-100 { background-color: rgba(249, 168, 37, 0.2) !important; }
+        .theme-forest .bg-blue-100 { background-color: rgba(2, 119, 189, 0.2) !important; }
+        
+        /* Text */
+        .theme-forest .text-slate-900, .theme-forest .text-slate-800, .theme-forest .text-slate-700, .theme-forest .text-slate-600, .theme-forest .text-slate-500, .theme-forest .text-slate-400 { color: #b8cbb8 !important; }
+        .theme-forest .text-indigo-600, .theme-forest .text-indigo-500, .theme-forest .text-indigo-700 { color: #76c893 !important; }
+        .theme-forest .text-purple-600 { color: #4db6ac !important; }
+        .theme-forest .text-blue-600 { color: #4dd0e1 !important; }
+        .theme-forest .text-amber-600 { color: #dce775 !important; }
+        
+        /* Inputs & Generic Buttons */
+        .theme-forest button:not([class*="bg-indigo-"]):not([class*="bg-red-"]):not([class*="bg-gradient-"]), 
+        .theme-forest input, .theme-forest select, .theme-forest textarea {
             background-color: #1c2321 !important;
-            border: 1px solid #4a5d55 !important;
+            border-color: #4a5d55 !important;
             color: #e8f5e9 !important;
         }
-        .theme-forest .bg-indigo-600, .theme-forest .bg-gradient-to-r {
-            background-image: linear-gradient(to right, #2d6a4f, #40916c) !important;
-            border: none !important;
+
+        /* Primary Actions & Gradients */
+        .theme-forest .bg-indigo-600 { background-color: #2e7d32 !important; }
+        .theme-forest .hover\:bg-indigo-700:hover { background-color: #1b5e20 !important; }
+        .theme-forest .from-indigo-600 { --tw-gradient-from: #2e7d32 !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+        .theme-forest .to-purple-600 { --tw-gradient-to: #00695c !important; }
+        .theme-forest .bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-from), var(--tw-gradient-to)) !important; }
+        
+        /* Shadows */
+        .theme-forest .shadow-indigo-500\/30 { --tw-shadow-color: rgba(46, 125, 50, 0.3) !important; box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important; }
+        
+        /* Borders */
+        .theme-forest .border-slate-100, .theme-forest .border-slate-200, .theme-forest .border-slate-300, .theme-forest .border-slate-700, .theme-forest .border-indigo-100 {
+            border-color: #4a5d55 !important;
         }
 
-        /* Theme: Coffee */
+
+        /* --- Theme: Coffee --- */
         .theme-coffee body { background-color: #2b2118 !important; color: #dcc8b3 !important; }
+        
+        /* Backgrounds */
         .theme-coffee .bg-white, .theme-coffee .bg-slate-50, .theme-coffee .bg-slate-100, .theme-coffee .bg-slate-200, .theme-coffee .bg-slate-800, .theme-coffee .bg-slate-900 {
             background-color: #3d2f24 !important;
             border-color: #5c4738 !important;
             color: #dcc8b3 !important;
         }
-        .theme-coffee .text-slate-900, .theme-coffee .text-slate-700, .theme-coffee .text-slate-500, .theme-coffee .text-slate-400 { color: #a69076 !important; }
-        .theme-coffee .text-indigo-600, .theme-coffee .text-indigo-500, .theme-coffee .text-purple-600 { color: #d2691e !important; }
-        .theme-coffee button, .theme-coffee input, .theme-coffee select, .theme-coffee textarea {
+        .theme-coffee .bg-indigo-50 { background-color: rgba(210, 105, 30, 0.1) !important; }
+        .theme-coffee .bg-indigo-100 { background-color: rgba(210, 105, 30, 0.2) !important; }
+        .theme-coffee .bg-purple-100 { background-color: rgba(160, 82, 45, 0.2) !important; }
+        .theme-coffee .bg-amber-100 { background-color: rgba(218, 165, 32, 0.2) !important; }
+        .theme-coffee .bg-blue-100 { background-color: rgba(139, 69, 19, 0.2) !important; }
+
+        /* Text */
+        .theme-coffee .text-slate-900, .theme-coffee .text-slate-800, .theme-coffee .text-slate-700, .theme-coffee .text-slate-600, .theme-coffee .text-slate-500, .theme-coffee .text-slate-400 { color: #a69076 !important; }
+        .theme-coffee .text-indigo-600, .theme-coffee .text-indigo-500, .theme-coffee .text-indigo-700 { color: #d2691e !important; }
+        .theme-coffee .text-purple-600 { color: #cd853f !important; }
+        .theme-coffee .text-blue-600 { color: #8d6e63 !important; }
+        .theme-coffee .text-amber-600 { color: #ffb74d !important; }
+
+        /* Inputs & Generic Buttons */
+        .theme-coffee button:not([class*="bg-indigo-"]):not([class*="bg-red-"]):not([class*="bg-gradient-"]), 
+        .theme-coffee input, .theme-coffee select, .theme-coffee textarea {
             background-color: #2b2118 !important;
-            border: 1px solid #5c4738 !important;
+            border-color: #5c4738 !important;
             color: #dcc8b3 !important;
         }
-        .theme-coffee .bg-indigo-600, .theme-coffee .bg-gradient-to-r {
-            background-image: linear-gradient(to right, #8b4513, #a0522d) !important;
-            border: none !important;
+
+        /* Primary Actions & Gradients */
+        .theme-coffee .bg-indigo-600 { background-color: #8b4513 !important; }
+        .theme-coffee .hover\:bg-indigo-700:hover { background-color: #5e2f0d !important; }
+        .theme-coffee .from-indigo-600 { --tw-gradient-from: #8b4513 !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+        .theme-coffee .to-purple-600 { --tw-gradient-to: #a0522d !important; }
+        .theme-coffee .bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-from), var(--tw-gradient-to)) !important; }
+
+        /* Shadows */
+        .theme-coffee .shadow-indigo-500\/30 { --tw-shadow-color: rgba(139, 69, 19, 0.3) !important; box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important; }
+
+        /* Borders */
+        .theme-coffee .border-slate-100, .theme-coffee .border-slate-200, .theme-coffee .border-slate-300, .theme-coffee .border-slate-700, .theme-coffee .border-indigo-100 {
+            border-color: #5c4738 !important;
         }
     </style>
 </head>
