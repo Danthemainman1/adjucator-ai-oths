@@ -595,10 +595,28 @@
         };
 
         const Dashboard = ({ user, history, setActiveTab }) => {
+            const calculateAverageScore = () => {
+                if (!history || history.length === 0) return 'N/A';
+                let total = 0;
+                let count = 0;
+                history.forEach(h => {
+                    const tableMatch = h.content && h.content.match(/\|\s*\*\*Total\*\*\s*\|\s*\*\*(\d+)\*\*\s*\|/);
+                    const simpleMatch = h.content && h.content.match(/Score:\s*(\d+)/i);
+                    if (tableMatch && tableMatch[1]) {
+                        total += parseInt(tableMatch[1]);
+                        count++;
+                    } else if (simpleMatch && simpleMatch[1]) {
+                        total += parseInt(simpleMatch[1]);
+                        count++;
+                    }
+                });
+                return count > 0 ? Math.round(total / count) : 'N/A';
+            };
+
             const stats = [
                 { label: 'Total Analyses', value: history.length, icon: Activity, color: 'text-blue-600', bg: 'bg-blue-100 dark:bg-blue-900/30' },
                 { label: 'Last Topic', value: history[0]?.topic || 'N/A', icon: BookOpen, color: 'text-purple-600', bg: 'bg-purple-100 dark:bg-purple-900/30' },
-                { label: 'Avg Score', value: '88', icon: Award, color: 'text-amber-600', bg: 'bg-amber-100 dark:bg-amber-900/30' },
+                { label: 'Avg Score', value: calculateAverageScore(), icon: Award, color: 'text-amber-600', bg: 'bg-amber-100 dark:bg-amber-900/30' },
             ];
 
             const tools = [
