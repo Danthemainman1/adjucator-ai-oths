@@ -194,6 +194,87 @@
             );
         };
 
+        const speechTimes = {
+            'Public Forum (PF)': [
+                { name: 'Constructive', time: 240 },
+                { name: 'Rebuttal', time: 240 },
+                { name: 'Summary', time: 180 },
+                { name: 'Final Focus', time: 120 },
+                { name: 'Crossfire', time: 180 }
+            ],
+            'Lincoln-Douglas (LD)': [
+                { name: 'Aff Constructive (AC)', time: 360 },
+                { name: 'Neg Constructive (NC)', time: 420 },
+                { name: '1st Aff Rebuttal (1AR)', time: 240 },
+                { name: 'Neg Rebuttal (NR)', time: 360 },
+                { name: '2nd Aff Rebuttal (2AR)', time: 180 }
+            ],
+            'Policy Debate (CX)': [
+                { name: 'Constructive', time: 480 },
+                { name: 'Rebuttal', time: 300 },
+                { name: 'Cross-Ex', time: 180 }
+            ],
+            'World Schools Debate': [
+                { name: 'Main Speech', time: 480 },
+                { name: 'Reply Speech', time: 240 }
+            ],
+            'Congressional Debate': [
+                { name: 'Sponsorship/Auth', time: 180 },
+                { name: 'Questioning', time: 120 }
+            ],
+            'default': [
+                { name: 'Speech', time: 600 }
+            ]
+        };
+
+        const AudioVisualizer = ({ analyser, isRecording }) => {
+            const canvasRef = useRef(null);
+
+            useEffect(() => {
+                if (!analyser || !isRecording || !canvasRef.current) return;
+
+                const canvas = canvasRef.current;
+                const ctx = canvas.getContext('2d');
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+                let animationId;
+
+                const draw = () => {
+                    animationId = requestAnimationFrame(draw);
+                    analyser.getByteFrequencyData(dataArray);
+
+                    ctx.fillStyle = 'rgb(0, 0, 0, 0)'; // Transparent clear
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    const barWidth = (canvas.width / bufferLength) * 2.5;
+                    let barHeight;
+                    let x = 0;
+
+                    for (let i = 0; i < bufferLength; i++) {
+                        barHeight = dataArray[i] / 2;
+
+                        // Gradient color based on height
+                        const gradient = ctx.createLinearGradient(0, canvas.height, 0, 0);
+                        gradient.addColorStop(0, '#4f46e5'); // Indigo
+                        gradient.addColorStop(1, '#a855f7'); // Purple
+
+                        ctx.fillStyle = gradient;
+                        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+
+                        x += barWidth + 1;
+                    }
+                };
+
+                draw();
+
+                return () => cancelAnimationFrame(animationId);
+            }, [analyser, isRecording]);
+
+            if (!isRecording) return null;
+
+            return <canvas ref={canvasRef} width={300} height={100} className="w-full max-w-xs h-24 rounded-lg" />;
+        };
+
         function App() {
             // State Management
             const [activeTab, setActiveTab] = useState('speech'); 
@@ -446,9 +527,21 @@
             const [isRecording, setIsRecording] = useState(false);
             const [recordingTime, setRecordingTime] = useState(0);
             const [audioData, setAudioData] = useState(null); 
+            const [selectedSection, setSelectedSection] = useState(null);
+            const [analyser, setAnalyser] = useState(null);
+            
             const mediaRecorderRef = useRef(null);
             const timerRef = useRef(null);
             const chunksRef = useRef([]);
+            const audioContextRef = useRef(null);
+            const analyserRef = useRef(null);
+            const sourceRef = useRef(null);
+
+            // Update selected section when speech type changes
+            useEffect(() => {
+                const sections = speechTimes[speechType] || speechTimes['default'];
+                setSelectedSection(sections[0]);
+            }, [speechType]);
 
             // Options
             const speechTypes = [
@@ -505,6 +598,19 @@
                 setError('');
                 try {
                     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    
+                    // Audio Context Setup for Visualization
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const analyserNode = audioContext.createAnalyser();
+                    const source = audioContext.createMediaStreamSource(stream);
+                    source.connect(analyserNode);
+                    analyserNode.fftSize = 256;
+                    
+                    audioContextRef.current = audioContext;
+                    analyserRef.current = analyserNode;
+                    sourceRef.current = source;
+                    setAnalyser(analyserNode);
+
                     mediaRecorderRef.current = new MediaRecorder(stream);
                     chunksRef.current = [];
                     mediaRecorderRef.current.ondataavailable = (e) => {
@@ -519,6 +625,13 @@
                             setAudioData({ raw: base64String, mimeType: blob.type });
                         };
                         stream.getTracks().forEach(track => track.stop());
+                        
+                        // Cleanup Audio Context
+                        if (audioContextRef.current) {
+                            audioContextRef.current.close();
+                            audioContextRef.current = null;
+                            setAnalyser(null);
+                        }
                     };
                     mediaRecorderRef.current.start();
                     setIsRecording(true);
@@ -856,23 +969,73 @@
                                         )}
 
                                         {activeTab === 'listen' && (
-                                            <div className="h-full flex flex-col items-center justify-center space-y-8 py-8">
-                                                <div className="text-center">
-                                                    <h3 className="text-2xl font-mono font-bold text-slate-700 dark:text-slate-200">{formatTime(recordingTime)}</h3>
-                                                    <p className="text-sm text-slate-500 mt-2">{isRecording ? 'Recording...' : audioData ? 'Ready for analysis' : 'Ready to record'}</p>
+                                            <div className="h-full flex flex-col items-center justify-center space-y-6 py-4">
+                                                {/* Speedrun Timer */}
+                                                <div className="w-full max-w-md bg-slate-100 dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-700">
+                                                    <div className="flex justify-between items-center mb-2">
+                                                        <select 
+                                                            className="bg-transparent text-sm font-semibold text-slate-700 dark:text-slate-300 outline-none cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                                                            value={selectedSection?.name || ''}
+                                                            onChange={(e) => {
+                                                                const sections = speechTimes[speechType] || speechTimes['default'];
+                                                                setSelectedSection(sections.find(s => s.name === e.target.value));
+                                                            }}
+                                                        >
+                                                            {(speechTimes[speechType] || speechTimes['default']).map(s => (
+                                                                <option key={s.name} value={s.name}>{s.name}</option>
+                                                            ))}
+                                                        </select>
+                                                        <span className={`text-xs font-mono px-2 py-1 rounded ${recordingTime > (selectedSection?.time || 0) ? 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' : 'bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-400'}`}>
+                                                            Target: {formatTime(selectedSection?.time || 0)}
+                                                        </span>
+                                                    </div>
+                                                    
+                                                    <div className="relative h-4 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                                                        <div 
+                                                            className={`absolute top-0 left-0 h-full transition-all duration-1000 ease-linear ${
+                                                                recordingTime > (selectedSection?.time || 0) 
+                                                                    ? 'bg-red-500' 
+                                                                    : recordingTime > ((selectedSection?.time || 0) * 0.8) 
+                                                                        ? 'bg-amber-500' 
+                                                                        : 'bg-indigo-500'
+                                                            }`}
+                                                            style={{ width: `${Math.min((recordingTime / (selectedSection?.time || 1)) * 100, 100)}%` }}
+                                                        ></div>
+                                                    </div>
+                                                    
+                                                    <div className="flex justify-between mt-2 text-xs text-slate-500 font-mono">
+                                                        <span>{formatTime(recordingTime)}</span>
+                                                        <span>{Math.round((recordingTime / (selectedSection?.time || 1)) * 100)}%</span>
+                                                    </div>
                                                 </div>
-                                                <div className="relative group">
-                                                    {isRecording && <div className="absolute inset-0 bg-red-500 rounded-full animate-ping opacity-20"></div>}
-                                                    {!isRecording ? (
-                                                        <button onClick={startRecording} className="relative z-10 w-20 h-20 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full flex items-center justify-center shadow-lg transform hover:scale-105 transition-all">
-                                                            <Mic className="w-8 h-8" />
-                                                        </button>
-                                                    ) : (
-                                                        <button onClick={stopRecording} className="relative z-10 w-20 h-20 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg transform hover:scale-105 transition-all">
-                                                            <Square className="w-8 h-8 fill-current" />
-                                                        </button>
-                                                    )}
+
+                                                {/* Visualizer & Controls */}
+                                                <div className="flex flex-col items-center space-y-4">
+                                                    <div className="h-24 flex items-center justify-center w-full">
+                                                        {isRecording ? (
+                                                            <AudioVisualizer analyser={analyser} isRecording={isRecording} />
+                                                        ) : (
+                                                            <div className="text-center">
+                                                                <h3 className="text-2xl font-mono font-bold text-slate-700 dark:text-slate-200">{formatTime(recordingTime)}</h3>
+                                                                <p className="text-sm text-slate-500 mt-2">{audioData ? 'Ready for analysis' : 'Ready to record'}</p>
+                                                            </div>
+                                                        )}
+                                                    </div>
+
+                                                    <div className="relative group">
+                                                        {isRecording && <div className="absolute inset-0 bg-red-500 rounded-full animate-ping opacity-20"></div>}
+                                                        {!isRecording ? (
+                                                            <button onClick={startRecording} className="relative z-10 w-20 h-20 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full flex items-center justify-center shadow-lg transform hover:scale-105 transition-all">
+                                                                <Mic className="w-8 h-8" />
+                                                            </button>
+                                                        ) : (
+                                                            <button onClick={stopRecording} className="relative z-10 w-20 h-20 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg transform hover:scale-105 transition-all">
+                                                                <Square className="w-8 h-8 fill-current" />
+                                                            </button>
+                                                        )}
+                                                    </div>
                                                 </div>
+
                                                 {audioData && !isRecording && (
                                                     <div className="flex items-center space-x-4 animate-in fade-in slide-in-from-bottom-4">
                                                         <div className="flex items-center px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-full border border-green-200 dark:border-green-800 text-sm font-medium">
