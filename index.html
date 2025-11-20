@@ -573,10 +573,10 @@
                             {user ? (
                                 <div className="flex items-center p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
                                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xs mr-3 shadow-md">
-                                        {user.email[0].toUpperCase()}
+                                        {(user.username || user.email)[0].toUpperCase()}
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                        <p className="text-xs font-medium text-slate-900 dark:text-white truncate">{user.email}</p>
+                                        <p className="text-xs font-medium text-slate-900 dark:text-white truncate">{user.username || user.email}</p>
                                         <button onClick={logout} className="text-[10px] text-red-500 hover:text-red-600 flex items-center mt-0.5 font-medium">
                                             <LogOut className="w-3 h-3 mr-1" /> Sign out
                                         </button>
@@ -613,7 +613,7 @@
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div>
                             <h2 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
-                                Welcome back, <span className="text-indigo-600 dark:text-indigo-400">{user?.email?.split('@')[0] || 'Guest'}</span>
+                                Welcome back, <span className="text-indigo-600 dark:text-indigo-400">{user?.username || user?.email?.split('@')[0] || 'Guest'}</span>
                             </h2>
                             <p className="text-slate-500 dark:text-slate-400 mt-1">Ready to improve your debate skills today?</p>
                         </div>
@@ -709,9 +709,11 @@
             const [user, setUser] = useState(null);
             const [showLogin, setShowLogin] = useState(false);
             const [authMode, setAuthMode] = useState('login'); // login, signup
+            const [authUsername, setAuthUsername] = useState('');
             const [authEmail, setAuthEmail] = useState('');
             const [authPassword, setAuthPassword] = useState('');
             const [authError, setAuthError] = useState('');
+            const [showUsernameSetup, setShowUsernameSetup] = useState(false);
             const [isFirebaseReady, setIsFirebaseReady] = useState(false);
 
             useEffect(() => {
@@ -721,10 +723,27 @@
                 // Check if Firebase is initialized
                 if (window.auth && window.firebaseAuth) {
                     setIsFirebaseReady(true);
-                    const unsubscribe = window.firebaseAuth.onAuthStateChanged(window.auth, (currentUser) => {
+                    const unsubscribe = window.firebaseAuth.onAuthStateChanged(window.auth, async (currentUser) => {
                         if (currentUser) {
-                            setUser(currentUser);
+                            // Fetch additional user data (username)
+                            let username = null;
+                            try {
+                                const userDoc = await window.firebaseDb.getDoc(window.firebaseDb.doc(window.db, "users", currentUser.uid));
+                                if (userDoc.exists()) {
+                                    username = userDoc.data().username;
+                                }
+                            } catch (e) {
+                                console.error("Error fetching user profile:", e);
+                            }
+                            
+                            // Merge username into the user object or state
+                            const enhancedUser = { ...currentUser, username };
+                            setUser(enhancedUser);
+                            
                             setShowLogin(false);
+                            if (!username) {
+                                setShowUsernameSetup(true);
+                            }
                             loadUserHistory(currentUser.uid);
                         } else {
                             setUser(null);
@@ -811,7 +830,7 @@
                 e.preventDefault();
                 setAuthError('');
                 
-                if (!authEmail || !authPassword) {
+                if (!authEmail || !authPassword || (authMode === 'signup' && !authUsername)) {
                     setAuthError('Please fill in all fields');
                     return;
                 }
@@ -820,22 +839,49 @@
                     // Firebase Auth
                     try {
                         if (authMode === 'signup') {
+                            // 1. Check if username is taken
+                            const usernameRef = window.firebaseDb.doc(window.db, "usernames", authUsername);
+                            const usernameSnap = await window.firebaseDb.getDoc(usernameRef);
+                            
+                            if (usernameSnap.exists()) {
+                                setAuthError('Username is already taken.');
+                                return;
+                            }
+
+                            // 2. Create User
                             const userCredential = await window.firebaseAuth.createUserWithEmailAndPassword(window.auth, authEmail, authPassword);
-                            await window.firebaseAuth.sendEmailVerification(userCredential.user);
+                            const user = userCredential.user;
+
+                            // 3. Reserve Username & Create Profile
+                            const batch = window.db.batch ? window.db.batch() : null; // Handle if batch isn't available in this simplified import
+                            
+                            // Fallback to individual writes if batch not easily accessible in this context, 
+                            // but let's try standard writes.
+                            await window.firebaseDb.setDoc(window.firebaseDb.doc(window.db, "users", user.uid), {
+                                email: authEmail,
+                                username: authUsername,
+                                createdAt: new Date().toISOString(),
+                                history: []
+                            });
+                            
+                            await window.firebaseDb.setDoc(window.firebaseDb.doc(window.db, "usernames", authUsername), {
+                                uid: user.uid
+                            });
+
+                            await window.firebaseAuth.sendEmailVerification(user);
                             setAuthError('Account created! Please check your email to verify your account.');
-                            // Optional: Sign out immediately if you want to force verification before login
-                            // await window.firebaseAuth.signOut(window.auth);
                         } else {
                             const userCredential = await window.firebaseAuth.signInWithEmailAndPassword(window.auth, authEmail, authPassword);
                             if (!userCredential.user.emailVerified) {
-                                setAuthError('Please verify your email address before signing in.');
-                                // Optional: Allow login anyway or force signout
-                                // await window.firebaseAuth.signOut(window.auth);
+                                // setAuthError('Please verify your email address before signing in.');
+                                // Optional: Allow login anyway
                             }
                         }
                         setAuthEmail('');
                         setAuthPassword('');
+                        setAuthUsername('');
                     } catch (error) {
+                        console.error(error);
                         let msg = error.message;
                         if (error.code === 'auth/invalid-credential') msg = 'Invalid email or password.';
                         if (error.code === 'auth/email-already-in-use') msg = 'Email already in use.';
@@ -845,10 +891,22 @@
                 } else {
                     // Local Storage Fallback (Demo Mode)
                     const users = JSON.parse(localStorage.getItem('registeredUsers') || '{}');
+                    const takenUsernames = JSON.parse(localStorage.getItem('takenUsernames') || '{}');
+
                     if (authMode === 'signup') {
                         if (users[authEmail]) { setAuthError('User already exists'); return; }
+                        if (takenUsernames[authUsername]) { setAuthError('Username already taken'); return; }
+                        
                         users[authEmail] = authPassword;
+                        takenUsernames[authUsername] = authEmail;
+                        
                         localStorage.setItem('registeredUsers', JSON.stringify(users));
+                        localStorage.setItem('takenUsernames', JSON.stringify(takenUsernames));
+                        
+                        // Save profile
+                        const userProfile = { email: authEmail, username: authUsername };
+                        localStorage.setItem(`profile_${authEmail}`, JSON.stringify(userProfile));
+
                         loginUserLocal(authEmail);
                     } else {
                         if (users[authEmail] && users[authEmail] === authPassword) {
@@ -874,13 +932,78 @@
             };
 
             const loginUserLocal = (email) => {
-                const userData = { email, uid: null }; // No UID for local users
+                const profile = JSON.parse(localStorage.getItem(`profile_${email}`) || '{}');
+                const userData = { email, uid: null, username: profile.username || null }; // No UID for local users
                 setUser(userData);
                 localStorage.setItem('activeUser', JSON.stringify(userData));
                 setShowLogin(false);
+                if (!userData.username) {
+                    setShowUsernameSetup(true);
+                }
                 loadUserHistory(email);
                 setAuthEmail('');
                 setAuthPassword('');
+                setAuthUsername('');
+            };
+
+            const handleUsernameSetup = async (e) => {
+                e.preventDefault();
+                setAuthError('');
+                
+                if (!authUsername) {
+                    setAuthError('Please enter a username');
+                    return;
+                }
+
+                if (window.auth && window.firebaseAuth && window.auth.app.options.apiKey !== "YOUR_API_KEY_HERE") {
+                    try {
+                        // 1. Check if username is taken
+                        const usernameRef = window.firebaseDb.doc(window.db, "usernames", authUsername);
+                        const usernameSnap = await window.firebaseDb.getDoc(usernameRef);
+                        
+                        if (usernameSnap.exists()) {
+                            setAuthError('Username is already taken.');
+                            return;
+                        }
+
+                        // 2. Reserve Username & Update Profile
+                        const userId = user.uid;
+                        await window.firebaseDb.setDoc(window.firebaseDb.doc(window.db, "users", userId), {
+                            username: authUsername
+                        }, { merge: true });
+                        
+                        await window.firebaseDb.setDoc(window.firebaseDb.doc(window.db, "usernames", authUsername), {
+                            uid: userId
+                        });
+
+                        // Update local state
+                        setUser(prev => ({ ...prev, username: authUsername }));
+                        setShowUsernameSetup(false);
+                        setAuthUsername('');
+                    } catch (error) {
+                        console.error(error);
+                        setAuthError(error.message);
+                    }
+                } else {
+                    // Local Storage Fallback
+                    const takenUsernames = JSON.parse(localStorage.getItem('takenUsernames') || '{}');
+                    if (takenUsernames[authUsername]) { setAuthError('Username already taken'); return; }
+                    
+                    takenUsernames[authUsername] = user.email;
+                    localStorage.setItem('takenUsernames', JSON.stringify(takenUsernames));
+                    
+                    const userProfile = JSON.parse(localStorage.getItem(`profile_${user.email}`) || '{}');
+                    userProfile.username = authUsername;
+                    localStorage.setItem(`profile_${user.email}`, JSON.stringify(userProfile));
+
+                    // Update local state
+                    const updatedUser = { ...user, username: authUsername };
+                    setUser(updatedUser);
+                    localStorage.setItem('activeUser', JSON.stringify(updatedUser));
+                    
+                    setShowUsernameSetup(false);
+                    setAuthUsername('');
+                }
             };
 
             const logout = async () => {
@@ -1290,7 +1413,7 @@
                                 {user ? (
                                     <div className="flex items-center">
                                         <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold mr-2">
-                                            {user.email[0].toUpperCase()}
+                                            {(user.username || user.email)[0].toUpperCase()}
                                         </div>
                                         <button onClick={logout} className="text-slate-400 hover:text-red-500 transition-colors"><LogOut className="w-4 h-4" /></button>
                                     </div>
@@ -1332,12 +1455,18 @@
                                                 
                                                 {provider === 'gemini' ? (
                                                     <div>
-                                                        <label className="block text-sm font-medium mb-2">Gemini API Key</label>
+                                                        <label className="block text-sm font-medium mb-2">
+                                                            Gemini API Key
+                                                            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-xs text-indigo-600 hover:underline ml-2 font-normal">(Get Key)</a>
+                                                        </label>
                                                         <input type="password" placeholder="Paste your Gemini API key..." className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" value={apiKey} onChange={(e) => setApiKey(e.target.value)} />
                                                     </div>
                                                 ) : (
                                                     <div>
-                                                        <label className="block text-sm font-medium mb-2">OpenAI API Key</label>
+                                                        <label className="block text-sm font-medium mb-2">
+                                                            OpenAI API Key
+                                                            <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer" className="text-xs text-indigo-600 hover:underline ml-2 font-normal">(Get Key)</a>
+                                                        </label>
                                                         <input type="password" placeholder="Paste your OpenAI API key..." className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" value={openaiKey} onChange={(e) => setOpenaiKey(e.target.value)} />
                                                     </div>
                                                 )}
@@ -1609,6 +1738,22 @@
                                     </div>
 
                                     <form onSubmit={handleAuth} className="space-y-4">
+                                        {authMode === 'signup' && (
+                                            <div>
+                                                <label className="block text-xs font-semibold text-slate-500 uppercase mb-1">Username</label>
+                                                <div className="relative">
+                                                    <User className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
+                                                    <input 
+                                                        type="text" 
+                                                        required
+                                                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" 
+                                                        placeholder="Username"
+                                                        value={authUsername}
+                                                        onChange={(e) => setAuthUsername(e.target.value)}
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
                                         <div>
                                             <label className="block text-xs font-semibold text-slate-500 uppercase mb-1">Email</label>
                                             <div className="relative">
@@ -1678,6 +1823,54 @@
                                             {isFirebaseReady ? 'Secure Cloud Authentication' : 'Demo Mode: Data stored locally'}
                                         </p>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Username Setup Modal */}
+                    {showUsernameSetup && (
+                        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-sm animate-in fade-in">
+                            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-200 dark:border-slate-700 relative">
+                                <div className="p-8">
+                                    <div className="flex justify-center mb-6">
+                                        <div className="bg-indigo-600 p-3 rounded-xl shadow-lg shadow-indigo-500/30">
+                                            <User className="w-8 h-8 text-white" />
+                                        </div>
+                                    </div>
+                                    <h2 className="text-2xl font-bold text-center text-slate-900 dark:text-white mb-2">
+                                        Choose a Username
+                                    </h2>
+                                    <p className="text-center text-slate-500 dark:text-slate-400 mb-6 text-sm">
+                                        Please set a unique username to continue using Adjudicator AI.
+                                    </p>
+
+                                    <form onSubmit={handleUsernameSetup} className="space-y-4">
+                                        <div>
+                                            <label className="block text-xs font-semibold text-slate-500 uppercase mb-1">Username</label>
+                                            <div className="relative">
+                                                <User className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
+                                                <input 
+                                                    type="text" 
+                                                    required
+                                                    className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" 
+                                                    placeholder="Username"
+                                                    value={authUsername}
+                                                    onChange={(e) => setAuthUsername(e.target.value)}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {authError && (
+                                            <div className="text-red-500 text-xs text-center bg-red-50 dark:bg-red-900/20 p-2 rounded">
+                                                {authError}
+                                            </div>
+                                        )}
+
+                                        <button type="submit" className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors shadow-lg shadow-indigo-500/30">
+                                            Save Username
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
