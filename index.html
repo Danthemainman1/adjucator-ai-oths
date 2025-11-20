@@ -84,7 +84,7 @@
             color: #e8f5e9 !important;
         }
         .theme-forest .bg-indigo-600, .theme-forest .bg-gradient-to-r {
-            background: linear-gradient(to right, #2d6a4f, #40916c) !important;
+            background-image: linear-gradient(to right, #2d6a4f, #40916c) !important;
             border: none !important;
         }
 
@@ -103,7 +103,7 @@
             color: #dcc8b3 !important;
         }
         .theme-coffee .bg-indigo-600, .theme-coffee .bg-gradient-to-r {
-            background: linear-gradient(to right, #8b4513, #a0522d) !important;
+            background-image: linear-gradient(to right, #8b4513, #a0522d) !important;
             border: none !important;
         }
     </style>
@@ -210,7 +210,7 @@
             
             // Auth State
             const [user, setUser] = useState(null);
-            const [showLogin, setShowLogin] = useState(true);
+            const [showLogin, setShowLogin] = useState(false);
             const [authMode, setAuthMode] = useState('login'); // login, signup
             const [authEmail, setAuthEmail] = useState('');
             const [authPassword, setAuthPassword] = useState('');
@@ -244,6 +244,8 @@
                         setUser(userData);
                         setShowLogin(false);
                         loadUserHistory(userData.email); // Fallback uses email as ID
+                    } else {
+                        setShowLogin(true);
                     }
                 }
             }, []);
