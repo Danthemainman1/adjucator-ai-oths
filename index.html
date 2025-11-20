@@ -397,10 +397,183 @@
             );
         };
 
+        const rubrics = {
+            'Public Forum (PF)': `
+                - **Evidence & Warrants (30%)**: Quality of evidence, logical links.
+                - **Impact Calculus (30%)**: Magnitude, probability, timeframe.
+                - **Clash & Rebuttal (20%)**: Direct responsiveness to opponent.
+                - **Delivery (10%)**: Clarity, persuasion, speed.
+                - **Crossfire (10%)**: Question quality and dominance.
+            `,
+            'Lincoln-Douglas (LD)': `
+                - **Value & Criterion (30%)**: Framework clarity and application.
+                - **Contentions (30%)**: Logical consistency and evidence.
+                - **Philosophical Depth (20%)**: Understanding of core values.
+                - **Clash (10%)**: Direct refutation.
+                - **Delivery (10%)**: Persuasiveness.
+            `,
+            'Policy Debate (CX)': `
+                - **Stock Issues (30%)**: Harms, Solvency, Inherency, Topicality, Significance.
+                - **Evidence Quality (25%)**: Source credibility and recency.
+                - **Flow & Organization (20%)**: Line-by-line refutation.
+                - **Impact Analysis (15%)**: Terminal impacts.
+                - **Delivery (10%)**: Clarity (even if spreading).
+            `,
+            'World Schools Debate': `
+                - **Content (40%)**: Logic and relevance of arguments.
+                - **Style (40%)**: Rhetoric, delivery, tone.
+                - **Strategy (20%)**: Structure, timing, teamwork.
+            `,
+            'Congressional Debate': `
+                - **Argumentation (35%)**: New analysis, evidence.
+                - **Rhetoric (35%)**: Persuasion, delivery, style.
+                - **Parliamentary Procedure (15%)**: Knowledge of rules.
+                - **Questioning (15%)**: Engagement in chamber.
+            `,
+            'default': `
+                - **Argumentation (40%)**: Logic, evidence, structure.
+                - **Delivery (30%)**: Tone, pace, clarity.
+                - **Strategy (20%)**: Time management, focus.
+                - **Responsiveness (10%)**: Engagement with the topic.
+            `
+        };
+
+        const Sidebar = ({ activeTab, setActiveTab, user, logout, theme, setTheme, setShowLogin }) => {
+            const navItems = [
+                { id: 'dashboard', label: 'Dashboard', icon: Layout },
+                { id: 'speech', label: 'Judge Text', icon: Mic },
+                { id: 'board', label: 'Evaluate Board', icon: ImageIcon },
+                { id: 'listen', label: 'Live Coach', icon: Activity },
+                { id: 'history', label: 'History', icon: History },
+                { id: 'settings', label: 'Settings', icon: Settings },
+            ];
+
+            return (
+                <div className="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 flex flex-col h-screen fixed left-0 top-0 z-20 transition-all duration-300">
+                    <div className="p-6 flex items-center space-x-3 border-b border-slate-100 dark:border-slate-800">
+                        <div className="bg-indigo-600 p-2 rounded-lg shadow-lg shadow-indigo-500/30">
+                            <Gavel className="w-6 h-6 text-white" />
+                        </div>
+                        <h1 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
+                            Adjudicator
+                        </h1>
+                    </div>
+
+                    <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+                        {navItems.map(item => (
+                            <button
+                                key={item.id}
+                                onClick={() => setActiveTab(item.id)}
+                                className={`w-full flex items-center px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                                    activeTab === item.id 
+                                        ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 shadow-sm' 
+                                        : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'
+                                }`}
+                            >
+                                <item.icon className={`w-5 h-5 mr-3 ${activeTab === item.id ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400'}`} />
+                                {item.label}
+                            </button>
+                        ))}
+                    </nav>
+
+                    <div className="p-4 border-t border-slate-100 dark:border-slate-800">
+                        <div className="flex items-center justify-between mb-4 px-2">
+                            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Theme</span>
+                            <div className="flex space-x-1">
+                                <button onClick={() => setTheme('light')} className={`p-1.5 rounded-lg transition-all ${theme === 'light' ? 'bg-amber-100 text-amber-600' : 'text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'}`}><Sun className="w-4 h-4" /></button>
+                                <button onClick={() => setTheme('dark')} className={`p-1.5 rounded-lg transition-all ${theme === 'dark' ? 'bg-indigo-100 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400' : 'text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'}`}><Moon className="w-4 h-4" /></button>
+                                <button onClick={() => setTheme('forest')} className={`p-1.5 rounded-lg transition-all ${theme === 'forest' ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400' : 'text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'}`}><Leaf className="w-4 h-4" /></button>
+                                <button onClick={() => setTheme('coffee')} className={`p-1.5 rounded-lg transition-all ${theme === 'coffee' ? 'bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400' : 'text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'}`}><Coffee className="w-4 h-4" /></button>
+                            </div>
+                        </div>
+                        
+                        {user ? (
+                            <div className="flex items-center p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
+                                <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold text-xs mr-3">
+                                    {user.email[0].toUpperCase()}
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <p className="text-xs font-medium text-slate-900 dark:text-white truncate">{user.email}</p>
+                                    <button onClick={logout} className="text-[10px] text-red-500 hover:text-red-600 flex items-center mt-0.5">
+                                        <LogOut className="w-3 h-3 mr-1" /> Sign out
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            <button onClick={() => setShowLogin(true)} className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition-colors shadow-lg shadow-indigo-500/30">
+                                Sign In
+                            </button>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const Dashboard = ({ user, history, setActiveTab }) => {
+            const stats = [
+                { label: 'Total Analyses', value: history.length, icon: Activity, color: 'bg-blue-500' },
+                { label: 'Last Topic', value: history[0]?.topic || 'N/A', icon: BookOpen, color: 'bg-purple-500' },
+                { label: 'Avg Score', value: '88', icon: Award, color: 'bg-amber-500' }, // Placeholder logic
+            ];
+
+            return (
+                <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Welcome back, {user?.email?.split('@')[0] || 'Debater'}</h2>
+                            <p className="text-slate-500 dark:text-slate-400">Here's your recent activity and performance overview.</p>
+                        </div>
+                        <button onClick={() => setActiveTab('speech')} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium shadow-lg shadow-indigo-500/30 transition-all flex items-center">
+                            <Plus className="w-4 h-4 mr-2" /> New Analysis
+                        </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {stats.map((stat, i) => (
+                            <div key={i} className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 flex items-center space-x-4 hover:shadow-md transition-shadow">
+                                <div className={`p-3 rounded-xl ${stat.color} bg-opacity-10 text-${stat.color.split('-')[1]}-600 dark:text-${stat.color.split('-')[1]}-400`}>
+                                    <stat.icon className="w-6 h-6" />
+                                </div>
+                                <div>
+                                    <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">{stat.label}</p>
+                                    <p className="text-xl font-bold text-slate-900 dark:text-white truncate max-w-[150px]">{stat.value}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <div className="p-6 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                            <h3 className="font-bold text-slate-900 dark:text-white">Recent History</h3>
+                            <button onClick={() => setActiveTab('history')} className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline">View All</button>
+                        </div>
+                        <div className="divide-y divide-slate-100 dark:divide-slate-700">
+                            {history.length === 0 ? (
+                                <div className="p-8 text-center text-slate-500">No history yet. Start analyzing!</div>
+                            ) : (
+                                history.slice(0, 5).map(item => (
+                                    <div key={item.id} className="p-4 hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors flex items-center justify-between group">
+                                        <div className="flex items-center space-x-4">
+                                            <div className={`w-2 h-2 rounded-full ${item.type === 'speech' ? 'bg-blue-500' : item.type === 'board' ? 'bg-purple-500' : 'bg-green-500'}`}></div>
+                                            <div>
+                                                <p className="font-medium text-slate-900 dark:text-white">{item.topic}</p>
+                                                <p className="text-xs text-slate-500">{item.date} • {item.type}</p>
+                                            </div>
+                                        </div>
+                                        <ChevronDown className="w-4 h-4 text-slate-300 group-hover:text-slate-500 -rotate-90" />
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
         // --- App Component ---
         function App() {
             // State Management
-            const [activeTab, setActiveTab] = useState('speech'); 
+            const [activeTab, setActiveTab] = useState('dashboard'); 
             const [provider, setProvider] = useState('gemini'); // gemini, openai
             const [apiKey, setApiKey] = useState('');
             const [openaiKey, setOpenaiKey] = useState('');
@@ -815,6 +988,7 @@
 
                 try {
                     let generatedText = '';
+                    const rubric = rubrics[speechType] || rubrics['default'];
 
                     if (provider === 'gemini') {
                         let payloadParts = [];
@@ -831,7 +1005,36 @@
                              Do NOT generate an image, just a detailed text description.`;
                              payloadParts = [{ text: systemPrompt }];
                         } else if (activeTab === 'speech') {
-                            systemPrompt = `You are an expert Debate Adjudicator. Context: ${speechType}, ${side}, Topic: ${topic}. Evaluate the speech text. Provide Score (0-100), Summary, Strengths, Weaknesses, Advice. SPEECH: ${transcript}`;
+                            systemPrompt = `
+                                You are an expert Debate Adjudicator for ${speechType}. 
+                                Topic: ${topic}. Side: ${side}.
+                                
+                                Evaluate the following speech based on this rubric:
+                                ${rubric}
+
+                                Please provide the output in the following Markdown format:
+                                ## Executive Summary
+                                (Brief overview of performance)
+
+                                ## Scorecard
+                                | Category | Score (0-10) | Notes |
+                                | --- | --- | --- |
+                                (Fill based on rubric)
+                                | **Total** | **(Sum)** | |
+
+                                ## Key Argument Analysis
+                                (Bullet points on specific arguments made)
+
+                                ## Constructive Feedback
+                                - **Strengths**: ...
+                                - **Areas for Improvement**: ...
+
+                                ## Recommended Drills
+                                (Specific exercises to improve weak areas)
+
+                                SPEECH TEXT:
+                                ${transcript}
+                            `;
                             payloadParts = [{ text: systemPrompt }];
                         } else if (activeTab === 'board') {
                             systemPrompt = `Expert Debate Coach (Flowing). Evaluate board/flow. Context: ${speechType}, ${side}, Topic: ${topic}. Assess Organization, Grouping, Legibility, Suggestions. User Notes: ${boardDescription}`;
@@ -863,9 +1066,20 @@
                             }];
                         } else if (activeTab === 'speech') {
                             messages = [{
-                                role: "system", content: "You are an expert Debate Adjudicator."
+                                role: "system", content: `You are an expert Debate Adjudicator for ${speechType}. Use the following rubric: ${rubric}`
                             }, {
-                                role: "user", content: `Context: ${speechType}, ${side}, Topic: ${topic}. Evaluate this speech. Provide Score (0-100), Summary, Strengths, Weaknesses, Advice. SPEECH: ${transcript}`
+                                role: "user", content: `
+                                    Topic: ${topic}. Side: ${side}.
+                                    Evaluate this speech.
+                                    
+                                    Output Format:
+                                    ## Executive Summary
+                                    ## Scorecard (Table)
+                                    ## Key Argument Analysis
+                                    ## Constructive Feedback
+                                    ## Recommended Drills
+
+                                    SPEECH: ${transcript}`
                             }];
                         } else if (activeTab === 'board') {
                             const content = [
@@ -914,304 +1128,331 @@
 
             // Render UI
             return (
-                <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans selection:bg-indigo-100 dark:selection:bg-indigo-900 transition-colors duration-200">
-                    {/* Header */}
-                    <header className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10">
-                        <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
-                            <div className="flex items-center space-x-2">
-                                <div className="bg-indigo-600 p-2 rounded-lg">
-                                    <Gavel className="w-6 h-6 text-white" />
-                                </div>
-                                <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
-                                    Adjudicator AI
-                                </h1>
-                            </div>
-                            <div className="flex items-center text-sm text-slate-500 dark:text-slate-400">
-                                <div className="flex items-center mr-4 bg-slate-100 dark:bg-slate-700 rounded-full p-1">
-                                    <button onClick={() => setTheme('light')} className={`p-1.5 rounded-full transition-all ${theme === 'light' ? 'bg-white shadow text-yellow-500' : 'text-slate-400 hover:text-slate-600'}`} title="Light Mode"><Sun className="w-4 h-4" /></button>
-                                    <button onClick={() => setTheme('dark')} className={`p-1.5 rounded-full transition-all ${theme === 'dark' ? 'bg-slate-600 shadow text-indigo-300' : 'text-slate-400 hover:text-slate-600'}`} title="Dark Mode"><Moon className="w-4 h-4" /></button>
-                                    <button onClick={() => setTheme('forest')} className={`p-1.5 rounded-full transition-all ${theme === 'forest' ? 'bg-[#1c2321] shadow text-green-300 border border-green-800' : 'text-slate-400 hover:text-slate-600'}`} title="Forest Mode"><Leaf className="w-4 h-4" /></button>
-                                    <button onClick={() => setTheme('coffee')} className={`p-1.5 rounded-full transition-all ${theme === 'coffee' ? 'bg-[#2b2118] shadow text-orange-300 border border-orange-800' : 'text-slate-400 hover:text-slate-600'}`} title="Coffee Mode"><Coffee className="w-4 h-4" /></button>
-                                </div>
-                                {user && (
-                                    <div className="flex items-center mr-4">
-                                        <span className="hidden sm:inline mr-2 text-xs font-medium">{user.email}</span>
-                                        <button onClick={logout} className="p-2 hover:bg-red-100 dark:hover:bg-red-900/30 text-slate-400 hover:text-red-500 rounded-full transition-colors" title="Logout">
-                                            <LogOut className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                )}
-                                <button onClick={() => setShowHistory(true)} className="mr-2 p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-colors" aria-label="History">
-                                    <History className="w-5 h-5" />
-                                </button>
-                                <button onClick={() => setShowHelp(true)} className="mr-2 sm:mr-4 p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-colors" aria-label="Help">
-                                    <HelpCircle className="w-5 h-5" />
-                                </button>
-                                <span className="hidden sm:inline">Powered by Gemini</span>
-                                <Award className="w-4 h-4 ml-1" />
-                            </div>
-                        </div>
-                    </header>
+                <div className="flex h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans selection:bg-indigo-100 dark:selection:bg-indigo-900 transition-colors duration-200 overflow-hidden">
+                    {/* Sidebar */}
+                    <Sidebar 
+                        activeTab={activeTab} 
+                        setActiveTab={setActiveTab} 
+                        theme={theme} 
+                        setTheme={setTheme} 
+                        user={user} 
+                        logout={logout} 
+                        setShowLogin={setShowLogin}
+                    />
 
-                    <main className="max-w-5xl mx-auto px-4 py-8">
-                        {/* API Key */}
-                        <div className="mb-8 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
-                            <div className="bg-slate-100 dark:bg-slate-900/50 px-6 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center">
-                                <Settings className="w-4 h-4 mr-2 text-slate-500" />
-                                <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Configuration</h2>
-                            </div>
-                            <div className="p-6">
-                                <div className="mb-4">
-                                    <label className="block text-sm font-medium mb-2">AI Provider</label>
-                                    <div className="flex space-x-4">
-                                        <label className="flex items-center cursor-pointer">
-                                            <input type="radio" name="provider" value="gemini" checked={provider === 'gemini'} onChange={() => setProvider('gemini')} className="mr-2" />
-                                            <span className="text-sm">Google Gemini</span>
-                                        </label>
-                                        <label className="flex items-center cursor-pointer">
-                                            <input type="radio" name="provider" value="openai" checked={provider === 'openai'} onChange={() => setProvider('openai')} className="mr-2" />
-                                            <span className="text-sm">OpenAI (GPT-4o)</span>
-                                        </label>
-                                    </div>
+                    {/* Main Content */}
+                    <main className="flex-1 overflow-y-auto h-full relative">
+                        {/* Top Bar */}
+                        <header className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-20 px-6 py-3 flex items-center justify-between">
+                             <div className="flex items-center">
+                                <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-200 capitalize">
+                                    {activeTab === 'speech' ? 'Judge Text' : 
+                                     activeTab === 'board' ? 'Evaluate Board' : 
+                                     activeTab === 'listen' ? 'Live Coach' : 
+                                     activeTab}
+                                </h2>
+                             </div>
+                             <div className="flex items-center space-x-4">
+                                <div className="flex items-center bg-slate-100 dark:bg-slate-700 rounded-full p-1">
+                                    <button onClick={() => setTheme('light')} className={`p-1.5 rounded-full transition-all ${theme === 'light' ? 'bg-white shadow text-yellow-500' : 'text-slate-400 hover:text-slate-600'}`}><Sun className="w-4 h-4" /></button>
+                                    <button onClick={() => setTheme('dark')} className={`p-1.5 rounded-full transition-all ${theme === 'dark' ? 'bg-slate-600 shadow text-indigo-300' : 'text-slate-400 hover:text-slate-600'}`}><Moon className="w-4 h-4" /></button>
+                                    <button onClick={() => setTheme('forest')} className={`p-1.5 rounded-full transition-all ${theme === 'forest' ? 'bg-[#1c2321] shadow text-green-300 border border-green-800' : 'text-slate-400 hover:text-slate-600'}`}><Leaf className="w-4 h-4" /></button>
+                                    <button onClick={() => setTheme('coffee')} className={`p-1.5 rounded-full transition-all ${theme === 'coffee' ? 'bg-[#2b2118] shadow text-orange-300 border border-orange-800' : 'text-slate-400 hover:text-slate-600'}`}><Coffee className="w-4 h-4" /></button>
                                 </div>
-
-                                {provider === 'gemini' ? (
-                                    <div>
-                                        <label className="block text-sm font-medium mb-2">Gemini API Key</label>
-                                        <input type="password" placeholder="Paste your Gemini API key..." className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" value={apiKey} onChange={(e) => setApiKey(e.target.value)} />
-                                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
-                                            Need a key? <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-indigo-600 dark:text-indigo-400 hover:underline">Get a free Gemini API key here</a>.
-                                        </p>
+                                {user ? (
+                                    <div className="flex items-center">
+                                        <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold mr-2">
+                                            {user.email[0].toUpperCase()}
+                                        </div>
+                                        <button onClick={logout} className="text-slate-400 hover:text-red-500 transition-colors"><LogOut className="w-4 h-4" /></button>
                                     </div>
                                 ) : (
-                                    <div>
-                                        <label className="block text-sm font-medium mb-2">OpenAI API Key</label>
-                                        <input type="password" placeholder="Paste your OpenAI API key..." className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" value={openaiKey} onChange={(e) => setOpenaiKey(e.target.value)} />
-                                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
-                                            Need a key? <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer" className="text-indigo-600 dark:text-indigo-400 hover:underline">Get an OpenAI API key here</a>.
-                                        </p>
-                                    </div>
+                                    <button onClick={() => setShowLogin(true)} className="text-sm font-medium text-indigo-600 hover:text-indigo-700">Sign In</button>
                                 )}
-                            </div>
-                        </div>
+                             </div>
+                        </header>
 
-                        {/* Navigation */}
-                        <div className="flex space-x-2 mb-6 bg-slate-200 dark:bg-slate-800 p-1 rounded-lg w-fit overflow-x-auto">
-                            {[
-                                { id: 'speech', label: 'Judge Text', icon: Mic },
-                                { id: 'board', label: 'Evaluate Board', icon: Layout },
-                                { id: 'listen', label: 'Live Coach', icon: Activity }
-                            ].map(tab => (
-                                <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`flex items-center px-4 py-2 rounded-md text-sm font-medium transition-all whitespace-nowrap ${activeTab === tab.id ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'}`}>
-                                    <tab.icon className="w-4 h-4 mr-2" />
-                                    {tab.label}
-                                </button>
-                            ))}
-                        </div>
+                        <div className="p-6 max-w-7xl mx-auto">
+                            {activeTab === 'dashboard' && (
+                                <Dashboard 
+                                    user={user} 
+                                    history={history} 
+                                    setActiveTab={setActiveTab} 
+                                />
+                            )}
 
-                        <div className="grid md:grid-cols-3 gap-8">
-                            {/* Context Panel */}
-                            <div className="md:col-span-1 space-y-6">
-                                <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
-                                    <div className="flex items-center mb-4 text-indigo-600 dark:text-indigo-400">
-                                        <BookOpen className="w-5 h-5 mr-2" />
-                                        <h2 className="font-bold">Context</h2>
-                                    </div>
-                                    <div className="space-y-4">
-                                        <div>
-                                            <label className="block text-xs font-semibold text-slate-500 uppercase mb-1">Format</label>
-                                            <div className="relative">
-                                                <select className="w-full appearance-none bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100 py-2 px-3 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" value={speechType} onChange={(e) => setSpeechType(e.target.value)}>
-                                                    {speechTypes.map(t => <option key={t} value={t}>{t}</option>)}
-                                                </select>
-                                                <ChevronDown className="absolute right-3 top-3 w-4 h-4 text-slate-400 pointer-events-none" />
-                                            </div>
+                            {activeTab === 'settings' && (
+                                <div className="max-w-2xl mx-auto">
+                                    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+                                        <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+                                            <h3 className="text-lg font-semibold">Configuration</h3>
+                                            <p className="text-sm text-slate-500">Manage your API keys and preferences</p>
                                         </div>
-                                        <div>
-                                            <label className="block text-xs font-semibold text-slate-500 uppercase mb-1">Role</label>
-                                            <div className="relative">
-                                                <select className="w-full appearance-none bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100 py-2 px-3 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" value={side} onChange={(e) => setSide(e.target.value)}>
-                                                    {sides.map(s => <option key={s} value={s}>{s}</option>)}
-                                                </select>
-                                                <ChevronDown className="absolute right-3 top-3 w-4 h-4 text-slate-400 pointer-events-none" />
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label className="block text-xs font-semibold text-slate-500 uppercase mb-1">Topic</label>
-                                            <input type="text" placeholder="Resolved: ..." className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100 py-2 px-3 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" value={topic} onChange={(e) => setTopic(e.target.value)} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Main Panel */}
-                            <div className="md:col-span-2 space-y-6">
-                                <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col min-h-[24rem]">
-                                    <div className="px-6 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between bg-slate-50 dark:bg-slate-900/50 rounded-t-xl">
-                                        <div className="flex items-center text-slate-700 dark:text-slate-300 font-semibold">
-                                            {activeTab === 'speech' && <><Mic className="w-4 h-4 mr-2" /> Transcript Input</>}
-                                            {activeTab === 'board' && <><ImageIcon className="w-4 h-4 mr-2" /> Board Upload</>}
-                                            {activeTab === 'listen' && <><Activity className="w-4 h-4 mr-2" /> Live Audio</>}
-                                        </div>
-                                    </div>
-
-                                    <div className="flex-1 p-6">
-                                        {activeTab === 'speech' && (
-                                            <textarea className="w-full h-full min-h-[200px] bg-transparent resize-none outline-none font-mono text-sm" placeholder="Paste speech text here..." value={transcript} onChange={(e) => setTranscript(e.target.value)} />
-                                        )}
-
-                                        {activeTab === 'board' && (
-                                            <div className="space-y-4 flex flex-col h-full">
-                                                {boardImages.length === 0 ? (
-                                                    <div className="border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-lg p-8 text-center hover:bg-slate-50 dark:hover:bg-slate-900/50 cursor-pointer" onClick={() => fileInputRef.current?.click()}>
-                                                        <Upload className="w-10 h-10 text-slate-400 mb-3 mx-auto" />
-                                                        <p className="text-sm text-slate-500">Click to upload Board Images</p>
+                                        <div className="p-6 space-y-6">
+                                            <div>
+                                                <label className="block text-sm font-medium mb-2">AI Provider</label>
+                                                <div className="flex space-x-4 mb-4">
+                                                    <label className="flex items-center cursor-pointer p-3 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors flex-1">
+                                                        <input type="radio" name="provider" value="gemini" checked={provider === 'gemini'} onChange={() => setProvider('gemini')} className="mr-3" />
+                                                        <span className="font-medium">Google Gemini</span>
+                                                    </label>
+                                                    <label className="flex items-center cursor-pointer p-3 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors flex-1">
+                                                        <input type="radio" name="provider" value="openai" checked={provider === 'openai'} onChange={() => setProvider('openai')} className="mr-3" />
+                                                        <span className="font-medium">OpenAI (GPT-4o)</span>
+                                                    </label>
+                                                </div>
+                                                
+                                                {provider === 'gemini' ? (
+                                                    <div>
+                                                        <label className="block text-sm font-medium mb-2">Gemini API Key</label>
+                                                        <input type="password" placeholder="Paste your Gemini API key..." className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" value={apiKey} onChange={(e) => setApiKey(e.target.value)} />
                                                     </div>
                                                 ) : (
-                                                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                                                        {boardImages.map((img, idx) => (
-                                                            <div key={img.id} className="relative border border-slate-200 dark:border-slate-700 rounded-lg p-1">
-                                                                <div className="absolute top-0 left-0 px-2 py-1 text-xs font-semibold bg-slate-100 dark:bg-slate-900 rounded-br-lg">Board {idx + 1}</div>
-                                                                <img src={img.url} alt="" className="w-full h-24 object-cover rounded" />
-                                                                <button onClick={() => removeImage(img.id)} className="absolute -top-2 -right-2 bg-red-500 text-white p-1 rounded-full"><X className="w-3 h-3" /></button>
-                                                            </div>
-                                                        ))}
-                                                        <div onClick={() => fileInputRef.current?.click()} className="flex flex-col items-center justify-center h-26 border-2 border-dashed border-slate-300 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-900/50">
-                                                            <Plus className="w-6 h-6 text-slate-400" />
-                                                        </div>
-                                                    </div>
-                                                )}
-                                                <input type="file" multiple ref={fileInputRef} className="hidden" accept="image/*" onChange={handleImageUpload} />
-                                                <textarea className="w-full h-32 p-3 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 resize-none outline-none text-sm" placeholder="Describe board strategy..." value={boardDescription} onChange={(e) => setBoardDescription(e.target.value)} />
-                                                <div className="flex justify-end">
-                                                    <button onClick={() => handleAnalyze(true)} className="text-xs flex items-center text-indigo-600 dark:text-indigo-400 hover:underline">
-                                                        <Lightbulb className="w-3 h-3 mr-1" /> Need ideas? Generate a board strategy
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {activeTab === 'listen' && (
-                                            <div className="h-full flex flex-col items-center justify-center space-y-6 py-4">
-                                                {/* Speedrun Timer & Roadmap */}
-                                                <div className="w-full max-w-md bg-slate-100 dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-700">
-                                                    {/* Roadmap */}
-                                                    <div className="flex space-x-1 mb-4 overflow-x-auto pb-2 scrollbar-hide">
-                                                        {(speechTimes[speechType] || speechTimes['default']).map((s, idx) => (
-                                                            <button 
-                                                                key={s.name}
-                                                                onClick={() => {
-                                                                    setSelectedSection(s);
-                                                                    setRecordingTime(0);
-                                                                    setIsRecording(false);
-                                                                    setAudioData(null);
-                                                                }}
-                                                                className={`flex-shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap ${
-                                                                    selectedSection?.name === s.name 
-                                                                        ? 'bg-indigo-600 text-white shadow-md' 
-                                                                        : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-indigo-300'
-                                                                }`}
-                                                            >
-                                                                {s.name}
-                                                                <span className="ml-1.5 opacity-70 text-[10px]">{formatTime(s.time)}</span>
-                                                            </button>
-                                                        ))}
-                                                    </div>
-
-                                                    <div className="flex justify-between items-center mb-2">
-                                                        <div className="flex flex-col">
-                                                            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Current Section</span>
-                                                            <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">{selectedSection?.name}</span>
-                                                        </div>
-                                                        <div className="text-right">
-                                                            <span className={`text-xl font-mono font-bold ${recordingTime > (selectedSection?.time || 0) ? 'text-red-500' : 'text-slate-700 dark:text-slate-200'}`}>
-                                                                {formatTime(recordingTime)}
-                                                            </span>
-                                                            <span className="text-xs text-slate-400 block">/ {formatTime(selectedSection?.time || 0)}</span>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div className="relative h-3 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-                                                        <div 
-                                                            className={`absolute top-0 left-0 h-full transition-all duration-1000 ease-linear ${
-                                                                recordingTime > (selectedSection?.time || 0) 
-                                                                    ? 'bg-red-500' 
-                                                                    : recordingTime > ((selectedSection?.time || 0) * 0.8) 
-                                                                        ? 'bg-amber-500' 
-                                                                        : 'bg-indigo-500'
-                                                            }`}
-                                                            style={{ width: `${Math.min((recordingTime / (selectedSection?.time || 1)) * 100, 100)}%` }}
-                                                        ></div>
-                                                    </div>
-                                                </div>
-
-                                                {/* Visualizer & Controls */}
-                                                <div className="flex flex-col items-center space-y-4">
-                                                    <div className="h-24 flex items-center justify-center w-full">
-                                                        {isRecording ? (
-                                                            <AudioVisualizer analyser={analyser} isRecording={isRecording} />
-                                                        ) : (
-                                                            <div className="text-center">
-                                                                <h3 className="text-2xl font-mono font-bold text-slate-700 dark:text-slate-200">{formatTime(recordingTime)}</h3>
-                                                                <p className="text-sm text-slate-500 mt-2">{audioData ? 'Ready for analysis' : 'Ready to record'}</p>
-                                                            </div>
-                                                        )}
-                                                    </div>
-
-                                                    <div className="relative group">
-                                                        {isRecording && <div className="absolute inset-0 bg-red-500 rounded-full animate-ping opacity-20"></div>}
-                                                        {!isRecording ? (
-                                                            <button onClick={startRecording} className="relative z-10 w-20 h-20 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full flex items-center justify-center shadow-lg transform hover:scale-105 transition-all">
-                                                                <Mic className="w-8 h-8" />
-                                                            </button>
-                                                        ) : (
-                                                            <button onClick={stopRecording} className="relative z-10 w-20 h-20 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg transform hover:scale-105 transition-all">
-                                                                <Square className="w-8 h-8 fill-current" />
-                                                            </button>
-                                                        )}
-                                                    </div>
-                                                    
-                                                    {/* Tone Indicator */}
-                                                    <ToneIndicator analyser={analyser} isRecording={isRecording} />
-                                                </div>
-
-                                                {audioData && !isRecording && (
-                                                    <div className="flex items-center space-x-4 animate-in fade-in slide-in-from-bottom-4">
-                                                        <div className="flex items-center px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-full border border-green-200 dark:border-green-800 text-sm font-medium">
-                                                            <CheckCircle2 className="w-4 h-4 mr-2" /> Saved
-                                                        </div>
-                                                        <button onClick={resetAudio} className="text-sm text-slate-500 hover:text-slate-700 underline">Retry</button>
+                                                    <div>
+                                                        <label className="block text-sm font-medium mb-2">OpenAI API Key</label>
+                                                        <input type="password" placeholder="Paste your OpenAI API key..." className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" value={openaiKey} onChange={(e) => setOpenaiKey(e.target.value)} />
                                                     </div>
                                                 )}
                                             </div>
-                                        )}
-                                    </div>
-
-                                    <div className="p-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 rounded-b-xl flex justify-end">
-                                        <button onClick={() => handleAnalyze(false)} disabled={loading} className={`flex items-center px-6 py-2.5 rounded-lg font-medium text-white shadow-md transition-all ${loading ? 'bg-slate-400 cursor-not-allowed' : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700'}`}>
-                                            {loading ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Analyzing...</> : <><Send className="w-4 h-4 mr-2" /> Analyze</>}
-                                        </button>
+                                        </div>
                                     </div>
                                 </div>
+                            )}
 
-                                {error && (
-                                    <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 p-4 rounded-lg flex items-center">
-                                        <AlertCircle className="w-5 h-5 mr-3 flex-shrink-0" /> {error}
+                            {activeTab === 'history' && (
+                                <div className="space-y-4">
+                                    <div className="flex justify-between items-center mb-4">
+                                        <h3 className="text-lg font-semibold">Analysis History</h3>
+                                        {history.length > 0 && (
+                                            <button onClick={clearHistory} className="text-red-500 hover:text-red-700 text-sm flex items-center px-3 py-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+                                                <Trash2 className="w-4 h-4 mr-1" /> Clear All
+                                            </button>
+                                        )}
                                     </div>
-                                )}
+                                    {history.length === 0 ? (
+                                        <div className="text-center py-12 text-slate-500">No history yet. Start analyzing!</div>
+                                    ) : (
+                                        history.map((item) => (
+                                            <div key={item.id} className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow cursor-pointer" onClick={() => { setResult(item.result); setActiveTab('speech'); }}>
+                                                <div className="flex justify-between items-start mb-2">
+                                                    <span className="px-2 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-xs rounded-full font-medium uppercase">{item.type}</span>
+                                                    <span className="text-xs text-slate-400">{new Date(item.timestamp).toLocaleString()}</span>
+                                                </div>
+                                                <p className="text-sm text-slate-600 dark:text-slate-300 line-clamp-2">{item.preview}</p>
+                                            </div>
+                                        ))
+                                    )}
+                                </div>
+                            )}
 
-                                {result && (
-                                    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-indigo-100 dark:border-slate-700 overflow-hidden animate-in fade-in slide-in-from-bottom-4">
-                                        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4 flex items-center text-white">
-                                            <CheckCircle2 className="w-6 h-6 mr-3" />
-                                            <h2 className="font-bold text-lg">Result</h2>
-                                        </div>
-                                        <div className="p-8 bg-slate-50/50 dark:bg-slate-800">
-                                            <MarkdownRenderer content={result} />
+                            {['speech', 'board', 'listen'].includes(activeTab) && (
+                                <div className="grid lg:grid-cols-3 gap-8 animate-in fade-in slide-in-from-bottom-4">
+                                    {/* Context Panel */}
+                                    <div className="lg:col-span-1 space-y-6">
+                                        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 sticky top-24">
+                                            <div className="flex items-center mb-6 text-indigo-600 dark:text-indigo-400">
+                                                <BookOpen className="w-5 h-5 mr-2" />
+                                                <h2 className="font-bold text-lg">Debate Context</h2>
+                                            </div>
+                                            <div className="space-y-5">
+                                                <div>
+                                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Format</label>
+                                                    <div className="relative">
+                                                        <select className="w-full appearance-none bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 py-2.5 px-4 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition-all" value={speechType} onChange={(e) => setSpeechType(e.target.value)}>
+                                                            {speechTypes.map(t => <option key={t} value={t}>{t}</option>)}
+                                                        </select>
+                                                        <ChevronDown className="absolute right-3 top-3.5 w-4 h-4 text-slate-400 pointer-events-none" />
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Role</label>
+                                                    <div className="relative">
+                                                        <select className="w-full appearance-none bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 py-2.5 px-4 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition-all" value={side} onChange={(e) => setSide(e.target.value)}>
+                                                            {sides.map(s => <option key={s} value={s}>{s}</option>)}
+                                                        </select>
+                                                        <ChevronDown className="absolute right-3 top-3.5 w-4 h-4 text-slate-400 pointer-events-none" />
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Topic</label>
+                                                    <textarea rows="3" placeholder="Resolved: The United States Federal Government should..." className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 py-2 px-3 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none resize-none text-sm" value={topic} onChange={(e) => setTopic(e.target.value)} />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                )}
-                            </div>
+
+                                    {/* Main Tool Panel */}
+                                    <div className="lg:col-span-2 space-y-6">
+                                        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col min-h-[24rem]">
+                                            <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50 rounded-t-xl">
+                                                <div className="flex items-center text-slate-700 dark:text-slate-300 font-semibold">
+                                                    {activeTab === 'speech' && <><Mic className="w-4 h-4 mr-2" /> Transcript Input</>}
+                                                    {activeTab === 'board' && <><ImageIcon className="w-4 h-4 mr-2" /> Board Upload</>}
+                                                    {activeTab === 'listen' && <><Activity className="w-4 h-4 mr-2" /> Live Audio</>}
+                                                </div>
+                                            </div>
+
+                                            <div className="flex-1 p-6">
+                                                {activeTab === 'speech' && (
+                                                    <textarea className="w-full h-full min-h-[200px] bg-transparent resize-none outline-none font-mono text-sm leading-relaxed" placeholder="Paste speech text here..." value={transcript} onChange={(e) => setTranscript(e.target.value)} />
+                                                )}
+
+                                                {activeTab === 'board' && (
+                                                    <div className="space-y-4 flex flex-col h-full">
+                                                        {boardImages.length === 0 ? (
+                                                            <div className="border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-lg p-8 text-center hover:bg-slate-50 dark:hover:bg-slate-900/50 cursor-pointer transition-colors" onClick={() => fileInputRef.current?.click()}>
+                                                                <Upload className="w-10 h-10 text-slate-400 mb-3 mx-auto" />
+                                                                <p className="text-sm text-slate-500">Click to upload Board Images</p>
+                                                            </div>
+                                                        ) : (
+                                                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                                                                {boardImages.map((img, idx) => (
+                                                                    <div key={img.id} className="relative border border-slate-200 dark:border-slate-700 rounded-lg p-1 group">
+                                                                        <div className="absolute top-0 left-0 px-2 py-1 text-xs font-semibold bg-slate-100 dark:bg-slate-900 rounded-br-lg z-10">Board {idx + 1}</div>
+                                                                        <img src={img.url} alt="" className="w-full h-24 object-cover rounded" />
+                                                                        <button onClick={() => removeImage(img.id)} className="absolute -top-2 -right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"><X className="w-3 h-3" /></button>
+                                                                    </div>
+                                                                ))}
+                                                                <div onClick={() => fileInputRef.current?.click()} className="flex flex-col items-center justify-center h-26 border-2 border-dashed border-slate-300 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors">
+                                                                    <Plus className="w-6 h-6 text-slate-400" />
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                        <input type="file" multiple ref={fileInputRef} className="hidden" accept="image/*" onChange={handleImageUpload} />
+                                                        <textarea className="w-full h-32 p-3 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 resize-none outline-none text-sm focus:ring-2 focus:ring-indigo-500 transition-all" placeholder="Describe board strategy..." value={boardDescription} onChange={(e) => setBoardDescription(e.target.value)} />
+                                                        <div className="flex justify-end">
+                                                            <button onClick={() => handleAnalyze(true)} className="text-xs flex items-center text-indigo-600 dark:text-indigo-400 hover:underline">
+                                                                <Lightbulb className="w-3 h-3 mr-1" /> Need ideas? Generate a board strategy
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {activeTab === 'listen' && (
+                                                    <div className="h-full flex flex-col items-center justify-center space-y-8 py-4">
+                                                        <div className="w-full max-w-md bg-slate-100 dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-inner">
+                                                            <div className="flex space-x-2 mb-6 overflow-x-auto pb-2 scrollbar-hide">
+                                                                {(speechTimes[speechType] || speechTimes['default']).map((s, idx) => (
+                                                                    <button 
+                                                                        key={s.name}
+                                                                        onClick={() => {
+                                                                            setSelectedSection(s);
+                                                                            setRecordingTime(0);
+                                                                            setIsRecording(false);
+                                                                            setAudioData(null);
+                                                                        }}
+                                                                        className={`flex-shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap ${
+                                                                            selectedSection?.name === s.name 
+                                                                                ? 'bg-indigo-600 text-white shadow-md ring-2 ring-indigo-200 dark:ring-indigo-900' 
+                                                                                : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-indigo-300'
+                                                                        }`}
+                                                                    >
+                                                                        {s.name}
+                                                                        <span className="ml-1.5 opacity-70 text-[10px]">{formatTime(s.time)}</span>
+                                                                    </button>
+                                                                ))}
+                                                            </div>
+
+                                                            <div className="flex justify-between items-end mb-3">
+                                                                <div className="flex flex-col">
+                                                                    <span className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Current Section</span>
+                                                                    <span className="text-xl font-bold text-indigo-600 dark:text-indigo-400">{selectedSection?.name}</span>
+                                                                </div>
+                                                                <div className="text-right">
+                                                                    <span className={`text-3xl font-mono font-bold ${recordingTime > (selectedSection?.time || 0) ? 'text-red-500' : 'text-slate-700 dark:text-slate-200'}`}>
+                                                                        {formatTime(recordingTime)}
+                                                                    </span>
+                                                                    <span className="text-xs text-slate-400 block mt-1">Target: {formatTime(selectedSection?.time || 0)}</span>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div className="relative h-4 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden shadow-inner">
+                                                                <div 
+                                                                    className={`absolute top-0 left-0 h-full transition-all duration-1000 ease-linear ${
+                                                                        recordingTime > (selectedSection?.time || 0) 
+                                                                            ? 'bg-red-500' 
+                                                                            : recordingTime > ((selectedSection?.time || 0) * 0.8) 
+                                                                                ? 'bg-amber-500' 
+                                                                                : 'bg-indigo-500'
+                                                                    }`}
+                                                                    style={{ width: `${Math.min((recordingTime / (selectedSection?.time || 1)) * 100, 100)}%` }}
+                                                                ></div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="flex flex-col items-center space-y-6 w-full">
+                                                            <div className="h-32 flex items-center justify-center w-full bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden relative">
+                                                                {isRecording ? (
+                                                                    <AudioVisualizer analyser={analyser} isRecording={isRecording} />
+                                                                ) : (
+                                                                    <div className="text-center z-10">
+                                                                        <p className="text-sm text-slate-500 font-medium">{audioData ? 'Recording saved. Ready for analysis.' : 'Press microphone to start recording'}</p>
+                                                                    </div>
+                                                                )}
+                                                            </div>
+
+                                                            <div className="flex items-center justify-center space-x-8">
+                                                                <div className="relative group">
+                                                                    {isRecording && <div className="absolute inset-0 bg-red-500 rounded-full animate-ping opacity-20"></div>}
+                                                                    {!isRecording ? (
+                                                                        <button onClick={startRecording} className="relative z-10 w-16 h-16 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full flex items-center justify-center shadow-lg shadow-indigo-500/30 transform hover:scale-105 transition-all">
+                                                                            <Mic className="w-7 h-7" />
+                                                                        </button>
+                                                                    ) : (
+                                                                        <button onClick={stopRecording} className="relative z-10 w-16 h-16 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg shadow-red-500/30 transform hover:scale-105 transition-all">
+                                                                            <Square className="w-7 h-7 fill-current" />
+                                                                        </button>
+                                                                    )}
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div className="w-full max-w-md">
+                                                                <ToneIndicator analyser={analyser} isRecording={isRecording} />
+                                                            </div>
+                                                        </div>
+
+                                                        {audioData && !isRecording && (
+                                                            <div className="flex items-center space-x-4 animate-in fade-in slide-in-from-bottom-4">
+                                                                <div className="flex items-center px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-full border border-green-200 dark:border-green-800 text-sm font-medium">
+                                                                    <CheckCircle2 className="w-4 h-4 mr-2" /> Audio Captured
+                                                                </div>
+                                                                <button onClick={resetAudio} className="text-sm text-slate-500 hover:text-slate-700 underline">Discard & Retry</button>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            <div className="p-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 rounded-b-xl flex justify-end">
+                                                <button onClick={() => handleAnalyze(false)} disabled={loading} className={`flex items-center px-6 py-2.5 rounded-lg font-medium text-white shadow-md transition-all ${loading ? 'bg-slate-400 cursor-not-allowed' : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-indigo-500/25'}`}>
+                                                    {loading ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Analyzing...</> : <><Send className="w-4 h-4 mr-2" /> Analyze</>}
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        {error && (
+                                            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 p-4 rounded-lg flex items-center animate-in fade-in">
+                                                <AlertCircle className="w-5 h-5 mr-3 flex-shrink-0" /> {error}
+                                            </div>
+                                        )}
+
+                                        {result && (
+                                            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-indigo-100 dark:border-slate-700 overflow-hidden animate-in fade-in slide-in-from-bottom-4">
+                                                <div className="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4 flex items-center text-white justify-between">
+                                                    <div className="flex items-center">
+                                                        <CheckCircle2 className="w-6 h-6 mr-3" />
+                                                        <h2 className="font-bold text-lg">Analysis Result</h2>
+                                                    </div>
+                                                    <button onClick={() => setResult(null)} className="text-white/80 hover:text-white"><X className="w-5 h-5" /></button>
+                                                </div>
+                                                <div className="p-8 bg-slate-50/50 dark:bg-slate-800">
+                                                    <MarkdownRenderer content={result} />
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </main>
 
