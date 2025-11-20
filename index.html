@@ -314,26 +314,71 @@
                 { name: 'Body 3', time: 150 },
                 { name: 'Conclusion', time: 60 }
             ],
-            'Dramatic Interpretation (DI)': [{ name: 'Performance', time: 600 }],
-            'Humorous Interpretation (HI)': [{ name: 'Performance', time: 600 }],
-            'Duo Interpretation': [{ name: 'Performance', time: 600 }],
-            'Program Oral Interpretation (POI)': [{ name: 'Performance', time: 600 }],
-            'Impromptu': [{ name: 'Speech', time: 300 }], // Usually 7 min total, 5 speaking
-            'Extemporaneous Commentary': [{ name: 'Speech', time: 420 }], // 7 min
-            'Expository': [{ name: 'Speech', time: 300 }], // 5 min
-            'Storytelling': [{ name: 'Performance', time: 300 }], // 5 min
-            'Prose/Poetry': [{ name: 'Performance', time: 300 }], // 5 min
+            'Dramatic Interpretation (DI)': [
+                { name: 'Teaser', time: 90 },
+                { name: 'Intro', time: 45 },
+                { name: 'Performance', time: 465 }
+            ],
+            'Humorous Interpretation (HI)': [
+                { name: 'Teaser', time: 90 },
+                { name: 'Intro', time: 45 },
+                { name: 'Performance', time: 465 }
+            ],
+            'Duo Interpretation': [
+                { name: 'Teaser', time: 90 },
+                { name: 'Intro', time: 45 },
+                { name: 'Performance', time: 465 }
+            ],
+            'Program Oral Interpretation (POI)': [
+                { name: 'Teaser', time: 90 },
+                { name: 'Intro', time: 45 },
+                { name: 'Performance', time: 465 }
+            ],
+            'Impromptu': [
+                { name: 'Prep', time: 120 },
+                { name: 'Speech', time: 300 }
+            ],
+            'Extemporaneous Commentary': [
+                { name: 'Intro', time: 60 },
+                { name: 'Points', time: 300 },
+                { name: 'Conclusion', time: 60 }
+            ],
+            'Expository': [
+                { name: 'Intro', time: 45 },
+                { name: 'Body', time: 210 },
+                { name: 'Conclusion', time: 45 }
+            ],
+            'Storytelling': [
+                { name: 'Intro', time: 30 },
+                { name: 'Story', time: 270 }
+            ],
+            'Prose/Poetry': [
+                { name: 'Intro', time: 30 },
+                { name: 'Reading', time: 270 }
+            ],
             'Parliamentary (British)': [
-                { name: 'Constructive', time: 420 }, // 7 min
-                { name: 'Rebuttal', time: 240 } // 4 min
+                { name: 'Constructive', time: 420 },
+                { name: 'Rebuttal', time: 240 }
             ],
             'Parliamentary (Asian)': [
-                { name: 'Constructive', time: 420 }, // 7 min
-                { name: 'Reply', time: 240 } // 4 min
+                { name: 'Constructive', time: 420 },
+                { name: 'Reply', time: 240 }
             ],
-            'Model UN Speech': [{ name: 'Speech', time: 90 }], // 1.5 min typical
-            'After Dinner Speaking': [{ name: 'Speech', time: 360 }], // 6 min
-            'Toast/Ceremonial': [{ name: 'Speech', time: 180 }], // 3 min
+            'Model UN Speech': [
+                { name: 'Intro', time: 15 },
+                { name: 'Points', time: 60 },
+                { name: 'Call to Action', time: 15 }
+            ],
+            'After Dinner Speaking': [
+                { name: 'Intro', time: 60 },
+                { name: 'Body (Humor)', time: 240 },
+                { name: 'Conclusion', time: 60 }
+            ],
+            'Toast/Ceremonial': [
+                { name: 'Intro', time: 30 },
+                { name: 'Body', time: 120 },
+                { name: 'Toast', time: 30 }
+            ],
             'default': [
                 { name: 'Speech', time: 600 }
             ]
