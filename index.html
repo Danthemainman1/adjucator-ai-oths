@@ -596,6 +596,106 @@
                 - **Parliamentary Procedure (15%)**: Knowledge of rules.
                 - **Questioning (15%)**: Engagement in chamber.
             `,
+            'Big Questions Debate': `
+                - **Argumentation (40%)**: Logic, evidence, and analysis.
+                - **Affirmative/Negative Burden (30%)**: Fulfilling side obligations.
+                - **Delivery (20%)**: Persuasion and clarity.
+                - **Questioning (10%)**: Effectiveness in Q&A.
+            `,
+            'United States Extemp (USX)': `
+                - **Analysis (40%)**: Depth of answer to the question.
+                - **Sourcing (20%)**: Variety and quality of sources.
+                - **Organization (20%)**: Structure (Intro, Points, Conclusion).
+                - **Delivery (20%)**: Fluency, tone, and poise.
+            `,
+            'International Extemp (IX)': `
+                - **Analysis (40%)**: Depth of answer to the question.
+                - **Sourcing (20%)**: Variety and quality of sources.
+                - **Organization (20%)**: Structure (Intro, Points, Conclusion).
+                - **Delivery (20%)**: Fluency, tone, and poise.
+            `,
+            'Original Oratory (OO)': `
+                - **Topic/Content (40%)**: Originality, significance, and depth.
+                - **Delivery (40%)**: Vocal variety, movement, and emotion.
+                - **Structure (20%)**: Flow and organization.
+            `,
+            'Informative Speaking (INFO)': `
+                - **Topic/Content (40%)**: Educational value and originality.
+                - **Visual Aids (20%)**: Quality and integration of props/boards.
+                - **Delivery (30%)**: Engagement and clarity.
+                - **Structure (10%)**: Organization.
+            `,
+            'Dramatic Interpretation (DI)': `
+                - **Characterization (40%)**: Depth and believability.
+                - **Cutting (30%)**: Story arc and coherence.
+                - **Delivery (30%)**: Vocal and physical control.
+            `,
+            'Humorous Interpretation (HI)': `
+                - **Characterization (40%)**: Distinct voices and physical comedy.
+                - **Cutting (30%)**: Story arc and humor.
+                - **Delivery (30%)**: Timing and execution.
+            `,
+            'Duo Interpretation': `
+                - **Interaction (30%)**: Chemistry and timing (without touching).
+                - **Characterization (30%)**: Distinct roles.
+                - **Cutting (20%)**: Story coherence.
+                - **Blocking (20%)**: Creative use of space.
+            `,
+            'Program Oral Interpretation (POI)': `
+                - **Programming (40%)**: Weaving of different genres/pieces.
+                - **Theme (30%)**: Coherence of the central argument.
+                - **Delivery (30%)**: Character differentiation and binder technique.
+            `,
+            'Impromptu': `
+                - **Organization (40%)**: Clear structure (Intro, 2-3 points, Conclusion).
+                - **Analysis (40%)**: Depth of interpretation of the prompt.
+                - **Delivery (20%)**: Fluency and poise.
+            `,
+            'Extemporaneous Commentary': `
+                - **Analysis (50%)**: Insight into the topic.
+                - **Delivery (30%)**: Conversational yet professional style.
+                - **Structure (20%)**: Clear organization.
+            `,
+            'Expository': `
+                - **Content (50%)**: Informative and well-researched.
+                - **Delivery (30%)**: Engaging and clear.
+                - **Organization (20%)**: Logical flow.
+            `,
+            'Storytelling': `
+                - **Narrative (40%)**: Plot and pacing.
+                - **Characterization (30%)**: Voices and physicalization.
+                - **Engagement (30%)**: Connection with audience.
+            `,
+            'Prose/Poetry': `
+                - **Interpretation (40%)**: Understanding of the text.
+                - **Delivery (40%)**: Vocal variety and emotion.
+                - **Binder Technique (20%)**: Professional use of the book.
+            `,
+            'Parliamentary (British)': `
+                - **Matter (40%)**: Content and logic.
+                - **Manner (40%)**: Style and delivery.
+                - **Method (20%)**: Structure and responsiveness.
+            `,
+            'Parliamentary (Asian)': `
+                - **Matter (40%)**: Content and logic.
+                - **Manner (40%)**: Style and delivery.
+                - **Method (20%)**: Structure and responsiveness.
+            `,
+            'Model UN Speech': `
+                - **Diplomacy (30%)**: Tone and adherence to policy.
+                - **Content (40%)**: Substance and solutions.
+                - **Rhetoric (30%)**: Persuasiveness.
+            `,
+            'After Dinner Speaking': `
+                - **Humor (40%)**: Effectiveness of jokes.
+                - **Message (30%)**: Underlying serious point.
+                - **Delivery (30%)**: Timing and style.
+            `,
+            'Toast/Ceremonial': `
+                - **Sentiment (40%)**: Appropriateness and emotion.
+                - **Brevity (20%)**: Concise and focused.
+                - **Delivery (40%)**: Connection with audience.
+            `,
             'default': `
                 - **Argumentation (40%)**: Logic, evidence, structure.
                 - **Delivery (30%)**: Tone, pace, clarity.
@@ -1465,10 +1565,30 @@
                 const [isGraceBRunning, setIsGraceBRunning] = useState(false);
                 const graceBInterval = useRef(null);
 
+                // Event Configuration
+                const eventSettings = {
+                    'Public Forum (PF)': { type: 'debate', showPrep: true, prepTime: 180, teamA: 'Pro', teamB: 'Con' },
+                    'Lincoln-Douglas (LD)': { type: 'debate', showPrep: true, prepTime: 240, teamA: 'Aff', teamB: 'Neg' },
+                    'Policy Debate (CX)': { type: 'debate', showPrep: true, prepTime: 300, teamA: 'Aff', teamB: 'Neg' },
+                    'Big Questions Debate': { type: 'debate', showPrep: true, prepTime: 180, teamA: 'Aff', teamB: 'Neg' },
+                    'World Schools Debate': { type: 'debate', showPrep: false, teamA: 'Prop', teamB: 'Opp' },
+                    'Parliamentary (British)': { type: 'debate', showPrep: false, teamA: 'Gov', teamB: 'Opp' },
+                    'Parliamentary (Asian)': { type: 'debate', showPrep: false, teamA: 'Gov', teamB: 'Opp' },
+                    'Congressional Debate': { type: 'congress', showPrep: false },
+                    'default': { type: 'speech', showPrep: false, teamA: 'Team A', teamB: 'Team B' }
+                };
+
+                const currentSettings = eventSettings[format] || eventSettings['default'];
+
                 useEffect(() => {
                     if (speechTimes[format]) {
                         setActiveSpeech(speechTimes[format][0]);
                         setMainTimer(speechTimes[format][0].time);
+                    }
+                    // Reset prep timers based on format
+                    if (currentSettings.showPrep) {
+                        setPrepA(currentSettings.prepTime);
+                        setPrepB(currentSettings.prepTime);
                     }
                 }, [format]);
 
@@ -1545,7 +1665,7 @@
                                     <h3 className="font-bold text-lg text-slate-800 dark:text-slate-200 flex items-center">
                                         <Mic className="w-5 h-5 mr-2 text-indigo-500" /> Speech Timer
                                     </h3>
-                                    <div className="flex space-x-2">
+                                    <div className="flex space-x-2 flex-wrap gap-y-2">
                                         {speechTimes[format]?.map((s, idx) => (
                                             <button 
                                                 key={idx}
@@ -1582,70 +1702,74 @@
                                 </div>
                             </div>
 
-                            {/* Prep & Grace Timers */}
-                            <div className="space-y-6">
-                                {/* Prep Time */}
-                                <div className="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                                    <h3 className="font-bold text-sm text-slate-500 uppercase tracking-wider mb-4 flex items-center">
-                                        <History className="w-4 h-4 mr-2" /> Prep Time
-                                    </h3>
-                                    <div className="space-y-4">
-                                        {/* Team A */}
-                                        <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
-                                            <div className="flex justify-between items-center mb-2">
-                                                <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">Aff / Pro / Team A</span>
-                                                <span className={`font-mono font-bold text-xl ${prepA < 30 ? 'text-red-500' : 'text-slate-800 dark:text-slate-200'}`}>{formatTime(prepA)}</span>
-                                            </div>
-                                            <div className="flex space-x-2">
-                                                <button onClick={() => toggleTimer(isPrepARunning, setIsPrepARunning, prepAInterval, setPrepA)} className={`flex-1 py-1 text-xs rounded font-medium text-white ${isPrepARunning ? 'bg-amber-500' : 'bg-indigo-500 hover:bg-indigo-600'}`}>{isPrepARunning ? 'Pause' : 'Start'}</button>
-                                                <button onClick={() => resetTimer(setPrepA, 180, setIsPrepARunning, prepAInterval)} className="px-3 py-1 text-xs rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300">Reset</button>
+                            {/* Prep & Grace Timers - Only show for Debate formats */}
+                            {currentSettings.type === 'debate' && (
+                                <div className="space-y-6">
+                                    {/* Prep Time - Only if format has prep */}
+                                    {currentSettings.showPrep && (
+                                        <div className="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                                            <h3 className="font-bold text-sm text-slate-500 uppercase tracking-wider mb-4 flex items-center">
+                                                <History className="w-4 h-4 mr-2" /> Prep Time
+                                            </h3>
+                                            <div className="space-y-4">
+                                                {/* Team A */}
+                                                <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
+                                                    <div className="flex justify-between items-center mb-2">
+                                                        <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">{currentSettings.teamA} Prep</span>
+                                                        <span className={`font-mono font-bold text-xl ${prepA < 30 ? 'text-red-500' : 'text-slate-800 dark:text-slate-200'}`}>{formatTime(prepA)}</span>
+                                                    </div>
+                                                    <div className="flex space-x-2">
+                                                        <button onClick={() => toggleTimer(isPrepARunning, setIsPrepARunning, prepAInterval, setPrepA)} className={`flex-1 py-1 text-xs rounded font-medium text-white ${isPrepARunning ? 'bg-amber-500' : 'bg-indigo-500 hover:bg-indigo-600'}`}>{isPrepARunning ? 'Pause' : 'Start'}</button>
+                                                        <button onClick={() => resetTimer(setPrepA, currentSettings.prepTime, setIsPrepARunning, prepAInterval)} className="px-3 py-1 text-xs rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300">Reset</button>
+                                                    </div>
+                                                </div>
+                                                {/* Team B */}
+                                                <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
+                                                    <div className="flex justify-between items-center mb-2">
+                                                        <span className="text-xs font-bold text-purple-600 dark:text-purple-400">{currentSettings.teamB} Prep</span>
+                                                        <span className={`font-mono font-bold text-xl ${prepB < 30 ? 'text-red-500' : 'text-slate-800 dark:text-slate-200'}`}>{formatTime(prepB)}</span>
+                                                    </div>
+                                                    <div className="flex space-x-2">
+                                                        <button onClick={() => toggleTimer(isPrepBRunning, setIsPrepBRunning, prepBInterval, setPrepB)} className={`flex-1 py-1 text-xs rounded font-medium text-white ${isPrepBRunning ? 'bg-amber-500' : 'bg-purple-500 hover:bg-purple-600'}`}>{isPrepBRunning ? 'Pause' : 'Start'}</button>
+                                                        <button onClick={() => resetTimer(setPrepB, currentSettings.prepTime, setIsPrepBRunning, prepBInterval)} className="px-3 py-1 text-xs rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300">Reset</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        {/* Team B */}
-                                        <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
-                                            <div className="flex justify-between items-center mb-2">
-                                                <span className="text-xs font-bold text-purple-600 dark:text-purple-400">Neg / Con / Team B</span>
-                                                <span className={`font-mono font-bold text-xl ${prepB < 30 ? 'text-red-500' : 'text-slate-800 dark:text-slate-200'}`}>{formatTime(prepB)}</span>
-                                            </div>
-                                            <div className="flex space-x-2">
-                                                <button onClick={() => toggleTimer(isPrepBRunning, setIsPrepBRunning, prepBInterval, setPrepB)} className={`flex-1 py-1 text-xs rounded font-medium text-white ${isPrepBRunning ? 'bg-amber-500' : 'bg-purple-500 hover:bg-purple-600'}`}>{isPrepBRunning ? 'Pause' : 'Start'}</button>
-                                                <button onClick={() => resetTimer(setPrepB, 180, setIsPrepBRunning, prepBInterval)} className="px-3 py-1 text-xs rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300">Reset</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                    )}
 
-                                {/* Grace / Tech Time */}
-                                <div className="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                                    <h3 className="font-bold text-sm text-slate-500 uppercase tracking-wider mb-4 flex items-center">
-                                        <AlertCircle className="w-4 h-4 mr-2" /> Grace / Tech Time
-                                    </h3>
-                                    <div className="space-y-4">
-                                        {/* Team A */}
-                                        <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
-                                            <div className="flex justify-between items-center mb-2">
-                                                <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">Aff / Pro Grace</span>
-                                                <span className={`font-mono font-bold text-xl ${graceA < 30 ? 'text-red-500' : 'text-slate-800 dark:text-slate-200'}`}>{formatTime(graceA)}</span>
+                                    {/* Grace / Tech Time - Show for all debates */}
+                                    <div className="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                                        <h3 className="font-bold text-sm text-slate-500 uppercase tracking-wider mb-4 flex items-center">
+                                            <AlertCircle className="w-4 h-4 mr-2" /> Grace / Tech Time
+                                        </h3>
+                                        <div className="space-y-4">
+                                            {/* Team A */}
+                                            <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
+                                                <div className="flex justify-between items-center mb-2">
+                                                    <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">{currentSettings.teamA} Grace</span>
+                                                    <span className={`font-mono font-bold text-xl ${graceA < 30 ? 'text-red-500' : 'text-slate-800 dark:text-slate-200'}`}>{formatTime(graceA)}</span>
+                                                </div>
+                                                <div className="flex space-x-2">
+                                                    <button onClick={() => toggleTimer(isGraceARunning, setIsGraceARunning, graceAInterval, setGraceA)} className={`flex-1 py-1 text-xs rounded font-medium text-white ${isGraceARunning ? 'bg-amber-500' : 'bg-indigo-500 hover:bg-indigo-600'}`}>{isGraceARunning ? 'Pause' : 'Start'}</button>
+                                                    <button onClick={() => resetTimer(setGraceA, 120, setIsGraceARunning, graceAInterval)} className="px-3 py-1 text-xs rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300">Reset</button>
+                                                </div>
                                             </div>
-                                            <div className="flex space-x-2">
-                                                <button onClick={() => toggleTimer(isGraceARunning, setIsGraceARunning, graceAInterval, setGraceA)} className={`flex-1 py-1 text-xs rounded font-medium text-white ${isGraceARunning ? 'bg-amber-500' : 'bg-indigo-500 hover:bg-indigo-600'}`}>{isGraceARunning ? 'Pause' : 'Start'}</button>
-                                                <button onClick={() => resetTimer(setGraceA, 120, setIsGraceARunning, graceAInterval)} className="px-3 py-1 text-xs rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300">Reset</button>
-                                            </div>
-                                        </div>
-                                        {/* Team B */}
-                                        <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
-                                            <div className="flex justify-between items-center mb-2">
-                                                <span className="text-xs font-bold text-purple-600 dark:text-purple-400">Neg / Con Grace</span>
-                                                <span className={`font-mono font-bold text-xl ${graceB < 30 ? 'text-red-500' : 'text-slate-800 dark:text-slate-200'}`}>{formatTime(graceB)}</span>
-                                            </div>
-                                            <div className="flex space-x-2">
-                                                <button onClick={() => toggleTimer(isGraceBRunning, setIsGraceBRunning, graceBInterval, setGraceB)} className={`flex-1 py-1 text-xs rounded font-medium text-white ${isGraceBRunning ? 'bg-amber-500' : 'bg-purple-500 hover:bg-purple-600'}`}>{isGraceBRunning ? 'Pause' : 'Start'}</button>
-                                                <button onClick={() => resetTimer(setGraceB, 120, setIsGraceBRunning, graceBInterval)} className="px-3 py-1 text-xs rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300">Reset</button>
+                                            {/* Team B */}
+                                            <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
+                                                <div className="flex justify-between items-center mb-2">
+                                                    <span className="text-xs font-bold text-purple-600 dark:text-purple-400">{currentSettings.teamB} Grace</span>
+                                                    <span className={`font-mono font-bold text-xl ${graceB < 30 ? 'text-red-500' : 'text-slate-800 dark:text-slate-200'}`}>{formatTime(graceB)}</span>
+                                                </div>
+                                                <div className="flex space-x-2">
+                                                    <button onClick={() => toggleTimer(isGraceBRunning, setIsGraceBRunning, graceBInterval, setGraceB)} className={`flex-1 py-1 text-xs rounded font-medium text-white ${isGraceBRunning ? 'bg-amber-500' : 'bg-purple-500 hover:bg-purple-600'}`}>{isGraceBRunning ? 'Pause' : 'Start'}</button>
+                                                    <button onClick={() => resetTimer(setGraceB, 120, setIsGraceBRunning, graceBInterval)} className="px-3 py-1 text-xs rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300">Reset</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
 
                         {/* Resources / Rubric */}
