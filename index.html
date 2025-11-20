@@ -305,6 +305,99 @@
             return <canvas ref={canvasRef} width={300} height={100} className="w-full max-w-xs h-24 rounded-lg" />;
         };
 
+        const ToneIndicator = ({ analyser, isRecording }) => {
+            const [metrics, setMetrics] = useState({ volume: 0, brightness: 0 });
+            const [feedback, setFeedback] = useState({ label: 'Ready', color: 'text-slate-400' });
+
+            useEffect(() => {
+                if (!analyser || !isRecording) return;
+                
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+                const waveformArray = new Uint8Array(analyser.fftSize);
+                
+                let updateId;
+                
+                const update = () => {
+                    analyser.getByteFrequencyData(dataArray);
+                    analyser.getByteTimeDomainData(waveformArray);
+                    
+                    // Calculate Volume (RMS)
+                    let sum = 0;
+                    for(let i = 0; i < waveformArray.length; i++) {
+                        const amplitude = (waveformArray[i] - 128) / 128;
+                        sum += amplitude * amplitude;
+                    }
+                    const volume = Math.sqrt(sum / waveformArray.length); // 0 to 1
+                    
+                    // Calculate Brightness (Spectral Centroid)
+                    let numerator = 0;
+                    let denominator = 0;
+                    for(let i = 0; i < bufferLength; i++) {
+                        numerator += i * dataArray[i];
+                        denominator += dataArray[i];
+                    }
+                    const brightness = denominator === 0 ? 0 : (numerator / denominator) / bufferLength; // 0 to 1
+                    
+                    setMetrics({ volume, brightness });
+                    
+                    // Determine Tone Label
+                    if (volume < 0.02) {
+                        setFeedback({ label: 'Listening...', color: 'text-slate-400' });
+                    } else if (volume < 0.1) {
+                        setFeedback({ label: 'Too Quiet', color: 'text-amber-500' });
+                    } else if (volume > 0.5) {
+                        setFeedback({ label: 'Too Loud / Aggressive', color: 'text-red-500' });
+                    } else {
+                        // Good volume range
+                        if (brightness > 0.4) {
+                            setFeedback({ label: 'Urgent / Intense', color: 'text-orange-500' });
+                        } else if (brightness < 0.15) {
+                            setFeedback({ label: 'Serious / Gravitas', color: 'text-indigo-500' });
+                        } else {
+                            setFeedback({ label: 'Balanced / Clear', color: 'text-green-500' });
+                        }
+                    }
+                    
+                    updateId = requestAnimationFrame(update);
+                };
+                
+                update();
+                return () => cancelAnimationFrame(updateId);
+            }, [analyser, isRecording]);
+
+            if (!isRecording) return null;
+
+            return (
+                <div className="flex flex-col items-center space-y-2 mt-4 animate-in fade-in">
+                    <div className={`text-lg font-bold ${feedback.color} transition-colors duration-300`}>
+                        {feedback.label}
+                    </div>
+                    <div className="flex space-x-4 text-xs text-slate-400">
+                        <div className="flex flex-col items-center">
+                            <div className="h-16 w-4 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden relative">
+                                <div 
+                                    className="absolute bottom-0 left-0 w-full bg-indigo-500 transition-all duration-100"
+                                    style={{ height: `${Math.min(metrics.volume * 200, 100)}%` }}
+                                ></div>
+                            </div>
+                            <span className="mt-1">Vol</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <div className="h-16 w-4 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden relative">
+                                <div 
+                                    className="absolute bottom-0 left-0 w-full bg-purple-500 transition-all duration-100"
+                                    style={{ height: `${Math.min(metrics.brightness * 300, 100)}%` }}
+                                ></div>
+                            </div>
+                            <span className="mt-1">Tone</span>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // --- App Component ---
         function App() {
             // State Management
             const [activeTab, setActiveTab] = useState('speech'); 
@@ -1077,6 +1170,9 @@
                                                             </button>
                                                         )}
                                                     </div>
+                                                    
+                                                    {/* Tone Indicator */}
+                                                    <ToneIndicator analyser={analyser} isRecording={isRecording} />
                                                 </div>
 
                                                 {audioData && !isRecording && (
