@@ -733,6 +733,7 @@
             const [authError, setAuthError] = useState('');
             const [showUsernameSetup, setShowUsernameSetup] = useState(false);
             const [isFirebaseReady, setIsFirebaseReady] = useState(false);
+            const [verificationStatus, setVerificationStatus] = useState({ gemini: 'idle', openai: 'idle' }); // idle, loading, success, error
 
             useEffect(() => {
                 const savedTheme = localStorage.getItem('theme') || 'light';
@@ -745,10 +746,15 @@
                         if (currentUser) {
                             // Fetch additional user data (username)
                             let username = null;
+                            let storedGeminiKey = '';
+                            let storedOpenaiKey = '';
                             try {
                                 const userDoc = await window.firebaseDb.getDoc(window.firebaseDb.doc(window.db, "users", currentUser.uid));
                                 if (userDoc.exists()) {
-                                    username = userDoc.data().username;
+                                    const data = userDoc.data();
+                                    username = data.username;
+                                    storedGeminiKey = data.geminiKey || '';
+                                    storedOpenaiKey = data.openaiKey || '';
                                 }
                             } catch (e) {
                                 console.error("Error fetching user profile:", e);
@@ -757,6 +763,8 @@
                             // Merge username into the user object or state
                             const enhancedUser = { ...currentUser, username };
                             setUser(enhancedUser);
+                            setApiKey(storedGeminiKey);
+                            setOpenaiKey(storedOpenaiKey);
                             
                             setShowLogin(false);
                             if (!username) {
@@ -776,6 +784,12 @@
                     if (sessionUser) {
                         const userData = JSON.parse(sessionUser);
                         setUser(userData);
+                        
+                        // Load keys from local profile
+                        const profile = JSON.parse(localStorage.getItem(`profile_${userData.email}`) || '{}');
+                        setApiKey(profile.geminiKey || '');
+                        setOpenaiKey(profile.openaiKey || '');
+
                         setShowLogin(false);
                         loadUserHistory(userData.email); // Fallback uses email as ID
                     } else {
@@ -953,6 +967,8 @@
                 const profile = JSON.parse(localStorage.getItem(`profile_${email}`) || '{}');
                 const userData = { email, uid: null, username: profile.username || null }; // No UID for local users
                 setUser(userData);
+                setApiKey(profile.geminiKey || '');
+                setOpenaiKey(profile.openaiKey || '');
                 localStorage.setItem('activeUser', JSON.stringify(userData));
                 setShowLogin(false);
                 if (!userData.username) {
@@ -962,6 +978,74 @@
                 setAuthEmail('');
                 setAuthPassword('');
                 setAuthUsername('');
+            };
+
+            const verifyAndSaveKey = async (type, key) => {
+                if (!key) return;
+                setVerificationStatus(prev => ({ ...prev, [type]: 'loading' }));
+                
+                try {
+                    if (type === 'gemini') {
+                        // Test call
+                        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ contents: [{ parts: [{ text: "Test" }] }] })
+                        });
+                        if (!response.ok) throw new Error("Invalid Key");
+                        
+                        // Save
+                        if (user) {
+                            if (window.auth && window.firebaseAuth && isFirebaseReady) {
+                                await window.firebaseDb.setDoc(window.firebaseDb.doc(window.db, "users", user.uid), {
+                                    geminiKey: key
+                                }, { merge: true });
+                            } else {
+                                // Local
+                                const profile = JSON.parse(localStorage.getItem(`profile_${user.email}`) || '{}');
+                                profile.geminiKey = key;
+                                localStorage.setItem(`profile_${user.email}`, JSON.stringify(profile));
+                            }
+                        }
+                        setVerificationStatus(prev => ({ ...prev, [type]: 'success' }));
+                        setTimeout(() => setVerificationStatus(prev => ({ ...prev, [type]: 'idle' })), 3000);
+                    } else {
+                        // OpenAI test
+                        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${key}`
+                            },
+                            body: JSON.stringify({
+                                model: "gpt-4o",
+                                messages: [{ role: "user", content: "Test" }],
+                                max_tokens: 5
+                            })
+                        });
+                        if (!response.ok) throw new Error("Invalid Key");
+                        
+                        // Save
+                        if (user) {
+                            if (window.auth && window.firebaseAuth && isFirebaseReady) {
+                                await window.firebaseDb.setDoc(window.firebaseDb.doc(window.db, "users", user.uid), {
+                                    openaiKey: key
+                                }, { merge: true });
+                            } else {
+                                // Local
+                                const profile = JSON.parse(localStorage.getItem(`profile_${user.email}`) || '{}');
+                                profile.openaiKey = key;
+                                localStorage.setItem(`profile_${user.email}`, JSON.stringify(profile));
+                            }
+                        }
+                        setVerificationStatus(prev => ({ ...prev, [type]: 'success' }));
+                        setTimeout(() => setVerificationStatus(prev => ({ ...prev, [type]: 'idle' })), 3000);
+                    }
+                } catch (e) {
+                    console.error(e);
+                    setVerificationStatus(prev => ({ ...prev, [type]: 'error' }));
+                    setTimeout(() => setVerificationStatus(prev => ({ ...prev, [type]: 'idle' })), 3000);
+                }
             };
 
             const handleUsernameSetup = async (e) => {
@@ -1477,7 +1561,25 @@
                                                             Gemini API Key
                                                             <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-xs text-indigo-600 hover:underline ml-2 font-normal">(Get Key)</a>
                                                         </label>
-                                                        <input type="password" placeholder="Paste your Gemini API key..." className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" value={apiKey} onChange={(e) => setApiKey(e.target.value)} />
+                                                        <div className="flex space-x-2">
+                                                            <input type="password" placeholder="Paste your Gemini API key..." className="flex-1 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" value={apiKey} onChange={(e) => setApiKey(e.target.value)} />
+                                                            <button 
+                                                                onClick={() => verifyAndSaveKey('gemini', apiKey)}
+                                                                disabled={verificationStatus.gemini === 'loading' || !apiKey}
+                                                                className={`px-4 py-2 rounded-lg font-medium text-white transition-all ${
+                                                                    verificationStatus.gemini === 'success' ? 'bg-green-600 hover:bg-green-700' :
+                                                                    verificationStatus.gemini === 'error' ? 'bg-red-600 hover:bg-red-700' :
+                                                                    'bg-indigo-600 hover:bg-indigo-700'
+                                                                }`}
+                                                            >
+                                                                {verificationStatus.gemini === 'loading' ? <Loader2 className="w-5 h-5 animate-spin" /> : 
+                                                                 verificationStatus.gemini === 'success' ? <CheckCircle2 className="w-5 h-5" /> : 
+                                                                 verificationStatus.gemini === 'error' ? <AlertCircle className="w-5 h-5" /> : 
+                                                                 'Verify & Save'}
+                                                            </button>
+                                                        </div>
+                                                        {verificationStatus.gemini === 'success' && <p className="text-xs text-green-600 mt-1">Key verified and saved!</p>}
+                                                        {verificationStatus.gemini === 'error' && <p className="text-xs text-red-600 mt-1">Invalid API Key. Please check and try again.</p>}
                                                     </div>
                                                 ) : (
                                                     <div>
@@ -1485,7 +1587,25 @@
                                                             OpenAI API Key
                                                             <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer" className="text-xs text-indigo-600 hover:underline ml-2 font-normal">(Get Key)</a>
                                                         </label>
-                                                        <input type="password" placeholder="Paste your OpenAI API key..." className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" value={openaiKey} onChange={(e) => setOpenaiKey(e.target.value)} />
+                                                        <div className="flex space-x-2">
+                                                            <input type="password" placeholder="Paste your OpenAI API key..." className="flex-1 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" value={openaiKey} onChange={(e) => setOpenaiKey(e.target.value)} />
+                                                            <button 
+                                                                onClick={() => verifyAndSaveKey('openai', openaiKey)}
+                                                                disabled={verificationStatus.openai === 'loading' || !openaiKey}
+                                                                className={`px-4 py-2 rounded-lg font-medium text-white transition-all ${
+                                                                    verificationStatus.openai === 'success' ? 'bg-green-600 hover:bg-green-700' :
+                                                                    verificationStatus.openai === 'error' ? 'bg-red-600 hover:bg-red-700' :
+                                                                    'bg-indigo-600 hover:bg-indigo-700'
+                                                                }`}
+                                                            >
+                                                                {verificationStatus.openai === 'loading' ? <Loader2 className="w-5 h-5 animate-spin" /> : 
+                                                                 verificationStatus.openai === 'success' ? <CheckCircle2 className="w-5 h-5" /> : 
+                                                                 verificationStatus.openai === 'error' ? <AlertCircle className="w-5 h-5" /> : 
+                                                                 'Verify & Save'}
+                                                            </button>
+                                                        </div>
+                                                        {verificationStatus.openai === 'success' && <p className="text-xs text-green-600 mt-1">Key verified and saved!</p>}
+                                                        {verificationStatus.openai === 'error' && <p className="text-xs text-red-600 mt-1">Invalid API Key. Please check and try again.</p>}
                                                     </div>
                                                 )}
                                             </div>
