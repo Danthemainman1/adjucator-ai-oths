@@ -64,166 +64,51 @@
     </script>
 
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        /* Hide scrollbar for cleaner UI */
-        textarea::-webkit-scrollbar { width: 8px; }
-        textarea::-webkit-scrollbar-track { background: transparent; }
-        textarea::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 20px; }
-
-        /* --- Theme: Forest --- */
-        .theme-forest body { background-color: #1c2321 !important; color: #e8f5e9 !important; }
+        /* --- COMMAND CENTER THEME --- */
+        body { 
+            background-color: #020617 !important; /* slate-950 */
+            color: #cbd5e1 !important; /* slate-300 */
+            font-family: 'Inter', sans-serif;
+        }
         
-        /* Backgrounds - Surface */
-        .theme-forest .bg-white, .theme-forest .bg-slate-50, .theme-forest .bg-slate-800, .theme-forest .bg-slate-900 {
-            background-color: #2d3b36 !important;
-            border-color: #4a5d55 !important;
-            color: #e8f5e9 !important;
-        }
-        /* Backgrounds - Tracks/Inputs (Darker/Distinct) */
-        .theme-forest .bg-slate-100, .theme-forest .bg-slate-200, .theme-forest .bg-slate-700 {
-            background-color: #1b2420 !important;
-            border-color: #4a5d55 !important;
-        }
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 0; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
-        .theme-forest .bg-indigo-50 { background-color: rgba(46, 125, 50, 0.1) !important; }
-        .theme-forest .bg-indigo-100 { background-color: rgba(46, 125, 50, 0.2) !important; }
-        .theme-forest .bg-purple-100 { background-color: rgba(0, 105, 92, 0.2) !important; }
-        .theme-forest .bg-amber-100 { background-color: rgba(249, 168, 37, 0.2) !important; }
-        .theme-forest .bg-blue-100 { background-color: rgba(2, 119, 189, 0.2) !important; }
+        /* Typography Overrides */
+        .font-mono { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
         
-        /* Text */
-        .theme-forest .text-slate-900, .theme-forest .text-slate-800, .theme-forest .text-slate-700, .theme-forest .text-slate-600, .theme-forest .text-slate-500, .theme-forest .text-slate-400 { color: #b8cbb8 !important; }
-        .theme-forest .text-indigo-600, .theme-forest .text-indigo-500, .theme-forest .text-indigo-700 { color: #76c893 !important; }
-        .theme-forest .text-purple-600 { color: #4db6ac !important; }
-        .theme-forest .text-blue-600 { color: #4dd0e1 !important; }
-        .theme-forest .text-amber-600 { color: #dce775 !important; }
+        /* Utility Overrides for "HUD" Look */
+        .hud-border { border: 1px solid #1e293b; } /* slate-800 */
+        .hud-bg { background-color: #020617; }
+        .hud-panel { background-color: #0f172a; border: 1px solid #1e293b; }
         
-        /* Inputs & Generic Buttons */
-        .theme-forest button:not([class*="bg-indigo-"]):not([class*="bg-red-"]):not([class*="bg-gradient-"]), 
-        .theme-forest input, .theme-forest select, .theme-forest textarea {
-            background-color: #1c2321 !important;
-            border-color: #4a5d55 !important;
-            color: #e8f5e9 !important;
+        /* Remove all shadows, replace with borders */
+        .shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl {
+            box-shadow: none !important;
+            border: 1px solid #1e293b !important;
         }
 
-        /* Primary Actions & Gradients */
-        .theme-forest .bg-indigo-600 { background-color: #2e7d32 !important; }
-        .theme-forest .hover\:bg-indigo-700:hover { background-color: #1b5e20 !important; }
-        .theme-forest .from-indigo-600 { --tw-gradient-from: #2e7d32 !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
-        .theme-forest .to-purple-600 { --tw-gradient-to: #00695c !important; }
-        .theme-forest .bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-from), var(--tw-gradient-to)) !important; }
-        
-        /* Shadows */
-        .theme-forest .shadow-indigo-500\/30 { --tw-shadow-color: rgba(46, 125, 50, 0.3) !important; box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important; }
-        
-        /* Borders */
-        .theme-forest .border-slate-100, .theme-forest .border-slate-200, .theme-forest .border-slate-300, .theme-forest .border-slate-700, .theme-forest .border-indigo-100, .theme-forest .border-slate-600 {
-            border-color: #4a5d55 !important;
+        /* Inputs */
+        input, select, textarea {
+            background-color: #000000 !important;
+            border: 1px solid #1e293b !important;
+            color: #4ade80 !important; /* green-400 */
+            font-family: monospace !important;
+        }
+        input::placeholder, textarea::placeholder { color: #334155 !important; }
+        input:focus, select:focus, textarea:focus {
+            outline: none !important;
+            border-color: #06b6d4 !important; /* cyan-500 */
+            box-shadow: 0 0 0 1px #06b6d4 !important;
         }
 
-
-        /* --- Theme: Coffee --- */
-        .theme-coffee body { background-color: #2b2118 !important; color: #dcc8b3 !important; }
-        
-        /* Backgrounds - Surface */
-        .theme-coffee .bg-white, .theme-coffee .bg-slate-50, .theme-coffee .bg-slate-800, .theme-coffee .bg-slate-900 {
-            background-color: #3d2f24 !important;
-            border-color: #5c4738 !important;
-            color: #dcc8b3 !important;
+        /* Buttons */
+        button {
+            border-radius: 2px !important; /* Sharp/Slightly rounded */
         }
-        /* Backgrounds - Tracks/Inputs */
-        .theme-coffee .bg-slate-100, .theme-coffee .bg-slate-200, .theme-coffee .bg-slate-700 {
-            background-color: #261d15 !important;
-            border-color: #5c4738 !important;
-        }
-
-        .theme-coffee .bg-indigo-50 { background-color: rgba(210, 105, 30, 0.1) !important; }
-        .theme-coffee .bg-indigo-100 { background-color: rgba(210, 105, 30, 0.2) !important; }
-        .theme-coffee .bg-purple-100 { background-color: rgba(160, 82, 45, 0.2) !important; }
-        .theme-coffee .bg-amber-100 { background-color: rgba(218, 165, 32, 0.2) !important; }
-        .theme-coffee .bg-blue-100 { background-color: rgba(139, 69, 19, 0.2) !important; }
-
-        /* Text */
-        .theme-coffee .text-slate-900, .theme-coffee .text-slate-800, .theme-coffee .text-slate-700, .theme-coffee .text-slate-600, .theme-coffee .text-slate-500, .theme-coffee .text-slate-400 { color: #a69076 !important; }
-        .theme-coffee .text-indigo-600, .theme-coffee .text-indigo-500, .theme-coffee .text-indigo-700 { color: #d2691e !important; }
-        .theme-coffee .text-purple-600 { color: #cd853f !important; }
-        .theme-coffee .text-blue-600 { color: #8d6e63 !important; }
-        .theme-coffee .text-amber-600 { color: #ffb74d !important; }
-
-        /* Inputs & Generic Buttons */
-        .theme-coffee button:not([class*="bg-indigo-"]):not([class*="bg-red-"]):not([class*="bg-gradient-"]), 
-        .theme-coffee input, .theme-coffee select, .theme-coffee textarea {
-            background-color: #2b2118 !important;
-            border-color: #5c4738 !important;
-            color: #dcc8b3 !important;
-        }
-
-        /* Primary Actions & Gradients */
-        .theme-coffee .bg-indigo-600 { background-color: #8b4513 !important; }
-        .theme-coffee .hover\:bg-indigo-700:hover { background-color: #5e2f0d !important; }
-        .theme-coffee .from-indigo-600 { --tw-gradient-from: #8b4513 !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
-        .theme-coffee .to-purple-600 { --tw-gradient-to: #a0522d !important; }
-        .theme-coffee .bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-from), var(--tw-gradient-to)) !important; }
-
-        /* Shadows */
-        .theme-coffee .shadow-indigo-500\/30 { --tw-shadow-color: rgba(139, 69, 19, 0.3) !important; box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important; }
-
-        /* Borders */
-        .theme-coffee .border-slate-100, .theme-coffee .border-slate-200, .theme-coffee .border-slate-300, .theme-coffee .border-slate-700, .theme-coffee .border-indigo-100, .theme-coffee .border-slate-600 {
-            border-color: #5c4738 !important;
-        }
-
-        /* --- Theme: Ocean --- */
-        .theme-ocean body { background-color: #0f172a !important; color: #e2e8f0 !important; }
-        
-        /* Backgrounds - Surface */
-        .theme-ocean .bg-white, .theme-ocean .bg-slate-50, .theme-ocean .bg-slate-800, .theme-ocean .bg-slate-900 {
-            background-color: #1e293b !important;
-            border-color: #334155 !important;
-            color: #e2e8f0 !important;
-        }
-        /* Backgrounds - Tracks/Inputs */
-        .theme-ocean .bg-slate-100, .theme-ocean .bg-slate-200, .theme-ocean .bg-slate-700 {
-            background-color: #0f172a !important;
-            border-color: #334155 !important;
-        }
-
-        .theme-ocean .text-slate-900, .theme-ocean .text-slate-800, .theme-ocean .text-slate-700, .theme-ocean .text-slate-600, .theme-ocean .text-slate-500, .theme-ocean .text-slate-400 { color: #94a3b8 !important; }
-        .theme-ocean .text-indigo-600, .theme-ocean .text-indigo-500, .theme-ocean .text-indigo-700 { color: #38bdf8 !important; } /* Sky Blue */
-        .theme-ocean .bg-indigo-600 { background-color: #0ea5e9 !important; }
-        .theme-ocean .hover\:bg-indigo-700:hover { background-color: #0284c7 !important; }
-        .theme-ocean .from-indigo-600 { --tw-gradient-from: #0ea5e9 !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
-        .theme-ocean .to-purple-600 { --tw-gradient-to: #6366f1 !important; }
-        .theme-ocean .bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-from), var(--tw-gradient-to)) !important; }
-        .theme-ocean .border-slate-100, .theme-ocean .border-slate-200, .theme-ocean .border-slate-300, .theme-ocean .border-slate-700, .theme-ocean .border-indigo-100, .theme-ocean .border-slate-600 { border-color: #334155 !important; }
-        .theme-ocean input, .theme-ocean select, .theme-ocean textarea { background-color: #0f172a !important; border-color: #334155 !important; color: #e2e8f0 !important; }
-        .theme-ocean button:not([class*="bg-indigo-"]):not([class*="bg-red-"]):not([class*="bg-gradient-"]) { background-color: #1e293b !important; border-color: #334155 !important; color: #e2e8f0 !important; }
-
-        /* --- Theme: Midnight --- */
-        .theme-midnight body { background-color: #000000 !important; color: #e5e5e5 !important; }
-        
-        /* Backgrounds - Surface */
-        .theme-midnight .bg-white, .theme-midnight .bg-slate-50, .theme-midnight .bg-slate-800, .theme-midnight .bg-slate-900 {
-            background-color: #171717 !important;
-            border-color: #404040 !important;
-            color: #e5e5e5 !important;
-        }
-        /* Backgrounds - Tracks/Inputs (Lighter than black) */
-        .theme-midnight .bg-slate-100, .theme-midnight .bg-slate-200, .theme-midnight .bg-slate-700 {
-            background-color: #0a0a0a !important;
-            border-color: #404040 !important;
-        }
-
-        .theme-midnight .text-slate-900, .theme-midnight .text-slate-800, .theme-midnight .text-slate-700, .theme-midnight .text-slate-600, .theme-midnight .text-slate-500, .theme-midnight .text-slate-400 { color: #a3a3a3 !important; }
-        .theme-midnight .text-indigo-600, .theme-midnight .text-indigo-500, .theme-midnight .text-indigo-700 { color: #818cf8 !important; } /* Indigo */
-        .theme-midnight .bg-indigo-600 { background-color: #4f46e5 !important; }
-        .theme-midnight .hover\:bg-indigo-700:hover { background-color: #4338ca !important; }
-        .theme-midnight .from-indigo-600 { --tw-gradient-from: #4f46e5 !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
-        .theme-midnight .to-purple-600 { --tw-gradient-to: #9333ea !important; }
-        .theme-midnight .bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-from), var(--tw-gradient-to)) !important; }
-        .theme-midnight .border-slate-100, .theme-midnight .border-slate-200, .theme-midnight .border-slate-300, .theme-midnight .border-slate-700, .theme-midnight .border-indigo-100, .theme-midnight .border-slate-600 { border-color: #404040 !important; }
-        .theme-midnight input, .theme-midnight select, .theme-midnight textarea { background-color: #000000 !important; border-color: #404040 !important; color: #e5e5e5 !important; }
-        .theme-midnight button:not([class*="bg-indigo-"]):not([class*="bg-red-"]):not([class*="bg-gradient-"]) { background-color: #171717 !important; border-color: #404040 !important; color: #e5e5e5 !important; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100">
@@ -903,144 +788,56 @@
                 { id: 'coach', label: 'Judge Tools', icon: Gavel },
                 { id: 'history', label: 'History', icon: History },
                 { id: 'settings', label: 'Configuration', icon: Settings },
-                { id: 'contact', label: 'Contact Us', icon: Mail },
             ];
 
-            // Storage Usage Logic
-            const [storageUsage, setStorageUsage] = useState(0);
-            
-            useEffect(() => {
-                const checkStorage = () => {
-                    let total = 0;
-                    for(let key in localStorage) {
-                        if(localStorage.hasOwnProperty(key)) {
-                            total += (localStorage[key].length + key.length);
-                        }
-                    }
-                    // Approx 5 million characters (5MB)
-                    setStorageUsage((total / 5000000) * 100);
-                };
-                
-                checkStorage();
-                const interval = setInterval(checkStorage, 5000); // Check every 5s
-                return () => clearInterval(interval);
-            }, []);
-
             return (
-                <>
-                    {/* Mobile Overlay */}
-                    {isOpen && (
-                        <div 
-                            className="fixed inset-0 bg-black/50 z-30 lg:hidden backdrop-blur-sm transition-opacity"
-                            onClick={() => setIsOpen(false)}
-                        />
-                    )}
-
-                    {/* Sidebar Container */}
-                    <div className={`
-                        fixed lg:static inset-y-0 left-0 z-40 w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 
-                        flex flex-col transition-transform duration-300 ease-in-out shadow-2xl lg:shadow-none
-                        ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-                    `}>
-                        {/* Logo Area */}
-                        <div className="h-16 flex items-center px-6 border-b border-slate-100 dark:border-slate-800">
-                            <div className="bg-indigo-600 p-2 rounded-lg shadow-lg shadow-indigo-500/30 mr-3">
-                                <Gavel className="w-5 h-5 text-white" />
-                            </div>
-                            <span className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
-                                Adjudicator
-                            </span>
-                        </div>
-
-                        {/* Navigation */}
-                        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-                            <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4 px-4 mt-2">Menu</div>
-                            {navItems.map(item => (
-                                <button
-                                    key={item.id}
-                                    onClick={() => { setActiveTab(item.id); setIsOpen(false); }}
-                                    className={`w-full flex items-center px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group ${
-                                        activeTab === item.id 
-                                            ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 shadow-sm' 
-                                            : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200'
-                                    }`}
-                                >
-                                    <item.icon className={`w-5 h-5 mr-3 transition-colors ${activeTab === item.id ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'}`} />
-                                    {item.label}
-                                </button>
-                            ))}
-                        </nav>
-
-                        {/* Footer Controls */}
-                        <div className="p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
-                            {/* Storage Meter */}
-                            <div className="px-2 pb-4">
-                                <div className="flex justify-between text-[10px] text-slate-400 mb-1">
-                                    <span>Storage</span>
-                                    <span>{Math.round(storageUsage)}%</span>
-                                </div>
-                                <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                                    <div 
-                                        className={`h-full rounded-full transition-all duration-500 ${storageUsage > 90 ? 'bg-red-500' : storageUsage > 75 ? 'bg-amber-500' : 'bg-indigo-500'}`}
-                                        style={{ width: `${Math.min(storageUsage, 100)}%` }}
-                                    ></div>
-                                </div>
-                                {storageUsage > 75 && (
-                                    <p className="text-[10px] text-red-500 mt-1 font-bold animate-pulse">
-                                        Storage full! Clear history.
-                                    </p>
-                                )}
-                            </div>
-
-                            <div className="flex items-center justify-between mb-4 px-2">
-                                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Theme</span>
-                                <div className="flex bg-white dark:bg-slate-800 rounded-lg p-1 border border-slate-200 dark:border-slate-700 shadow-sm">
-                                    {[
-                                        { id: 'light', icon: Sun, color: 'text-amber-500' },
-                                        { id: 'dark', icon: Moon, color: 'text-indigo-400' },
-                                        { id: 'forest', icon: Leaf, color: 'text-emerald-500' },
-                                        { id: 'coffee', icon: Coffee, color: 'text-orange-400' },
-                                        { id: 'ocean', icon: Droplets, color: 'text-blue-500' },
-                                        { id: 'midnight', icon: Star, color: 'text-slate-400' }
-                                    ].map(t => (
-                                        <button 
-                                            key={t.id}
-                                            onClick={() => setTheme(t.id)} 
-                                            className={`p-1.5 rounded-md transition-all ${theme === t.id ? 'bg-slate-100 dark:bg-slate-700 shadow-sm ' + t.color : 'text-slate-400 hover:text-slate-600'}`}
-                                            title={t.id.charAt(0).toUpperCase() + t.id.slice(1)}
-                                        >
-                                            <t.icon className="w-3.5 h-3.5" />
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                            
-                            {user ? (
-                                <div className="flex items-center p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
-                                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xs mr-3 shadow-md">
-                                        {(user.username || user.email)[0].toUpperCase()}
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <div className="flex items-center">
-                                            <p className="text-xs font-medium text-slate-900 dark:text-white truncate">{user.username || user.email}</p>
-                                            {user.isAdmin && (
-                                                <span className="ml-1.5 px-1.5 py-0.5 bg-gradient-to-r from-red-500 to-pink-600 text-white text-[9px] font-bold rounded uppercase tracking-wider shadow-sm">ADMIN</span>
-                                            )}
-                                        </div>
-                                        <button onClick={logout} className="text-[10px] text-red-500 hover:text-red-600 flex items-center mt-0.5 font-medium">
-                                            <LogOut className="w-3 h-3 mr-1" /> Sign out
-                                        </button>
-                                    </div>
-                                </div>
-                            ) : (
-                                <button onClick={() => setShowLogin(true)} className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-medium transition-all shadow-lg shadow-indigo-500/30 flex items-center justify-center group">
-                                    <User className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-                                    Sign In
-                                </button>
-                            )}
-                        </div>
+                <div className="fixed inset-y-0 left-0 z-50 w-16 bg-slate-950 border-r border-slate-800 flex flex-col items-center py-4">
+                    {/* Logo */}
+                    <div className="mb-8 p-2 bg-indigo-600 rounded-sm shadow-[0_0_10px_rgba(79,70,229,0.5)]">
+                        <Gavel className="w-6 h-6 text-white" />
                     </div>
-                </>
+
+                    {/* Nav Items */}
+                    <nav className="flex-1 w-full flex flex-col items-center space-y-4">
+                        {navItems.map(item => (
+                            <button
+                                key={item.id}
+                                onClick={() => setActiveTab(item.id)}
+                                title={item.label}
+                                className={`p-3 rounded-sm transition-all duration-200 group relative ${
+                                    activeTab === item.id 
+                                        ? 'text-cyan-400 bg-slate-900 border-l-2 border-cyan-500' 
+                                        : 'text-slate-500 hover:text-slate-300 hover:bg-slate-900'
+                                }`}
+                            >
+                                <item.icon className="w-5 h-5" />
+                                {activeTab === item.id && (
+                                    <div className="absolute inset-0 bg-cyan-500/10 blur-sm"></div>
+                                )}
+                            </button>
+                        ))}
+                    </nav>
+
+                    {/* Footer / User */}
+                    <div className="mt-auto flex flex-col items-center space-y-4">
+                        <button 
+                            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} 
+                            className="p-2 text-slate-500 hover:text-slate-300"
+                        >
+                            {theme === 'dark' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+                        </button>
+                        
+                        {user ? (
+                            <button onClick={logout} className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-mono text-slate-300 hover:border-red-500 hover:text-red-500 transition-colors">
+                                {(user.username || user.email)[0].toUpperCase()}
+                            </button>
+                        ) : (
+                            <button onClick={() => setShowLogin(true)} className="p-2 text-slate-500 hover:text-cyan-400">
+                                <User className="w-5 h-5" />
+                            </button>
+                        )}
+                    </div>
+                </div>
             );
         };
 
@@ -1079,84 +876,74 @@
             };
 
             const stats = [
-                { label: 'Total Analyses', value: history.length, icon: Activity, color: 'text-blue-600', bg: 'bg-blue-100 dark:bg-blue-900/30' },
-                { label: 'Last Topic', value: history[0]?.topic || 'N/A', icon: BookOpen, color: 'text-purple-600', bg: 'bg-purple-100 dark:bg-purple-900/30' },
-                { label: 'Avg Score', value: calculateAverageScore(), icon: Award, color: 'text-amber-600', bg: 'bg-amber-100 dark:bg-amber-900/30' },
+                { label: 'TOTAL ANALYSES', value: history.length, icon: Activity, color: 'text-blue-400' },
+                { label: 'LAST TOPIC', value: history[0]?.topic || 'N/A', icon: BookOpen, color: 'text-purple-400' },
+                { label: 'AVG SCORE', value: calculateAverageScore(), icon: Award, color: 'text-amber-400' },
             ];
 
             const tools = [
-                { id: 'speech', title: 'Judge Text', desc: 'Paste transcripts for instant scoring and feedback.', icon: Mic, color: 'from-blue-500 to-cyan-500' },
-                { id: 'board', title: 'Evaluate Board', desc: 'Upload flow photos for strategic analysis.', icon: ImageIcon, color: 'from-purple-500 to-pink-500' },
-                { id: 'listen', title: 'Live Coach', desc: 'Real-time audio analysis of tone and pace.', icon: Activity, color: 'from-orange-500 to-red-500' }
+                { id: 'speech', title: 'JUDGE TEXT', desc: 'Paste transcripts for instant scoring.', icon: Mic, color: 'text-cyan-400' },
+                { id: 'board', title: 'EVALUATE BOARD', desc: 'Upload flow photos for analysis.', icon: ImageIcon, color: 'text-pink-400' },
+                { id: 'listen', title: 'LIVE COACH', desc: 'Real-time audio analysis.', icon: Activity, color: 'text-red-400' }
             ];
 
             return (
-                <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    {/* Welcome Section with Gradient */}
-                    <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-600 to-purple-600 p-8 text-white shadow-xl">
-                        <div className="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl"></div>
-                        <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-indigo-400 opacity-20 rounded-full blur-2xl"></div>
-                        
-                        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                            <div>
-                                <h2 className="text-4xl font-extrabold tracking-tight mb-2">
-                                    Welcome back, {user?.username || user?.email?.split('@')[0] || 'Guest'}!
-                                </h2>
-                                <p className="text-indigo-100 text-lg max-w-xl">
-                                    Ready to dominate your next round? Let's analyze some arguments.
-                                </p>
-                                {tip && (
-                                    <div className="mt-6 inline-flex items-center bg-white/10 backdrop-blur-md rounded-lg px-4 py-2 text-sm font-medium text-indigo-50 border border-white/20">
-                                        <Lightbulb className="w-4 h-4 mr-2 text-yellow-300" />
-                                        Tip: {tip}
-                                    </div>
-                                )}
-                            </div>
-                            <button onClick={() => setActiveTab('speech')} className="px-6 py-3 bg-white text-indigo-600 hover:bg-indigo-50 rounded-xl font-bold shadow-lg transition-all transform hover:scale-105 flex items-center whitespace-nowrap">
-                                <Plus className="w-5 h-5 mr-2" /> New Analysis
+                <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 p-6">
+                    {/* Header */}
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-800 pb-6">
+                        <div>
+                            <h2 className="text-2xl font-mono font-bold text-white tracking-tight mb-1">
+                                COMMAND CENTER // {user?.username || 'GUEST'}
+                            </h2>
+                            <p className="text-slate-500 font-mono text-xs uppercase tracking-widest">
+                                SYSTEM READY • {new Date().toLocaleDateString()}
+                            </p>
+                        </div>
+                        <div className="mt-4 md:mt-0 flex items-center space-x-4">
+                            {tip && (
+                                <div className="hidden md:flex items-center px-3 py-1 border border-slate-800 bg-slate-900/50 text-xs font-mono text-slate-400">
+                                    <Lightbulb className="w-3 h-3 mr-2 text-yellow-500" />
+                                    {tip.substring(0, 40)}...
+                                </div>
+                            )}
+                            <button onClick={() => setActiveTab('speech')} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-mono text-xs font-bold uppercase tracking-wider transition-colors">
+                                + NEW ANALYSIS
                             </button>
                         </div>
                     </div>
 
-                    {/* Stats Grid with Glassmorphism */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* Stats Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {stats.map((stat, i) => (
-                            <div key={i} className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 flex items-center space-x-4 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
-                                <div className={`p-4 rounded-2xl ${stat.bg} ${stat.color} group-hover:scale-110 transition-transform duration-300`}>
-                                    <stat.icon className="w-6 h-6" />
+                            <div key={i} className="bg-slate-900 border border-slate-800 p-4 flex items-center justify-between group hover:border-slate-600 transition-colors">
+                                <div>
+                                    <p className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-1">{stat.label}</p>
+                                    <p className="text-2xl font-mono font-bold text-white truncate">{stat.value}</p>
                                 </div>
-                                <div className="min-w-0">
-                                    <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">{stat.label}</p>
-                                    <p className="text-3xl font-bold text-slate-900 dark:text-white truncate">{stat.value}</p>
-                                </div>
+                                <stat.icon className={`w-6 h-6 ${stat.color} opacity-50 group-hover:opacity-100 transition-opacity`} />
                             </div>
                         ))}
                     </div>
 
-                    {/* Quick Actions with Hover Effects */}
+                    {/* Quick Actions */}
                     <div>
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center">
-                            <Zap className="w-5 h-5 mr-2 text-amber-500" /> Quick Actions
+                        <h3 className="text-xs font-mono font-bold text-slate-500 uppercase tracking-widest mb-4 flex items-center">
+                            <Zap className="w-3 h-3 mr-2 text-amber-500" /> QUICK DEPLOYMENT
                         </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             {tools.map((tool) => (
                                 <button 
                                     key={tool.id}
                                     onClick={() => setActiveTab(tool.id)}
-                                    className="group relative overflow-hidden bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-2xl hover:border-indigo-500/30 dark:hover:border-indigo-500/30 transition-all duration-300 text-left"
+                                    className="group bg-slate-900 border border-slate-800 p-6 hover:bg-slate-800 hover:border-cyan-500/50 transition-all duration-300 text-left relative overflow-hidden"
                                 >
-                                    <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${tool.color} opacity-5 rounded-bl-full -mr-8 -mt-8 transition-all duration-500 group-hover:scale-150 group-hover:opacity-10`}></div>
-                                    
                                     <div className="relative z-10">
-                                        <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${tool.color} flex items-center justify-center text-white mb-6 shadow-lg group-hover:shadow-indigo-500/40 group-hover:scale-110 transition-all duration-300`}>
-                                            <tool.icon className="w-7 h-7" />
-                                        </div>
-                                        <h4 className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{tool.title}</h4>
-                                        <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{tool.desc}</p>
+                                        <tool.icon className={`w-6 h-6 ${tool.color} mb-4`} />
+                                        <h4 className="text-sm font-mono font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">{tool.title}</h4>
+                                        <p className="text-xs text-slate-500 font-mono leading-relaxed">{tool.desc}</p>
                                     </div>
-                                    
-                                    <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-300">
-                                        <ArrowRight className="w-6 h-6 text-indigo-500" />
+                                    <div className="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <ArrowRight className="w-4 h-4 text-cyan-500" />
                                     </div>
                                 </button>
                             ))}
@@ -1167,27 +954,27 @@
                     <ExtempQuestionGenerator provider={provider} apiKey={apiKey} openaiKey={openaiKey} />
 
                     {/* Recent History */}
-                    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
-                        <div className="p-6 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50">
-                            <h3 className="font-bold text-slate-900 dark:text-white flex items-center">
-                                <History className="w-5 h-5 mr-2 text-slate-400" /> Recent Activity
+                    <div className="border border-slate-800 bg-slate-900">
+                        <div className="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-950">
+                            <h3 className="text-xs font-mono font-bold text-slate-400 uppercase tracking-widest flex items-center">
+                                <History className="w-3 h-3 mr-2" /> RECENT LOGS
                             </h3>
-                            <button onClick={() => setActiveTab('history')} className="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 hover:underline">View All</button>
+                            <button onClick={() => setActiveTab('history')} className="text-[10px] font-mono text-cyan-500 hover:text-cyan-400 uppercase">VIEW ALL</button>
                         </div>
-                        <div className="divide-y divide-slate-100 dark:divide-slate-700">
+                        <div className="divide-y divide-slate-800">
                             {history.length === 0 ? (
-                                <div className="p-8 text-center text-slate-500">No history yet. Start analyzing!</div>
+                                <div className="p-8 text-center text-slate-600 font-mono text-xs">NO LOGS FOUND. INITIATE ANALYSIS.</div>
                             ) : (
                                 history.slice(0, 5).map(item => (
-                                    <div key={item.id} className="p-4 hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors flex items-center justify-between group">
+                                    <div key={item.id} className="p-3 hover:bg-slate-800 transition-colors flex items-center justify-between group cursor-pointer">
                                         <div className="flex items-center space-x-4">
-                                            <div className={`w-2 h-2 rounded-full ${item.type === 'speech' ? 'bg-blue-500' : item.type === 'board' ? 'bg-purple-500' : 'bg-green-500'}`}></div>
+                                            <div className={`w-1.5 h-1.5 ${item.type === 'speech' ? 'bg-blue-500' : item.type === 'board' ? 'bg-pink-500' : 'bg-green-500'}`}></div>
                                             <div>
-                                                <p className="font-medium text-slate-900 dark:text-white">{item.topic}</p>
-                                                <p className="text-xs text-slate-500">{item.date} • {item.type}</p>
+                                                <p className="font-mono text-xs font-bold text-slate-300 group-hover:text-white">{item.topic}</p>
+                                                <p className="text-[10px] font-mono text-slate-600">{item.date} • {item.type.toUpperCase()}</p>
                                             </div>
                                         </div>
-                                        <ChevronDown className="w-4 h-4 text-slate-300 group-hover:text-slate-500 -rotate-90" />
+                                        <div className="text-[10px] font-mono text-slate-600 group-hover:text-cyan-500">OPEN &gt;</div>
                                     </div>
                                 ))
                             )}
@@ -1927,17 +1714,17 @@
                 return (
                     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
                         {/* Header & Format Selection */}
-                        <div className="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                        <div className="bg-slate-900/50 p-6 border border-slate-800">
                             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                                 <div>
-                                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Judge & Coach Tools</h2>
-                                    <p className="text-slate-500 dark:text-slate-400 text-sm">Comprehensive timer suite and resources for adjudication.</p>
+                                    <h2 className="text-xl font-bold text-white uppercase tracking-widest">Tactical Timer Suite</h2>
+                                    <p className="text-slate-400 text-xs font-mono">Synchronized Chronometers for Adjudication</p>
                                 </div>
                                     <div className="w-full md:w-64">
-                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Debate Format</label>
+                                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Protocol</label>
                                     <div className="relative group">
                                         <select 
-                                            className="w-full appearance-none bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 py-3 px-4 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 outline-none transition-all cursor-pointer hover:border-indigo-300 dark:hover:border-indigo-700"
+                                            className="w-full appearance-none bg-black border border-slate-700 text-cyan-400 py-2 px-3 text-xs font-mono uppercase outline-none focus:border-cyan-500 transition-all cursor-pointer"
                                             value={format}
                                             onChange={(e) => setFormat(e.target.value)}
                                         >
@@ -1945,8 +1732,8 @@
                                                 <option key={k} value={k}>{k}</option>
                                             ))}
                                         </select>
-                                        <div className="absolute right-3 top-3.5 pointer-events-none text-slate-400 group-hover:text-indigo-500 transition-colors">
-                                            <ChevronDown className="w-5 h-5" />
+                                        <div className="absolute right-3 top-3 pointer-events-none">
+                                            <div className="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[4px] border-t-cyan-500"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -1955,17 +1742,22 @@
 
                         {/* Main Speech Timer */}
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <div className="lg:col-span-2 bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col">
+                            <div className="lg:col-span-2 bg-slate-900/50 p-6 border border-slate-800 flex flex-col relative overflow-hidden">
+                                <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-500"></div>
+                                <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-cyan-500"></div>
+                                <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-cyan-500"></div>
+                                <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-500"></div>
+
                                 <div className="flex justify-between items-center mb-6">
-                                    <h3 className="font-bold text-lg text-slate-800 dark:text-slate-200 flex items-center">
-                                        <Mic className="w-5 h-5 mr-2 text-indigo-500" /> Speech Timer
+                                    <h3 className="font-bold text-sm text-cyan-500 uppercase tracking-widest flex items-center">
+                                        <Mic className="w-4 h-4 mr-2" /> Primary Channel
                                     </h3>
                                     <div className="flex space-x-2 flex-wrap gap-y-2">
                                         {speechTimes[format]?.map((s, idx) => (
                                             <button 
                                                 key={idx}
                                                 onClick={() => setActiveSpeech(s)}
-                                                className={`px-3 py-1 text-xs rounded-full transition-all ${activeSpeech?.name === s.name ? 'bg-indigo-600 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600'}`}
+                                                className={`px-3 py-1 text-[10px] font-mono uppercase border transition-all ${activeSpeech?.name === s.name ? 'bg-cyan-900/50 border-cyan-500 text-cyan-400' : 'bg-transparent border-slate-700 text-slate-500 hover:border-slate-500'}`}
                                             >
                                                 {s.name}
                                             </button>
@@ -1974,18 +1766,18 @@
                                 </div>
                                 
                                 <div className="flex-1 flex flex-col items-center justify-center py-8">
-                                    <div className="text-center mb-2">
-                                        <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">{activeSpeech?.name || 'Select Speech'}</span>
+                                    <div className="text-center mb-4">
+                                        <span className="text-xs font-bold text-slate-500 uppercase tracking-[0.2em]">{activeSpeech?.name || 'SELECT PHASE'}</span>
                                     </div>
-                                    <div className={`text-8xl font-mono font-bold tracking-tighter mb-8 tabular-nums ${mainTimer < 30 ? 'text-red-500 animate-pulse' : 'text-slate-900 dark:text-white'}`}>
+                                    <div className={`text-8xl font-mono font-bold tracking-tighter mb-8 tabular-nums ${mainTimer < 30 ? 'text-red-500 animate-pulse' : 'text-white'}`}>
                                         {formatTime(mainTimer)}
                                     </div>
                                     
                                     {/* Progress Bar */}
                                     {activeSpeech && (
-                                        <div className="w-full max-w-md h-3 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mb-8 border border-slate-300 dark:border-slate-600">
+                                        <div className="w-full max-w-md h-2 bg-slate-800 rounded-full overflow-hidden mb-8 border border-slate-700">
                                             <div 
-                                                className={`h-full transition-all duration-1000 ease-linear ${mainTimer < 30 ? 'bg-red-500' : 'bg-indigo-500'}`}
+                                                className={`h-full transition-all duration-1000 ease-linear ${mainTimer < 30 ? 'bg-red-500' : 'bg-cyan-500'}`}
                                                 style={{ width: `${(mainTimer / activeSpeech.time) * 100}%` }}
                                             />
                                         </div>
@@ -1994,13 +1786,13 @@
                                     <div className="flex space-x-4">
                                         <button 
                                             onClick={() => toggleTimer(isMainRunning, setIsMainRunning, mainInterval, setMainTimer)}
-                                            className={`w-32 py-3 rounded-xl font-bold text-white shadow-lg transition-transform active:scale-95 ${isMainRunning ? 'bg-amber-500 hover:bg-amber-600' : 'bg-indigo-600 hover:bg-indigo-700'}`}
+                                            className={`w-32 py-3 font-bold text-xs uppercase tracking-widest border transition-all ${isMainRunning ? 'bg-amber-900/20 border-amber-500 text-amber-500 hover:bg-amber-900/40' : 'bg-cyan-900/20 border-cyan-500 text-cyan-400 hover:bg-cyan-900/40'}`}
                                         >
-                                            {isMainRunning ? 'Pause' : 'Start'}
+                                            {isMainRunning ? 'Halt' : 'Engage'}
                                         </button>
                                         <button 
                                             onClick={() => resetTimer(setMainTimer, activeSpeech?.time || 0, setIsMainRunning, mainInterval)}
-                                            className="w-32 py-3 rounded-xl font-bold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                                            className="w-32 py-3 font-bold text-xs uppercase tracking-widest border border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-200 transition-colors"
                                         >
                                             Reset
                                         </button>
@@ -2013,31 +1805,31 @@
                                 <div className="space-y-6">
                                     {/* Prep Time - Only if format has prep */}
                                     {currentSettings.showPrep && (
-                                        <div className="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                                            <h3 className="font-bold text-sm text-slate-500 uppercase tracking-wider mb-4 flex items-center">
-                                                <History className="w-4 h-4 mr-2" /> Prep Time
+                                        <div className="bg-slate-900/50 p-5 border border-slate-800">
+                                            <h3 className="font-bold text-xs text-slate-500 uppercase tracking-widest mb-4 flex items-center">
+                                                <History className="w-3 h-3 mr-2" /> Prep Time
                                             </h3>
                                             <div className="space-y-4">
                                                 {/* Team A */}
-                                                <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
+                                                <div className="bg-black p-3 border border-slate-800">
                                                     <div className="flex justify-between items-center mb-2">
-                                                        <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">{currentSettings.teamA} Prep</span>
-                                                        <span className={`font-mono font-bold text-xl ${prepA < 30 ? 'text-red-500' : 'text-slate-800 dark:text-slate-200'}`}>{formatTime(prepA)}</span>
+                                                        <span className="text-[10px] font-bold text-cyan-500 uppercase">{currentSettings.teamA} Prep</span>
+                                                        <span className={`font-mono font-bold text-xl ${prepA < 30 ? 'text-red-500' : 'text-slate-200'}`}>{formatTime(prepA)}</span>
                                                     </div>
                                                     <div className="flex space-x-2">
-                                                        <button onClick={() => toggleTimer(isPrepARunning, setIsPrepARunning, prepAInterval, setPrepA)} className={`flex-1 py-1 text-xs rounded font-medium text-white ${isPrepARunning ? 'bg-amber-500' : 'bg-indigo-500 hover:bg-indigo-600'}`}>{isPrepARunning ? 'Pause' : 'Start'}</button>
-                                                        <button onClick={() => resetTimer(setPrepA, currentSettings.prepTime, setIsPrepARunning, prepAInterval)} className="px-3 py-1 text-xs rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300">Reset</button>
+                                                        <button onClick={() => toggleTimer(isPrepARunning, setIsPrepARunning, prepAInterval, setPrepA)} className={`flex-1 py-1 text-[10px] font-mono uppercase border ${isPrepARunning ? 'border-amber-500 text-amber-500' : 'border-cyan-500 text-cyan-500 hover:bg-cyan-900/20'}`}>{isPrepARunning ? 'Stop' : 'Start'}</button>
+                                                        <button onClick={() => resetTimer(setPrepA, currentSettings.prepTime, setIsPrepARunning, prepAInterval)} className="px-3 py-1 text-[10px] font-mono uppercase border border-slate-700 text-slate-500 hover:text-slate-300">Rst</button>
                                                     </div>
                                                 </div>
                                                 {/* Team B */}
-                                                <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
+                                                <div className="bg-black p-3 border border-slate-800">
                                                     <div className="flex justify-between items-center mb-2">
-                                                        <span className="text-xs font-bold text-purple-600 dark:text-purple-400">{currentSettings.teamB} Prep</span>
-                                                        <span className={`font-mono font-bold text-xl ${prepB < 30 ? 'text-red-500' : 'text-slate-800 dark:text-slate-200'}`}>{formatTime(prepB)}</span>
+                                                        <span className="text-[10px] font-bold text-purple-500 uppercase">{currentSettings.teamB} Prep</span>
+                                                        <span className={`font-mono font-bold text-xl ${prepB < 30 ? 'text-red-500' : 'text-slate-200'}`}>{formatTime(prepB)}</span>
                                                     </div>
                                                     <div className="flex space-x-2">
-                                                        <button onClick={() => toggleTimer(isPrepBRunning, setIsPrepBRunning, prepBInterval, setPrepB)} className={`flex-1 py-1 text-xs rounded font-medium text-white ${isPrepBRunning ? 'bg-amber-500' : 'bg-purple-500 hover:bg-purple-600'}`}>{isPrepBRunning ? 'Pause' : 'Start'}</button>
-                                                        <button onClick={() => resetTimer(setPrepB, currentSettings.prepTime, setIsPrepBRunning, prepBInterval)} className="px-3 py-1 text-xs rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300">Reset</button>
+                                                        <button onClick={() => toggleTimer(isPrepBRunning, setIsPrepBRunning, prepBInterval, setPrepB)} className={`flex-1 py-1 text-[10px] font-mono uppercase border ${isPrepBRunning ? 'border-amber-500 text-amber-500' : 'border-purple-500 text-purple-500 hover:bg-purple-900/20'}`}>{isPrepBRunning ? 'Stop' : 'Start'}</button>
+                                                        <button onClick={() => resetTimer(setPrepB, currentSettings.prepTime, setIsPrepBRunning, prepBInterval)} className="px-3 py-1 text-[10px] font-mono uppercase border border-slate-700 text-slate-500 hover:text-slate-300">Rst</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2045,31 +1837,31 @@
                                     )}
 
                                     {/* Grace / Tech Time - Show for all debates */}
-                                    <div className="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                                        <h3 className="font-bold text-sm text-slate-500 uppercase tracking-wider mb-4 flex items-center">
-                                            <AlertCircle className="w-4 h-4 mr-2" /> Grace / Tech Time
+                                    <div className="bg-slate-900/50 p-5 border border-slate-800">
+                                        <h3 className="font-bold text-xs text-slate-500 uppercase tracking-widest mb-4 flex items-center">
+                                            <AlertCircle className="w-3 h-3 mr-2" /> Grace / Tech
                                         </h3>
                                         <div className="space-y-4">
                                             {/* Team A */}
-                                            <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
+                                            <div className="bg-black p-3 border border-slate-800">
                                                 <div className="flex justify-between items-center mb-2">
-                                                    <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">{currentSettings.teamA} Grace</span>
-                                                    <span className={`font-mono font-bold text-xl ${graceA < 30 ? 'text-red-500' : 'text-slate-800 dark:text-slate-200'}`}>{formatTime(graceA)}</span>
+                                                    <span className="text-[10px] font-bold text-cyan-500 uppercase">{currentSettings.teamA} Grace</span>
+                                                    <span className={`font-mono font-bold text-xl ${graceA < 30 ? 'text-red-500' : 'text-slate-200'}`}>{formatTime(graceA)}</span>
                                                 </div>
                                                 <div className="flex space-x-2">
-                                                    <button onClick={() => toggleTimer(isGraceARunning, setIsGraceARunning, graceAInterval, setGraceA)} className={`flex-1 py-1 text-xs rounded font-medium text-white ${isGraceARunning ? 'bg-amber-500' : 'bg-indigo-500 hover:bg-indigo-600'}`}>{isGraceARunning ? 'Pause' : 'Start'}</button>
-                                                    <button onClick={() => resetTimer(setGraceA, 120, setIsGraceARunning, graceAInterval)} className="px-3 py-1 text-xs rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300">Reset</button>
+                                                    <button onClick={() => toggleTimer(isGraceARunning, setIsGraceARunning, graceAInterval, setGraceA)} className={`flex-1 py-1 text-[10px] font-mono uppercase border ${isGraceARunning ? 'border-amber-500 text-amber-500' : 'border-cyan-500 text-cyan-500 hover:bg-cyan-900/20'}`}>{isGraceARunning ? 'Stop' : 'Start'}</button>
+                                                    <button onClick={() => resetTimer(setGraceA, 120, setIsGraceARunning, graceAInterval)} className="px-3 py-1 text-[10px] font-mono uppercase border border-slate-700 text-slate-500 hover:text-slate-300">Rst</button>
                                                 </div>
                                             </div>
                                             {/* Team B */}
-                                            <div className="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
+                                            <div className="bg-black p-3 border border-slate-800">
                                                 <div className="flex justify-between items-center mb-2">
-                                                    <span className="text-xs font-bold text-purple-600 dark:text-purple-400">{currentSettings.teamB} Grace</span>
-                                                    <span className={`font-mono font-bold text-xl ${graceB < 30 ? 'text-red-500' : 'text-slate-800 dark:text-slate-200'}`}>{formatTime(graceB)}</span>
+                                                    <span className="text-[10px] font-bold text-purple-500 uppercase">{currentSettings.teamB} Grace</span>
+                                                    <span className={`font-mono font-bold text-xl ${graceB < 30 ? 'text-red-500' : 'text-slate-200'}`}>{formatTime(graceB)}</span>
                                                 </div>
                                                 <div className="flex space-x-2">
-                                                    <button onClick={() => toggleTimer(isGraceBRunning, setIsGraceBRunning, graceBInterval, setGraceB)} className={`flex-1 py-1 text-xs rounded font-medium text-white ${isGraceBRunning ? 'bg-amber-500' : 'bg-purple-500 hover:bg-purple-600'}`}>{isGraceBRunning ? 'Pause' : 'Start'}</button>
-                                                    <button onClick={() => resetTimer(setGraceB, 120, setIsGraceBRunning, graceBInterval)} className="px-3 py-1 text-xs rounded font-medium bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-300">Reset</button>
+                                                    <button onClick={() => toggleTimer(isGraceBRunning, setIsGraceBRunning, graceBInterval, setGraceB)} className={`flex-1 py-1 text-[10px] font-mono uppercase border ${isGraceBRunning ? 'border-amber-500 text-amber-500' : 'border-purple-500 text-purple-500 hover:bg-purple-900/20'}`}>{isGraceBRunning ? 'Stop' : 'Start'}</button>
+                                                    <button onClick={() => resetTimer(setGraceB, 120, setIsGraceBRunning, graceBInterval)} className="px-3 py-1 text-[10px] font-mono uppercase border border-slate-700 text-slate-500 hover:text-slate-300">Rst</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -2079,11 +1871,11 @@
                         </div>
 
                         {/* Resources / Rubric */}
-                        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
-                            <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50">
-                                <h3 className="font-bold text-lg text-slate-800 dark:text-slate-200">Judging Resources: {format}</h3>
+                        <div className="bg-slate-900/50 border border-slate-800">
+                            <div className="px-6 py-4 border-b border-slate-800 bg-black">
+                                <h3 className="font-bold text-sm text-white uppercase tracking-widest">Judging Resources: {format}</h3>
                             </div>
-                            <div className="p-6">
+                            <div className="p-6 prose prose-invert max-w-none font-mono text-sm text-slate-400">
                                 <MarkdownRenderer content={rubrics[format] || rubrics['default']} />
                             </div>
                         </div>
@@ -2339,7 +2131,7 @@
 
             // Render UI
             return (
-                <div className="flex h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans selection:bg-indigo-100 dark:selection:bg-indigo-900 transition-colors duration-200 overflow-hidden">
+                <div className="flex min-h-screen bg-slate-950 text-slate-300 font-mono selection:bg-cyan-900 selection:text-cyan-100 overflow-hidden">
                     {/* Sidebar */}
                     <Sidebar 
                         activeTab={activeTab} 
@@ -2354,159 +2146,269 @@
                     />
 
                     {/* Main Content */}
-                    <main className="flex-1 overflow-y-auto h-full relative">
-                        {/* Top Bar */}
-                        <header className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-20 px-6 py-3 flex items-center justify-between">
-                             <div className="flex items-center">
-                                <button 
-                                    onClick={() => setIsSidebarOpen(true)} 
-                                    className="lg:hidden mr-4 p-2 -ml-2 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
-                                >
-                                    <Menu className="w-6 h-6" />
-                                </button>
-                                <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-200 capitalize">
-                                    {activeTab === 'speech' ? 'Judge Text' : 
-                                     activeTab === 'board' ? 'Evaluate Board' : 
-                                     activeTab === 'listen' ? 'Live Coach' : 
+                    <main className="flex-1 ml-16 h-screen overflow-hidden flex flex-col relative">
+                        {/* Command Header */}
+                        <header className="h-14 bg-slate-950 border-b border-slate-800 flex items-center justify-between px-6 shrink-0 z-20">
+                             <div className="flex items-center space-x-4">
+                                <div className="flex items-center text-cyan-500 space-x-2">
+                                    <Activity className="w-4 h-4 animate-pulse" />
+                                    <span className="text-xs font-bold tracking-[0.2em] uppercase">System Online</span>
+                                </div>
+                                <div className="h-4 w-px bg-slate-800"></div>
+                                <h2 className="text-sm font-bold text-slate-100 uppercase tracking-widest">
+                                    {activeTab === 'speech' ? 'Text Analysis Protocol' : 
+                                     activeTab === 'board' ? 'Visual Strategy Decoder' : 
+                                     activeTab === 'listen' ? 'Audio Intercept Mode' : 
                                      activeTab}
                                 </h2>
                              </div>
-                             <div className="flex items-center space-x-4">
-                                <div className="flex items-center bg-slate-100 dark:bg-slate-700 rounded-full p-1">
-                                    <button onClick={() => setTheme('light')} className={`p-1.5 rounded-full transition-all ${theme === 'light' ? 'bg-white shadow text-yellow-500' : 'text-slate-400 hover:text-slate-600'}`} title="Light"><Sun className="w-4 h-4" /></button>
-                                    <button onClick={() => setTheme('dark')} className={`p-1.5 rounded-full transition-all ${theme === 'dark' ? 'bg-slate-600 shadow text-indigo-300' : 'text-slate-400 hover:text-slate-600'}`} title="Dark"><Moon className="w-4 h-4" /></button>
-                                    <button onClick={() => setTheme('forest')} className={`p-1.5 rounded-full transition-all ${theme === 'forest' ? 'bg-[#1c2321] shadow text-green-300 border border-green-800' : 'text-slate-400 hover:text-slate-600'}`} title="Forest"><Leaf className="w-4 h-4" /></button>
-                                    <button onClick={() => setTheme('coffee')} className={`p-1.5 rounded-full transition-all ${theme === 'coffee' ? 'bg-[#2b2118] shadow text-orange-300 border border-orange-800' : 'text-slate-400 hover:text-slate-600'}`} title="Coffee"><Coffee className="w-4 h-4" /></button>
-                                    <button onClick={() => setTheme('ocean')} className={`p-1.5 rounded-full transition-all ${theme === 'ocean' ? 'bg-[#0f172a] shadow text-blue-300 border border-blue-800' : 'text-slate-400 hover:text-slate-600'}`} title="Ocean"><Droplets className="w-4 h-4" /></button>
-                                    <button onClick={() => setTheme('midnight')} className={`p-1.5 rounded-full transition-all ${theme === 'midnight' ? 'bg-[#000000] shadow text-slate-300 border border-slate-700' : 'text-slate-400 hover:text-slate-600'}`} title="Midnight"><Star className="w-4 h-4" /></button>
+                             <div className="flex items-center space-x-6">
+                                <div className="hidden md:flex items-center space-x-4 text-xs text-slate-500 font-mono">
+                                    <span>CPU: <span className="text-green-400">12%</span></span>
+                                    <span>MEM: <span className="text-green-400">4.2GB</span></span>
+                                    <span>NET: <span className="text-green-400">1.2Gbps</span></span>
                                 </div>
+                                <div className="h-4 w-px bg-slate-800"></div>
                                 {user ? (
-                                    <div className="flex items-center">
-                                        <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold mr-2">
+                                    <div className="flex items-center space-x-3">
+                                        <div className="text-right hidden sm:block">
+                                            <div className="text-xs font-bold text-cyan-400 uppercase">{user.username || 'Operative'}</div>
+                                            <div className="text-[10px] text-slate-500 uppercase tracking-wider">Level 4 Clearance</div>
+                                        </div>
+                                        <div className="w-8 h-8 rounded bg-slate-900 border border-slate-700 flex items-center justify-center text-cyan-500 font-bold">
                                             {(user.username || user.email)[0].toUpperCase()}
                                         </div>
-                                        <button onClick={logout} className="text-slate-400 hover:text-red-500 transition-colors"><LogOut className="w-4 h-4" /></button>
+                                        <button onClick={logout} className="text-slate-500 hover:text-red-500 transition-colors"><LogOut className="w-4 h-4" /></button>
                                     </div>
                                 ) : (
-                                    <button onClick={() => setShowLogin(true)} className="text-sm font-medium text-indigo-600 hover:text-indigo-700">Sign In</button>
+                                    <button onClick={() => setShowLogin(true)} className="text-xs font-bold text-cyan-500 hover:text-cyan-400 uppercase tracking-wider border border-cyan-900 hover:border-cyan-500 px-4 py-1.5 rounded transition-all">Initialize Session</button>
                                 )}
                              </div>
                         </header>
 
-                        <div className="p-6 max-w-7xl mx-auto">
+                        <div className="flex-1 overflow-hidden relative">
                             {activeTab === 'dashboard' && (
-                                <Dashboard 
-                                    user={user} 
-                                    history={history} 
-                                    setActiveTab={setActiveTab} 
-                                    provider={provider}
-                                    apiKey={apiKey}
-                                    openaiKey={openaiKey}
-                                />
+                                <div className="h-full overflow-y-auto p-6">
+                                    <Dashboard 
+                                        user={user} 
+                                        history={history} 
+                                        setActiveTab={setActiveTab} 
+                                        provider={provider}
+                                        apiKey={apiKey}
+                                        openaiKey={openaiKey}
+                                    />
+                                </div>
                             )}
 
+                            {activeTab === 'coach' && (
+                                <div className="h-full overflow-y-auto p-6">
+                                    <CoachTools speechTimes={speechTimes} rubrics={rubrics} />
+                                </div>
+                            )}
+
+                            {['speech', 'board', 'listen'].includes(activeTab) && (
+                                <div className="flex flex-col lg:flex-row h-full">
+                                    {/* LEFT PANE - DATA INGESTION */}
+                                    <div className="w-full lg:w-5/12 flex flex-col border-r border-slate-800 bg-black relative z-10">
+                                        
+                                        {/* Control Panel */}
+                                        <div className="p-4 border-b border-slate-800 bg-slate-950/50">
+                                            <div className="grid grid-cols-2 gap-4 mb-4">
+                                                <div>
+                                                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Protocol</label>
+                                                    <div className="relative">
+                                                        <select className="w-full appearance-none bg-black border border-slate-700 text-cyan-400 py-2 px-3 text-xs font-mono uppercase outline-none focus:border-cyan-500 transition-colors cursor-pointer" value={speechType} onChange={(e) => setSpeechType(e.target.value)}>
+                                                            {speechTypes.map(t => <option key={t} value={t}>{t}</option>)}
+                                                        </select>
+                                                        <div className="absolute right-2 top-2.5 pointer-events-none">
+                                                            <div className="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[4px] border-t-cyan-500"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Alignment</label>
+                                                    <div className="relative">
+                                                        <select className="w-full appearance-none bg-black border border-slate-700 text-cyan-400 py-2 px-3 text-xs font-mono uppercase outline-none focus:border-cyan-500 transition-colors cursor-pointer" value={side} onChange={(e) => setSide(e.target.value)}>
+                                                            {sides.map(s => <option key={s} value={s}>{s}</option>)}
+                                                        </select>
+                                                        <div className="absolute right-2 top-2.5 pointer-events-none">
+                                                            <div className="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[4px] border-t-cyan-500"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="relative">
+                                                <span className="absolute left-3 top-2.5 text-slate-600 font-mono text-xs">{'>'}</span>
+                                                <input type="text" placeholder="ENTER RESOLUTION..." className="w-full bg-black border border-slate-700 text-green-400 py-2 pl-8 pr-3 text-xs font-mono focus:border-green-500 outline-none placeholder:text-slate-700 uppercase" value={topic} onChange={(e) => setTopic(e.target.value)} />
+                                            </div>
+                                        </div>
+
+                                        {/* Input Terminal */}
+                                        <div className="flex-1 overflow-y-auto relative custom-scrollbar bg-black p-1">
+                                            {activeTab === 'speech' && (
+                                                <textarea 
+                                                    className="w-full h-full p-4 bg-black text-green-400 font-mono text-xs leading-relaxed outline-none resize-none placeholder:text-slate-800" 
+                                                    placeholder="// AWAITING INPUT STREAM..." 
+                                                    value={transcript} 
+                                                    onChange={(e) => setTranscript(e.target.value)} 
+                                                    spellCheck="false"
+                                                />
+                                            )}
+                                            {activeTab === 'board' && (
+                                                <div className="p-6 space-y-6">
+                                                    {boardImages.length === 0 ? (
+                                                        <div className="border border-dashed border-slate-700 bg-slate-900/20 p-12 text-center hover:bg-slate-900/40 cursor-pointer transition-colors group" onClick={() => fileInputRef.current?.click()}>
+                                                            <Upload className="w-12 h-12 text-slate-600 group-hover:text-cyan-500 mb-4 mx-auto transition-colors" />
+                                                            <p className="text-xs text-slate-500 font-mono uppercase tracking-widest">Upload Visual Data</p>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="grid grid-cols-2 gap-4">
+                                                            {boardImages.map((img, idx) => (
+                                                                <div key={img.id} className="relative border border-slate-700 bg-slate-900 p-1 group">
+                                                                    <div className="absolute top-0 left-0 px-2 py-1 text-[10px] font-bold bg-cyan-900/50 text-cyan-400 border-b border-r border-slate-700 z-10">IMG_0{idx + 1}</div>
+                                                                    <img src={img.url} alt="" className="w-full h-32 object-cover opacity-80 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0" />
+                                                                    <button onClick={() => removeImage(img.id)} className="absolute top-1 right-1 text-red-500 hover:text-red-400"><X className="w-4 h-4" /></button>
+                                                                </div>
+                                                            ))}
+                                                            <div onClick={() => fileInputRef.current?.click()} className="flex items-center justify-center h-32 border border-dashed border-slate-700 cursor-pointer hover:border-cyan-500/50 transition-colors">
+                                                                <Plus className="w-6 h-6 text-slate-600" />
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                    <input type="file" multiple ref={fileInputRef} className="hidden" accept="image/*" onChange={handleImageUpload} />
+                                                    <textarea className="w-full h-32 p-3 bg-black border border-slate-700 text-green-400 font-mono text-xs outline-none focus:border-green-500 transition-colors resize-none" placeholder="// ADD STRATEGIC CONTEXT..." value={boardDescription} onChange={(e) => setBoardDescription(e.target.value)} />
+                                                </div>
+                                            )}
+                                            {activeTab === 'listen' && (
+                                                <div className="h-full flex flex-col items-center justify-center p-6 space-y-8">
+                                                    <div className="w-full max-w-md border border-slate-700 bg-slate-900/30 p-6 relative overflow-hidden">
+                                                        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-500"></div>
+                                                        <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-cyan-500"></div>
+                                                        <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-cyan-500"></div>
+                                                        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-500"></div>
+                                                        
+                                                        <div className="text-center mb-6">
+                                                            <div className="text-xs font-mono text-cyan-500 mb-2 uppercase tracking-widest">Audio Intercept</div>
+                                                            <div className="text-4xl font-mono font-bold text-white tracking-tighter">
+                                                                {formatTime(recordingTime)}
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="h-24 bg-black border border-slate-800 flex items-center justify-center mb-6 relative overflow-hidden">
+                                                            {isRecording ? (
+                                                                <AudioVisualizer analyser={analyser} isRecording={isRecording} />
+                                                            ) : (
+                                                                <div className="text-[10px] text-slate-600 font-mono uppercase">Signal Lost</div>
+                                                            )}
+                                                            <div className="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,0.05)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
+                                                        </div>
+
+                                                        <div className="flex justify-center">
+                                                            <button 
+                                                                onClick={isRecording ? stopRecording : startRecording}
+                                                                className={`w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all ${isRecording ? 'border-red-500 bg-red-500/10 text-red-500 animate-pulse' : 'border-cyan-500 bg-cyan-500/10 text-cyan-500 hover:bg-cyan-500/20'}`}
+                                                            >
+                                                                {isRecording ? <Square className="w-6 h-6 fill-current" /> : <Mic className="w-6 h-6" />}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Action Footer */}
+                                        <div className="p-4 border-t border-slate-800 bg-slate-950">
+                                            {error && (
+                                                <div className="mb-3 text-[10px] text-red-400 font-mono border border-red-900/50 bg-red-900/10 p-2 flex items-center">
+                                                    <AlertCircle className="w-3 h-3 mr-2" /> {error}
+                                                </div>
+                                            )}
+                                            <button onClick={() => handleAnalyze(false)} disabled={loading} className={`w-full flex items-center justify-center px-6 py-3 font-bold text-xs uppercase tracking-widest transition-all border ${loading ? 'bg-slate-900 border-slate-700 text-slate-500 cursor-not-allowed' : 'bg-cyan-900/20 border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-black'}`}>
+                                                {loading ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Processing...</> : <><Send className="w-4 h-4 mr-2" /> Execute Analysis</>}
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* RIGHT PANE - ANALYSIS TERMINAL */}
+                                    <div className="w-full lg:w-7/12 overflow-y-auto bg-slate-950 p-6 lg:p-10 relative custom-scrollbar">
+                                        {/* Background Grid */}
+                                        <div className="absolute inset-0 bg-[linear-gradient(rgba(30,41,59,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(30,41,59,0.2)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
+
+                                        {result ? (
+                                            <div className="max-w-4xl mx-auto space-y-8 relative z-10 animate-in slide-in-from-bottom-4 duration-500">
+                                                {/* Radar Hologram */}
+                                                {radarData && (
+                                                    <div className="border border-slate-800 bg-slate-900/50 p-6 relative overflow-hidden">
+                                                        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-500"></div>
+                                                        <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-cyan-500"></div>
+                                                        <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-cyan-500"></div>
+                                                        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-500"></div>
+                                                        
+                                                        <h3 className="text-xs font-bold text-cyan-500 uppercase tracking-widest mb-6 text-center border-b border-slate-800 pb-2">Performance Matrix</h3>
+                                                        <div className="h-64 w-full">
+                                                            <ResponsiveContainer width="100%" height="100%">
+                                                                <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
+                                                                    <PolarGrid stroke="#1e293b" />
+                                                                    <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 10, fontFamily: 'monospace' }} />
+                                                                    <PolarRadiusAxis angle={30} domain={[0, 10]} tick={false} axisLine={false} />
+                                                                    <Radar name="Score" dataKey="A" stroke="#06b6d4" strokeWidth={2} fill="#06b6d4" fillOpacity={0.2} />
+                                                                </RadarChart>
+                                                            </ResponsiveContainer>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                
+                                                {/* Analysis Output */}
+                                                <div className="border border-slate-800 bg-black p-8 relative">
+                                                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-purple-500 to-cyan-500 opacity-50"></div>
+                                                    <div className="prose prose-invert max-w-none font-mono text-sm leading-loose text-slate-300">
+                                                        <MarkdownRenderer content={result} />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className="h-full flex flex-col items-center justify-center text-slate-600 opacity-50">
+                                                <div className="w-32 h-32 border border-slate-800 rounded-full flex items-center justify-center mb-6 animate-pulse">
+                                                    <Activity className="w-12 h-12" />
+                                                </div>
+                                                <p className="text-xs font-mono uppercase tracking-widest">System Standby</p>
+                                                <p className="text-[10px] font-mono mt-2">Awaiting Data Stream</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                            
                             {activeTab === 'contact' && (
-                                <div className="max-w-2xl mx-auto">
-                                    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
-                                        <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
-                                            <h3 className="text-lg font-semibold">Contact Us</h3>
-                                            <p className="text-sm text-slate-500">Get in touch with the team</p>
-                                        </div>
-                                        <div className="p-8 text-center space-y-6">
-                                            <div className="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center mx-auto text-indigo-600 dark:text-indigo-400">
-                                                <Mail className="w-8 h-8" />
-                                            </div>
-                                            <div>
-                                                <h4 className="text-xl font-bold text-slate-900 dark:text-white mb-2">We'd love to hear from you!</h4>
-                                                <p className="text-slate-600 dark:text-slate-400 max-w-md mx-auto">
-                                                    Have questions, feedback, or need support? Reach out to us directly via email.
-                                                </p>
-                                            </div>
-                                            <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-700 inline-flex items-center space-x-3">
-                                                <Mail className="w-5 h-5 text-slate-400" />
-                                                <a href="mailto:adjucatorai@gmail.com" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">
-                                                    adjucatorai@gmail.com
-                                                </a>
-                                            </div>
-                                        </div>
+                                <div className="p-12 flex justify-center">
+                                    <div className="max-w-md w-full border border-slate-800 bg-slate-900/50 p-8 text-center">
+                                        <Mail className="w-12 h-12 text-cyan-500 mx-auto mb-4" />
+                                        <h3 className="text-lg font-bold text-white uppercase tracking-widest mb-2">Comms Channel</h3>
+                                        <p className="text-slate-400 font-mono text-sm mb-6">adjucatorai@gmail.com</p>
                                     </div>
                                 </div>
                             )}
 
                             {activeTab === 'settings' && (
-                                <div className="max-w-2xl mx-auto">
-                                    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
-                                        <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
-                                            <h3 className="text-lg font-semibold">Configuration</h3>
-                                            <p className="text-sm text-slate-500">Manage your API keys and preferences</p>
-                                        </div>
-                                        <div className="p-6 space-y-6">
+                                <div className="p-12 flex justify-center">
+                                    <div className="max-w-lg w-full border border-slate-800 bg-slate-900/50 p-8">
+                                        <h3 className="text-lg font-bold text-white uppercase tracking-widest mb-6 border-b border-slate-800 pb-4">System Configuration</h3>
+                                        
+                                        <div className="space-y-6">
                                             <div>
-                                                <label className="block text-sm font-medium mb-2">AI Provider</label>
-                                                <div className="flex space-x-4 mb-4">
-                                                    <label className="flex items-center cursor-pointer p-3 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors flex-1">
-                                                        <input type="radio" name="provider" value="gemini" checked={provider === 'gemini'} onChange={() => setProvider('gemini')} className="mr-3" />
-                                                        <span className="font-medium">Google Gemini</span>
-                                                    </label>
-                                                    <label className="flex items-center cursor-pointer p-3 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors flex-1">
-                                                        <input type="radio" name="provider" value="openai" checked={provider === 'openai'} onChange={() => setProvider('openai')} className="mr-3" />
-                                                        <span className="font-medium">OpenAI (GPT-4o)</span>
-                                                    </label>
+                                                <label className="block text-xs font-bold text-slate-500 uppercase mb-2">AI Core</label>
+                                                <div className="flex space-x-4">
+                                                    <button onClick={() => setProvider('gemini')} className={`flex-1 py-2 border ${provider === 'gemini' ? 'border-cyan-500 text-cyan-400 bg-cyan-900/20' : 'border-slate-700 text-slate-500'} text-xs font-mono uppercase transition-all`}>Gemini</button>
+                                                    <button onClick={() => setProvider('openai')} className={`flex-1 py-2 border ${provider === 'openai' ? 'border-cyan-500 text-cyan-400 bg-cyan-900/20' : 'border-slate-700 text-slate-500'} text-xs font-mono uppercase transition-all`}>OpenAI</button>
                                                 </div>
-                                                
-                                                {provider === 'gemini' ? (
-                                                    <div>
-                                                        <label className="block text-sm font-medium mb-2">
-                                                            Gemini API Key
-                                                            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-xs text-indigo-600 hover:underline ml-2 font-normal">(Get Key)</a>
-                                                        </label>
-                                                        <div className="flex space-x-2">
-                                                            <input type="password" placeholder="Paste your Gemini API key..." className="flex-1 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" value={apiKey} onChange={(e) => setApiKey(e.target.value)} />
-                                                            <button 
-                                                                onClick={() => verifyAndSaveKey('gemini', apiKey)}
-                                                                disabled={verificationStatus.gemini === 'loading' || !apiKey}
-                                                                className={`px-4 py-2 rounded-lg font-medium text-white transition-all ${
-                                                                    verificationStatus.gemini === 'success' ? 'bg-green-600 hover:bg-green-700' :
-                                                                    verificationStatus.gemini === 'error' ? 'bg-red-600 hover:bg-red-700' :
-                                                                    'bg-indigo-600 hover:bg-indigo-700'
-                                                                }`}
-                                                            >
-                                                                {verificationStatus.gemini === 'loading' ? <Loader2 className="w-5 h-5 animate-spin" /> : 
-                                                                 verificationStatus.gemini === 'success' ? <CheckCircle2 className="w-5 h-5" /> : 
-                                                                 verificationStatus.gemini === 'error' ? <AlertCircle className="w-5 h-5" /> : 
-                                                                 'Verify & Save'}
-                                                            </button>
-                                                        </div>
-                                                        {verificationStatus.gemini === 'success' && <p className="text-xs text-green-600 mt-1">Key verified and saved!</p>}
-                                                        {verificationStatus.gemini === 'error' && <p className="text-xs text-red-600 mt-1">Invalid API Key. Please check and try again.</p>}
-                                                    </div>
-                                                ) : (
-                                                    <div>
-                                                        <label className="block text-sm font-medium mb-2">
-                                                            OpenAI API Key
-                                                            <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer" className="text-xs text-indigo-600 hover:underline ml-2 font-normal">(Get Key)</a>
-                                                        </label>
-                                                        <div className="flex space-x-2">
-                                                            <input type="password" placeholder="Paste your OpenAI API key..." className="flex-1 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" value={openaiKey} onChange={(e) => setOpenaiKey(e.target.value)} />
-                                                            <button 
-                                                                onClick={() => verifyAndSaveKey('openai', openaiKey)}
-                                                                disabled={verificationStatus.openai === 'loading' || !openaiKey}
-                                                                className={`px-4 py-2 rounded-lg font-medium text-white transition-all ${
-                                                                    verificationStatus.openai === 'success' ? 'bg-green-600 hover:bg-green-700' :
-                                                                    verificationStatus.openai === 'error' ? 'bg-red-600 hover:bg-red-700' :
-                                                                    'bg-indigo-600 hover:bg-indigo-700'
-                                                                }`}
-                                                            >
-                                                                {verificationStatus.openai === 'loading' ? <Loader2 className="w-5 h-5 animate-spin" /> : 
-                                                                 verificationStatus.openai === 'success' ? <CheckCircle2 className="w-5 h-5" /> : 
-                                                                 verificationStatus.openai === 'error' ? <AlertCircle className="w-5 h-5" /> : 
-                                                                 'Verify & Save'}
-                                                            </button>
-                                                        </div>
-                                                        {verificationStatus.openai === 'success' && <p className="text-xs text-green-600 mt-1">Key verified and saved!</p>}
-                                                        {verificationStatus.openai === 'error' && <p className="text-xs text-red-600 mt-1">Invalid API Key. Please check and try again.</p>}
-                                                    </div>
-                                                )}
+                                            </div>
+
+                                            <div>
+                                                <label className="block text-xs font-bold text-slate-500 uppercase mb-2">API Key</label>
+                                                <div className="flex space-x-2">
+                                                    <input type="password" className="flex-1 bg-black border border-slate-700 text-slate-300 px-3 py-2 text-xs font-mono outline-none focus:border-cyan-500" value={provider === 'gemini' ? apiKey : openaiKey} onChange={(e) => provider === 'gemini' ? setApiKey(e.target.value) : setOpenaiKey(e.target.value)} placeholder="••••••••••••••••" />
+                                                    <button onClick={() => verifyAndSaveKey(provider, provider === 'gemini' ? apiKey : openaiKey)} className="px-4 py-2 bg-cyan-900/20 border border-cyan-500 text-cyan-400 text-xs font-bold uppercase hover:bg-cyan-500 hover:text-black transition-all">Save</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -2514,539 +2416,80 @@
                             )}
 
                             {activeTab === 'history' && (
-                                <div className="space-y-4">
-                                    <div className="flex justify-between items-center mb-4">
-                                        <h3 className="text-lg font-semibold">Analysis History</h3>
-                                        {history.length > 0 && (
-                                            <button onClick={clearHistory} className="text-red-500 hover:text-red-700 text-sm flex items-center px-3 py-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
-                                                <Trash2 className="w-4 h-4 mr-1" /> Clear All
-                                            </button>
-                                        )}
-                                    </div>
-                                    {history.length === 0 ? (
-                                        <div className="text-center py-12 text-slate-500">No history yet. Start analyzing!</div>
-                                    ) : (
-                                        history.map((item) => (
-                                            <div key={item.id} className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow cursor-pointer" onClick={() => { 
-                                                setResult(item.result || item.content); 
-                                                setTopic(item.topic);
-                                                if (item.type === 'speech' || item.type === 'Judge Text') {
-                                                    setTranscript(typeof item.input === 'string' ? item.input : '');
-                                                    setActiveTab('speech');
-                                                } else if (item.type === 'listen' || item.type === 'Live Coach') {
-                                                    if (item.input && item.input.raw) setAudioData(item.input);
-                                                    setActiveTab('listen');
-                                                } else if (item.type === 'board' || item.type === 'Evaluate Board') {
-                                                    if (item.input) {
-                                                        setBoardDescription(item.input.description || '');
-                                                        setBoardImages(item.input.images || []);
+                                <div className="p-6 h-full overflow-y-auto">
+                                    <div className="max-w-4xl mx-auto">
+                                        <div className="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
+                                            <h3 className="text-lg font-bold text-white uppercase tracking-widest">Mission Logs</h3>
+                                            {history.length > 0 && (
+                                                <button onClick={clearHistory} className="text-red-500 text-xs font-mono uppercase hover:text-red-400 flex items-center">
+                                                    <Trash2 className="w-3 h-3 mr-1" /> Purge
+                                                </button>
+                                            )}
+                                        </div>
+                                        <div className="space-y-2">
+                                            {history.map((item) => (
+                                                <div key={item.id} onClick={() => { 
+                                                    setResult(item.result || item.content); 
+                                                    setTopic(item.topic);
+                                                    if (item.type === 'speech' || item.type === 'Judge Text') {
+                                                        setTranscript(typeof item.input === 'string' ? item.input : '');
+                                                        setActiveTab('speech');
+                                                    } else if (item.type === 'listen' || item.type === 'Live Coach') {
+                                                        if (item.input && item.input.raw) setAudioData(item.input);
+                                                        setActiveTab('listen');
+                                                    } else if (item.type === 'board' || item.type === 'Evaluate Board') {
+                                                        if (item.input) {
+                                                            setBoardDescription(item.input.description || '');
+                                                            setBoardImages(item.input.images || []);
+                                                        }
+                                                        setActiveTab('board');
                                                     }
-                                                    setActiveTab('board');
-                                                }
-                                            }}>
-                                                <div className="flex justify-between items-start mb-2">
-                                                    <span className="px-2 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-xs rounded-full font-medium uppercase">{item.type}</span>
-                                                    <span className="text-xs text-slate-400">{new Date(item.date).toLocaleString()}</span>
-                                                </div>
-                                                <p className="text-sm text-slate-600 dark:text-slate-300 line-clamp-2">{item.preview || (item.content ? item.content.substring(0, 100) + '...' : 'No preview')}</p>
-                                            </div>
-                                        ))
-                                    )}
-                                </div>
-                            )}
-
-                            {activeTab === 'coach' && (
-                                <CoachTools speechTimes={speechTimes} rubrics={rubrics} />
-                            )}
-
-                            {['speech', 'board', 'listen'].includes(activeTab) && (
-                                <div className="flex flex-col lg:flex-row h-[calc(100vh-64px)] overflow-hidden animate-in fade-in">
-                                    {/* LEFT PANE - INPUT STUDIO */}
-                                    <div className="w-full lg:w-5/12 flex flex-col border-r border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 relative z-10 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
-                                        
-                                        {/* Context Header (Collapsible or Compact) */}
-                                        <div className="p-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 backdrop-blur-sm">
-                                            <div className="grid grid-cols-2 gap-3 mb-3">
-                                                <div>
-                                                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Format</label>
-                                                    <div className="relative group">
-                                                        <select className="w-full appearance-none bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 py-2 px-3 rounded-lg text-xs shadow-sm focus:ring-1 focus:ring-indigo-500 outline-none transition-all cursor-pointer" value={speechType} onChange={(e) => setSpeechType(e.target.value)}>
-                                                            {speechTypes.map(t => <option key={t} value={t}>{t}</option>)}
-                                                        </select>
-                                                        <ChevronDown className="absolute right-2 top-2.5 w-3 h-3 text-slate-400 pointer-events-none" />
+                                                }} className="bg-slate-900/30 border border-slate-800 p-4 cursor-pointer hover:border-cyan-500/50 hover:bg-slate-900/50 transition-all group">
+                                                    <div className="flex justify-between items-start">
+                                                        <div>
+                                                            <span className="text-[10px] font-bold text-cyan-500 uppercase tracking-wider border border-cyan-900/50 px-1.5 py-0.5 bg-cyan-900/10">{item.type}</span>
+                                                            <h4 className="text-sm font-mono text-slate-300 mt-2 group-hover:text-white">{item.topic}</h4>
+                                                        </div>
+                                                        <span className="text-[10px] text-slate-600 font-mono">{new Date(item.date).toLocaleDateString()}</span>
                                                     </div>
                                                 </div>
-                                                <div>
-                                                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Role</label>
-                                                    <div className="relative group">
-                                                        <select className="w-full appearance-none bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 py-2 px-3 rounded-lg text-xs shadow-sm focus:ring-1 focus:ring-indigo-500 outline-none transition-all cursor-pointer" value={side} onChange={(e) => setSide(e.target.value)}>
-                                                            {sides.map(s => <option key={s} value={s}>{s}</option>)}
-                                                        </select>
-                                                        <ChevronDown className="absolute right-2 top-2.5 w-3 h-3 text-slate-400 pointer-events-none" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <input type="text" placeholder="Resolved: The United States..." className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 py-2 px-3 rounded-lg text-xs focus:ring-1 focus:ring-indigo-500 outline-none" value={topic} onChange={(e) => setTopic(e.target.value)} />
+                                            ))}
                                         </div>
-
-                                        {/* Main Input Area (Scrollable) */}
-                                        <div className="flex-1 overflow-y-auto relative group">
-                                            {activeTab === 'speech' && (
-                                                <textarea 
-                                                    className="w-full h-full p-6 bg-transparent border-0 focus:ring-0 resize-none font-mono text-sm leading-relaxed text-slate-800 dark:text-slate-200 placeholder:text-slate-300 dark:placeholder:text-slate-600 outline-none" 
-                                                    placeholder="// Paste your speech transcript here..." 
-                                                    value={transcript} 
-                                                    onChange={(e) => setTranscript(e.target.value)} 
-                                                />
-                                            )}
-                                            {activeTab === 'board' && (
-                                                <div className="p-6 space-y-6">
-                                                    {boardImages.length === 0 ? (
-                                                        <div className="border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-lg p-8 text-center hover:bg-slate-50 dark:hover:bg-slate-900/50 cursor-pointer transition-colors" onClick={() => fileInputRef.current?.click()}>
-                                                            <Upload className="w-10 h-10 text-slate-400 mb-3 mx-auto" />
-                                                            <p className="text-sm text-slate-500">Click to upload Board Images</p>
-                                                        </div>
-                                                    ) : (
-                                                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                                                            {boardImages.map((img, idx) => (
-                                                                <div key={img.id} className="relative border border-slate-200 dark:border-slate-700 rounded-lg p-1 group">
-                                                                    <div className="absolute top-0 left-0 px-2 py-1 text-xs font-semibold bg-slate-100 dark:bg-slate-900 rounded-br-lg z-10">Board {idx + 1}</div>
-                                                                    <img src={img.url} alt="" className="w-full h-24 object-cover rounded" />
-                                                                    <button onClick={() => removeImage(img.id)} className="absolute -top-2 -right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"><X className="w-3 h-3" /></button>
-                                                                </div>
-                                                            ))}
-                                                            <div onClick={() => fileInputRef.current?.click()} className="flex flex-col items-center justify-center h-26 border-2 border-dashed border-slate-300 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors">
-                                                                <Plus className="w-6 h-6 text-slate-400" />
-                                                            </div>
-                                                        </div>
-                                                    )}
-                                                    <input type="file" multiple ref={fileInputRef} className="hidden" accept="image/*" onChange={handleImageUpload} />
-                                                    <textarea className="w-full h-32 p-3 rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 resize-none outline-none text-sm focus:ring-2 focus:ring-indigo-500 transition-all" placeholder="Describe board strategy..." value={boardDescription} onChange={(e) => setBoardDescription(e.target.value)} />
-                                                    <div className="flex justify-end">
-                                                        <button onClick={() => handleAnalyze(true)} className="text-xs flex items-center text-indigo-600 dark:text-indigo-400 hover:underline">
-                                                            <Lightbulb className="w-3 h-3 mr-1" /> Need ideas? Generate a board strategy
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            )}
-                                            {activeTab === 'listen' && (
-                                                <div className="h-full flex flex-col items-center justify-center p-6 space-y-8">
-                                                    <div className="w-full max-w-md bg-slate-100 dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-inner">
-                                                        <div className="flex space-x-2 mb-6 overflow-x-auto pb-2 scrollbar-hide">
-                                                            {(speechTimes[speechType] || speechTimes['default']).map((s, idx) => (
-                                                                <button 
-                                                                    key={s.name}
-                                                                    onClick={() => {
-                                                                        setSelectedSection(s);
-                                                                        setRecordingTime(0);
-                                                                        setIsRecording(false);
-                                                                        setAudioData(null);
-                                                                    }}
-                                                                    className={`flex-shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap ${
-                                                                        selectedSection?.name === s.name 
-                                                                            ? 'bg-indigo-600 text-white shadow-md ring-2 ring-indigo-200 dark:ring-indigo-900' 
-                                                                            : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-indigo-300'
-                                                                    }`}
-                                                                >
-                                                                    {s.name}
-                                                                    <span className="ml-1.5 opacity-70 text-[10px]">{formatTime(s.time)}</span>
-                                                                </button>
-                                                            ))}
-                                                        </div>
-
-                                                        <div className="flex justify-between items-end mb-3">
-                                                            <div className="flex flex-col">
-                                                                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Current Section</span>
-                                                                <span className="text-xl font-bold text-indigo-600 dark:text-indigo-400">{selectedSection?.name}</span>
-                                                            </div>
-                                                            <div className="text-right">
-                                                                <span className={`text-3xl font-mono font-bold ${recordingTime > (selectedSection?.time || 0) ? 'text-red-500' : 'text-slate-700 dark:text-slate-200'}`}>
-                                                                    {formatTime(recordingTime)}
-                                                                </span>
-                                                                <span className="text-xs text-slate-400 block mt-1">Target: {formatTime(selectedSection?.time || 0)}</span>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div className="relative h-4 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden shadow-inner border border-slate-300 dark:border-slate-600">
-                                                            <div 
-                                                                className={`absolute top-0 left-0 h-full transition-all duration-1000 ease-linear ${
-                                                                    recordingTime > (selectedSection?.time || 0) 
-                                                                        ? 'bg-red-500' 
-                                                                        : recordingTime > ((selectedSection?.time || 0) * 0.8) 
-                                                                            ? 'bg-amber-500' 
-                                                                            : 'bg-indigo-500'
-                                                                }`}
-                                                                style={{ width: `${Math.min((recordingTime / (selectedSection?.time || 1)) * 100, 100)}%` }}
-                                                            ></div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="flex flex-col items-center space-y-6 w-full">
-                                                        <div className="h-32 flex items-center justify-center w-full bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden relative">
-                                                            {isRecording ? (
-                                                                <AudioVisualizer analyser={analyser} isRecording={isRecording} />
-                                                            ) : (
-                                                                <div className="text-center z-10">
-                                                                    <p className="text-sm text-slate-500 font-medium">{audioData ? 'Recording saved. Ready for analysis.' : 'Press microphone to start recording'}</p>
-                                                                </div>
-                                                            )}
-                                                        </div>
-
-                                                        <div className="flex items-center justify-center space-x-8">
-                                                            <div className="relative group">
-                                                                {isRecording && <div className="absolute inset-0 bg-red-500 rounded-full animate-ping opacity-20"></div>}
-                                                                {!isRecording ? (
-                                                                    <button onClick={startRecording} className="relative z-10 w-16 h-16 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full flex items-center justify-center shadow-lg shadow-indigo-500/30 transform hover:scale-105 transition-all">
-                                                                        <Mic className="w-7 h-7" />
-                                                                    </button>
-                                                                ) : (
-                                                                    <button onClick={stopRecording} className="relative z-10 w-16 h-16 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg shadow-red-500/30 transform hover:scale-105 transition-all">
-                                                                        <Square className="w-7 h-7 fill-current" />
-                                                                    </button>
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div className="w-full max-w-md">
-                                                            <ToneIndicator analyser={analyser} isRecording={isRecording} />
-                                                        </div>
-                                                    </div>
-
-                                                    {audioData && !isRecording && (
-                                                        <div className="flex items-center space-x-4 animate-in fade-in slide-in-from-bottom-4">
-                                                            <div className="flex items-center px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-full border border-green-200 dark:border-green-800 text-sm font-medium">
-                                                                <CheckCircle2 className="w-4 h-4 mr-2" /> Audio Captured
-                                                            </div>
-                                                            <button onClick={resetAudio} className="text-sm text-slate-500 hover:text-slate-700 underline">Discard & Retry</button>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        {/* Sticky Footer */}
-                                        <div className="p-4 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
-                                            {error && (
-                                                <div className="mb-3 text-xs text-red-500 bg-red-50 dark:bg-red-900/20 p-2 rounded border border-red-100 dark:border-red-800 flex items-center">
-                                                    <AlertCircle className="w-3 h-3 mr-2" /> {error}
-                                                </div>
-                                            )}
-                                            <button onClick={() => handleAnalyze(false)} disabled={loading} className={`w-full flex items-center justify-center px-6 py-3 rounded-lg font-medium text-white shadow-md transition-all ${loading ? 'bg-slate-400 cursor-not-allowed' : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-indigo-500/25'}`}>
-                                                {loading ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Analyzing...</> : <><Send className="w-4 h-4 mr-2" /> Run Analysis</>}
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    {/* RIGHT PANE - JUDGE'S CHAMBER */}
-                                    <div className="w-full lg:w-7/12 overflow-y-auto bg-slate-50 dark:bg-slate-950 p-4 lg:p-12 scroll-smooth">
-                                        {result ? (
-                                            <div className="max-w-3xl mx-auto space-y-8 animate-in slide-in-from-bottom-4 duration-500">
-                                                {/* Radar Chart */}
-                                                {radarData && (
-                                                    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
-                                                        <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-6 text-center">Performance Metrics</h3>
-                                                        <div className="h-64 w-full">
-                                                            <ResponsiveContainer width="100%" height="100%">
-                                                                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarData}>
-                                                                    <PolarGrid stroke="#e2e8f0" strokeDasharray="3 3" />
-                                                                    <PolarAngleAxis dataKey="subject" tick={{ fill: '#64748b', fontSize: 11, fontWeight: 500 }} />
-                                                                    <PolarRadiusAxis angle={30} domain={[0, 10]} tick={false} axisLine={false} />
-                                                                    <Radar name="Score" dataKey="A" stroke="#6366f1" strokeWidth={2} fill="#818cf8" fillOpacity={0.2} />
-                                                                </RadarChart>
-                                                            </ResponsiveContainer>
-                                                        </div>
-                                                    </div>
-                                                )}
-                                                
-                                                {/* Analysis Paper */}
-                                                <div className="bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-800 rounded-xl p-8 lg:p-10">
-                                                    <div className="prose prose-slate dark:prose-invert max-w-none font-serif leading-loose">
-                                                        <MarkdownRenderer content={result} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            <div className="h-full flex flex-col items-center justify-center text-slate-400 opacity-60">
-                                                <div className="w-24 h-24 bg-slate-200 dark:bg-slate-800 rounded-full mb-6 flex items-center justify-center">
-                                                    <Gavel className="w-10 h-10 text-slate-300 dark:text-slate-600" />
-                                                </div>
-                                                <p className="text-lg font-medium">Ready to Adjudicate</p>
-                                                <p className="text-sm">Input data on the left to begin analysis</p>
-                                            </div>
-                                        )}
                                     </div>
                                 </div>
                             )}
                         </div>
                     </main>
 
-                    {/* Login Modal */}
+                    {/* Modals (Login, etc) - Simplified for Dark Mode */}
                     {showLogin && (
-                        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm animate-in fade-in">
-                            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-200 dark:border-slate-700 relative">
-                                <button onClick={() => setShowLogin(false)} className="absolute top-4 right-4 p-2 bg-slate-100 dark:bg-slate-700 rounded-full text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors z-10" aria-label="Close">
-                                    <X className="w-5 h-5" />
-                                </button>
-                                <div className="p-8">
-                                    <div className="flex justify-center mb-6">
-                                        <div className="bg-indigo-600 p-3 rounded-xl shadow-lg shadow-indigo-500/30">
-                                            <Gavel className="w-8 h-8 text-white" />
-                                        </div>
+                        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+                            <div className="bg-slate-950 border border-slate-700 max-w-md w-full p-8 relative">
+                                <button onClick={() => setShowLogin(false)} className="absolute top-4 right-4 text-slate-500 hover:text-white"><X className="w-5 h-5" /></button>
+                                <div className="text-center mb-8">
+                                    <div className="w-12 h-12 bg-cyan-900/20 border border-cyan-500/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <User className="w-6 h-6 text-cyan-500" />
                                     </div>
-                                    <h2 className="text-2xl font-bold text-center text-slate-900 dark:text-white mb-2">
-                                        {authMode === 'login' ? 'Welcome Back' : 'Create Account'}
-                                    </h2>
-                                    
-                                    <div className="mb-6 text-center">
-                                        <p className="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 p-2 rounded border border-amber-100 dark:border-amber-800/30">
-                                            <AlertCircle className="w-3 h-3 inline mr-1 mb-0.5" />
-                                            Note: You can skip login, but history won't be saved to the cloud.
-                                        </p>
-                                    </div>
-
-                                    <form onSubmit={handleAuth} className="space-y-4">
-                                        {authMode === 'signup' && (
-                                            <div>
-                                                <label className="block text-xs font-semibold text-slate-500 uppercase mb-1">Username</label>
-                                                <div className="relative">
-                                                    <User className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
-                                                    <input 
-                                                        type="text" 
-                                                        required
-                                                        className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" 
-                                                        placeholder="Username"
-                                                        value={authUsername}
-                                                        onChange={(e) => setAuthUsername(e.target.value)}
-                                                    />
-                                                </div>
-                                            </div>
-                                        )}
-                                        <div>
-                                            <label className="block text-xs font-semibold text-slate-500 uppercase mb-1">Email</label>
-                                            <div className="relative">
-                                                <User className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
-                                                <input 
-                                                    type="email" 
-                                                    required
-                                                    className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" 
-                                                    placeholder="name@example.com"
-                                                    value={authEmail}
-                                                    onChange={(e) => setAuthEmail(e.target.value)}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label className="block text-xs font-semibold text-slate-500 uppercase mb-1">Password</label>
-                                            <div className="relative">
-                                                <Lock className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
-                                                <input 
-                                                    type="password" 
-                                                    required
-                                                    className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" 
-                                                    placeholder="••••••••"
-                                                    value={authPassword}
-                                                    onChange={(e) => setAuthPassword(e.target.value)}
-                                                />
-                                            </div>
-                                        </div>
-
-                                        {authError && (
-                                            <div className="text-red-500 text-xs text-center bg-red-50 dark:bg-red-900/20 p-2 rounded">
-                                                {authError}
-                                            </div>
-                                        )}
-
-                                        <button type="submit" className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors shadow-lg shadow-indigo-500/30">
-                                            {authMode === 'login' ? 'Sign In' : 'Create Account'}
-                                        </button>
-                                    </form>
-
-                                    <div className="my-4 flex items-center">
-                                        <div className="flex-grow border-t border-slate-200 dark:border-slate-700"></div>
-                                        <span className="mx-4 text-xs text-slate-400 uppercase">Or</span>
-                                        <div className="flex-grow border-t border-slate-200 dark:border-slate-700"></div>
-                                    </div>
-
-                                    <button onClick={handleGoogleLogin} className="w-full py-2.5 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 rounded-lg font-medium transition-colors hover:bg-slate-50 dark:hover:bg-slate-600 flex items-center justify-center">
-                                        <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
-                                            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
-                                            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
-                                            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
-                                            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
-                                        </svg>
-                                        Sign in with Google
-                                    </button>
-
-                                    <div className="mt-6 text-center text-sm text-slate-500">
-                                        {authMode === 'login' ? (
-                                            <>Don't have an account? <button onClick={() => setAuthMode('signup')} className="text-indigo-600 hover:underline font-medium">Sign up</button></>
-                                        ) : (
-                                            <>Already have an account? <button onClick={() => setAuthMode('login')} className="text-indigo-600 hover:underline font-medium">Sign in</button></>
-                                        )}
-                                    </div>
-                                    
-                                    <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-700 text-center">
-                                        <p className="text-xs text-slate-400">
-                                            {isFirebaseReady ? 'Secure Cloud Authentication' : 'Demo Mode: Data stored locally'}
-                                        </p>
-                                    </div>
+                                    <h2 className="text-xl font-bold text-white uppercase tracking-widest">Identity Verification</h2>
                                 </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Username Setup Modal */}
-                    {showUsernameSetup && (
-                        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-sm animate-in fade-in">
-                            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-200 dark:border-slate-700 relative">
-                                <div className="p-8">
-                                    <div className="flex justify-center mb-6">
-                                        <div className="bg-indigo-600 p-3 rounded-xl shadow-lg shadow-indigo-500/30">
-                                            <User className="w-8 h-8 text-white" />
-                                        </div>
-                                    </div>
-                                    <h2 className="text-2xl font-bold text-center text-slate-900 dark:text-white mb-2">
-                                        Choose a Username
-                                    </h2>
-                                    <p className="text-center text-slate-500 dark:text-slate-400 mb-6 text-sm">
-                                        Please set a unique username to continue using Adjudicator AI.
-                                    </p>
-
-                                    <form onSubmit={handleUsernameSetup} className="space-y-4">
-                                        <div>
-                                            <label className="block text-xs font-semibold text-slate-500 uppercase mb-1">Username</label>
-                                            <div className="relative">
-                                                <User className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
-                                                <input 
-                                                    type="text" 
-                                                    required
-                                                    className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none transition-all" 
-                                                    placeholder="Username"
-                                                    value={authUsername}
-                                                    onChange={(e) => setAuthUsername(e.target.value)}
-                                                />
-                                            </div>
-                                        </div>
-
-                                        {authError && (
-                                            <div className="text-red-500 text-xs text-center bg-red-50 dark:bg-red-900/20 p-2 rounded">
-                                                {authError}
-                                            </div>
-                                        )}
-
-                                        <button type="submit" className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors shadow-lg shadow-indigo-500/30">
-                                            Save Username
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* History Modal */}
-                    {showHistory && (
-                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in">
-                            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-2xl w-full overflow-hidden border border-slate-200 dark:border-slate-700 flex flex-col max-h-[90vh]">
-                                <div className="p-6 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
-                                    <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center">
-                                        <History className="w-5 h-5 mr-2" /> History
-                                    </h3>
-                                    <div className="flex items-center space-x-2">
-                                        {history.length > 0 && (
-                                            <button onClick={clearHistory} className="text-red-500 hover:text-red-700 text-sm flex items-center px-3 py-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
-                                                <Trash2 className="w-4 h-4 mr-1" /> Clear
-                                            </button>
-                                        )}
-                                        <button onClick={() => setShowHistory(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                                            <X className="w-6 h-6" />
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="flex-1 overflow-y-auto p-6 space-y-4">
-                                    {history.length === 0 ? (
-                                        <div className="text-center text-slate-500 py-10">
-                                            <History className="w-12 h-12 mx-auto mb-3 opacity-20" />
-                                            <p>No history yet. Analyze something to see it here!</p>
-                                        </div>
-                                    ) : (
-                                        history.map(item => (
-                                            <div key={item.id} className="bg-slate-50 dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-700 transition-colors">
-                                                <div className="flex justify-between items-start mb-2">
-                                                    <div>
-                                                        <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded">{item.type}</span>
-                                                        <h4 className="font-semibold text-slate-800 dark:text-slate-200 mt-1">{item.topic}</h4>
-                                                        <span className="text-xs text-slate-400">{item.date}</span>
-                                                    </div>
-                                                    <div className="flex space-x-1">
-                                                        <button onClick={() => { setResult(item.content); setShowHistory(false); }} className="p-1.5 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded transition-colors" title="View">
-                                                            <Layout className="w-4 h-4" />
-                                                        </button>
-                                                        <button onClick={() => navigator.clipboard.writeText(item.content)} className="p-1.5 text-slate-500 hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-900/30 rounded transition-colors" title="Copy">
-                                                            <Copy className="w-4 h-4" />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">
-                                                    {item.content.substring(0, 150)}...
-                                                </div>
-                                            </div>
-                                        ))
+                                
+                                <form onSubmit={handleAuth} className="space-y-4">
+                                    {authMode === 'signup' && (
+                                        <input type="text" placeholder="CODENAME" className="w-full bg-black border border-slate-700 text-white px-4 py-3 text-xs font-mono outline-none focus:border-cyan-500" value={authUsername} onChange={(e) => setAuthUsername(e.target.value)} />
                                     )}
-                                </div>
-                            </div>
-                        </div>
-                    )}
+                                    <input type="email" placeholder="EMAIL" className="w-full bg-black border border-slate-700 text-white px-4 py-3 text-xs font-mono outline-none focus:border-cyan-500" value={authEmail} onChange={(e) => setAuthEmail(e.target.value)} />
+                                    <input type="password" placeholder="PASSPHRASE" className="w-full bg-black border border-slate-700 text-white px-4 py-3 text-xs font-mono outline-none focus:border-cyan-500" value={authPassword} onChange={(e) => setAuthPassword(e.target.value)} />
+                                    
+                                    {authError && <div className="text-red-500 text-xs text-center">{authError}</div>}
 
-                    {/* Help Modal */}
-                    {showHelp && (
-                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in">
-                            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-200 dark:border-slate-700 flex flex-col max-h-[90vh]">
-                                <div className="p-6 overflow-y-auto">
-                                    <div className="flex justify-between items-center mb-4">
-                                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">Welcome to Adjudicator AI</h3>
-                                        <button onClick={() => setShowHelp(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                                            <X className="w-6 h-6" />
-                                        </button>
-                                    </div>
-                                    <div className="space-y-4 text-slate-600 dark:text-slate-300 text-sm">
-                                        <p>Your personal AI debate coach and adjudicator. Here's how to use it:</p>
-                                        <ul className="space-y-3">
-                                            <li className="flex items-start">
-                                                <div className="bg-indigo-100 dark:bg-indigo-900/30 p-2 rounded-lg mr-3 mt-0.5 flex-shrink-0">
-                                                    <Mic className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-                                                </div>
-                                                <div>
-                                                    <strong className="block text-slate-800 dark:text-slate-200">Judge Text</strong>
-                                                    Paste your speech transcript to get a score and detailed feedback.
-                                                </div>
-                                            </li>
-                                            <li className="flex items-start">
-                                                <div className="bg-purple-100 dark:bg-purple-900/30 p-2 rounded-lg mr-3 mt-0.5 flex-shrink-0">
-                                                    <Layout className="w-4 h-4 text-purple-600 dark:text-purple-400" />
-                                                </div>
-                                                <div>
-                                                    <strong className="block text-slate-800 dark:text-slate-200">Evaluate Board</strong>
-                                                    Upload photos of your flow/board for strategy and organization tips.
-                                                </div>
-                                            </li>
-                                            <li className="flex items-start">
-                                                <div className="bg-pink-100 dark:bg-pink-900/30 p-2 rounded-lg mr-3 mt-0.5 flex-shrink-0">
-                                                    <Activity className="w-4 h-4 text-pink-600 dark:text-pink-400" />
-                                                </div>
-                                                <div>
-                                                    <strong className="block text-slate-800 dark:text-slate-200">Live Coach</strong>
-                                                    Record your speech audio for delivery and content analysis.
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        <div className="mt-4 p-3 bg-slate-100 dark:bg-slate-900 rounded-lg text-xs text-slate-500">
-                                            <strong>Note:</strong> You'll need a Gemini API key to start. Enter it in the Configuration section.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="p-4 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-700 flex justify-end flex-shrink-0">
-                                    <button onClick={() => setShowHelp(false)} className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors w-full sm:w-auto">
-                                        Get Started
+                                    <button type="submit" className="w-full py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold text-xs uppercase tracking-widest transition-colors">
+                                        {authMode === 'login' ? 'Authenticate' : 'Register Operative'}
+                                    </button>
+                                </form>
+                                
+                                <div className="mt-6 text-center">
+                                    <button onClick={() => setAuthMode(authMode === 'login' ? 'signup' : 'login')} className="text-xs text-slate-500 hover:text-cyan-400 uppercase tracking-wider">
+                                        {authMode === 'login' ? 'Request New Clearance' : 'Return to Login'}
                                     </button>
                                 </div>
                             </div>
