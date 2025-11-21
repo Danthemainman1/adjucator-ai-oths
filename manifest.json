@@ -1,0 +1,19 @@
+{
+    "name": "Adjudicator AI",
+    "short_name": "Adjudicator",
+    "description": "AI-powered debate adjudication and coaching tool for students and judges.",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#020617",
+    "theme_color": "#020617",
+    "orientation": "portrait",
+    "scope": "./",
+    "icons": [
+        {
+            "src": "https://cdn-icons-png.flaticon.com/512/2643/2643509.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}

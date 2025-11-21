@@ -5,6 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adjudicator AI</title>
     
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#020617">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2643/2643509.png">
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(registration => console.log('SW registered: ', registration))
+                    .catch(registrationError => console.log('SW registration failed: ', registrationError));
+            });
+        }
+    </script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(registration => console.log('SW registered: ', registration))
+                    .catch(registrationError => console.log('SW registration failed: ', registrationError));
+            });
+        }
+    </script>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -1616,23 +1643,7 @@
 
             // --- Coach Tools Component ---
             const CoachTools = ({ speechTimes, rubrics }) => {
-                const [format, setFormat] = useState('Public Forum (PF)');
-                const [activeSpeech, setActiveSpeech] = useState(null);
-                
-                // Main Speech Timer
-                const [mainTimer, setMainTimer] = useState(0);
-                const [isMainRunning, setIsMainRunning] = useState(false);
-                const mainInterval = useRef(null);
-
-                // Prep Timers
-                const [prepA, setPrepA] = useState(180); // 3 mins default
-                const [isPrepARunning, setIsPrepARunning] = useState(false);
-                const prepAInterval = useRef(null);
-
-                const [prepB, setPrepB] = useState(180);
-                const [isPrepBRunning, setIsPrepBRunning] = useState(false);
-                const prepBInterval = useRef(null);
-
+                const [format, setFormat] = useState('Public Forum (
                 // Grace Timers
                 const [graceA, setGraceA] = useState(120); // 2 mins default
                 const [isGraceARunning, setIsGraceARunning] = useState(false);
