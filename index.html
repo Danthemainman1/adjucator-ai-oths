@@ -28,7 +28,8 @@
       "imports": {
         "react": "https://esm.sh/react@18.2.0",
         "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-        "lucide-react": "https://esm.sh/lucide-react@0.263.1"
+        "lucide-react": "https://esm.sh/lucide-react@0.263.1",
+        "recharts": "https://esm.sh/recharts@2.12.0"
       }
     }
     </script>
@@ -232,6 +233,7 @@
     <script type="text/babel" data-type="module">
         import React, { useState, useRef, useEffect } from 'react';
         import { createRoot } from 'react-dom/client';
+        import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
         import { 
             Gavel, 
             Mic, 
@@ -268,10 +270,104 @@
             Droplets,
             CloudSun,
             Star,
-            Mail
+            Mail,
+            Zap,
+            ArrowRight,
+            Globe,
+            RefreshCw
         } from 'lucide-react';
 
         // --- Components ---
+
+        const ExtempQuestionGenerator = () => {
+            const [category, setCategory] = useState('DX'); // DX or NX
+            const [difficulty, setDifficulty] = useState('Medium'); // Easy, Medium, Hard
+            const [question, setQuestion] = useState('');
+            const [loading, setLoading] = useState(false);
+
+            const generateQuestion = async () => {
+                setLoading(true);
+                setQuestion('');
+                try {
+                    // Simple local generation for demo, or could use LLM if API key available
+                    // For now, let's use a simple list or a placeholder for LLM call
+                    // Since we have API keys in App, we might want to pass a function or use context.
+                    // But to keep it simple and self-contained, let's just use a predefined list for now
+                    // or ask the user to use the main "Judge Text" tab for generation.
+                    
+                    // Actually, the user asked for a generator. Let's make it use the LLM if possible, 
+                    // but since this component is outside App, it doesn't have access to apiKey.
+                    // I'll move this component INSIDE App or pass props. 
+                    // For now, let's define it here and I'll move it inside App later or pass props.
+                    // Wait, I can just define it here and pass props from App.
+                    
+                    // Let's use a simulated delay and random selection from a list for now to ensure it works immediately
+                    // without needing API calls for every question, or I can implement the API call if props are passed.
+                    
+                    const topics = {
+                        'DX': {
+                            'Easy': ['Should the US increase funding for space exploration?', 'Is the US economy heading for a recession?', 'Should the voting age be lowered to 16?'],
+                            'Medium': ['How will the new infrastructure bill impact the midterms?', 'What steps should the US take to address climate change?', 'Is the current US foreign policy effective?'],
+                            'Hard': ['Analyze the long-term effects of the US-China trade war.', 'Does the US need a new constitutional convention?', 'Evaluate the efficacy of the Federal Reserve\'s current monetary policy.']
+                        },
+                        'NX': {
+                            'Easy': ['How can the UN better address the refugee crisis?', 'Will the EU survive the next decade?', 'Is China\'s Belt and Road Initiative failing?'],
+                            'Medium': ['What is the future of NATO?', 'How should the international community respond to the crisis in Sudan?', 'Assess the impact of Brexit on the UK economy.'],
+                            'Hard': ['Analyze the geopolitical implications of the rise of India.', 'Is the era of US hegemony over?', 'Evaluate the success of the Paris Agreement.']
+                        }
+                    };
+                    
+                    await new Promise(r => setTimeout(r, 800));
+                    const list = topics[category][difficulty];
+                    const randomQ = list[Math.floor(Math.random() * list.length)];
+                    setQuestion(randomQ);
+                    
+                } catch (e) {
+                    console.error(e);
+                    setQuestion("Error generating question.");
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            return (
+                <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 mb-6">
+                    <h3 className="text-lg font-semibold mb-4 flex items-center">
+                        <HelpCircle className="w-5 h-5 mr-2 text-indigo-600" />
+                        Extemp Question Generator
+                    </h3>
+                    <div className="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Category</label>
+                            <div className="flex space-x-2">
+                                <button onClick={() => setCategory('DX')} className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${category === 'DX' ? 'bg-indigo-600 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'}`}>DX (Domestic)</button>
+                                <button onClick={() => setCategory('NX')} className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${category === 'NX' ? 'bg-indigo-600 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'}`}>NX (International)</button>
+                            </div>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Difficulty</label>
+                            <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)} className="w-full p-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-indigo-500 outline-none">
+                                <option>Easy</option>
+                                <option>Medium</option>
+                                <option>Hard</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button 
+                        onClick={generateQuestion} 
+                        disabled={loading}
+                        className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Generate Question'}
+                    </button>
+                    {question && (
+                        <div className="mt-6 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-lg border border-slate-200 dark:border-slate-700 animate-in fade-in slide-in-from-bottom-2">
+                            <p className="text-lg font-medium text-center text-slate-800 dark:text-slate-200">"{question}"</p>
+                        </div>
+                    )}
+                </div>
+            );
+        };
 
         const MarkdownRenderer = ({ content }) => {
             if (!content) return null;
@@ -648,10 +744,9 @@
                 - **Structure (20%)**: Flow and organization.
             `,
             'Informative Speaking (INFO)': `
-                - **Topic/Content (40%)**: Educational value and originality.
-                - **Visual Aids (20%)**: Quality and integration of props/boards.
+                - **Topic/Content (50%)**: Educational value and originality.
                 - **Delivery (30%)**: Engagement and clarity.
-                - **Structure (10%)**: Organization.
+                - **Structure (20%)**: Organization.
             `,
             'Dramatic Interpretation (DI)': `
                 - **Characterization (40%)**: Depth and believability.
@@ -883,6 +978,21 @@
         };
 
         const Dashboard = ({ user, history, setActiveTab }) => {
+            const [tip, setTip] = useState('');
+
+            useEffect(() => {
+                const tips = [
+                    "Flowing is essential: Use two different colored pens for Aff and Neg arguments.",
+                    "In Cross-Ex, ask open-ended questions to force your opponent to explain, not just say yes/no.",
+                    "Signposting helps the judge follow your speech. Clearly state which contention you are addressing.",
+                    "Impact calculus: Tell the judge why your impacts matter more (Magnitude, Probability, Timeframe).",
+                    "Don't drop arguments. If an opponent makes a point, you must address it or it stands.",
+                    "Eye contact matters. Look at the judge, not just your paper.",
+                    "Use 'even if' arguments to layer your defense.",
+                ];
+                setTip(tips[Math.floor(Math.random() * tips.length)]);
+            }, []);
+
             const calculateAverageScore = () => {
                 if (!history || history.length === 0) return 'N/A';
                 let total = 0;
@@ -915,54 +1025,79 @@
 
             return (
                 <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    {/* Welcome Section */}
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div>
-                            <h2 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
-                                Welcome back, <span className="text-indigo-600 dark:text-indigo-400">{user?.username || user?.email?.split('@')[0] || 'Guest'}</span>
-                            </h2>
-                            <p className="text-slate-500 dark:text-slate-400 mt-1">Ready to improve your debate skills today?</p>
+                    {/* Welcome Section with Gradient */}
+                    <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-600 to-purple-600 p-8 text-white shadow-xl">
+                        <div className="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl"></div>
+                        <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-indigo-400 opacity-20 rounded-full blur-2xl"></div>
+                        
+                        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                            <div>
+                                <h2 className="text-4xl font-extrabold tracking-tight mb-2">
+                                    Welcome back, {user?.username || user?.email?.split('@')[0] || 'Guest'}!
+                                </h2>
+                                <p className="text-indigo-100 text-lg max-w-xl">
+                                    Ready to dominate your next round? Let's analyze some arguments.
+                                </p>
+                                {tip && (
+                                    <div className="mt-6 inline-flex items-center bg-white/10 backdrop-blur-md rounded-lg px-4 py-2 text-sm font-medium text-indigo-50 border border-white/20">
+                                        <Lightbulb className="w-4 h-4 mr-2 text-yellow-300" />
+                                        Tip: {tip}
+                                    </div>
+                                )}
+                            </div>
+                            <button onClick={() => setActiveTab('speech')} className="px-6 py-3 bg-white text-indigo-600 hover:bg-indigo-50 rounded-xl font-bold shadow-lg transition-all transform hover:scale-105 flex items-center whitespace-nowrap">
+                                <Plus className="w-5 h-5 mr-2" /> New Analysis
+                            </button>
                         </div>
-                        <button onClick={() => setActiveTab('speech')} className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-medium shadow-lg shadow-indigo-500/30 transition-all flex items-center justify-center transform hover:scale-105">
-                            <Plus className="w-5 h-5 mr-2" /> New Analysis
-                        </button>
                     </div>
 
-                    {/* Stats Grid */}
+                    {/* Stats Grid with Glassmorphism */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {stats.map((stat, i) => (
-                            <div key={i} className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 flex items-center space-x-4 hover:shadow-md transition-all duration-300">
-                                <div className={`p-4 rounded-2xl ${stat.bg} ${stat.color}`}>
+                            <div key={i} className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 flex items-center space-x-4 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
+                                <div className={`p-4 rounded-2xl ${stat.bg} ${stat.color} group-hover:scale-110 transition-transform duration-300`}>
                                     <stat.icon className="w-6 h-6" />
                                 </div>
                                 <div className="min-w-0">
                                     <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">{stat.label}</p>
-                                    <p className="text-2xl font-bold text-slate-900 dark:text-white truncate">{stat.value}</p>
+                                    <p className="text-3xl font-bold text-slate-900 dark:text-white truncate">{stat.value}</p>
                                 </div>
                             </div>
                         ))}
                     </div>
 
-                    {/* Quick Actions */}
+                    {/* Quick Actions with Hover Effects */}
                     <div>
-                        <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Quick Actions</h3>
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center">
+                            <Zap className="w-5 h-5 mr-2 text-amber-500" /> Quick Actions
+                        </h3>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {tools.map((tool) => (
                                 <button 
                                     key={tool.id}
                                     onClick={() => setActiveTab(tool.id)}
-                                    className="group relative overflow-hidden bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-all duration-300 text-left"
+                                    className="group relative overflow-hidden bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-2xl hover:border-indigo-500/30 dark:hover:border-indigo-500/30 transition-all duration-300 text-left"
                                 >
-                                    <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${tool.color} opacity-10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-150 duration-500`}></div>
-                                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${tool.color} flex items-center justify-center text-white mb-4 shadow-lg`}>
-                                        <tool.icon className="w-6 h-6" />
+                                    <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${tool.color} opacity-5 rounded-bl-full -mr-8 -mt-8 transition-all duration-500 group-hover:scale-150 group-hover:opacity-10`}></div>
+                                    
+                                    <div className="relative z-10">
+                                        <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${tool.color} flex items-center justify-center text-white mb-6 shadow-lg group-hover:shadow-indigo-500/40 group-hover:scale-110 transition-all duration-300`}>
+                                            <tool.icon className="w-7 h-7" />
+                                        </div>
+                                        <h4 className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{tool.title}</h4>
+                                        <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{tool.desc}</p>
                                     </div>
-                                    <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-1">{tool.title}</h4>
-                                    <p className="text-sm text-slate-500 dark:text-slate-400">{tool.desc}</p>
+                                    
+                                    <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-300">
+                                        <ArrowRight className="w-6 h-6 text-indigo-500" />
+                                    </div>
                                 </button>
                             ))}
                         </div>
                     </div>
+
+                    {/* Extemp Generator */}
+                    <ExtempQuestionGenerator />
 
                     {/* Recent History */}
                     <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
@@ -1010,6 +1145,7 @@
             const [showHistory, setShowHistory] = useState(false);
             const [history, setHistory] = useState([]);
             const [theme, setTheme] = useState('light'); // light, dark, neon
+            const [radarData, setRadarData] = useState(null);
             
             // Auth State
             const [user, setUser] = useState(null);
@@ -1929,6 +2065,8 @@
                                 Evaluate the following speech based on this rubric:
                                 ${rubric}
 
+                                IMPORTANT: Do NOT penalize for missing visual aids, boards, or props, as this is a text-only evaluation.
+
                                 Please provide the output in the following Markdown format:
                                 ## Executive Summary
                                 (Brief overview of performance)
@@ -1938,6 +2076,9 @@
                                 | --- | --- | --- |
                                 (Fill based on rubric)
                                 | **Total** | **(Sum)** | |
+
+                                ## Radar Data
+                                (Provide a JSON object with scores for each category, e.g., {"Argumentation": 8, "Delivery": 7, ...})
 
                                 ## Key Argument Analysis
                                 (Bullet points on specific arguments made)
@@ -1954,11 +2095,50 @@
                             `;
                             payloadParts = [{ text: systemPrompt }];
                         } else if (activeTab === 'board') {
-                            systemPrompt = `Expert Debate Coach (Flowing). Evaluate board/flow. Context: ${speechType}, ${side}, Topic: ${topic}. Assess Organization, Grouping, Legibility, Suggestions. User Notes: ${boardDescription}`;
+                            systemPrompt = `Expert Debate Coach (Flowing). Evaluate board/flow. Context: ${speechType}, ${side}, Topic: ${topic}. Assess Organization, Grouping, Legibility, Suggestions. User Notes: ${boardDescription}. 
+                            
+                            Please provide the output in the following Markdown format:
+                            ## Executive Summary
+                            (Brief overview)
+
+                            ## Scorecard
+                            | Category | Score (0-10) | Notes |
+                            | --- | --- | --- |
+                            | Organization | | |
+                            | Grouping | | |
+                            | Legibility | | |
+                            | Strategy | | |
+                            | **Total** | **(Sum)** | |
+
+                            ## Radar Data
+                            (Provide a JSON object with scores for each category: {"Organization": 8, "Grouping": 7, "Legibility": 6, "Strategy": 9})
+
+                            ## Detailed Feedback
+                            ...
+                            `;
                             payloadParts = [{ text: systemPrompt }];
                             boardImages.forEach(img => payloadParts.push({ inlineData: { mimeType: img.mimeType, data: img.raw } }));
                         } else if (activeTab === 'listen') {
-                            systemPrompt = `Expert Speech Coach. Listen to audio. Context: ${speechType}, ${side}, Topic: ${topic}. Evaluate: 1. Vocal Delivery (Pace, Tone, Fluency). 2. Content. 3. Score (0-100).`;
+                            systemPrompt = `Expert Speech Coach. Listen to audio. Context: ${speechType}, ${side}, Topic: ${topic}. Evaluate: 1. Vocal Delivery (Pace, Tone, Fluency). 2. Content. 3. Score (0-100).
+                            
+                            Please provide the output in the following Markdown format:
+                            ## Executive Summary
+                            (Brief overview)
+
+                            ## Scorecard
+                            | Category | Score (0-10) | Notes |
+                            | --- | --- | --- |
+                            | Vocal Delivery | | |
+                            | Content | | |
+                            | Persuasion | | |
+                            | **Total** | **(Sum)** | |
+
+                            ## Radar Data
+                            (Provide a JSON object with scores for each category: {"Vocal Delivery": 8, "Content": 7, "Persuasion": 6})
+
+                            ## Detailed Feedback
+                            ...
+                            `;
                             payloadParts = [{ text: systemPrompt }, { inlineData: { mimeType: audioData.mimeType, data: audioData.raw } }];
                         }
 
@@ -2005,7 +2185,7 @@
                             }];
                         } else if (activeTab === 'speech') {
                             messages = [{
-                                role: "system", content: `You are an expert Debate Adjudicator for ${speechType}. Use the following rubric: ${rubric}`
+                                role: "system", content: `You are an expert Debate Adjudicator for ${speechType}. Use the following rubric: ${rubric}. IMPORTANT: Do NOT penalize for missing visual aids, boards, or props, as this is a text-only evaluation.`
                             }, {
                                 role: "user", content: `
                                     Topic: ${topic}. Side: ${side}.
@@ -2053,6 +2233,26 @@
 
                     if (generatedText) {
                         setResult(generatedText);
+                        
+                        // Parse Radar Data
+                        try {
+                            const radarMatch = generatedText.match(/## Radar Data\s*\n\s*({[\s\S]*?})/);
+                            if (radarMatch && radarMatch[1]) {
+                                const parsed = JSON.parse(radarMatch[1]);
+                                const transformed = Object.keys(parsed).map(key => ({
+                                    subject: key,
+                                    A: parsed[key],
+                                    fullMark: 10
+                                }));
+                                setRadarData(transformed);
+                            } else {
+                                setRadarData(null);
+                            }
+                        } catch (e) {
+                            console.error("Error parsing radar data", e);
+                            setRadarData(null);
+                        }
+
                         let inputData = null;
                         if (activeTab === 'speech') inputData = transcript;
                         else if (activeTab === 'listen') inputData = audioData;
@@ -2494,6 +2694,19 @@
                                                     <button onClick={() => setResult(null)} className="text-white/80 hover:text-white"><X className="w-5 h-5" /></button>
                                                 </div>
                                                 <div className="p-8 bg-slate-50/50 dark:bg-slate-800">
+                                                    {radarData && (
+                                                        <div className="mb-8 h-80 w-full">
+                                                            <h3 className="text-lg font-semibold mb-4 text-center text-slate-800 dark:text-slate-200">Performance Radar</h3>
+                                                            <ResponsiveContainer width="100%" height="100%">
+                                                                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarData}>
+                                                                    <PolarGrid stroke="#94a3b8" />
+                                                                    <PolarAngleAxis dataKey="subject" tick={{ fill: '#64748b', fontSize: 12 }} />
+                                                                    <PolarRadiusAxis angle={30} domain={[0, 10]} tick={{ fill: '#64748b', fontSize: 10 }} />
+                                                                    <Radar name="Score" dataKey="A" stroke="#6366f1" fill="#818cf8" fillOpacity={0.6} />
+                                                                </RadarChart>
+                                                            </ResponsiveContainer>
+                                                        </div>
+                                                    )}
                                                     <MarkdownRenderer content={result} />
                                                 </div>
                                             </div>
