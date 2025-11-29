@@ -1,26 +1,16 @@
-# Adjudicator AI
+# React + Vite
 
-An AI-powered debate adjudicator and coach, running entirely in the browser.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Features
-- **Judge Text:** Paste a speech transcript and get a score, summary, and feedback.
-- **Evaluate Board:** Upload images of a debate flow/board and get a critique on organization and strategy.
-- **Live Coach:** Record audio of a speech and get feedback on vocal delivery and content.
+Currently, two official plugins are available:
 
-## Setup
-1. You need a Google Gemini API Key. Get one [here](https://aistudio.google.com/app/apikey).
-2. Open the app.
-3. Enter your API Key in the configuration settings.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Deployment to GitHub Pages
+## React Compiler
 
-This project is designed to be deployed easily to GitHub Pages.
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-1. **Commit and Push:** Ensure all your files (especially `index.html`) are committed and pushed to your GitHub repository.
-2. **Settings:** Go to your repository on GitHub.
-3. **Pages:** Click on the "Settings" tab, then find "Pages" in the left sidebar.
-4. **Source:** Under "Build and deployment", select "Deploy from a branch".
-5. **Branch:** Select `main` (or `master`) as the branch and `/ (root)` as the folder.
-6. **Save:** Click "Save".
+## Expanding the ESLint configuration
 
-Your site will be live at `https://<your-username>.github.io/<repo-name>/` in a few minutes.
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
