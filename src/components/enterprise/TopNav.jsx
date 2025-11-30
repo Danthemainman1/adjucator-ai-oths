@@ -21,7 +21,11 @@ import {
   Lightbulb,
   FileText,
   History,
-  MoreHorizontal
+  MoreHorizontal,
+  GitBranch,
+  Timer,
+  List,
+  Calendar
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -45,6 +49,11 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
 
   // Secondary nav - in "More" dropdown
   const secondaryNavItems = [
+    { id: 'flowchart', label: 'Flowchart', icon: GitBranch },
+    { id: 'voice', label: 'Voice Analysis', icon: Mic },
+    { id: 'timer', label: 'Debate Timer', icon: Timer },
+    { id: 'outline', label: 'Outline Builder', icon: List },
+    { id: 'scheduler', label: 'Round Scheduler', icon: Calendar },
     { id: 'opponents', label: 'Opponents', icon: Target },
     { id: 'evidence', label: 'Evidence Library', icon: BookOpen },
     { id: 'team', label: 'Team', icon: Users },

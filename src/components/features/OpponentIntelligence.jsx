@@ -1,804 +1,888 @@
 /**
- * Opponent Intelligence System
- * Track opponents, their patterns, and generate counter-strategies
+ * Opponent Intelligence System - PREMIUM POLISH
+ * Beautiful opponent tracking with threat analysis
  */
 
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Users,
-  UserPlus,
-  Search,
-  Filter,
   Target,
+  Users,
+  TrendingUp,
+  TrendingDown,
+  AlertTriangle,
   Shield,
-  BookOpen,
-  MessageSquare,
+  Zap,
+  Brain,
+  Search,
+  Plus,
+  Filter,
   ChevronRight,
   ChevronDown,
-  Plus,
-  Edit3,
-  Trash2,
-  Eye,
-  AlertTriangle,
-  Zap,
-  TrendingUp,
-  Clock,
-  Award,
   X,
-  Save,
-  Lightbulb,
-  RefreshCw,
-  School,
-  Star
+  Star,
+  Sword,
+  Eye,
+  FileText,
+  Clock,
+  Trophy,
+  AlertCircle,
+  CheckCircle2,
+  Sparkles,
+  Crown,
+  Flame,
+  BarChart3
 } from 'lucide-react';
 import { useOpponents } from '../../hooks/useDebateData';
 import { useAuth } from '../../contexts/AuthContext';
-import { callGeminiAPI } from '../../utils/api';
 
-// Empty state
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20, scale: 0.95 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1,
+    transition: { duration: 0.4, ease: 'easeOut' }
+  }
+};
+
+// Threat Level Configuration
+const THREAT_LEVELS = {
+  high: {
+    label: 'High Threat',
+    color: 'red',
+    bgClass: 'bg-red-500/10 border-red-500/30',
+    textClass: 'text-red-400',
+    icon: AlertTriangle,
+    glow: 'shadow-red-500/20'
+  },
+  medium: {
+    label: 'Medium Threat',
+    color: 'amber',
+    bgClass: 'bg-amber-500/10 border-amber-500/30',
+    textClass: 'text-amber-400',
+    icon: AlertCircle,
+    glow: 'shadow-amber-500/20'
+  },
+  low: {
+    label: 'Low Threat',
+    color: 'emerald',
+    bgClass: 'bg-emerald-500/10 border-emerald-500/30',
+    textClass: 'text-emerald-400',
+    icon: CheckCircle2,
+    glow: 'shadow-emerald-500/20'
+  }
+};
+
+// Empty State
 const EmptyOpponents = ({ onAdd }) => (
-  <div className="text-center py-16">
-    <div className="p-4 rounded-full bg-slate-800/50 border border-slate-700/50 mb-6 mx-auto w-fit">
-      <Users className="w-12 h-12 text-slate-500" />
+  <motion.div
+    initial={{ opacity: 0, scale: 0.95 }}
+    animate={{ opacity: 1, scale: 1 }}
+    className="text-center py-20"
+  >
+    <div className="relative inline-block mb-8">
+      <motion.div
+        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.1, 0.3] }}
+        transition={{ duration: 3, repeat: Infinity }}
+        className="absolute inset-0 w-32 h-32 rounded-full bg-red-500/20 blur-xl"
+      />
+      <motion.div
+        animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.05, 0.2] }}
+        transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
+        className="absolute inset-0 w-32 h-32 rounded-full bg-amber-500/20 blur-xl"
+      />
+      
+      <motion.div
+        animate={{ rotate: [0, 5, 0, -5, 0] }}
+        transition={{ duration: 5, repeat: Infinity }}
+        className="relative p-6 rounded-3xl bg-gradient-to-br from-slate-800/80 to-slate-900/80 border border-slate-700/50 backdrop-blur-xl shadow-2xl"
+      >
+        <Target className="w-16 h-16 text-red-400" />
+        <motion.div
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute -top-2 -right-2"
+        >
+          <Eye className="w-6 h-6 text-amber-400" />
+        </motion.div>
+      </motion.div>
     </div>
-    <h3 className="text-xl font-semibold text-white mb-2">No Opponents Tracked Yet</h3>
-    <p className="text-slate-400 max-w-md mx-auto mb-6">
-      Start building your opponent database to track patterns, weaknesses, and develop winning counter-strategies.
+    
+    <h3 className="text-2xl font-bold text-white mb-3">Know Your Competition</h3>
+    <p className="text-slate-400 max-w-md mx-auto mb-8 leading-relaxed">
+      Track opponents, analyze their strategies, and prepare winning counter-arguments. 
+      Intelligence wins debates.
     </p>
-    <button
+    
+    <motion.button
+      whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(239, 68, 68, 0.3)' }}
+      whileTap={{ scale: 0.98 }}
       onClick={onAdd}
-      className="px-6 py-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-medium hover:bg-cyan-500/20 transition-all inline-flex items-center gap-2"
+      className="px-8 py-4 rounded-2xl bg-gradient-to-r from-red-500 to-orange-600 text-white font-semibold text-lg shadow-lg shadow-red-500/25 inline-flex items-center gap-3"
     >
-      <UserPlus className="w-5 h-5" />
-      Add Your First Opponent
-    </button>
-  </div>
+      <Plus className="w-5 h-5" />
+      Add First Opponent
+      <ChevronRight className="w-5 h-5" />
+    </motion.button>
+  </motion.div>
 );
 
-// Add/Edit Opponent Modal
-const OpponentModal = ({ isOpen, onClose, onSave, opponent = null }) => {
-  const [formData, setFormData] = useState(opponent || {
-    name: '',
-    school: '',
-    format: 'Public Forum',
-    skillLevel: 'intermediate',
-    debateStyle: '',
-    strengths: [],
-    weaknesses: [],
-    commonArguments: [],
-    notes: [],
-    threatLevel: 3
-  });
-  const [newStrength, setNewStrength] = useState('');
-  const [newWeakness, setNewWeakness] = useState('');
-  const [newArgument, setNewArgument] = useState('');
-
-  if (!isOpen) return null;
-
-  const handleAddItem = (field, value, setter) => {
-    if (value.trim()) {
-      setFormData({
-        ...formData,
-        [field]: [...(formData[field] || []), value.trim()]
-      });
-      setter('');
-    }
-  };
-
-  const handleRemoveItem = (field, index) => {
-    setFormData({
-      ...formData,
-      [field]: formData[field].filter((_, i) => i !== index)
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave(formData);
-    onClose();
+// Threat Badge Component
+const ThreatBadge = ({ level, size = 'md', pulse = false }) => {
+  const config = THREAT_LEVELS[level] || THREAT_LEVELS.medium;
+  const Icon = config.icon;
+  
+  const sizes = {
+    sm: 'px-2 py-0.5 text-xs gap-1',
+    md: 'px-3 py-1 text-sm gap-1.5',
+    lg: 'px-4 py-2 text-base gap-2'
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.95 }}
-        className="w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto"
-      >
-        <div className="p-6 border-b border-slate-800 sticky top-0 bg-slate-900 z-10">
-          <h2 className="text-xl font-bold text-white">
-            {opponent ? 'Edit Opponent' : 'Add New Opponent'}
-          </h2>
-          <p className="text-slate-400 text-sm mt-1">Build your opponent intelligence profile</p>
-        </div>
+    <motion.span
+      initial={{ scale: 0.8, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      className={`inline-flex items-center font-semibold rounded-full border ${config.bgClass} ${config.textClass} ${sizes[size]} ${pulse ? 'animate-pulse' : ''}`}
+    >
+      <Icon className={size === 'sm' ? 'w-3 h-3' : size === 'lg' ? 'w-5 h-5' : 'w-4 h-4'} />
+      {config.label}
+    </motion.span>
+  );
+};
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
-          {/* Basic Info */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">Name *</label>
-              <input
-                type="text"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                placeholder="Opponent's name"
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">School</label>
-              <input
-                type="text"
-                value={formData.school}
-                onChange={(e) => setFormData({ ...formData, school: e.target.value })}
-                placeholder="School/Team name"
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none"
-              />
-            </div>
-          </div>
+// Win Rate Ring
+const WinRateRing = ({ winRate, size = 60 }) => {
+  const radius = (size - 6) / 2;
+  const circumference = radius * 2 * Math.PI;
+  const offset = circumference - (winRate / 100) * circumference;
+  const color = winRate >= 50 ? '#ef4444' : '#10b981';
 
-          <div className="grid grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">Primary Format</label>
-              <select
-                value={formData.format}
-                onChange={(e) => setFormData({ ...formData, format: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none"
-              >
-                {['Public Forum', 'Lincoln-Douglas', 'Policy', 'Congress', 'World Schools', 'Extemp'].map(f => (
-                  <option key={f} value={f}>{f}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">Skill Level</label>
-              <select
-                value={formData.skillLevel}
-                onChange={(e) => setFormData({ ...formData, skillLevel: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none"
-              >
-                <option value="novice">Novice</option>
-                <option value="intermediate">Intermediate</option>
-                <option value="advanced">Advanced</option>
-                <option value="elite">Elite/National</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">Threat Level</label>
-              <div className="flex items-center gap-1 pt-2">
-                {[1, 2, 3, 4, 5].map(level => (
-                  <button
-                    key={level}
-                    type="button"
-                    onClick={() => setFormData({ ...formData, threatLevel: level })}
-                    className={`p-1 transition-all ${
-                      level <= formData.threatLevel ? 'text-amber-400' : 'text-slate-600'
-                    }`}
-                  >
-                    <Star className="w-6 h-6 fill-current" />
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-slate-400 mb-2">Debate Style</label>
-            <textarea
-              value={formData.debateStyle}
-              onChange={(e) => setFormData({ ...formData, debateStyle: e.target.value })}
-              placeholder="Describe their general approach (aggressive, technical, narrative-focused...)"
-              rows={2}
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none resize-none"
-            />
-          </div>
-
-          {/* Strengths */}
-          <div>
-            <label className="block text-sm font-medium text-slate-400 mb-2">Strengths</label>
-            <div className="flex gap-2 mb-2">
-              <input
-                type="text"
-                value={newStrength}
-                onChange={(e) => setNewStrength(e.target.value)}
-                placeholder="Add a strength..."
-                className="flex-1 px-4 py-2 rounded-lg bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 outline-none"
-                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddItem('strengths', newStrength, setNewStrength))}
-              />
-              <button
-                type="button"
-                onClick={() => handleAddItem('strengths', newStrength, setNewStrength)}
-                className="px-4 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 transition-all"
-              >
-                <Plus className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {formData.strengths?.map((s, i) => (
-                <span key={i} className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm flex items-center gap-2">
-                  {s}
-                  <button type="button" onClick={() => handleRemoveItem('strengths', i)} className="hover:text-white">
-                    <X className="w-3 h-3" />
-                  </button>
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Weaknesses */}
-          <div>
-            <label className="block text-sm font-medium text-slate-400 mb-2">Weaknesses</label>
-            <div className="flex gap-2 mb-2">
-              <input
-                type="text"
-                value={newWeakness}
-                onChange={(e) => setNewWeakness(e.target.value)}
-                placeholder="Add a weakness..."
-                className="flex-1 px-4 py-2 rounded-lg bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 outline-none"
-                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddItem('weaknesses', newWeakness, setNewWeakness))}
-              />
-              <button
-                type="button"
-                onClick={() => handleAddItem('weaknesses', newWeakness, setNewWeakness)}
-                className="px-4 py-2 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20 transition-all"
-              >
-                <Plus className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {formData.weaknesses?.map((w, i) => (
-                <span key={i} className="px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-sm flex items-center gap-2">
-                  {w}
-                  <button type="button" onClick={() => handleRemoveItem('weaknesses', i)} className="hover:text-white">
-                    <X className="w-3 h-3" />
-                  </button>
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Common Arguments */}
-          <div>
-            <label className="block text-sm font-medium text-slate-400 mb-2">Common Arguments</label>
-            <div className="flex gap-2 mb-2">
-              <input
-                type="text"
-                value={newArgument}
-                onChange={(e) => setNewArgument(e.target.value)}
-                placeholder="Add an argument they frequently use..."
-                className="flex-1 px-4 py-2 rounded-lg bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 outline-none"
-                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddItem('commonArguments', newArgument, setNewArgument))}
-              />
-              <button
-                type="button"
-                onClick={() => handleAddItem('commonArguments', newArgument, setNewArgument)}
-                className="px-4 py-2 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/20 transition-all"
-              >
-                <Plus className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {formData.commonArguments?.map((a, i) => (
-                <span key={i} className="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-sm flex items-center gap-2">
-                  {a}
-                  <button type="button" onClick={() => handleRemoveItem('commonArguments', i)} className="hover:text-white">
-                    <X className="w-3 h-3" />
-                  </button>
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-5 py-2.5 rounded-xl text-slate-400 hover:text-white transition-colors"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-6 py-2.5 rounded-xl bg-cyan-500 text-white font-medium hover:bg-cyan-400 transition-colors flex items-center gap-2"
-            >
-              <Save className="w-5 h-5" />
-              {opponent ? 'Update' : 'Save'} Opponent
-            </button>
-          </div>
-        </form>
-      </motion.div>
+  return (
+    <div className="relative" style={{ width: size, height: size }}>
+      <svg className="transform -rotate-90" width={size} height={size}>
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="6"
+          className="text-slate-800"
+        />
+        <motion.circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          stroke={color}
+          strokeWidth="6"
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          initial={{ strokeDashoffset: circumference }}
+          animate={{ strokeDashoffset: offset }}
+          transition={{ duration: 1, ease: 'easeOut' }}
+        />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className={`text-sm font-bold ${winRate >= 50 ? 'text-red-400' : 'text-emerald-400'}`}>
+          {winRate}%
+        </span>
+      </div>
     </div>
   );
 };
 
 // Opponent Card Component
-const OpponentCard = ({ opponent, onEdit, onDelete, onView, onGenerateStrategy }) => {
-  const [expanded, setExpanded] = useState(false);
-
-  const threatColors = {
-    1: 'text-green-400',
-    2: 'text-green-400',
-    3: 'text-amber-400',
-    4: 'text-orange-400',
-    5: 'text-red-400'
-  };
-
-  const skillColors = {
-    novice: 'bg-green-500/10 text-green-400 border-green-500/30',
-    intermediate: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30',
-    advanced: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
-    elite: 'bg-amber-500/10 text-amber-400 border-amber-500/30'
-  };
+const OpponentCard = ({ opponent, onClick, isSelected }) => {
+  const threatConfig = THREAT_LEVELS[opponent.threatLevel] || THREAT_LEVELS.medium;
+  const winRate = opponent.debates?.total > 0 
+    ? Math.round((opponent.debates.wins / opponent.debates.total) * 100) 
+    : 0;
 
   return (
     <motion.div
-      layout
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="p-5 rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-slate-700/60 transition-all"
+      variants={itemVariants}
+      whileHover={{ scale: 1.02, y: -4 }}
+      whileTap={{ scale: 0.98 }}
+      onClick={onClick}
+      className={`relative group cursor-pointer ${isSelected ? 'ring-2 ring-cyan-500' : ''}`}
     >
-      <div className="flex items-start justify-between">
-        <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center text-white font-bold text-lg">
-            {opponent.name.charAt(0)}
+      {/* Glow effect */}
+      <div className={`absolute -inset-1 bg-gradient-to-r ${
+        opponent.threatLevel === 'high' ? 'from-red-500/20 to-orange-500/20' :
+        opponent.threatLevel === 'medium' ? 'from-amber-500/20 to-yellow-500/20' :
+        'from-emerald-500/20 to-teal-500/20'
+      } rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500`} />
+      
+      <div className="relative p-5 rounded-2xl border border-slate-800/60 bg-gradient-to-br from-slate-900/80 to-slate-950/80 backdrop-blur-sm hover:border-slate-700/60 transition-all overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-white/5 to-transparent rounded-full -translate-y-1/2 translate-x-1/2" />
+        
+        <div className="relative flex items-start gap-4">
+          {/* Avatar with threat indicator */}
+          <div className="relative">
+            <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${
+              opponent.threatLevel === 'high' ? 'from-red-500/30 to-orange-600/30' :
+              opponent.threatLevel === 'medium' ? 'from-amber-500/30 to-yellow-600/30' :
+              'from-emerald-500/30 to-teal-600/30'
+            } flex items-center justify-center text-2xl font-bold text-white border ${threatConfig.bgClass}`}>
+              {opponent.name?.[0]?.toUpperCase() || '?'}
+            </div>
+            <motion.div
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full ${
+                opponent.threatLevel === 'high' ? 'bg-red-500' :
+                opponent.threatLevel === 'medium' ? 'bg-amber-500' :
+                'bg-emerald-500'
+              } border-2 border-slate-900`}
+            />
           </div>
-          <div>
-            <h3 className="text-lg font-semibold text-white">{opponent.name}</h3>
-            <div className="flex items-center gap-2 mt-1">
-              {opponent.school && (
-                <span className="text-slate-400 text-sm flex items-center gap-1">
-                  <School className="w-3 h-3" />
-                  {opponent.school}
+
+          <div className="flex-1 min-w-0">
+            <div className="flex items-start justify-between gap-2">
+              <div>
+                <h3 className="text-white font-semibold text-lg truncate group-hover:text-cyan-400 transition-colors">
+                  {opponent.name}
+                </h3>
+                <p className="text-slate-500 text-sm">{opponent.school || 'Unknown School'}</p>
+              </div>
+              <ThreatBadge level={opponent.threatLevel} size="sm" />
+            </div>
+
+            {/* Stats Row */}
+            <div className="flex items-center gap-4 mt-3">
+              <div className="flex items-center gap-1.5 text-slate-400 text-sm">
+                <Sword className="w-4 h-4" />
+                <span>{opponent.debates?.total || 0} debates</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-sm">
+                <Trophy className={winRate >= 50 ? 'w-4 h-4 text-red-400' : 'w-4 h-4 text-emerald-400'} />
+                <span className={winRate >= 50 ? 'text-red-400' : 'text-emerald-400'}>
+                  {opponent.debates?.wins || 0}W - {opponent.debates?.losses || 0}L
                 </span>
-              )}
-              <span className="text-slate-600">•</span>
-              <span className="text-slate-400 text-sm">{opponent.format}</span>
+              </div>
             </div>
+
+            {/* Strengths/Weaknesses preview */}
+            {(opponent.strengths?.length > 0 || opponent.weaknesses?.length > 0) && (
+              <div className="flex flex-wrap gap-2 mt-3">
+                {opponent.strengths?.slice(0, 2).map((s, i) => (
+                  <span key={i} className="px-2 py-0.5 rounded-full text-xs bg-red-500/10 text-red-400 border border-red-500/20">
+                    💪 {s}
+                  </span>
+                ))}
+                {opponent.weaknesses?.slice(0, 2).map((w, i) => (
+                  <span key={i} className="px-2 py-0.5 rounded-full text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    🎯 {w}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Win rate indicator */}
+          <div className="hidden sm:block">
+            <WinRateRing winRate={winRate} />
           </div>
         </div>
-        
-        <div className="flex items-center gap-3">
-          {/* Threat Level */}
-          <div className="flex items-center gap-0.5">
-            {[1, 2, 3, 4, 5].map(level => (
-              <Star 
-                key={level}
-                className={`w-4 h-4 ${
-                  level <= opponent.threatLevel ? threatColors[opponent.threatLevel] : 'text-slate-700'
-                } ${level <= opponent.threatLevel ? 'fill-current' : ''}`}
-              />
-            ))}
-          </div>
-          
-          {/* Skill Badge */}
-          <span className={`px-2 py-1 rounded-lg text-xs font-medium border ${skillColors[opponent.skillLevel]}`}>
-            {opponent.skillLevel}
-          </span>
-        </div>
-      </div>
 
-      {/* Debate Style */}
-      {opponent.debateStyle && (
-        <p className="text-slate-400 text-sm mt-3 line-clamp-2">{opponent.debateStyle}</p>
-      )}
-
-      {/* Quick Stats */}
-      <div className="flex items-center gap-4 mt-4">
-        {opponent.strengths?.length > 0 && (
-          <span className="text-emerald-400 text-sm flex items-center gap-1">
-            <TrendingUp className="w-4 h-4" />
-            {opponent.strengths.length} strengths
-          </span>
-        )}
-        {opponent.weaknesses?.length > 0 && (
-          <span className="text-red-400 text-sm flex items-center gap-1">
-            <AlertTriangle className="w-4 h-4" />
-            {opponent.weaknesses.length} weaknesses
-          </span>
-        )}
-        {opponent.commonArguments?.length > 0 && (
-          <span className="text-cyan-400 text-sm flex items-center gap-1">
-            <Target className="w-4 h-4" />
-            {opponent.commonArguments.length} known args
-          </span>
-        )}
-      </div>
-
-      {/* Expandable Details */}
-      <AnimatePresence>
-        {expanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden"
-          >
-            <div className="mt-4 pt-4 border-t border-slate-800 space-y-4">
-              {opponent.strengths?.length > 0 && (
-                <div>
-                  <h4 className="text-sm font-medium text-slate-400 mb-2 flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4 text-emerald-400" />
-                    Strengths
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {opponent.strengths.map((s, i) => (
-                      <span key={i} className="px-2 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs">
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-              
-              {opponent.weaknesses?.length > 0 && (
-                <div>
-                  <h4 className="text-sm font-medium text-slate-400 mb-2 flex items-center gap-2">
-                    <AlertTriangle className="w-4 h-4 text-red-400" />
-                    Weaknesses
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {opponent.weaknesses.map((w, i) => (
-                      <span key={i} className="px-2 py-1 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs">
-                        {w}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-              
-              {opponent.commonArguments?.length > 0 && (
-                <div>
-                  <h4 className="text-sm font-medium text-slate-400 mb-2 flex items-center gap-2">
-                    <Target className="w-4 h-4 text-cyan-400" />
-                    Common Arguments
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {opponent.commonArguments.map((a, i) => (
-                      <span key={i} className="px-2 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs">
-                        {a}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Action Buttons */}
-      <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-800/50">
-        <button
-          onClick={() => setExpanded(!expanded)}
-          className="text-slate-400 hover:text-white text-sm flex items-center gap-1 transition-colors"
-        >
-          {expanded ? 'Show less' : 'Show more'}
-          <ChevronDown className={`w-4 h-4 transition-transform ${expanded ? 'rotate-180' : ''}`} />
-        </button>
-        
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => onGenerateStrategy(opponent)}
-            className="px-3 py-1.5 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-400 hover:bg-purple-500/20 transition-all text-sm flex items-center gap-1"
-          >
-            <Zap className="w-4 h-4" />
-            Counter Strategy
-          </button>
-          <button
-            onClick={() => onEdit(opponent)}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
-          >
-            <Edit3 className="w-4 h-4" />
-          </button>
-          <button
-            onClick={() => onDelete(opponent.id)}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-all"
-          >
-            <Trash2 className="w-4 h-4" />
-          </button>
-        </div>
+        <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-600 group-hover:text-slate-400 group-hover:translate-x-1 transition-all" />
       </div>
     </motion.div>
   );
 };
 
-// Counter Strategy Modal
-const CounterStrategyModal = ({ isOpen, onClose, opponent, apiKey }) => {
-  const [strategy, setStrategy] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [topic, setTopic] = useState('');
+// Opponent Detail Panel
+const OpponentDetailPanel = ({ opponent, onClose, onGenerateStrategy }) => {
+  const [activeTab, setActiveTab] = useState('overview');
+  const [isGenerating, setIsGenerating] = useState(false);
 
-  if (!isOpen) return null;
+  if (!opponent) return null;
 
-  const generateStrategy = async () => {
-    if (!apiKey) {
-      alert('Please configure your Gemini API key in settings');
-      return;
-    }
+  const threatConfig = THREAT_LEVELS[opponent.threatLevel] || THREAT_LEVELS.medium;
+  const winRate = opponent.debates?.total > 0 
+    ? Math.round((opponent.debates.wins / opponent.debates.total) * 100) 
+    : 0;
 
-    setLoading(true);
-    try {
-      const prompt = `You are an expert debate coach. Generate a comprehensive counter-strategy for debating against this opponent:
-
-**Opponent Profile:**
-- Name: ${opponent.name}
-- School: ${opponent.school || 'Unknown'}
-- Format: ${opponent.format}
-- Skill Level: ${opponent.skillLevel}
-- Debate Style: ${opponent.debateStyle || 'Not specified'}
-- Known Strengths: ${opponent.strengths?.join(', ') || 'None recorded'}
-- Known Weaknesses: ${opponent.weaknesses?.join(', ') || 'None recorded'}
-- Common Arguments: ${opponent.commonArguments?.join(', ') || 'None recorded'}
-
-${topic ? `**Debate Topic:** ${topic}` : ''}
-
-Provide:
-1. **Pre-Round Preparation** - What to research and prepare
-2. **Opening Strategy** - How to start the debate
-3. **Exploiting Weaknesses** - Specific tactics to use
-4. **Defending Against Strengths** - How to neutralize their advantages
-5. **Cross-Examination Tips** - Questions to ask
-6. **Predicted Arguments & Responses** - What they'll likely argue and how to counter
-7. **Key Phrases to Use** - Impactful language
-8. **Closing Strategy** - How to finish strong
-
-Format your response with clear headers and bullet points.`;
-
-      const response = await callGeminiAPI(prompt, apiKey);
-      setStrategy(response);
-    } catch (err) {
-      console.error('Error generating strategy:', err);
-      setStrategy('Error generating strategy. Please check your API key and try again.');
-    } finally {
-      setLoading(false);
-    }
+  const handleGenerateStrategy = async () => {
+    setIsGenerating(true);
+    await onGenerateStrategy?.(opponent);
+    setIsGenerating(false);
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.95 }}
-        className="w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl max-h-[90vh] overflow-hidden flex flex-col"
-      >
-        <div className="p-6 border-b border-slate-800">
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <Zap className="w-5 h-5 text-purple-400" />
-            Counter Strategy Generator
-          </h2>
-          <p className="text-slate-400 text-sm mt-1">
-            Generate AI-powered strategy to defeat {opponent.name}
-          </p>
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 20 }}
+      className="h-full overflow-hidden rounded-2xl border border-slate-800/60 bg-gradient-to-b from-slate-900/95 to-slate-950/95 backdrop-blur-xl"
+    >
+      {/* Header */}
+      <div className="relative p-6 border-b border-slate-800 overflow-hidden">
+        <div className={`absolute inset-0 bg-gradient-to-r ${
+          opponent.threatLevel === 'high' ? 'from-red-500/10 via-transparent to-orange-500/5' :
+          opponent.threatLevel === 'medium' ? 'from-amber-500/10 via-transparent to-yellow-500/5' :
+          'from-emerald-500/10 via-transparent to-teal-500/5'
+        }`} />
+        
+        <div className="relative flex items-start justify-between">
+          <div className="flex items-center gap-4">
+            <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${
+              opponent.threatLevel === 'high' ? 'from-red-500/30 to-orange-600/30' :
+              opponent.threatLevel === 'medium' ? 'from-amber-500/30 to-yellow-600/30' :
+              'from-emerald-500/30 to-teal-600/30'
+            } flex items-center justify-center text-3xl font-bold text-white border ${threatConfig.bgClass}`}>
+              {opponent.name?.[0]?.toUpperCase() || '?'}
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-white">{opponent.name}</h2>
+              <p className="text-slate-400">{opponent.school || 'Unknown School'}</p>
+              <ThreatBadge level={opponent.threatLevel} size="md" />
+            </div>
+          </div>
+          
+          <motion.button
+            whileHover={{ scale: 1.1, rotate: 90 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={onClose}
+            className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+          >
+            <X className="w-5 h-5" />
+          </motion.button>
         </div>
+      </div>
 
-        <div className="p-6 flex-1 overflow-y-auto">
-          {!strategy ? (
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-slate-400 mb-2">
-                  Debate Topic (Optional)
-                </label>
-                <input
-                  type="text"
-                  value={topic}
-                  onChange={(e) => setTopic(e.target.value)}
-                  placeholder="Enter the debate resolution for topic-specific strategy..."
-                  className="w-full px-4 py-3 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none"
-                />
+      {/* Tabs */}
+      <div className="flex items-center gap-2 p-4 border-b border-slate-800/50">
+        {[
+          { id: 'overview', label: 'Overview', icon: BarChart3 },
+          { id: 'history', label: 'History', icon: Clock },
+          { id: 'strategy', label: 'Strategy', icon: Brain }
+        ].map(tab => (
+          <motion.button
+            key={tab.id}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => setActiveTab(tab.id)}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+              activeTab === tab.id
+                ? 'bg-slate-800 text-white'
+                : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+            }`}
+          >
+            <tab.icon className="w-4 h-4" />
+            {tab.label}
+          </motion.button>
+        ))}
+      </div>
+
+      {/* Content */}
+      <div className="p-6 overflow-y-auto max-h-[calc(100%-200px)] space-y-6">
+        {activeTab === 'overview' && (
+          <>
+            {/* Stats Grid */}
+            <div className="grid grid-cols-3 gap-4">
+              <div className="p-4 rounded-xl bg-slate-800/30 border border-slate-800/50 text-center">
+                <p className="text-3xl font-bold text-white">{opponent.debates?.total || 0}</p>
+                <p className="text-slate-500 text-sm">Total Debates</p>
               </div>
+              <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-center">
+                <p className="text-3xl font-bold text-red-400">{opponent.debates?.wins || 0}</p>
+                <p className="text-slate-500 text-sm">Your Losses</p>
+              </div>
+              <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center">
+                <p className="text-3xl font-bold text-emerald-400">{opponent.debates?.losses || 0}</p>
+                <p className="text-slate-500 text-sm">Your Wins</p>
+              </div>
+            </div>
 
-              <div className="p-4 rounded-xl bg-slate-800/30 border border-slate-800/50">
-                <h3 className="text-white font-medium mb-2">Opponent Summary</h3>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <span className="text-slate-500">Format:</span>
-                    <span className="text-slate-300 ml-2">{opponent.format}</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-500">Skill:</span>
-                    <span className="text-slate-300 ml-2">{opponent.skillLevel}</span>
-                  </div>
-                  <div className="col-span-2">
-                    <span className="text-slate-500">Style:</span>
-                    <span className="text-slate-300 ml-2">{opponent.debateStyle || 'Unknown'}</span>
-                  </div>
+            {/* Strengths */}
+            <div>
+              <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-red-400" />
+                Opponent Strengths
+              </h3>
+              <div className="space-y-2">
+                {opponent.strengths?.length > 0 ? (
+                  opponent.strengths.map((strength, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                      className="flex items-center gap-3 p-3 rounded-xl bg-red-500/5 border border-red-500/20"
+                    >
+                      <div className="w-2 h-2 rounded-full bg-red-500" />
+                      <span className="text-slate-300">{strength}</span>
+                    </motion.div>
+                  ))
+                ) : (
+                  <p className="text-slate-500 italic">No strengths recorded yet</p>
+                )}
+              </div>
+            </div>
+
+            {/* Weaknesses */}
+            <div>
+              <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
+                <Target className="w-5 h-5 text-emerald-400" />
+                Opponent Weaknesses
+              </h3>
+              <div className="space-y-2">
+                {opponent.weaknesses?.length > 0 ? (
+                  opponent.weaknesses.map((weakness, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                      className="flex items-center gap-3 p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/20"
+                    >
+                      <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                      <span className="text-slate-300">{weakness}</span>
+                    </motion.div>
+                  ))
+                ) : (
+                  <p className="text-slate-500 italic">No weaknesses recorded yet</p>
+                )}
+              </div>
+            </div>
+
+            {/* Common Arguments */}
+            {opponent.commonArguments?.length > 0 && (
+              <div>
+                <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-cyan-400" />
+                  Common Arguments
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {opponent.commonArguments.map((arg, i) => (
+                    <span key={i} className="px-3 py-1.5 rounded-full text-sm bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                      {arg}
+                    </span>
+                  ))}
                 </div>
               </div>
+            )}
+          </>
+        )}
 
-              <button
-                onClick={generateStrategy}
-                disabled={loading}
-                className="w-full py-4 rounded-xl bg-gradient-to-r from-purple-500 to-cyan-500 text-white font-semibold hover:from-purple-400 hover:to-cyan-400 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
-              >
-                {loading ? (
-                  <>
-                    <RefreshCw className="w-5 h-5 animate-spin" />
-                    Generating Strategy...
-                  </>
-                ) : (
-                  <>
-                    <Lightbulb className="w-5 h-5" />
-                    Generate Counter Strategy
-                  </>
-                )}
-              </button>
-            </div>
-          ) : (
-            <div className="prose prose-invert max-w-none">
-              <div className="p-4 rounded-xl bg-slate-800/30 border border-slate-800/50 whitespace-pre-wrap text-slate-300 leading-relaxed">
-                {strategy}
+        {activeTab === 'history' && (
+          <div className="space-y-4">
+            {opponent.debateHistory?.length > 0 ? (
+              opponent.debateHistory.map((debate, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  className="flex items-center gap-4 p-4 rounded-xl bg-slate-800/30 border border-slate-800/50"
+                >
+                  <div className={`w-2 h-12 rounded-full ${
+                    debate.result === 'win' ? 'bg-emerald-500' : 'bg-red-500'
+                  }`} />
+                  <div className="flex-1">
+                    <p className="text-white font-medium">{debate.tournament}</p>
+                    <p className="text-slate-500 text-sm">{debate.round} • {debate.date}</p>
+                  </div>
+                  <span className={`px-3 py-1 rounded-lg text-sm font-medium ${
+                    debate.result === 'win'
+                      ? 'bg-emerald-500/10 text-emerald-400'
+                      : 'bg-red-500/10 text-red-400'
+                  }`}>
+                    {debate.result === 'win' ? 'Won' : 'Lost'}
+                  </span>
+                </motion.div>
+              ))
+            ) : (
+              <p className="text-slate-500 text-center py-8">No debate history recorded</p>
+            )}
+          </div>
+        )}
+
+        {activeTab === 'strategy' && (
+          <div className="space-y-6">
+            <motion.button
+              whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(168, 85, 247, 0.3)' }}
+              whileTap={{ scale: 0.98 }}
+              onClick={handleGenerateStrategy}
+              disabled={isGenerating}
+              className="w-full py-4 rounded-xl bg-gradient-to-r from-purple-500 to-pink-600 text-white font-semibold shadow-lg shadow-purple-500/25 flex items-center justify-center gap-3 disabled:opacity-50"
+            >
+              {isGenerating ? (
+                <>
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                  >
+                    <Sparkles className="w-5 h-5" />
+                  </motion.div>
+                  Generating AI Strategy...
+                </>
+              ) : (
+                <>
+                  <Brain className="w-5 h-5" />
+                  Generate AI Counter-Strategy
+                  <Sparkles className="w-5 h-5" />
+                </>
+              )}
+            </motion.button>
+
+            {opponent.counterStrategies?.length > 0 && (
+              <div className="space-y-4">
+                <h3 className="text-white font-semibold flex items-center gap-2">
+                  <Shield className="w-5 h-5 text-purple-400" />
+                  Counter-Strategies
+                </h3>
+                {opponent.counterStrategies.map((strategy, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-4 rounded-xl bg-purple-500/5 border border-purple-500/20"
+                  >
+                    <p className="text-slate-300">{strategy}</p>
+                  </motion.div>
+                ))}
               </div>
-              <button
-                onClick={() => setStrategy(null)}
-                className="mt-4 px-4 py-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white transition-colors"
-              >
-                Generate New Strategy
-              </button>
+            )}
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+};
+
+// Add Opponent Modal
+const AddOpponentModal = ({ isOpen, onClose, onSave }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    school: '',
+    threatLevel: 'medium',
+    strengths: '',
+    weaknesses: '',
+    commonArguments: '',
+    notes: ''
+  });
+
+  if (!isOpen) return null;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSave({
+      ...formData,
+      strengths: formData.strengths.split(',').map(s => s.trim()).filter(Boolean),
+      weaknesses: formData.weaknesses.split(',').map(s => s.trim()).filter(Boolean),
+      commonArguments: formData.commonArguments.split(',').map(s => s.trim()).filter(Boolean),
+      debates: { total: 0, wins: 0, losses: 0 }
+    });
+    onClose();
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4"
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        className="w-full max-w-lg bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 rounded-3xl shadow-2xl max-h-[90vh] overflow-hidden"
+      >
+        <div className="relative p-6 border-b border-slate-800 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 via-transparent to-amber-500/10" />
+          <div className="relative flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-red-500/10 border border-red-500/30">
+                  <Target className="w-5 h-5 text-red-400" />
+                </div>
+                Add Opponent
+              </h2>
             </div>
-          )}
+            <motion.button
+              whileHover={{ scale: 1.1, rotate: 90 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={onClose}
+              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+            >
+              <X className="w-5 h-5" />
+            </motion.button>
+          </div>
         </div>
 
-        <div className="p-4 border-t border-slate-800">
-          <button
-            onClick={onClose}
-            className="w-full py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
-          >
-            Close
-          </button>
-        </div>
+        <form onSubmit={handleSubmit} className="p-6 space-y-5 overflow-y-auto max-h-[calc(90vh-140px)]">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-400">Name *</label>
+              <input
+                type="text"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className="w-full px-4 py-3 rounded-xl bg-slate-800/50 border border-slate-700 text-white focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-400">School</label>
+              <input
+                type="text"
+                value={formData.school}
+                onChange={(e) => setFormData({ ...formData, school: e.target.value })}
+                className="w-full px-4 py-3 rounded-xl bg-slate-800/50 border border-slate-700 text-white focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-400">Threat Level</label>
+            <div className="grid grid-cols-3 gap-3">
+              {Object.entries(THREAT_LEVELS).map(([level, config]) => (
+                <motion.button
+                  key={level}
+                  type="button"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setFormData({ ...formData, threatLevel: level })}
+                  className={`p-3 rounded-xl border-2 transition-all text-center ${
+                    formData.threatLevel === level
+                      ? `${config.bgClass} border-current ${config.textClass}`
+                      : 'bg-slate-800/30 border-slate-700 text-slate-400 hover:border-slate-600'
+                  }`}
+                >
+                  <config.icon className={`w-6 h-6 mx-auto mb-1 ${formData.threatLevel === level ? config.textClass : ''}`} />
+                  <span className="text-sm font-medium">{config.label.split(' ')[0]}</span>
+                </motion.button>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-400">Strengths (comma-separated)</label>
+            <input
+              type="text"
+              value={formData.strengths}
+              onChange={(e) => setFormData({ ...formData, strengths: e.target.value })}
+              placeholder="e.g., Strong rebuttals, Fast speaking, Good evidence"
+              className="w-full px-4 py-3 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-400">Weaknesses (comma-separated)</label>
+            <input
+              type="text"
+              value={formData.weaknesses}
+              onChange={(e) => setFormData({ ...formData, weaknesses: e.target.value })}
+              placeholder="e.g., Weak on CX, Poor time management"
+              className="w-full px-4 py-3 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-400">Notes</label>
+            <textarea
+              value={formData.notes}
+              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+              placeholder="Any additional observations..."
+              rows={3}
+              className="w-full px-4 py-3 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all resize-none"
+            />
+          </div>
+
+          <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+            <motion.button
+              type="button"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={onClose}
+              className="px-6 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+            >
+              Cancel
+            </motion.button>
+            <motion.button
+              type="submit"
+              whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(239, 68, 68, 0.3)' }}
+              whileTap={{ scale: 0.98 }}
+              className="px-8 py-3 rounded-xl bg-gradient-to-r from-red-500 to-orange-600 text-white font-semibold shadow-lg shadow-red-500/25"
+            >
+              Add Opponent
+            </motion.button>
+          </div>
+        </form>
       </motion.div>
-    </div>
+    </motion.div>
   );
 };
 
 // Main Component
 const OpponentIntelligence = ({ apiKey }) => {
-  const { opponents, loading, addOpponent, updateOpponent, deleteOpponent } = useOpponents();
+  const { user } = useAuth();
+  const { opponents, loading, saveOpponent, generateCounterStrategy } = useOpponents();
   const [showAddModal, setShowAddModal] = useState(false);
-  const [editingOpponent, setEditingOpponent] = useState(null);
-  const [strategyOpponent, setStrategyOpponent] = useState(null);
+  const [selectedOpponent, setSelectedOpponent] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [filterFormat, setFilterFormat] = useState('all');
+  const [filterThreat, setFilterThreat] = useState('all');
 
   const filteredOpponents = useMemo(() => {
-    return opponents.filter(opp => {
-      const matchesSearch = !searchQuery || 
-        opp.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        opp.school?.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesFormat = filterFormat === 'all' || opp.format === filterFormat;
-      return matchesSearch && matchesFormat;
+    return (opponents || []).filter(opponent => {
+      const matchesSearch = opponent.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          opponent.school?.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesThreat = filterThreat === 'all' || opponent.threatLevel === filterThreat;
+      return matchesSearch && matchesThreat;
     });
-  }, [opponents, searchQuery, filterFormat]);
+  }, [opponents, searchQuery, filterThreat]);
 
-  const handleSaveOpponent = async (data) => {
-    if (editingOpponent) {
-      await updateOpponent(editingOpponent.id, data);
-      setEditingOpponent(null);
-    } else {
-      await addOpponent(data);
-    }
-    setShowAddModal(false);
+  const handleSaveOpponent = async (opponentData) => {
+    await saveOpponent(opponentData);
   };
 
   return (
-    <div className="space-y-8">
-      {/* Page Header */}
-      <div className="flex items-start justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
-            <Users className="w-8 h-8 text-cyan-400" />
-            Opponent Intelligence
-          </h1>
-          <p className="text-slate-400 mt-1">Track opponents, patterns, and generate winning strategies</p>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="h-full"
+    >
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+              <div className="p-2.5 rounded-xl bg-gradient-to-br from-red-500/20 to-orange-600/20 border border-red-500/30">
+                <Target className="w-7 h-7 text-red-400" />
+              </div>
+              Opponent Intelligence
+            </h1>
+            <p className="text-slate-400 mt-2">Track, analyze, and prepare for your competition</p>
+          </div>
+          <motion.button
+            whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(239, 68, 68, 0.3)' }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => setShowAddModal(true)}
+            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-500 to-orange-600 text-white font-medium shadow-lg shadow-red-500/25 flex items-center gap-2"
+          >
+            <Plus className="w-5 h-5" />
+            Add Opponent
+          </motion.button>
         </div>
-        <button
-          onClick={() => setShowAddModal(true)}
-          className="px-4 py-2.5 rounded-xl bg-cyan-500 text-white font-medium hover:bg-cyan-400 transition-colors flex items-center gap-2"
-        >
-          <UserPlus className="w-5 h-5" />
-          Add Opponent
-        </button>
-      </div>
 
-      {/* Search & Filters */}
-      <div className="flex items-center gap-4">
-        <div className="flex-1 relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search opponents..."
-            className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-900/50 border border-slate-800 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none"
-          />
-        </div>
-        <select
-          value={filterFormat}
-          onChange={(e) => setFilterFormat(e.target.value)}
-          className="px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-800 text-white focus:border-cyan-500 outline-none"
-        >
-          <option value="all">All Formats</option>
-          {['Public Forum', 'Lincoln-Douglas', 'Policy', 'Congress', 'World Schools', 'Extemp'].map(f => (
-            <option key={f} value={f}>{f}</option>
-          ))}
-        </select>
-      </div>
-
-      {/* Stats Bar */}
-      {opponents.length > 0 && (
-        <div className="grid grid-cols-4 gap-4">
-          {[
-            { label: 'Total Opponents', value: opponents.length, color: 'cyan' },
-            { label: 'High Threat', value: opponents.filter(o => o.threatLevel >= 4).length, color: 'red' },
-            { label: 'With Notes', value: opponents.filter(o => o.notes?.length > 0).length, color: 'purple' },
-            { label: 'Elite Level', value: opponents.filter(o => o.skillLevel === 'elite').length, color: 'amber' },
-          ].map((stat, i) => (
-            <div key={i} className={`p-4 rounded-xl bg-${stat.color}-500/10 border border-${stat.color}-500/20`}>
-              <p className={`text-2xl font-bold text-${stat.color}-400`}>{stat.value}</p>
-              <p className="text-slate-400 text-sm">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Opponents Grid */}
-      {loading ? (
-        <div className="flex items-center justify-center py-20">
-          <RefreshCw className="w-8 h-8 text-cyan-400 animate-spin" />
-        </div>
-      ) : opponents.length === 0 ? (
-        <div className="p-8 rounded-2xl border border-slate-800/60 bg-slate-900/30">
-          <EmptyOpponents onAdd={() => setShowAddModal(true)} />
-        </div>
-      ) : filteredOpponents.length === 0 ? (
-        <div className="text-center py-12 text-slate-400">
-          No opponents match your search
-        </div>
-      ) : (
-        <div className="grid md:grid-cols-2 gap-4">
-          {filteredOpponents.map(opponent => (
-            <OpponentCard
-              key={opponent.id}
-              opponent={opponent}
-              onEdit={(opp) => {
-                setEditingOpponent(opp);
-                setShowAddModal(true);
-              }}
-              onDelete={deleteOpponent}
-              onView={() => {}}
-              onGenerateStrategy={(opp) => setStrategyOpponent(opp)}
+        {/* Search and Filter */}
+        <div className="flex items-center gap-4">
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search opponents..."
+              className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
             />
-          ))}
+          </div>
+          
+          <div className="flex items-center gap-2 p-1 bg-slate-900/50 rounded-xl border border-slate-800/50">
+            {[
+              { id: 'all', label: 'All' },
+              { id: 'high', label: 'High', color: 'text-red-400' },
+              { id: 'medium', label: 'Medium', color: 'text-amber-400' },
+              { id: 'low', label: 'Low', color: 'text-emerald-400' }
+            ].map(filter => (
+              <button
+                key={filter.id}
+                onClick={() => setFilterThreat(filter.id)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  filterThreat === filter.id
+                    ? 'bg-slate-800 text-white'
+                    : `text-slate-400 hover:text-white ${filter.color || ''}`
+                }`}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
         </div>
-      )}
 
-      {/* Modals */}
+        {/* Content */}
+        {loading ? (
+          <div className="grid md:grid-cols-2 gap-4">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 animate-pulse">
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 rounded-xl bg-slate-800" />
+                  <div className="flex-1 space-y-3">
+                    <div className="h-5 w-32 bg-slate-800 rounded" />
+                    <div className="h-4 w-24 bg-slate-800 rounded" />
+                    <div className="h-3 w-full bg-slate-800 rounded" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : filteredOpponents.length === 0 ? (
+          <div className="p-8 rounded-3xl border border-slate-800/60 bg-gradient-to-b from-slate-900/50 to-slate-950/50">
+            <EmptyOpponents onAdd={() => setShowAddModal(true)} />
+          </div>
+        ) : (
+          <div className="grid lg:grid-cols-5 gap-6">
+            {/* Opponent List */}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className={`${selectedOpponent ? 'lg:col-span-3' : 'lg:col-span-5'} space-y-4`}
+            >
+              <div className={`grid ${selectedOpponent ? 'grid-cols-1' : 'md:grid-cols-2'} gap-4`}>
+                {filteredOpponents.map(opponent => (
+                  <OpponentCard
+                    key={opponent.id}
+                    opponent={opponent}
+                    onClick={() => setSelectedOpponent(opponent)}
+                    isSelected={selectedOpponent?.id === opponent.id}
+                  />
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Detail Panel */}
+            <AnimatePresence>
+              {selectedOpponent && (
+                <div className="lg:col-span-2">
+                  <OpponentDetailPanel
+                    opponent={selectedOpponent}
+                    onClose={() => setSelectedOpponent(null)}
+                    onGenerateStrategy={generateCounterStrategy}
+                  />
+                </div>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
+      </div>
+
+      {/* Add Modal */}
       <AnimatePresence>
         {showAddModal && (
-          <OpponentModal
+          <AddOpponentModal
             isOpen={showAddModal}
-            onClose={() => {
-              setShowAddModal(false);
-              setEditingOpponent(null);
-            }}
+            onClose={() => setShowAddModal(false)}
             onSave={handleSaveOpponent}
-            opponent={editingOpponent}
-          />
-        )}
-        {strategyOpponent && (
-          <CounterStrategyModal
-            isOpen={!!strategyOpponent}
-            onClose={() => setStrategyOpponent(null)}
-            opponent={strategyOpponent}
-            apiKey={apiKey}
           />
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };
 

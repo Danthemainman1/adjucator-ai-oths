@@ -17,6 +17,11 @@ import EvidenceLibrary from './components/features/EvidenceLibrary';
 import PracticeMode from './components/features/PracticeMode';
 import TeamCollaboration from './components/features/TeamCollaboration';
 import TournamentManagement from './components/features/TournamentManagement';
+import ArgumentFlowchart from './components/features/ArgumentFlowchart';
+import VoiceAnalysis from './components/features/VoiceAnalysis';
+import DebateTimer from './components/features/DebateTimer';
+import SpeechOutlineBuilder from './components/features/SpeechOutlineBuilder';
+import RoundRobinScheduler from './components/features/RoundRobinScheduler';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { Settings, Loader2 } from 'lucide-react';
@@ -168,6 +173,11 @@ function AppContent() {
       {activeTab === 'extemp' && <ExtempGenerator apiKey={apiKey} />}
       {activeTab === 'tone' && <ToneAnalyzer apiKey={apiKey} />}
       {activeTab === 'history' && <HistoryPanel />}
+      {activeTab === 'flowchart' && <ArgumentFlowchart />}
+      {activeTab === 'voice' && <VoiceAnalysis />}
+      {activeTab === 'timer' && <DebateTimer />}
+      {activeTab === 'outline' && <SpeechOutlineBuilder />}
+      {activeTab === 'scheduler' && <RoundRobinScheduler />}
 
       <SettingsModal
         isOpen={showSettings}
