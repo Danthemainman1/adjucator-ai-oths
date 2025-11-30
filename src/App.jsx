@@ -203,7 +203,7 @@ function AppContent() {
       {activeTab === 'validator' && <ArgumentValidator />}
       {activeTab === 'judgenotes' && <JudgeNotes />}
       {activeTab === 'roster' && <TeamRoster />}
-      {activeTab === 'teams' && <TeamBrowser />}
+      {activeTab === 'teams' && <TeamBrowser setActiveTab={setActiveTab} />}
 
       <SettingsModal
         isOpen={showSettings}

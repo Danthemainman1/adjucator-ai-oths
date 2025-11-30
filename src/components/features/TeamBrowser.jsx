@@ -15,7 +15,10 @@ import {
   Filter,
   X,
   Check,
-  AlertCircle
+  AlertCircle,
+  Send,
+  Settings,
+  Image as ImageIcon
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { db } from '../../utils/firebase';
@@ -58,7 +61,7 @@ const SPEECH_EVENTS = {
   ]
 };
 
-const TeamBrowser = () => {
+const TeamBrowser = ({ setActiveTab }) => {
   const { user, isAuthenticated } = useAuth();
   const [teams, setTeams] = useState([]);
   const [myTeams, setMyTeams] = useState([]);
@@ -68,6 +71,11 @@ const TeamBrowser = () => {
   const [filterCategory, setFilterCategory] = useState('all');
   const [showFilters, setShowFilters] = useState(false);
   const [notification, setNotification] = useState(null);
+  const [selectedTeam, setSelectedTeam] = useState(null);
+  const [showChatModal, setShowChatModal] = useState(false);
+  const [chatMessages, setChatMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
+  const [showTeamSettings, setShowTeamSettings] = useState(false);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -163,8 +171,16 @@ const TeamBrowser = () => {
       return;
     }
 
+    // CRITICAL FIX: Check if user is already a member before joining
     if (team.members?.includes(user.uid)) {
-      showNotification('You are already a member of this team', 'info');
+      showNotification('You are already a member of this team!', 'error');
+      return;
+    }
+
+    // Check if any memberDetails already has this user
+    const alreadyInMemberDetails = team.memberDetails?.some(m => m.uid === user.uid);
+    if (alreadyInMemberDetails) {
+      showNotification('You are already a member of this team!', 'error');
       return;
     }
 
@@ -175,6 +191,16 @@ const TeamBrowser = () => {
 
     try {
       const teamRef = doc(db, 'teams', teamId);
+      
+      // Double-check by reading the current document
+      const currentTeamDoc = await getDocs(query(collection(db, 'teams'), where('__name__', '==', teamId)));
+      const currentTeam = currentTeamDoc.docs[0]?.data();
+      
+      if (currentTeam?.members?.includes(user.uid)) {
+        showNotification('You are already a member of this team!', 'error');
+        return;
+      }
+      
       await updateDoc(teamRef, {
         members: arrayUnion(user.uid),
         memberDetails: arrayUnion({
@@ -226,6 +252,66 @@ const TeamBrowser = () => {
     }));
   };
 
+  // Chat functionality
+  useEffect(() => {
+    if (!selectedTeam || !showChatModal) return;
+
+    const messagesQuery = query(
+      collection(db, 'teams', selectedTeam.id, 'messages'),
+      orderBy('timestamp', 'asc')
+    );
+
+    const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
+      const messages = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setChatMessages(messages);
+    });
+
+    return () => unsubscribe();
+  }, [selectedTeam, showChatModal]);
+
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+    if (!newMessage.trim() || !selectedTeam) return;
+
+    try {
+      await addDoc(collection(db, 'teams', selectedTeam.id, 'messages'), {
+        text: newMessage,
+        userId: user.uid,
+        userName: user.displayName || user.email,
+        timestamp: serverTimestamp(),
+        createdAt: new Date().toISOString()
+      });
+
+      setNewMessage('');
+    } catch (error) {
+      console.error('Error sending message:', error);
+      showNotification('Failed to send message', 'error');
+    }
+  };
+
+  const openTeamChat = (team) => {
+    setSelectedTeam(team);
+    setShowChatModal(true);
+  };
+
+  const handleUpdateTeamSettings = async (teamId, updates) => {
+    try {
+      const teamRef = doc(db, 'teams', teamId);
+      await updateDoc(teamRef, {
+        ...updates,
+        updatedAt: serverTimestamp()
+      });
+      showNotification('Team settings updated!');
+      setShowTeamSettings(false);
+    } catch (error) {
+      console.error('Error updating team:', error);
+      showNotification('Failed to update team settings', 'error');
+    }
+  };
+
   const filteredTeams = teams.filter(team => {
     const matchesSearch = team.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          team.description?.toLowerCase().includes(searchQuery.toLowerCase());
@@ -251,7 +337,10 @@ const TeamBrowser = () => {
             Please sign in to browse teams, create your own team, and collaborate with other debaters.
           </p>
         </div>
-        <button className="btn-primary">
+        <button 
+          onClick={() => setActiveTab && setActiveTab('dashboard')}
+          className="btn-primary"
+        >
           Sign In to Continue
         </button>
       </div>
@@ -363,6 +452,11 @@ const TeamBrowser = () => {
                 user={user}
                 onJoin={handleJoinTeam}
                 onLeave={handleLeaveTeam}
+                onOpenChat={openTeamChat}
+                onOpenSettings={(team) => {
+                  setSelectedTeam(team);
+                  setShowTeamSettings(true);
+                }}
                 isMember={true}
               />
             ))}
@@ -404,6 +498,11 @@ const TeamBrowser = () => {
                 user={user}
                 onJoin={handleJoinTeam}
                 onLeave={handleLeaveTeam}
+                onOpenChat={openTeamChat}
+                onOpenSettings={(team) => {
+                  setSelectedTeam(team);
+                  setShowTeamSettings(true);
+                }}
                 isMember={team.members?.includes(user.uid)}
               />
             ))}
@@ -557,12 +656,190 @@ const TeamBrowser = () => {
           </div>
         </div>
       )}
+
+      {/* Team Chat Modal */}
+      {showChatModal && selectedTeam && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
+          <div className="glass-card w-full max-w-2xl h-[600px] flex flex-col animate-in zoom-in-95">
+            <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-800">
+              <div>
+                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                  <MessageSquare className="w-5 h-5 text-cyan-400" />
+                  {selectedTeam.name} Chat
+                </h2>
+                <p className="text-sm text-slate-400">{selectedTeam.members?.length || 0} members</p>
+              </div>
+              <button
+                onClick={() => {
+                  setShowChatModal(false);
+                  setSelectedTeam(null);
+                  setChatMessages([]);
+                }}
+                className="p-2 rounded-lg hover:bg-slate-800 transition-colors"
+              >
+                <X className="w-5 h-5 text-slate-400" />
+              </button>
+            </div>
+
+            {/* Messages */}
+            <div className="flex-1 overflow-y-auto space-y-3 mb-4">
+              {chatMessages.length === 0 ? (
+                <div className="text-center py-12">
+                  <MessageSquare className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+                  <p className="text-slate-400">No messages yet. Start the conversation!</p>
+                </div>
+              ) : (
+                chatMessages.map((message) => (
+                  <div
+                    key={message.id}
+                    className={`flex ${message.userId === user.uid ? 'justify-end' : 'justify-start'}`}
+                  >
+                    <div
+                      className={`max-w-[70%] rounded-lg p-3 ${
+                        message.userId === user.uid
+                          ? 'bg-cyan-500 text-white'
+                          : 'bg-slate-800 text-slate-200'
+                      }`}
+                    >
+                      {message.userId !== user.uid && (
+                        <p className="text-xs opacity-70 mb-1">{message.userName}</p>
+                      )}
+                      <p className="text-sm">{message.text}</p>
+                      <p className="text-xs opacity-60 mt-1">
+                        {new Date(message.createdAt).toLocaleTimeString()}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {/* Message Input */}
+            <form onSubmit={handleSendMessage} className="flex gap-2 pt-4 border-t border-slate-800">
+              <input
+                type="text"
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                placeholder="Type a message..."
+                className="input-field flex-1"
+              />
+              <button
+                type="submit"
+                disabled={!newMessage.trim()}
+                className="btn-primary px-4 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Send className="w-5 h-5" />
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Team Settings Modal */}
+      {showTeamSettings && selectedTeam && selectedTeam.owner === user.uid && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
+          <div className="glass-card w-full max-w-lg animate-in zoom-in-95">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                <Settings className="w-5 h-5 text-cyan-400" />
+                Team Settings
+              </h2>
+              <button
+                onClick={() => {
+                  setShowTeamSettings(false);
+                  setSelectedTeam(null);
+                }}
+                className="p-2 rounded-lg hover:bg-slate-800 transition-colors"
+              >
+                <X className="w-5 h-5 text-slate-400" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">
+                  Team Name
+                </label>
+                <input
+                  type="text"
+                  defaultValue={selectedTeam.name}
+                  onChange={(e) => setSelectedTeam({ ...selectedTeam, name: e.target.value })}
+                  className="input-field"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">
+                  Description
+                </label>
+                <textarea
+                  defaultValue={selectedTeam.description}
+                  onChange={(e) => setSelectedTeam({ ...selectedTeam, description: e.target.value })}
+                  rows={3}
+                  className="input-field resize-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">
+                  Max Members
+                </label>
+                <input
+                  type="number"
+                  min="2"
+                  max="100"
+                  defaultValue={selectedTeam.maxMembers}
+                  onChange={(e) => setSelectedTeam({ ...selectedTeam, maxMembers: parseInt(e.target.value) })}
+                  className="input-field"
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  id="editPrivate"
+                  defaultChecked={selectedTeam.isPrivate}
+                  onChange={(e) => setSelectedTeam({ ...selectedTeam, isPrivate: e.target.checked })}
+                  className="w-4 h-4 rounded border-slate-700 bg-slate-800 text-cyan-500"
+                />
+                <label htmlFor="editPrivate" className="text-sm text-slate-300 flex items-center gap-2">
+                  {selectedTeam.isPrivate ? <Lock className="w-4 h-4" /> : <Unlock className="w-4 h-4" />}
+                  Private Team (invite-only)
+                </label>
+              </div>
+
+              <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+                <button
+                  onClick={() => {
+                    setShowTeamSettings(false);
+                    setSelectedTeam(null);
+                  }}
+                  className="px-4 py-2 rounded-lg text-slate-400 hover:text-white transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => handleUpdateTeamSettings(selectedTeam.id, {
+                    name: selectedTeam.name,
+                    description: selectedTeam.description,
+                    maxMembers: selectedTeam.maxMembers,
+                    isPrivate: selectedTeam.isPrivate
+                  })}
+                  className="btn-primary"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 // Team Card Component
-const TeamCard = ({ team, user, onJoin, onLeave, isMember }) => {
+const TeamCard = ({ team, user, onJoin, onLeave, onOpenChat, onOpenSettings, isMember }) => {
   const isOwner = team.owner === user.uid;
   const isFull = team.members?.length >= team.maxMembers;
 
@@ -606,22 +883,42 @@ const TeamCard = ({ team, user, onJoin, onLeave, isMember }) => {
       )}
 
       {/* Actions */}
-      <div className="pt-3 border-t border-slate-800">
+      <div className="pt-3 border-t border-slate-800 space-y-2">
         {isMember ? (
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-green-400 flex items-center gap-2">
-              <Check className="w-4 h-4" />
-              Member
-            </span>
-            {!isOwner && (
+          <>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-green-400 flex items-center gap-2">
+                <Check className="w-4 h-4" />
+                Member
+              </span>
+              {isOwner && (
+                <button
+                  onClick={() => onOpenSettings(team)}
+                  className="p-1.5 rounded-lg hover:bg-slate-800 transition-colors"
+                  title="Team Settings"
+                >
+                  <Settings className="w-4 h-4 text-slate-400" />
+                </button>
+              )}
+            </div>
+            <div className="flex gap-2">
               <button
-                onClick={() => onLeave(team.id, team)}
-                className="text-sm text-red-400 hover:text-red-300 transition-colors"
+                onClick={() => onOpenChat(team)}
+                className="flex-1 py-2 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/20 transition-all flex items-center justify-center gap-2 text-sm font-medium"
               >
-                Leave Team
+                <MessageSquare className="w-4 h-4" />
+                Open Chat
               </button>
-            )}
-          </div>
+              {!isOwner && (
+                <button
+                  onClick={() => onLeave(team.id, team)}
+                  className="px-4 py-2 rounded-lg text-red-400 hover:bg-red-500/10 border border-red-500/30 transition-all text-sm font-medium"
+                >
+                  Leave
+                </button>
+              )}
+            </div>
+          </>
         ) : (
           <button
             onClick={() => onJoin(team.id, team)}
