@@ -9,7 +9,8 @@ import {
     Moon,
     Sun,
     HelpCircle,
-    History
+    History,
+    Target
 } from 'lucide-react';
 
 const Layout = ({ children, activeTab, setActiveTab, showSettings, setShowSettings }) => {
@@ -29,6 +30,7 @@ const Layout = ({ children, activeTab, setActiveTab, showSettings, setShowSettin
         { id: 'judge', label: 'Judge Speech', icon: Gavel },
         { id: 'board', label: 'Evaluate Board', icon: LayoutIcon },
         { id: 'coach', label: 'Live Coach', icon: Mic },
+        { id: 'strategy', label: 'Strategy', icon: Target },
         { id: 'extemp', label: 'Extemp Gen', icon: HelpCircle },
         { id: 'history', label: 'History', icon: History },
     ];

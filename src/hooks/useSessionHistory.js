@@ -141,6 +141,7 @@ export function useSessionHistory() {
       judge: history.filter(s => s.type === 'judge').length,
       board: history.filter(s => s.type === 'board').length,
       coach: history.filter(s => s.type === 'coach').length,
+      strategy: history.filter(s => s.type === 'strategy').length,
       extemp: history.filter(s => s.type === 'extemp').length,
     },
     lastSession: history[0] || null,

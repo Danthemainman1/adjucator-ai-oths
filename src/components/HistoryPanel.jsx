@@ -12,6 +12,7 @@ import {
   Mic,
   Image,
   HelpCircle,
+  Target,
   ChevronRight,
   ChevronDown,
   Calendar,
@@ -42,6 +43,12 @@ const TYPE_CONFIG = {
     label: 'Live Coaching', 
     color: 'text-emerald-400',
     bg: 'bg-emerald-500/10 border-emerald-500/20'
+  },
+  strategy: { 
+    icon: Target, 
+    label: 'Strategy', 
+    color: 'text-orange-400',
+    bg: 'bg-orange-500/10 border-orange-500/20'
   },
   extemp: { 
     icon: HelpCircle, 

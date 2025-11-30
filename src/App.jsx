@@ -4,6 +4,7 @@ import JudgeSpeech from './components/JudgeSpeech';
 import EvaluateBoard from './components/EvaluateBoard';
 import LiveCoach from './components/LiveCoach';
 import ExtempGenerator from './components/ExtempGenerator';
+import StrategyGenerator from './components/StrategyGenerator';
 import HistoryPanel from './components/HistoryPanel';
 import { Settings, AlertCircle } from 'lucide-react';
 
@@ -92,6 +93,7 @@ function App() {
       {activeTab === 'judge' && <JudgeSpeech apiKey={apiKey} />}
       {activeTab === 'board' && <EvaluateBoard apiKey={apiKey} />}
       {activeTab === 'coach' && <LiveCoach apiKey={apiKey} />}
+      {activeTab === 'strategy' && <StrategyGenerator apiKey={apiKey} />}
       {activeTab === 'extemp' && <ExtempGenerator apiKey={apiKey} />}
       {activeTab === 'history' && <HistoryPanel />}
 
