@@ -22,6 +22,9 @@ import VoiceAnalysis from './components/features/VoiceAnalysis';
 import DebateTimer from './components/features/DebateTimer';
 import SpeechOutlineBuilder from './components/features/SpeechOutlineBuilder';
 import RoundRobinScheduler from './components/features/RoundRobinScheduler';
+import QuickStatsWidget from './components/features/QuickStatsWidget';
+import MotionLibrary from './components/features/MotionLibrary';
+import JudgeBallotGenerator from './components/features/JudgeBallotGenerator';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { Settings, Loader2 } from 'lucide-react';
@@ -178,6 +181,9 @@ function AppContent() {
       {activeTab === 'timer' && <DebateTimer />}
       {activeTab === 'outline' && <SpeechOutlineBuilder />}
       {activeTab === 'scheduler' && <RoundRobinScheduler />}
+      {activeTab === 'quickstats' && <QuickStatsWidget />}
+      {activeTab === 'motions' && <MotionLibrary />}
+      {activeTab === 'ballot' && <JudgeBallotGenerator />}
 
       <SettingsModal
         isOpen={showSettings}

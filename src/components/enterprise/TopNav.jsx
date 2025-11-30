@@ -25,7 +25,10 @@ import {
   GitBranch,
   Timer,
   List,
-  Calendar
+  Calendar,
+  Activity,
+  ScrollText,
+  ClipboardCheck
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -49,6 +52,9 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
 
   // Secondary nav - in "More" dropdown
   const secondaryNavItems = [
+    { id: 'quickstats', label: 'Quick Stats', icon: Activity },
+    { id: 'motions', label: 'Motion Library', icon: ScrollText },
+    { id: 'ballot', label: 'Ballot Generator', icon: ClipboardCheck },
     { id: 'flowchart', label: 'Flowchart', icon: GitBranch },
     { id: 'voice', label: 'Voice Analysis', icon: Mic },
     { id: 'timer', label: 'Debate Timer', icon: Timer },
