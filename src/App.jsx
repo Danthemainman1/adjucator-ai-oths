@@ -6,16 +6,19 @@ import LiveCoach from './components/LiveCoach';
 import ExtempGenerator from './components/ExtempGenerator';
 import StrategyGenerator from './components/StrategyGenerator';
 import HistoryPanel from './components/HistoryPanel';
+import ToneAnalyzer from './components/ToneAnalyzer';
 import AuthPage from './components/AuthPage';
+import LandingPage from './components/LandingPage';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-import { Settings, AlertCircle, Loader2 } from 'lucide-react';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { Settings, Loader2 } from 'lucide-react';
 
 // Loading spinner component
 const LoadingScreen = () => (
-  <div className="min-h-screen bg-bg-primary flex items-center justify-center">
+  <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--bg-primary)' }}>
     <div className="text-center space-y-4">
-      <Loader2 className="w-12 h-12 text-primary animate-spin mx-auto" />
-      <p className="text-text-secondary">Loading Adjudicator AI...</p>
+      <Loader2 className="w-12 h-12 animate-spin mx-auto" style={{ color: 'var(--primary)' }} />
+      <p style={{ color: 'var(--text-secondary)' }}>Loading Adjudicator AI...</p>
     </div>
   </div>
 );
@@ -26,8 +29,8 @@ const Placeholder = ({ title }) => (
     <div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center animate-float">
       <span className="text-4xl">🚧</span>
     </div>
-    <h2 className="text-2xl font-bold text-white">{title}</h2>
-    <p className="text-text-secondary max-w-md">
+    <h2 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>{title}</h2>
+    <p style={{ color: 'var(--text-secondary)' }} className="max-w-md">
       This feature is currently being revamped with premium aesthetics. Check back soon!
     </p>
   </div>
@@ -38,14 +41,14 @@ const SettingsModal = ({ isOpen, onClose, apiKey, setApiKey, openaiKey, setOpena
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
       <div className="glass-card w-full max-w-md space-y-6 animate-in zoom-in-95">
-        <h2 className="text-xl font-bold text-white flex items-center">
-          <Settings className="w-5 h-5 mr-2 text-primary" />
+        <h2 className="text-xl font-bold flex items-center" style={{ color: 'var(--text-primary)' }}>
+          <Settings className="w-5 h-5 mr-2" style={{ color: 'var(--primary)' }} />
           Configuration
         </h2>
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-text-secondary mb-1">Google Gemini API Key</label>
+            <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>Google Gemini API Key</label>
             <input
               type="password"
               value={apiKey}
@@ -53,11 +56,11 @@ const SettingsModal = ({ isOpen, onClose, apiKey, setApiKey, openaiKey, setOpena
               placeholder="AIzaSy..."
               className="input-field"
             />
-            <p className="text-xs text-text-muted mt-1">Required for most features.</p>
+            <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Required for most features.</p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-text-secondary mb-1">OpenAI API Key (Optional)</label>
+            <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>OpenAI API Key (Optional)</label>
             <input
               type="password"
               value={openaiKey}
@@ -69,7 +72,7 @@ const SettingsModal = ({ isOpen, onClose, apiKey, setApiKey, openaiKey, setOpena
         </div>
 
         <div className="flex justify-end space-x-3 pt-4">
-          <button onClick={onClose} className="px-4 py-2 rounded-lg text-text-secondary hover:bg-slate-800 transition-colors">
+          <button onClick={onClose} className="px-4 py-2 rounded-lg transition-colors" style={{ color: 'var(--text-secondary)' }}>
             Close
           </button>
           <button onClick={onClose} className="btn-primary">
@@ -85,6 +88,7 @@ const SettingsModal = ({ isOpen, onClose, apiKey, setApiKey, openaiKey, setOpena
 function AppContent() {
   const [activeTab, setActiveTab] = useState('judge');
   const [showSettings, setShowSettings] = useState(false);
+  const [showLanding, setShowLanding] = useState(true);
   const [apiKey, setApiKey] = useState(localStorage.getItem('gemini_key') || '');
   const [openaiKey, setOpenaiKey] = useState(localStorage.getItem('openai_key') || '');
   const [isGuest, setIsGuest] = useState(localStorage.getItem('guest_mode') === 'true');
@@ -98,9 +102,30 @@ function AppContent() {
     localStorage.setItem('openai_key', openaiKey);
   }, [openaiKey]);
 
+  // Check if user has seen landing before or is already authenticated
+  useEffect(() => {
+    if (isAuthenticated || isGuest) {
+      setShowLanding(false);
+    }
+  }, [isAuthenticated, isGuest]);
+
   // Show loading screen while checking auth state
   if (loading) {
     return <LoadingScreen />;
+  }
+
+  // Show landing page for first-time visitors
+  if (showLanding && !isAuthenticated && !isGuest) {
+    return (
+      <LandingPage
+        onGetStarted={() => setShowLanding(false)}
+        onContinueAsGuest={() => {
+          setIsGuest(true);
+          localStorage.setItem('guest_mode', 'true');
+          setShowLanding(false);
+        }}
+      />
+    );
   }
 
   // Show auth page if not authenticated and not in guest mode
@@ -127,6 +152,7 @@ function AppContent() {
       {activeTab === 'coach' && <LiveCoach apiKey={apiKey} />}
       {activeTab === 'strategy' && <StrategyGenerator apiKey={apiKey} />}
       {activeTab === 'extemp' && <ExtempGenerator apiKey={apiKey} />}
+      {activeTab === 'tone' && <ToneAnalyzer apiKey={apiKey} />}
       {activeTab === 'history' && <HistoryPanel />}
 
       <SettingsModal
@@ -143,9 +169,11 @@ function AppContent() {
 
 function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

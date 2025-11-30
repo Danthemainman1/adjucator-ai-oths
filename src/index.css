@@ -2,9 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+/* CSS Custom Properties for theming */
+:root {
+  --bg-primary: #020617;
+  --bg-secondary: #0f172a;
+  --bg-tertiary: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --primary: #06b6d4;
+  --primary-hover: #22d3ee;
+  --accent: #a855f7;
+  --border: rgba(51, 65, 85, 0.5);
+  --glass: rgba(15, 23, 42, 0.8);
+  --card-bg: rgba(15, 23, 42, 0.5);
+  --input-bg: #020617;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --error: #ef4444;
+}
+
 @layer base {
   body {
-    @apply bg-bg-primary text-text-secondary font-sans antialiased;
+    background-color: var(--bg-primary);
+    color: var(--text-secondary);
+    @apply font-sans antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   /* Custom Scrollbar */
@@ -13,34 +36,99 @@
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    @apply bg-bg-primary;
+    background-color: var(--bg-primary);
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-bg-tertiary rounded-full;
+    background-color: var(--bg-tertiary);
+    @apply rounded-full;
   }
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-slate-600;
+    background-color: var(--text-muted);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply text-text-primary font-bold;
+    color: var(--text-primary);
+    @apply font-bold;
   }
 }
 
 @layer components {
   .glass {
-    @apply bg-slate-900/80 backdrop-blur-xl border border-slate-700/50;
+    background-color: var(--glass);
+    border-color: var(--border);
+    @apply backdrop-blur-xl border;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
   
   .glass-card {
-    @apply glass rounded-xl p-6 shadow-lg hover:shadow-cyan-500/10 transition-all duration-300;
+    background-color: var(--card-bg);
+    border-color: var(--border);
+    @apply backdrop-blur-xl border rounded-xl p-6 shadow-lg transition-all duration-300;
+  }
+
+  .glass-card:hover {
+    box-shadow: 0 0 30px rgba(var(--primary-rgb, 6, 182, 212), 0.1);
   }
 
   .btn-primary {
-    @apply bg-primary hover:bg-cyan-400 text-white font-medium py-2 px-4 rounded-lg transition-all shadow-lg shadow-cyan-500/20 active:scale-95;
+    background-color: var(--primary);
+    color: white;
+    @apply font-medium py-2 px-4 rounded-lg transition-all active:scale-95;
+    box-shadow: 0 4px 14px rgba(var(--primary-rgb, 6, 182, 212), 0.25);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--primary-hover);
+    box-shadow: 0 6px 20px rgba(var(--primary-rgb, 6, 182, 212), 0.35);
   }
 
   .input-field {
-    @apply bg-bg-primary border border-slate-700 text-primary font-mono rounded-lg px-4 py-2 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-full transition-all;
+    background-color: var(--input-bg);
+    border-color: var(--border);
+    color: var(--text-primary);
+    @apply font-mono rounded-lg px-4 py-2 focus:outline-none w-full transition-all border;
   }
+
+  .input-field:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(var(--primary-rgb, 6, 182, 212), 0.2);
+  }
+
+  /* Theme-specific prose overrides */
+  .prose-themed {
+    --tw-prose-body: var(--text-secondary);
+    --tw-prose-headings: var(--primary);
+    --tw-prose-links: var(--accent);
+    --tw-prose-bold: var(--text-primary);
+    --tw-prose-code: var(--primary);
+    --tw-prose-th-borders: var(--border);
+    --tw-prose-td-borders: var(--border);
+  }
+}
+
+/* Theme transition */
+* {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-out;
+}
+
+/* Disable transitions on page load */
+.no-transitions * {
+  transition: none !important;
+}
+
+/* Light theme overrides */
+.theme-light .glass-card {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.theme-light .glass-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* High contrast focus states */
+.theme-highContrast :focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }

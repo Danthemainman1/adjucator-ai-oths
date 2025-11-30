@@ -13,6 +13,7 @@ import {
   Image,
   HelpCircle,
   Target,
+  Brain,
   ChevronRight,
   ChevronDown,
   Calendar,
@@ -55,6 +56,12 @@ const TYPE_CONFIG = {
     label: 'Extemp Question', 
     color: 'text-amber-400',
     bg: 'bg-amber-500/10 border-amber-500/20'
+  },
+  tone: { 
+    icon: Brain, 
+    label: 'Tone Analysis', 
+    color: 'text-pink-400',
+    bg: 'bg-pink-500/10 border-pink-500/20'
   },
 };
 

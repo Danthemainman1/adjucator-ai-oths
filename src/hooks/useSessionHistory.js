@@ -143,6 +143,7 @@ export function useSessionHistory() {
       coach: history.filter(s => s.type === 'coach').length,
       strategy: history.filter(s => s.type === 'strategy').length,
       extemp: history.filter(s => s.type === 'extemp').length,
+      tone: history.filter(s => s.type === 'tone').length,
     },
     lastSession: history[0] || null,
   };
