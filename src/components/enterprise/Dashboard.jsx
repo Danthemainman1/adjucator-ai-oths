@@ -12,23 +12,51 @@ import {
   Zap,
   BarChart3,
   FileText,
-  Play
+  Play,
+  Sparkles,
+  MessageSquare,
+  Lightbulb
 } from 'lucide-react';
 
 const Dashboard = ({ setActiveTab }) => {
-  // Mock data for demonstration
-  const stats = [
-    { label: 'Speeches Analyzed', value: '47', change: '+12%', icon: Mic, color: 'cyan' },
-    { label: 'Hours Coached', value: '23.5', change: '+8%', icon: Clock, color: 'purple' },
-    { label: 'Avg. Score', value: '84', change: '+5pts', icon: Award, color: 'emerald' },
-    { label: 'Strategies Built', value: '18', change: '+3', icon: Target, color: 'orange' },
-  ];
-
-  const recentActivity = [
-    { type: 'analysis', title: 'PF Rebuttal Analysis', time: '2 hours ago', score: 87 },
-    { type: 'coach', title: 'Live Coaching Session', time: '5 hours ago', duration: '12:34' },
-    { type: 'strategy', title: 'LD Case Strategy', time: 'Yesterday', topic: 'Privacy vs Security' },
-    { type: 'analysis', title: 'Extemp Speech Review', time: '2 days ago', score: 92 },
+  // Empty state cards for new users
+  const getStartedCards = [
+    { 
+      label: 'Speech Analysis', 
+      icon: Mic, 
+      color: 'cyan',
+      title: 'No speeches analyzed yet',
+      description: 'Upload or record a speech to get AI-powered feedback on delivery, structure, and argumentation.',
+      action: 'Analyze First Speech',
+      tab: 'judge'
+    },
+    { 
+      label: 'Live Coaching', 
+      icon: Activity, 
+      color: 'purple',
+      title: 'No coaching sessions yet',
+      description: 'Start a live session to get real-time feedback as you practice your speech or debate.',
+      action: 'Start Coaching',
+      tab: 'coach'
+    },
+    { 
+      label: 'Strategy Builder', 
+      icon: Target, 
+      color: 'orange',
+      title: 'No strategies created yet',
+      description: 'Build winning debate strategies with AI-powered case analysis and argument mapping.',
+      action: 'Build Strategy',
+      tab: 'strategy'
+    },
+    { 
+      label: 'Tone Analysis', 
+      icon: MessageSquare, 
+      color: 'emerald',
+      title: 'No tone analyses yet',
+      description: 'Analyze the rhetorical tone and persuasive elements of your speeches.',
+      action: 'Analyze Tone',
+      tab: 'tone'
+    },
   ];
 
   const quickActions = [
@@ -38,46 +66,45 @@ const Dashboard = ({ setActiveTab }) => {
     { label: 'View History', icon: History, tab: 'history', color: 'from-emerald-500 to-teal-500' },
   ];
 
-  // Performance chart data (fake)
-  const chartData = [65, 72, 68, 80, 75, 85, 82, 88, 84, 91, 87, 94];
-  const maxValue = Math.max(...chartData);
-
   return (
     <div className="space-y-8">
       {/* Page Header */}
       <div>
         <h1 className="text-3xl font-bold text-white tracking-tight">Dashboard</h1>
-        <p className="text-slate-400 mt-1">Welcome back. Here's your performance overview.</p>
+        <p className="text-slate-400 mt-1">Welcome! Let's get started on improving your debate skills.</p>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map((stat, index) => {
-          const Icon = stat.icon;
+      {/* Get Started Cards Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {getStartedCards.map((card, index) => {
+          const Icon = card.icon;
           return (
             <motion.div
-              key={stat.label}
+              key={card.label}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               className="relative group"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-slate-800/50 to-slate-900/50 rounded-2xl" />
-              <div className="relative p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm hover:border-slate-700/60 transition-all">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className="text-sm text-slate-400 font-medium">{stat.label}</p>
-                    <p className="text-3xl font-bold text-white mt-2 tracking-tight">{stat.value}</p>
-                    <p className={`text-sm mt-1 font-medium ${
-                      stat.change.startsWith('+') ? 'text-emerald-400' : 'text-red-400'
-                    }`}>
-                      {stat.change} <span className="text-slate-500">vs last month</span>
-                    </p>
+              <div className="relative p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm hover:border-slate-700/60 transition-all h-full flex flex-col">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className={`p-3 rounded-xl bg-${card.color}-500/10 border border-${card.color}-500/20`}>
+                    <Icon className={`w-6 h-6 text-${card.color}-400`} />
                   </div>
-                  <div className={`p-3 rounded-xl bg-${stat.color}-500/10 border border-${stat.color}-500/20`}>
-                    <Icon className={`w-6 h-6 text-${stat.color}-400`} />
+                  <div className="flex-1">
+                    <p className="text-sm text-slate-500 font-medium">{card.label}</p>
+                    <p className="text-lg font-semibold text-white mt-0.5">{card.title}</p>
                   </div>
                 </div>
+                <p className="text-slate-400 text-sm flex-1 mb-4">{card.description}</p>
+                <button
+                  onClick={() => setActiveTab(card.tab)}
+                  className={`w-full py-2.5 px-4 rounded-lg bg-${card.color}-500/10 border border-${card.color}-500/30 text-${card.color}-400 font-medium hover:bg-${card.color}-500/20 transition-all flex items-center justify-center gap-2`}
+                >
+                  <Sparkles className="w-4 h-4" />
+                  {card.action}
+                </button>
               </div>
             </motion.div>
           );
@@ -86,7 +113,7 @@ const Dashboard = ({ setActiveTab }) => {
 
       {/* Main Content Grid */}
       <div className="grid lg:grid-cols-3 gap-6">
-        {/* Performance Chart */}
+        {/* Empty Performance Chart / Getting Started */}
         <div className="lg:col-span-2">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -97,44 +124,29 @@ const Dashboard = ({ setActiveTab }) => {
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-lg font-semibold text-white">Performance Trend</h2>
-                <p className="text-sm text-slate-400">Your score improvement over time</p>
-              </div>
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-                <TrendingUp className="w-4 h-4 text-emerald-400" />
-                <span className="text-sm font-medium text-emerald-400">+29% improvement</span>
+                <p className="text-sm text-slate-400">Track your improvement over time</p>
               </div>
             </div>
 
-            {/* Simple CSS Chart */}
-            <div className="relative h-48 mt-4">
-              <div className="absolute inset-0 flex items-end justify-between gap-2 px-2">
-                {chartData.map((value, index) => (
+            {/* Empty State for Chart */}
+            <div className="relative h-48 mt-4 flex flex-col items-center justify-center">
+              <div className="absolute inset-0 flex items-end justify-between gap-2 px-2 opacity-20">
+                {[40, 55, 45, 60, 50, 65, 58, 70, 63, 75, 68, 80].map((height, index) => (
                   <div key={index} className="flex-1 flex flex-col items-center gap-2">
-                    <motion.div
-                      initial={{ height: 0 }}
-                      animate={{ height: `${(value / maxValue) * 100}%` }}
-                      transition={{ delay: 0.3 + index * 0.05, duration: 0.5 }}
-                      className="w-full bg-gradient-to-t from-cyan-500/80 to-cyan-400/40 rounded-t-lg relative group cursor-pointer hover:from-cyan-400 hover:to-cyan-300/60 transition-all"
-                    >
-                      <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-slate-800 rounded text-xs text-white font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                        {value}%
-                      </div>
-                    </motion.div>
-                    <span className="text-xs text-slate-500">
-                      {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][index]}
-                    </span>
+                    <div
+                      style={{ height: `${height}%` }}
+                      className="w-full bg-gradient-to-t from-slate-700/50 to-slate-600/30 rounded-t-lg"
+                    />
                   </div>
                 ))}
               </div>
               
-              {/* Horizontal grid lines */}
-              <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
-                {[100, 75, 50, 25, 0].map((val) => (
-                  <div key={val} className="flex items-center gap-2">
-                    <span className="text-xs text-slate-600 w-8">{val}</span>
-                    <div className="flex-1 h-px bg-slate-800/50" />
-                  </div>
-                ))}
+              <div className="relative z-10 text-center">
+                <div className="p-4 rounded-full bg-slate-800/50 border border-slate-700/50 mb-4 mx-auto w-fit">
+                  <BarChart3 className="w-8 h-8 text-slate-500" />
+                </div>
+                <p className="text-slate-400 font-medium">No performance data yet</p>
+                <p className="text-slate-500 text-sm mt-1">Complete your first analysis to start tracking progress</p>
               </div>
             </div>
           </motion.div>
@@ -171,7 +183,7 @@ const Dashboard = ({ setActiveTab }) => {
         </div>
       </div>
 
-      {/* Recent Activity */}
+      {/* Recent Activity - Empty State */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -180,60 +192,28 @@ const Dashboard = ({ setActiveTab }) => {
       >
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-semibold text-white">Recent Activity</h2>
-          <button 
-            onClick={() => setActiveTab('history')}
-            className="text-sm text-cyan-400 hover:text-cyan-300 font-medium flex items-center gap-1"
-          >
-            View all <ChevronRight className="w-4 h-4" />
-          </button>
         </div>
 
-        <div className="space-y-4">
-          {recentActivity.map((activity, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-4 p-4 rounded-xl border border-slate-800/40 bg-slate-900/20 hover:bg-slate-800/30 hover:border-slate-700/50 transition-all cursor-pointer"
-            >
-              <div className={`p-2.5 rounded-lg ${
-                activity.type === 'analysis' ? 'bg-cyan-500/10 text-cyan-400' :
-                activity.type === 'coach' ? 'bg-purple-500/10 text-purple-400' :
-                'bg-orange-500/10 text-orange-400'
-              }`}>
-                {activity.type === 'analysis' ? <FileText className="w-5 h-5" /> :
-                 activity.type === 'coach' ? <Activity className="w-5 h-5" /> :
-                 <Target className="w-5 h-5" />}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-white font-medium truncate">{activity.title}</p>
-                <p className="text-sm text-slate-500">{activity.time}</p>
-              </div>
-              <div className="text-right">
-                {activity.score && (
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    activity.score >= 90 ? 'bg-emerald-500/10 text-emerald-400' :
-                    activity.score >= 80 ? 'bg-cyan-500/10 text-cyan-400' :
-                    'bg-amber-500/10 text-amber-400'
-                  }`}>
-                    {activity.score}/100
-                  </span>
-                )}
-                {activity.duration && (
-                  <span className="px-3 py-1 rounded-full text-sm font-medium bg-purple-500/10 text-purple-400">
-                    {activity.duration}
-                  </span>
-                )}
-                {activity.topic && (
-                  <span className="px-3 py-1 rounded-full text-sm font-medium bg-orange-500/10 text-orange-400 truncate max-w-[150px] inline-block">
-                    {activity.topic}
-                  </span>
-                )}
-              </div>
-            </div>
-          ))}
+        {/* Empty State */}
+        <div className="py-12 flex flex-col items-center justify-center">
+          <div className="p-4 rounded-full bg-slate-800/50 border border-slate-700/50 mb-4">
+            <History className="w-8 h-8 text-slate-500" />
+          </div>
+          <p className="text-slate-400 font-medium">No recent activity</p>
+          <p className="text-slate-500 text-sm mt-1 text-center max-w-md">
+            Your recent analyses, coaching sessions, and strategies will appear here as you use the platform.
+          </p>
+          <button
+            onClick={() => setActiveTab('judge')}
+            className="mt-6 px-5 py-2.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-medium hover:bg-cyan-500/20 transition-all flex items-center gap-2"
+          >
+            <FileText className="w-4 h-4" />
+            Start Your First Analysis
+          </button>
         </div>
       </motion.div>
 
-      {/* Pro Tip Banner */}
+      {/* Getting Started Tips */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -243,19 +223,19 @@ const Dashboard = ({ setActiveTab }) => {
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10" />
         <div className="relative p-6 flex items-center gap-6">
           <div className="p-3 rounded-xl bg-gradient-to-br from-cyan-500 to-purple-600 shadow-lg">
-            <Zap className="w-6 h-6 text-white" />
+            <Lightbulb className="w-6 h-6 text-white" />
           </div>
           <div className="flex-1">
-            <h3 className="text-white font-semibold">Pro Tip: Consistent Practice</h3>
+            <h3 className="text-white font-semibold">Getting Started</h3>
             <p className="text-slate-400 text-sm mt-1">
-              Debaters who analyze at least 3 speeches per week see 40% faster improvement in their scores.
+              Start by analyzing your first speech. Upload a recording or paste your speech text to get detailed AI-powered feedback.
             </p>
           </div>
           <button 
             onClick={() => setActiveTab('judge')}
             className="px-5 py-2.5 rounded-lg bg-white text-slate-900 font-semibold hover:bg-slate-100 transition-colors"
           >
-            Start Analysis
+            Get Started
           </button>
         </div>
       </motion.div>
