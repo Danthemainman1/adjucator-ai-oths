@@ -108,6 +108,78 @@ const DEBATE_FORMATS = {
     ],
     prepTime: { gov: 0, opp: 0 }
   },
+  congress: {
+    name: 'Congressional Debate',
+    shortName: 'Congress',
+    segments: [
+      { name: 'Auth', fullName: 'Authorship Speech', time: 180, speaker: 'author' },
+      { name: 'Q1', fullName: 'Question Period 1', time: 120, speaker: 'floor' },
+      { name: 'Neg1', fullName: 'First Negative Speech', time: 180, speaker: 'neg' },
+      { name: 'Q2', fullName: 'Question Period 2', time: 120, speaker: 'floor' },
+      { name: 'Aff', fullName: 'Affirmative Speech', time: 180, speaker: 'aff' },
+      { name: 'Q3', fullName: 'Question Period 3', time: 120, speaker: 'floor' },
+      { name: 'Neg2', fullName: 'Second Negative Speech', time: 180, speaker: 'neg' },
+      { name: 'Q4', fullName: 'Question Period 4', time: 120, speaker: 'floor' }
+    ],
+    prepTime: {}
+  },
+  bp: {
+    name: 'British Parliamentary',
+    shortName: 'BP',
+    segments: [
+      { name: 'PM', fullName: 'Prime Minister', time: 420, speaker: 'og' },
+      { name: 'LO', fullName: 'Leader of Opposition', time: 420, speaker: 'oo' },
+      { name: 'DPM', fullName: 'Deputy Prime Minister', time: 420, speaker: 'og' },
+      { name: 'DLO', fullName: 'Deputy Leader of Opposition', time: 420, speaker: 'oo' },
+      { name: 'MG', fullName: 'Member of Government', time: 420, speaker: 'cg' },
+      { name: 'MO', fullName: 'Member of Opposition', time: 420, speaker: 'co' },
+      { name: 'GW', fullName: 'Government Whip', time: 420, speaker: 'cg' },
+      { name: 'OW', fullName: 'Opposition Whip', time: 420, speaker: 'co' }
+    ],
+    prepTime: {}
+  },
+  worldschools: {
+    name: 'World Schools',
+    shortName: 'WSDC',
+    segments: [
+      { name: '1P', fullName: 'First Proposition', time: 480, speaker: 'prop' },
+      { name: '1O', fullName: 'First Opposition', time: 480, speaker: 'opp' },
+      { name: '2P', fullName: 'Second Proposition', time: 480, speaker: 'prop' },
+      { name: '2O', fullName: 'Second Opposition', time: 480, speaker: 'opp' },
+      { name: '3P', fullName: 'Third Proposition', time: 480, speaker: 'prop' },
+      { name: '3O', fullName: 'Third Opposition', time: 480, speaker: 'opp' },
+      { name: 'OR', fullName: 'Opposition Reply', time: 240, speaker: 'opp' },
+      { name: 'PR', fullName: 'Proposition Reply', time: 240, speaker: 'prop' }
+    ],
+    prepTime: {}
+  },
+  ipda: {
+    name: 'IPDA',
+    shortName: 'IPDA',
+    segments: [
+      { name: 'AC', fullName: 'Affirmative Constructive', time: 300, speaker: 'aff' },
+      { name: 'CX', fullName: 'Cross-Examination', time: 120, speaker: 'neg' },
+      { name: 'NC', fullName: 'Negative Constructive', time: 300, speaker: 'neg' },
+      { name: 'CX', fullName: 'Cross-Examination', time: 120, speaker: 'aff' },
+      { name: 'AR', fullName: 'Affirmative Rebuttal', time: 180, speaker: 'aff' },
+      { name: 'NR', fullName: 'Negative Rebuttal', time: 180, speaker: 'neg' },
+      { name: 'AFR', fullName: 'Affirmative Final Response', time: 60, speaker: 'aff' }
+    ],
+    prepTime: { aff: 0, neg: 0 }
+  },
+  npda: {
+    name: 'NPDA',
+    shortName: 'NPDA',
+    segments: [
+      { name: 'PMC', fullName: 'Prime Minister Constructive', time: 420, speaker: 'gov' },
+      { name: 'LOC', fullName: 'Leader of Opposition Constructive', time: 420, speaker: 'opp' },
+      { name: 'MGC', fullName: 'Member of Government Constructive', time: 420, speaker: 'gov' },
+      { name: 'MOC', fullName: 'Member of Opposition Constructive', time: 420, speaker: 'opp' },
+      { name: 'LOR', fullName: 'Leader of Opposition Rebuttal', time: 300, speaker: 'opp' },
+      { name: 'PMR', fullName: 'Prime Minister Rebuttal', time: 300, speaker: 'gov' }
+    ],
+    prepTime: { gov: 300, opp: 300 }
+  },
   custom: {
     name: 'Custom',
     shortName: 'Custom',

@@ -101,7 +101,7 @@ const DEBATE_FORMATS = {
     ]
   },
   parli: {
-    name: 'Parliamentary',
+    name: 'Parliamentary (NPDA)',
     teams: 2,
     speakersPerTeam: 2,
     maxSpeakerPoints: 30,
@@ -112,6 +112,59 @@ const DEBATE_FORMATS = {
       { id: 'poi', label: 'Points of Information', weight: 15, description: 'POI quality and handling' },
       { id: 'strategy', label: 'Strategy & Weighing', weight: 20, description: 'Strategic choices, crystallization' },
       { id: 'delivery', label: 'Delivery', weight: 15, description: 'Speaking skills, wit, presence' }
+    ]
+  },
+  bp: {
+    name: 'British Parliamentary',
+    teams: 4,
+    speakersPerTeam: 2,
+    maxSpeakerPoints: 100,
+    minSpeakerPoints: 50,
+    rubricCategories: [
+      { id: 'content', label: 'Content & Analysis', weight: 30, description: 'Depth of argumentation, examples, logical reasoning' },
+      { id: 'strategy', label: 'Strategy & Role Fulfilment', weight: 25, description: 'Meeting role requirements, extensions for closing teams' },
+      { id: 'engagement', label: 'Engagement & Rebuttal', weight: 20, description: 'Responses to other teams, clash with opposition' },
+      { id: 'poi', label: 'POI Handling', weight: 10, description: 'Quality of POIs offered and accepted' },
+      { id: 'delivery', label: 'Style & Delivery', weight: 15, description: 'Persuasion, clarity, structure, presence' }
+    ]
+  },
+  wsdc: {
+    name: 'World Schools',
+    teams: 2,
+    speakersPerTeam: 3,
+    maxSpeakerPoints: 100,
+    minSpeakerPoints: 60,
+    rubricCategories: [
+      { id: 'content', label: 'Content', weight: 40, description: 'Logic, argumentation, use of examples, case construction' },
+      { id: 'style', label: 'Style', weight: 40, description: 'Persuasion, language, vocal variety, presence, eye contact' },
+      { id: 'strategy', label: 'Strategy', weight: 20, description: 'Structure, time management, responsiveness, prioritization' }
+    ]
+  },
+  ipda: {
+    name: 'IPDA',
+    teams: 2,
+    speakersPerTeam: 1,
+    maxSpeakerPoints: 30,
+    minSpeakerPoints: 20,
+    rubricCategories: [
+      { id: 'argumentation', label: 'Argumentation', weight: 30, description: 'Quality of arguments, logical reasoning' },
+      { id: 'clash', label: 'Clash & Refutation', weight: 25, description: 'Engagement with opponent arguments' },
+      { id: 'communication', label: 'Communication', weight: 25, description: 'Clarity, accessibility, persuasion for lay judges' },
+      { id: 'organization', label: 'Organization & Structure', weight: 20, description: 'Clear structure, signposting, time management' }
+    ]
+  },
+  apda: {
+    name: 'APDA',
+    teams: 2,
+    speakersPerTeam: 2,
+    maxSpeakerPoints: 30,
+    minSpeakerPoints: 20,
+    rubricCategories: [
+      { id: 'case', label: 'Case Quality', weight: 25, description: 'Case statement quality, interpretation, modeling' },
+      { id: 'argumentation', label: 'Argumentation', weight: 25, description: 'Quality of arguments, logic, analysis' },
+      { id: 'refutation', label: 'Refutation & Clash', weight: 20, description: 'Responses to opposition, engagement' },
+      { id: 'poi', label: 'POI Performance', weight: 15, description: 'Quality of POIs given and received' },
+      { id: 'delivery', label: 'Delivery & Style', weight: 15, description: 'Speaking skills, wit, rhetorical flourish' }
     ]
   }
 };

@@ -18,6 +18,7 @@ import PracticeMode from './components/features/PracticeMode';
 import TeamCollaboration from './components/features/TeamCollaboration';
 import TournamentManagement from './components/features/TournamentManagement';
 import ArgumentFlowchart from './components/features/ArgumentFlowchart';
+import TeamBrowser from './components/features/TeamBrowser';
 import VoiceAnalysis from './components/features/VoiceAnalysis';
 import DebateTimer from './components/features/DebateTimer';
 import SpeechOutlineBuilder from './components/features/SpeechOutlineBuilder';
@@ -25,6 +26,15 @@ import RoundRobinScheduler from './components/features/RoundRobinScheduler';
 import QuickStatsWidget from './components/features/QuickStatsWidget';
 import MotionLibrary from './components/features/MotionLibrary';
 import JudgeBallotGenerator from './components/features/JudgeBallotGenerator';
+import TimerPresets from './components/features/TimerPresets';
+import NotesPanel from './components/features/NotesPanel';
+import CardOrganizer from './components/features/CardOrganizer';
+import FormatGuide from './components/features/FormatGuide';
+import SpeakerPointsTracker from './components/features/SpeakerPointsTracker';
+import DebateClock from './components/features/DebateClock';
+import ArgumentValidator from './components/features/ArgumentValidator';
+import JudgeNotes from './components/features/JudgeNotes';
+import TeamRoster from './components/features/TeamRoster';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { Settings, Loader2 } from 'lucide-react';
@@ -184,6 +194,16 @@ function AppContent() {
       {activeTab === 'quickstats' && <QuickStatsWidget />}
       {activeTab === 'motions' && <MotionLibrary />}
       {activeTab === 'ballot' && <JudgeBallotGenerator />}
+      {activeTab === 'presets' && <TimerPresets />}
+      {activeTab === 'notes' && <NotesPanel />}
+      {activeTab === 'cards' && <CardOrganizer />}
+      {activeTab === 'formatguide' && <FormatGuide />}
+      {activeTab === 'speakerpoints' && <SpeakerPointsTracker />}
+      {activeTab === 'clock' && <DebateClock />}
+      {activeTab === 'validator' && <ArgumentValidator />}
+      {activeTab === 'judgenotes' && <JudgeNotes />}
+      {activeTab === 'roster' && <TeamRoster />}
+      {activeTab === 'teams' && <TeamBrowser />}
 
       <SettingsModal
         isOpen={showSettings}

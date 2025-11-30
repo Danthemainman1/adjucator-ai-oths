@@ -39,115 +39,35 @@ import {
 } from 'lucide-react';
 
 // Mock data - in production would come from Firebase/API
-const generateMockStats = () => ({
+// Returns empty state for new users with no data
+const getEmptyStats = () => ({
   overall: {
-    wins: 47,
-    losses: 18,
-    ties: 2,
-    totalRounds: 67,
-    winRate: 70.1,
-    winStreak: 5,
-    bestStreak: 12,
-    improvement: 8.5 // percentage improvement from last period
+    wins: 0,
+    losses: 0,
+    ties: 0,
+    totalRounds: 0,
+    winRate: 0,
+    winStreak: 0,
+    bestStreak: 0,
+    improvement: 0
   },
   bySide: {
-    aff: { wins: 25, losses: 8, winRate: 75.8 },
-    neg: { wins: 22, losses: 10, winRate: 68.8 }
+    aff: { wins: 0, losses: 0, winRate: 0 },
+    neg: { wins: 0, losses: 0, winRate: 0 }
   },
-  byFormat: {
-    'Public Forum': { wins: 20, losses: 7, winRate: 74.1 },
-    'Lincoln Douglas': { wins: 15, losses: 6, winRate: 71.4 },
-    'Policy': { wins: 8, losses: 4, winRate: 66.7 },
-    'Congress': { wins: 4, losses: 1, winRate: 80.0 }
-  },
+  byFormat: {},
   speakerPoints: {
-    average: 28.4,
-    highest: 30,
-    lowest: 26.5,
-    recent: [28.5, 29, 27.5, 28, 29.5, 28, 30, 28.5],
-    percentile: 87,
-    trend: 'up' // up, down, stable
+    average: 0,
+    highest: 0,
+    lowest: 0,
+    recent: [],
+    percentile: 0,
+    trend: 'stable'
   },
-  recentTournaments: [
-    {
-      id: 1,
-      name: 'State Championships',
-      date: '2025-11-28',
-      place: 2,
-      totalTeams: 64,
-      record: '5-1',
-      speakerAward: true,
-      speakerRank: 3
-    },
-    {
-      id: 2,
-      name: 'Regional Qualifier',
-      date: '2025-11-15',
-      place: 1,
-      totalTeams: 32,
-      record: '6-0',
-      speakerAward: true,
-      speakerRank: 1
-    },
-    {
-      id: 3,
-      name: 'Fall Classic',
-      date: '2025-11-01',
-      place: 5,
-      totalTeams: 48,
-      record: '4-2',
-      speakerAward: false,
-      speakerRank: 12
-    },
-    {
-      id: 4,
-      name: 'October Invitational',
-      date: '2025-10-18',
-      place: 3,
-      totalTeams: 56,
-      record: '5-2',
-      speakerAward: true,
-      speakerRank: 5
-    }
-  ],
-  upcomingMatches: [
-    {
-      id: 1,
-      tournament: 'December Invitational',
-      date: '2025-12-06',
-      location: 'Central High School',
-      format: 'Public Forum',
-      registered: true
-    },
-    {
-      id: 2,
-      tournament: 'Winter Classic',
-      date: '2025-12-13',
-      location: 'University Arena',
-      format: 'Lincoln Douglas',
-      registered: true
-    },
-    {
-      id: 3,
-      tournament: 'Holiday Tournament',
-      date: '2025-12-20',
-      location: 'Convention Center',
-      format: 'Policy',
-      registered: false
-    }
-  ],
-  achievements: [
-    { id: 1, name: 'Tournament Champion', count: 3, icon: 'trophy', color: 'gold' },
-    { id: 2, name: 'Top Speaker', count: 5, icon: 'star', color: 'purple' },
-    { id: 3, name: 'Undefeated Day', count: 8, icon: 'flame', color: 'orange' },
-    { id: 4, name: '30 Speaker Points', count: 2, icon: 'zap', color: 'cyan' }
-  ],
-  headToHead: [
-    { opponent: 'Westview Academy', wins: 3, losses: 1, lastMet: '2025-11-28' },
-    { opponent: 'Eastside Prep', wins: 2, losses: 2, lastMet: '2025-11-15' },
-    { opponent: 'North High', wins: 4, losses: 0, lastMet: '2025-11-01' },
-    { opponent: 'Central Academy', wins: 1, losses: 2, lastMet: '2025-10-18' }
-  ]
+  recentTournaments: [],
+  upcomingMatches: [],
+  achievements: [],
+  headToHead: []
 });
 
 // Animated counter component
@@ -815,6 +735,31 @@ const FormatStatsCard = ({ byFormat }) => {
   );
 };
 
+// Empty State Component
+const EmptyStatsCard = ({ title, icon: Icon, message, actionText, onAction }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    className="bg-slate-800/50 border border-slate-700 rounded-xl p-5"
+  >
+    <div className="text-center py-6">
+      <div className="p-3 bg-slate-700/50 rounded-full w-fit mx-auto mb-3">
+        <Icon className="w-6 h-6 text-slate-500" />
+      </div>
+      <h3 className="text-white font-medium mb-1">{title}</h3>
+      <p className="text-slate-400 text-sm mb-4">{message}</p>
+      {actionText && onAction && (
+        <button
+          onClick={onAction}
+          className="text-cyan-400 text-sm hover:text-cyan-300 transition-colors"
+        >
+          {actionText}
+        </button>
+      )}
+    </div>
+  </motion.div>
+);
+
 // Main Component
 const QuickStatsWidget = ({ compact = false }) => {
   const [stats, setStats] = useState(null);
@@ -822,9 +767,11 @@ const QuickStatsWidget = ({ compact = false }) => {
   const [selectedPeriod, setSelectedPeriod] = useState('season');
 
   useEffect(() => {
-    // Simulate loading
+    // Load empty state for new users - in production, fetch from Firebase
     const timer = setTimeout(() => {
-      setStats(generateMockStats());
+      // TODO: Replace with actual data fetch from useAnalytics hook
+      // For now, show empty state for new users
+      setStats(getEmptyStats());
       setLoading(false);
     }, 500);
     
@@ -834,10 +781,14 @@ const QuickStatsWidget = ({ compact = false }) => {
   const refreshStats = () => {
     setLoading(true);
     setTimeout(() => {
-      setStats(generateMockStats());
+      // TODO: Replace with actual data refresh
+      setStats(getEmptyStats());
       setLoading(false);
     }, 500);
   };
+
+  // Check if user has any data
+  const hasData = stats && stats.overall.totalRounds > 0;
 
   if (loading) {
     return (
@@ -855,6 +806,81 @@ const QuickStatsWidget = ({ compact = false }) => {
       <div className="text-center py-12">
         <AlertCircle className="w-12 h-12 text-slate-600 mx-auto mb-3" />
         <p className="text-slate-400">Unable to load statistics</p>
+      </div>
+    );
+  }
+
+  // Show welcome state for new users with no data
+  if (!hasData) {
+    return (
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-white flex items-center gap-3">
+              <div className="p-2 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl">
+                <Activity className="w-6 h-6 text-white" />
+              </div>
+              Quick Stats
+            </h1>
+            <p className="text-slate-400 mt-1">
+              Your performance at a glance
+            </p>
+          </div>
+        </div>
+
+        {/* Welcome State */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border border-slate-700 rounded-2xl p-8 text-center"
+        >
+          <div className="p-4 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 rounded-full w-fit mx-auto mb-4">
+            <BarChart3 className="w-10 h-10 text-cyan-400" />
+          </div>
+          <h2 className="text-xl font-bold text-white mb-2">Welcome to Your Stats Dashboard</h2>
+          <p className="text-slate-400 max-w-md mx-auto mb-6">
+            Start logging your debate rounds to see detailed statistics, win rates, 
+            speaker points, and track your improvement over time.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <div className="px-4 py-2 bg-slate-700/50 rounded-lg">
+              <Trophy className="w-5 h-5 text-amber-400 mx-auto mb-1" />
+              <span className="text-xs text-slate-400">Tournament Results</span>
+            </div>
+            <div className="px-4 py-2 bg-slate-700/50 rounded-lg">
+              <Star className="w-5 h-5 text-purple-400 mx-auto mb-1" />
+              <span className="text-xs text-slate-400">Speaker Points</span>
+            </div>
+            <div className="px-4 py-2 bg-slate-700/50 rounded-lg">
+              <TrendingUp className="w-5 h-5 text-emerald-400 mx-auto mb-1" />
+              <span className="text-xs text-slate-400">Win Rate Trends</span>
+            </div>
+            <div className="px-4 py-2 bg-slate-700/50 rounded-lg">
+              <Users className="w-5 h-5 text-cyan-400 mx-auto mb-1" />
+              <span className="text-xs text-slate-400">Head-to-Head</span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Empty Stats Grid Preview */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 opacity-60">
+          <EmptyStatsCard
+            title="Win/Loss Record"
+            icon={BarChart3}
+            message="No rounds logged yet"
+          />
+          <EmptyStatsCard
+            title="Speaker Points"
+            icon={Star}
+            message="Points will appear after your first round"
+          />
+          <EmptyStatsCard
+            title="Recent Tournaments"
+            icon={Trophy}
+            message="Enter your tournament results"
+          />
+        </div>
       </div>
     );
   }

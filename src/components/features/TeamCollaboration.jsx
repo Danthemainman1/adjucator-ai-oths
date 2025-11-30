@@ -318,12 +318,8 @@ const ChatMessage = ({ message, isOwn, senderName, senderAvatar, timestamp }) =>
 
 // Chat Panel
 const ChatPanel = ({ teamId, members }) => {
-  const [messages, setMessages] = useState([
-    { id: 1, sender: 'Alex Chen', message: 'Ready for the tournament this weekend?', timestamp: '2:30 PM', isOwn: false },
-    { id: 2, sender: 'You', message: 'Yes! I finished the case outline. Will share it tonight.', timestamp: '2:32 PM', isOwn: true },
-    { id: 3, sender: 'Sarah Kim', message: 'Perfect! I found some great evidence on the climate topic.', timestamp: '2:35 PM', isOwn: false },
-    { id: 4, sender: 'You', message: 'Can\'t wait to see it. Let\'s do a practice round tomorrow?', timestamp: '2:36 PM', isOwn: true }
-  ]);
+  // Start with empty chat for new teams - messages load from Firebase in production
+  const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef(null);
 
@@ -379,15 +375,25 @@ const ChatPanel = ({ teamId, members }) => {
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.map(msg => (
-          <ChatMessage
-            key={msg.id}
-            message={msg.message}
-            isOwn={msg.isOwn}
-            senderName={msg.sender}
-            timestamp={msg.timestamp}
-          />
-        ))}
+        {messages.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-full text-center py-8">
+            <div className="p-3 bg-slate-800/50 rounded-full mb-3">
+              <MessageSquare className="w-6 h-6 text-slate-500" />
+            </div>
+            <p className="text-slate-400 text-sm mb-1">No messages yet</p>
+            <p className="text-slate-500 text-xs">Start the conversation with your team!</p>
+          </div>
+        ) : (
+          messages.map(msg => (
+            <ChatMessage
+              key={msg.id}
+              message={msg.message}
+              isOwn={msg.isOwn}
+              senderName={msg.sender}
+              timestamp={msg.timestamp}
+            />
+          ))
+        )}
         <div ref={messagesEndRef} />
       </div>
 
@@ -462,8 +468,8 @@ const DocumentCard = ({ doc, onClick }) => {
 // Checklist Component
 const PrepChecklist = ({ tournament }) => {
   const [items, setItems] = useState([
-    { id: 1, text: 'Complete Aff case', done: true },
-    { id: 2, text: 'Complete Neg blocks', done: true },
+    { id: 1, text: 'Complete Aff case', done: false },
+    { id: 2, text: 'Complete Neg blocks', done: false },
     { id: 3, text: 'Update evidence files', done: false },
     { id: 4, text: 'Practice round with team', done: false },
     { id: 5, text: 'Review judge paradigms', done: false },
@@ -574,31 +580,13 @@ const TeamCollaboration = () => {
   const [activeView, setActiveView] = useState('overview');
   const [showInviteModal, setShowInviteModal] = useState(false);
 
-  // Get the first team (or use mock data for demo)
+  // Get the first team the user is a member of
   const team = teams?.[0];
   const members = team?.members || [];
 
-  // Mock team data for demo
-  const mockTeam = {
-    id: 'demo-team',
-    name: 'Westwood Debate',
-    members: [
-      { id: 1, name: 'Alex Chen', email: 'alex@school.edu', role: 'captain', isOnline: true, events: ['LD', 'PF'] },
-      { id: 2, name: 'Sarah Kim', email: 'sarah@school.edu', role: 'varsity', isOnline: true, events: ['PF'] },
-      { id: 3, name: 'Mike Johnson', email: 'mike@school.edu', role: 'varsity', isOnline: false, events: ['LD'] },
-      { id: 4, name: 'Emma Davis', email: 'emma@school.edu', role: 'jv', isOnline: true, events: ['PF'] },
-      { id: 5, name: 'You', email: user?.email || 'you@school.edu', role: 'varsity', isOnline: true, events: ['LD', 'PF'] }
-    ],
-    documents: [
-      { id: 1, title: 'Aff Case - Climate Policy', type: 'case', updatedAt: '2 hours ago', updatedBy: 'Alex' },
-      { id: 2, title: 'Neg Blocks - Economy', type: 'evidence', updatedAt: '1 day ago', updatedBy: 'Sarah' },
-      { id: 3, title: 'Tournament Strategy', type: 'strategy', updatedAt: '3 days ago', updatedBy: 'Mike' },
-      { id: 4, title: 'Practice Notes', type: 'notes', updatedAt: '1 week ago', updatedBy: 'Emma' }
-    ]
-  };
-
-  const currentTeam = team || mockTeam;
-  const teamMembers = members || mockTeam.members;
+  // Use actual team data - no mock data for new users
+  const currentTeam = team;
+  const teamMembers = members;
 
   const views = [
     { id: 'overview', label: 'Overview', icon: Users },
@@ -607,8 +595,8 @@ const TeamCollaboration = () => {
     { id: 'prep', label: 'Prep', icon: CheckSquare }
   ];
 
-  // Check if there's a real team
-  const hasTeam = team || true; // Set to true for demo
+  // Check if user has a real team
+  const hasTeam = !!team;
 
   if (!hasTeam) {
     return (
@@ -727,23 +715,23 @@ const TeamCollaboration = () => {
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <span className="text-slate-400">Win Rate</span>
-                      <span className="text-white font-bold">68%</span>
+                      <span className="text-white font-bold">{currentTeam?.stats?.winRate || '—'}%</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-slate-400">Tournaments</span>
-                      <span className="text-white font-bold">12</span>
+                      <span className="text-white font-bold">{currentTeam?.stats?.tournaments || 0}</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-slate-400">Trophies</span>
                       <span className="text-white font-bold flex items-center gap-1">
-                        <Trophy className="w-4 h-4 text-amber-400" /> 5
+                        <Trophy className="w-4 h-4 text-amber-400" /> {currentTeam?.stats?.trophies || 0}
                       </span>
                     </div>
                   </div>
                 </div>
 
                 {/* Prep Checklist */}
-                <PrepChecklist tournament="State Championships - Dec 15" />
+                <PrepChecklist tournament={currentTeam?.nextTournament || "No upcoming tournament"} />
               </div>
             </motion.div>
           )}
@@ -798,8 +786,8 @@ const TeamCollaboration = () => {
               exit={{ opacity: 0, y: -10 }}
               className="grid md:grid-cols-2 gap-6"
             >
-              <PrepChecklist tournament="State Championships - Dec 15" />
-              <PrepChecklist tournament="National Qualifiers - Jan 20" />
+              <PrepChecklist tournament={currentTeam?.tournaments?.[0] || "Upcoming Tournament"} />
+              <PrepChecklist tournament={currentTeam?.tournaments?.[1] || "Next Tournament"} />
             </motion.div>
           )}
         </AnimatePresence>
