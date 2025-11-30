@@ -121,14 +121,15 @@
 /* Light theme overrides */
 .theme-light .glass-card {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(15, 23, 42, 0.1);
 }
 
 .theme-light .glass-card:hover {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-/* High contrast focus states */
-.theme-highContrast :focus {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
+/* Light theme text contrast fixes */
+.theme-light {
+  --text-secondary: #334155;
+  --text-muted: #64748b;
 }

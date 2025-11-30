@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Theme definitions - carefully crafted for harmony
+// Theme definitions - Dark and Light only with proper contrast
 export const THEMES = {
   dark: {
     id: 'dark',
@@ -30,91 +30,22 @@ export const THEMES = {
     name: 'Light',
     icon: '☀️',
     colors: {
-      bgPrimary: '#f8fafc',
-      bgSecondary: '#f1f5f9',
+      bgPrimary: '#ffffff',
+      bgSecondary: '#f8fafc',
       bgTertiary: '#e2e8f0',
       textPrimary: '#0f172a',
-      textSecondary: '#475569',
-      textMuted: '#94a3b8',
+      textSecondary: '#334155',
+      textMuted: '#64748b',
       primary: '#0891b2',
-      primaryHover: '#06b6d4',
-      accent: '#9333ea',
-      border: 'rgba(148, 163, 184, 0.3)',
-      glass: 'rgba(255, 255, 255, 0.9)',
-      cardBg: 'rgba(255, 255, 255, 0.7)',
+      primaryHover: '#0e7490',
+      accent: '#7c3aed',
+      border: 'rgba(15, 23, 42, 0.15)',
+      glass: 'rgba(255, 255, 255, 0.95)',
+      cardBg: 'rgba(248, 250, 252, 0.9)',
       inputBg: '#ffffff',
       success: '#16a34a',
       warning: '#d97706',
       error: '#dc2626',
-    }
-  },
-  highContrast: {
-    id: 'highContrast',
-    name: 'High Contrast',
-    icon: '◐',
-    colors: {
-      bgPrimary: '#000000',
-      bgSecondary: '#0a0a0a',
-      bgTertiary: '#171717',
-      textPrimary: '#ffffff',
-      textSecondary: '#e5e5e5',
-      textMuted: '#a3a3a3',
-      primary: '#00d4ff',
-      primaryHover: '#5eead4',
-      accent: '#c084fc',
-      border: 'rgba(255, 255, 255, 0.3)',
-      glass: 'rgba(0, 0, 0, 0.95)',
-      cardBg: 'rgba(23, 23, 23, 0.9)',
-      inputBg: '#000000',
-      success: '#4ade80',
-      warning: '#fbbf24',
-      error: '#f87171',
-    }
-  },
-  ocean: {
-    id: 'ocean',
-    name: 'Ocean',
-    icon: '🌊',
-    colors: {
-      bgPrimary: '#0c1929',
-      bgSecondary: '#132f4c',
-      bgTertiary: '#1a3a5c',
-      textPrimary: '#e3f2fd',
-      textSecondary: '#90caf9',
-      textMuted: '#64b5f6',
-      primary: '#29b6f6',
-      primaryHover: '#4fc3f7',
-      accent: '#7c4dff',
-      border: 'rgba(41, 182, 246, 0.2)',
-      glass: 'rgba(19, 47, 76, 0.85)',
-      cardBg: 'rgba(19, 47, 76, 0.6)',
-      inputBg: '#0c1929',
-      success: '#4caf50',
-      warning: '#ff9800',
-      error: '#f44336',
-    }
-  },
-  sunset: {
-    id: 'sunset',
-    name: 'Sunset',
-    icon: '🌅',
-    colors: {
-      bgPrimary: '#1a0a0a',
-      bgSecondary: '#2d1515',
-      bgTertiary: '#3d1f1f',
-      textPrimary: '#fef3f2',
-      textSecondary: '#fca5a5',
-      textMuted: '#f87171',
-      primary: '#f97316',
-      primaryHover: '#fb923c',
-      accent: '#ec4899',
-      border: 'rgba(249, 115, 22, 0.2)',
-      glass: 'rgba(45, 21, 21, 0.85)',
-      cardBg: 'rgba(45, 21, 21, 0.6)',
-      inputBg: '#1a0a0a',
-      success: '#84cc16',
-      warning: '#eab308',
-      error: '#ef4444',
     }
   }
 };
