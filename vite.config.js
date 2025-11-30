@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-    base: '/adjucator-ai-oths/',
+  base: '/adjucator-oths/',
   plugins: [
     react()
   ],
