@@ -4,6 +4,7 @@ import JudgeSpeech from './components/JudgeSpeech';
 import EvaluateBoard from './components/EvaluateBoard';
 import LiveCoach from './components/LiveCoach';
 import ExtempGenerator from './components/ExtempGenerator';
+import HistoryPanel from './components/HistoryPanel';
 import { Settings, AlertCircle } from 'lucide-react';
 
 // Placeholder components for now
@@ -92,6 +93,7 @@ function App() {
       {activeTab === 'board' && <EvaluateBoard apiKey={apiKey} />}
       {activeTab === 'coach' && <LiveCoach apiKey={apiKey} />}
       {activeTab === 'extemp' && <ExtempGenerator apiKey={apiKey} />}
+      {activeTab === 'history' && <HistoryPanel />}
 
       <SettingsModal
         isOpen={showSettings}

@@ -9,6 +9,7 @@ export default {
     extend: {
       colors: {
         primary: {
+          DEFAULT: '#06b6d4',
           50: '#ecfeff',
           100: '#cffafe',
           200: '#a5f3fc',
@@ -22,6 +23,7 @@ export default {
           950: '#083344',
         },
         accent: {
+          DEFAULT: '#a855f7',
           50: '#faf5ff',
           100: '#f3e8ff',
           200: '#e9d5ff',
@@ -33,7 +35,15 @@ export default {
           800: '#6b21a8',
           900: '#581c87',
           950: '#3b0764',
-        }
+        },
+        // Background colors
+        'bg-primary': '#020617',
+        'bg-secondary': '#0f172a',
+        'bg-tertiary': '#1e293b',
+        // Text colors
+        'text-primary': '#f8fafc',
+        'text-secondary': '#94a3b8',
+        'text-muted': '#64748b',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],

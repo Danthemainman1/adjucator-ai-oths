@@ -30,6 +30,7 @@ const Layout = ({ children, activeTab, setActiveTab, showSettings, setShowSettin
         { id: 'board', label: 'Evaluate Board', icon: LayoutIcon },
         { id: 'coach', label: 'Live Coach', icon: Mic },
         { id: 'extemp', label: 'Extemp Gen', icon: HelpCircle },
+        { id: 'history', label: 'History', icon: History },
     ];
 
     return (
