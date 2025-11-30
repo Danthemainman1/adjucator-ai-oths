@@ -41,6 +41,7 @@ export const AuthProvider = ({ children }) => {
             profile = {
               email: firebaseUser.email,
               displayName: firebaseUser.displayName || '',
+              username: firebaseUser.displayName?.toLowerCase().replace(/\s+/g, '_') || firebaseUser.email.split('@')[0],
               photoURL: firebaseUser.photoURL || '',
               preferredEvents: [],
               settings: {
@@ -85,6 +86,7 @@ export const AuthProvider = ({ children }) => {
       await createUserProfile(result.user.uid, {
         email,
         displayName,
+        username: displayName?.toLowerCase().replace(/\s+/g, '_') || email.split('@')[0],
         photoURL: '',
         preferredEvents: [],
         settings: {
@@ -112,6 +114,7 @@ export const AuthProvider = ({ children }) => {
         await createUserProfile(result.user.uid, {
           email: result.user.email,
           displayName: result.user.displayName || '',
+          username: result.user.displayName?.toLowerCase().replace(/\s+/g, '_') || result.user.email.split('@')[0],
           photoURL: result.user.photoURL || '',
           preferredEvents: [],
           settings: {

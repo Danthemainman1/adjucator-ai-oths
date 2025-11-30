@@ -18,7 +18,10 @@ import {
   AlertCircle,
   Send,
   Settings,
-  Image as ImageIcon
+  Image as ImageIcon,
+  UserCheck,
+  UserX,
+  Bell
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { db } from '../../utils/firebase';
@@ -62,7 +65,7 @@ const SPEECH_EVENTS = {
 };
 
 const TeamBrowser = ({ setActiveTab }) => {
-  const { user, isAuthenticated } = useAuth();
+  const { user, userProfile, isAuthenticated } = useAuth();
   const [teams, setTeams] = useState([]);
   const [myTeams, setMyTeams] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -76,6 +79,8 @@ const TeamBrowser = ({ setActiveTab }) => {
   const [chatMessages, setChatMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [showTeamSettings, setShowTeamSettings] = useState(false);
+  const [showJoinRequests, setShowJoinRequests] = useState(false);
+  const [joinRequests, setJoinRequests] = useState([]);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -88,9 +93,9 @@ const TeamBrowser = ({ setActiveTab }) => {
   });
 
   useEffect(() => {
-    if (!isAuthenticated) return;
+    if (!isAuthenticated || !user) return;
 
-    // Real-time listener for all teams
+    // Real-time listener for ALL teams in Firebase (GLOBAL)
     const teamsQuery = query(
       collection(db, 'teams'),
       orderBy('createdAt', 'desc')
@@ -101,6 +106,8 @@ const TeamBrowser = ({ setActiveTab }) => {
         id: doc.id,
         ...doc.data()
       }));
+      
+      // All teams are stored in Firebase, visible globally
       setTeams(teamsData);
       
       // Filter user's teams
@@ -130,14 +137,18 @@ const TeamBrowser = ({ setActiveTab }) => {
     }
 
     try {
+      const username = userProfile?.username || userProfile?.displayName || user.email;
+      
+      // Store team GLOBALLY in Firebase Firestore
       const teamData = {
         ...formData,
         owner: user.uid,
-        ownerName: user.displayName || user.email,
+        ownerName: username,
         members: [user.uid],
         memberDetails: [{
           uid: user.uid,
-          name: user.displayName || user.email,
+          username: username,
+          name: userProfile?.displayName || user.email,
           email: user.email,
           role: 'owner',
           joinedAt: new Date().toISOString()
@@ -146,6 +157,7 @@ const TeamBrowser = ({ setActiveTab }) => {
         updatedAt: serverTimestamp()
       };
 
+      // Add to Firebase (NOT localStorage) - GLOBAL storage
       await addDoc(collection(db, 'teams'), teamData);
       
       setShowCreateModal(false);
@@ -190,33 +202,33 @@ const TeamBrowser = ({ setActiveTab }) => {
     }
 
     try {
-      const teamRef = doc(db, 'teams', teamId);
+      const username = userProfile?.username || userProfile?.displayName || user.email;
       
-      // Double-check by reading the current document
-      const currentTeamDoc = await getDocs(query(collection(db, 'teams'), where('__name__', '==', teamId)));
-      const currentTeam = currentTeamDoc.docs[0]?.data();
+      // Check if already requested
+      const requestsRef = collection(db, 'teams', teamId, 'joinRequests');
+      const existingRequest = await getDocs(query(requestsRef, where('userId', '==', user.uid)));
       
-      if (currentTeam?.members?.includes(user.uid)) {
-        showNotification('You are already a member of this team!', 'error');
+      if (!existingRequest.empty) {
+        showNotification('Join request already pending!', 'info');
         return;
       }
       
-      await updateDoc(teamRef, {
-        members: arrayUnion(user.uid),
-        memberDetails: arrayUnion({
-          uid: user.uid,
-          name: user.displayName || user.email,
-          email: user.email,
-          role: 'member',
-          joinedAt: new Date().toISOString()
-        }),
-        updatedAt: serverTimestamp()
+      // Create join request in Firebase
+      await addDoc(requestsRef, {
+        userId: user.uid,
+        username: username,
+        displayName: userProfile?.displayName || user.email,
+        email: user.email,
+        photoURL: userProfile?.photoURL || '',
+        status: 'pending',
+        createdAt: serverTimestamp(),
+        timestamp: new Date().toISOString()
       });
       
-      showNotification('Successfully joined team!');
+      showNotification('Join request sent! Waiting for owner approval.');
     } catch (error) {
-      console.error('Error joining team:', error);
-      showNotification('Failed to join team', 'error');
+      console.error('Error sending join request:', error);
+      showNotification('Failed to send join request', 'error');
     }
   };
 
@@ -277,15 +289,26 @@ const TeamBrowser = ({ setActiveTab }) => {
     if (!newMessage.trim() || !selectedTeam) return;
 
     try {
+      const username = userProfile?.username || userProfile?.displayName || user.email;
+      
       await addDoc(collection(db, 'teams', selectedTeam.id, 'messages'), {
         text: newMessage,
         userId: user.uid,
-        userName: user.displayName || user.email,
+        username: username,
+        displayName: userProfile?.displayName || user.email,
         timestamp: serverTimestamp(),
         createdAt: new Date().toISOString()
       });
 
       setNewMessage('');
+      
+      // Auto-scroll to bottom after sending
+      setTimeout(() => {
+        const chatContainer = document.querySelector('.chat-messages-container');
+        if (chatContainer) {
+          chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+      }, 100);
     } catch (error) {
       console.error('Error sending message:', error);
       showNotification('Failed to send message', 'error');
@@ -310,6 +333,77 @@ const TeamBrowser = ({ setActiveTab }) => {
       console.error('Error updating team:', error);
       showNotification('Failed to update team settings', 'error');
     }
+  };
+
+  // Load join requests for team owner
+  useEffect(() => {
+    if (!selectedTeam || !showJoinRequests || selectedTeam.owner !== user?.uid) return;
+
+    const requestsRef = collection(db, 'teams', selectedTeam.id, 'joinRequests');
+    const requestsQuery = query(requestsRef, where('status', '==', 'pending'), orderBy('createdAt', 'desc'));
+
+    const unsubscribe = onSnapshot(requestsQuery, (snapshot) => {
+      const requests = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setJoinRequests(requests);
+    });
+
+    return () => unsubscribe();
+  }, [selectedTeam, showJoinRequests, user]);
+
+  const handleApproveJoinRequest = async (requestId, request) => {
+    try {
+      const username = request.username || request.displayName || request.email;
+      
+      // Add user to team
+      const teamRef = doc(db, 'teams', selectedTeam.id);
+      await updateDoc(teamRef, {
+        members: arrayUnion(request.userId),
+        memberDetails: arrayUnion({
+          uid: request.userId,
+          username: username,
+          name: request.displayName,
+          email: request.email,
+          role: 'member',
+          joinedAt: new Date().toISOString()
+        }),
+        updatedAt: serverTimestamp()
+      });
+
+      // Update request status
+      const requestRef = doc(db, 'teams', selectedTeam.id, 'joinRequests', requestId);
+      await updateDoc(requestRef, {
+        status: 'approved',
+        approvedAt: serverTimestamp()
+      });
+
+      showNotification('Join request approved!');
+    } catch (error) {
+      console.error('Error approving request:', error);
+      showNotification('Failed to approve request', 'error');
+    }
+  };
+
+  const handleDenyJoinRequest = async (requestId) => {
+    try {
+      const requestRef = doc(db, 'teams', selectedTeam.id, 'joinRequests', requestId);
+      await updateDoc(requestRef, {
+        status: 'denied',
+        deniedAt: serverTimestamp()
+      });
+
+      showNotification('Join request denied');
+    } catch (error) {
+      console.error('Error denying request:', error);
+      showNotification('Failed to deny request', 'error');
+    }
+  };
+
+  const openJoinRequests = (team) => {
+    setSelectedTeam(team);
+    setShowJoinRequests(true);
   };
 
   const filteredTeams = teams.filter(team => {
@@ -457,6 +551,7 @@ const TeamBrowser = ({ setActiveTab }) => {
                   setSelectedTeam(team);
                   setShowTeamSettings(true);
                 }}
+                onOpenJoinRequests={openJoinRequests}
                 isMember={true}
               />
             ))}
@@ -682,7 +777,7 @@ const TeamBrowser = ({ setActiveTab }) => {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto space-y-3 mb-4">
+            <div className="chat-messages-container flex-1 overflow-y-auto space-y-3 mb-4 scroll-smooth">
               {chatMessages.length === 0 ? (
                 <div className="text-center py-12">
                   <MessageSquare className="w-12 h-12 text-slate-600 mx-auto mb-3" />
@@ -702,11 +797,13 @@ const TeamBrowser = ({ setActiveTab }) => {
                       }`}
                     >
                       {message.userId !== user.uid && (
-                        <p className="text-xs opacity-70 mb-1">{message.userName}</p>
+                        <p className="text-xs font-semibold opacity-80 mb-1">
+                          @{message.username || message.displayName || message.userName}
+                        </p>
                       )}
                       <p className="text-sm">{message.text}</p>
                       <p className="text-xs opacity-60 mt-1">
-                        {new Date(message.createdAt).toLocaleTimeString()}
+                        {message.createdAt ? new Date(message.createdAt).toLocaleTimeString() : 'Just now'}
                       </p>
                     </div>
                   </div>
@@ -834,12 +931,78 @@ const TeamBrowser = ({ setActiveTab }) => {
           </div>
         </div>
       )}
+
+      {/* Join Requests Modal */}
+      {showJoinRequests && selectedTeam && selectedTeam.owner === user.uid && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
+          <div className="glass-card w-full max-w-lg max-h-[600px] flex flex-col animate-in zoom-in-95">
+            <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-800">
+              <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                <Bell className="w-5 h-5 text-cyan-400" />
+                Join Requests
+              </h2>
+              <button
+                onClick={() => {
+                  setShowJoinRequests(false);
+                  setSelectedTeam(null);
+                  setJoinRequests([]);
+                }}
+                className="p-2 rounded-lg hover:bg-slate-800 transition-colors"
+              >
+                <X className="w-5 h-5 text-slate-400" />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto space-y-3">
+              {joinRequests.length === 0 ? (
+                <div className="text-center py-12">
+                  <UserPlus className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+                  <p className="text-slate-400">No pending join requests</p>
+                </div>
+              ) : (
+                joinRequests.map((request) => (
+                  <div
+                    key={request.id}
+                    className="glass-card p-4 flex items-center justify-between"
+                  >
+                    <div className="flex-1">
+                      <p className="font-semibold text-white">
+                        @{request.username || request.displayName}
+                      </p>
+                      <p className="text-sm text-slate-400">{request.email}</p>
+                      <p className="text-xs text-slate-500 mt-1">
+                        {request.timestamp ? new Date(request.timestamp).toLocaleDateString() : 'Recently'}
+                      </p>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleApproveJoinRequest(request.id, request)}
+                        className="p-2 rounded-lg bg-green-500/10 text-green-400 hover:bg-green-500/20 border border-green-500/30 transition-all"
+                        title="Approve"
+                      >
+                        <UserCheck className="w-5 h-5" />
+                      </button>
+                      <button
+                        onClick={() => handleDenyJoinRequest(request.id)}
+                        className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/30 transition-all"
+                        title="Deny"
+                      >
+                        <UserX className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 // Team Card Component
-const TeamCard = ({ team, user, onJoin, onLeave, onOpenChat, onOpenSettings, isMember }) => {
+const TeamCard = ({ team, user, onJoin, onLeave, onOpenChat, onOpenSettings, onOpenJoinRequests, isMember }) => {
   const isOwner = team.owner === user.uid;
   const isFull = team.members?.length >= team.maxMembers;
 
@@ -892,13 +1055,22 @@ const TeamCard = ({ team, user, onJoin, onLeave, onOpenChat, onOpenSettings, isM
                 Member
               </span>
               {isOwner && (
-                <button
-                  onClick={() => onOpenSettings(team)}
-                  className="p-1.5 rounded-lg hover:bg-slate-800 transition-colors"
-                  title="Team Settings"
-                >
-                  <Settings className="w-4 h-4 text-slate-400" />
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => onOpenJoinRequests && onOpenJoinRequests(team)}
+                    className="p-1.5 rounded-lg hover:bg-slate-800 transition-colors"
+                    title="Join Requests"
+                  >
+                    <Bell className="w-4 h-4 text-cyan-400" />
+                  </button>
+                  <button
+                    onClick={() => onOpenSettings(team)}
+                    className="p-1.5 rounded-lg hover:bg-slate-800 transition-colors"
+                    title="Team Settings"
+                  >
+                    <Settings className="w-4 h-4 text-slate-400" />
+                  </button>
+                </div>
               )}
             </div>
             <div className="flex gap-2">
