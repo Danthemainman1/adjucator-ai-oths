@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { Send, Loader2, AlertCircle, RefreshCw, Copy, CheckCircle2, History } from 'lucide-react';
-import { speechTypes, sides, rubrics } from '../data/constants';
+import { Send, Loader2, AlertCircle, RefreshCw, Copy, CheckCircle2, History, Info, Gavel } from 'lucide-react';
+import { speechTypes, sides } from '../data/constants';
+import { 
+  getEventConfig, 
+  getApplicableSides, 
+  generateEventPrompt,
+  eventCategoryMap,
+  EVENT_CATEGORY_LABELS
+} from '../data/eventConfig';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { useSessionHistory } from '../hooks/useSessionHistory';
 
@@ -17,6 +24,21 @@ const JudgeSpeech = ({ apiKey }) => {
     const [copied, setCopied] = useState(false);
     const [saved, setSaved] = useState(false);
     const { addSession } = useSessionHistory();
+
+    // Get event-specific configuration
+    const eventConfig = useMemo(() => getEventConfig(speechType), [speechType]);
+    const applicableSides = useMemo(() => getApplicableSides(speechType), [speechType]);
+    const eventCategory = eventCategoryMap[speechType];
+    const categoryLabel = EVENT_CATEGORY_LABELS[eventCategory];
+
+    // Update side when speech type changes if current side isn't applicable
+    const handleSpeechTypeChange = (newType) => {
+        setSpeechType(newType);
+        const newApplicableSides = getApplicableSides(newType);
+        if (!newApplicableSides.includes(side)) {
+            setSide(newApplicableSides[0]);
+        }
+    };
 
     const handleAnalyze = async () => {
         if (!apiKey) {
@@ -34,45 +56,13 @@ const JudgeSpeech = ({ apiKey }) => {
 
         try {
             const genAI = new GoogleGenerativeAI(apiKey);
-            // Try experimental model first, then fallback
             const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
 
-            const rubric = rubrics[speechType] || rubrics['default'];
-            const prompt = `
-        You are an expert Debate Adjudicator for ${speechType}. 
-        Topic: ${topic}. Side: ${side}.
-        
-        Evaluate the following speech based on this rubric:
-        ${rubric}
+            // Use event-specific prompt generation
+            const prompt = generateEventPrompt(speechType, topic, side, transcript);
 
-        IMPORTANT: Do NOT penalize for missing visual aids, boards, or props, as this is a text-only evaluation.
-
-        Please provide the output in the following Markdown format:
-        ## Executive Summary
-        (Brief overview of performance)
-
-        ## Scorecard
-        | Category | Score (0-10) | Notes |
-        | --- | --- | --- |
-        (Fill based on rubric)
-        | **Total** | **(Sum)** | |
-
-        ## Key Argument Analysis
-        (Bullet points on specific arguments made)
-
-        ## Constructive Feedback
-        - **Strengths**: ...
-        - **Areas for Improvement**: ...
-
-        ## Recommended Drills
-        (Specific exercises to improve weak areas)
-
-        SPEECH TEXT:
-        ${transcript}
-      `;
-
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
+            const genResult = await model.generateContent(prompt);
+            const response = await genResult.response;
             const text = response.text();
 
             setResult(text);
@@ -80,10 +70,15 @@ const JudgeSpeech = ({ apiKey }) => {
             // Auto-save to history
             addSession({
                 type: 'judge',
-                title: topic || 'Speech Analysis',
+                title: topic || `${speechType} Analysis`,
                 input: { transcript: transcript.substring(0, 500) + (transcript.length > 500 ? '...' : '') },
                 result: text,
-                metadata: { speechType, side, topic }
+                metadata: { 
+                    speechType, 
+                    side: eventConfig.showOpposingArguments ? side : null, 
+                    topic,
+                    eventCategory
+                }
             });
             setSaved(true);
             setTimeout(() => setSaved(false), 2000);
@@ -93,12 +88,13 @@ const JudgeSpeech = ({ apiKey }) => {
             try {
                 const genAI = new GoogleGenerativeAI(apiKey);
                 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-                // ... same prompt ...
-                // For brevity, assuming the first try works or user can retry. 
-                // In production, I'd implement the loop logic here too.
-                setError(`Error: ${err.message}. Please try again.`);
+                const prompt = generateEventPrompt(speechType, topic, side, transcript);
+                const genResult = await model.generateContent(prompt);
+                const response = await genResult.response;
+                const text = response.text();
+                setResult(text);
             } catch (fallbackErr) {
-                setError(`Error: ${err.message}`);
+                setError(`Error: ${err.message}. Please try again.`);
             }
         } finally {
             setLoading(false);
@@ -113,42 +109,124 @@ const JudgeSpeech = ({ apiKey }) => {
         }
     };
 
+    // Group speech types by category for the dropdown
+    const groupedSpeechTypes = useMemo(() => {
+        const groups = {};
+        speechTypes.forEach(type => {
+            const cat = eventCategoryMap[type];
+            if (!groups[cat]) {
+                groups[cat] = [];
+            }
+            groups[cat].push(type);
+        });
+        return groups;
+    }, []);
+
     return (
         <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-8rem)]">
             {/* Input Panel */}
             <div className="w-full lg:w-1/2 flex flex-col gap-4">
                 <div className="glass-card space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
+                    {/* Event Category Badge */}
+                    {categoryLabel && (
+                        <div className="flex items-center gap-2 mb-2">
+                            <span className="text-lg">{categoryLabel.icon}</span>
+                            <span className={`text-sm font-medium ${categoryLabel.color}`}>
+                                {categoryLabel.label}
+                            </span>
+                            {eventConfig.showOpposingArguments && (
+                                <span className="px-2 py-0.5 text-xs bg-red-500/20 text-red-400 rounded-full">
+                                    Includes Clash Analysis
+                                </span>
+                            )}
+                        </div>
+                    )}
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-text-secondary mb-1">Format</label>
+                            <label className="block text-sm font-medium text-text-secondary mb-1">Event Format</label>
                             <select
                                 value={speechType}
-                                onChange={(e) => setSpeechType(e.target.value)}
+                                onChange={(e) => handleSpeechTypeChange(e.target.value)}
                                 className="input-field"
                             >
-                                {speechTypes.map(t => <option key={t} value={t}>{t}</option>)}
+                                {Object.entries(groupedSpeechTypes).map(([category, types]) => {
+                                    const catLabel = EVENT_CATEGORY_LABELS[category];
+                                    return (
+                                        <optgroup key={category} label={`${catLabel?.icon || ''} ${catLabel?.label || category}`}>
+                                            {types.map(t => <option key={t} value={t}>{t}</option>)}
+                                        </optgroup>
+                                    );
+                                })}
                             </select>
                         </div>
-                        <div>
-                            <label className="block text-sm font-medium text-text-secondary mb-1">Side</label>
-                            <select
-                                value={side}
-                                onChange={(e) => setSide(e.target.value)}
-                                className="input-field"
-                            >
-                                {sides.map(s => <option key={s} value={s}>{s}</option>)}
-                            </select>
-                        </div>
+                        
+                        {/* Only show Side selector for debate events */}
+                        {eventConfig.showOpposingArguments ? (
+                            <div>
+                                <label className="block text-sm font-medium text-text-secondary mb-1">Side/Position</label>
+                                <select
+                                    value={side}
+                                    onChange={(e) => setSide(e.target.value)}
+                                    className="input-field"
+                                >
+                                    {applicableSides.map(s => <option key={s} value={s}>{s}</option>)}
+                                </select>
+                            </div>
+                        ) : (
+                            <div>
+                                <label className="block text-sm font-medium text-text-secondary mb-1">Speaker Role</label>
+                                <select
+                                    value={side}
+                                    onChange={(e) => setSide(e.target.value)}
+                                    className="input-field"
+                                >
+                                    {applicableSides.map(s => <option key={s} value={s}>{s}</option>)}
+                                </select>
+                            </div>
+                        )}
                     </div>
+                    
                     <div>
-                        <label className="block text-sm font-medium text-text-secondary mb-1">Topic</label>
+                        <label className="block text-sm font-medium text-text-secondary mb-1">
+                            {eventConfig.showOpposingArguments ? 'Resolution/Topic' : 'Speech Topic/Prompt'}
+                        </label>
                         <input
                             type="text"
                             value={topic}
                             onChange={(e) => setTopic(e.target.value)}
-                            placeholder="Resolved: The United States should..."
+                            placeholder={
+                                eventConfig.showOpposingArguments 
+                                    ? "Resolved: The United States should..." 
+                                    : "Enter the topic or prompt..."
+                            }
                             className="input-field"
                         />
+                    </div>
+
+                    {/* Event-specific focus areas */}
+                    <div className="p-3 bg-slate-800/50 rounded-lg">
+                        <div className="flex items-center gap-2 mb-2">
+                            <Info className="w-4 h-4 text-primary" />
+                            <span className="text-sm font-medium text-text-secondary">
+                                This analysis will focus on:
+                            </span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                            {eventConfig.focusAreas.slice(0, 4).map((area, idx) => (
+                                <span 
+                                    key={idx}
+                                    className="px-2 py-1 text-xs bg-slate-700/50 text-text-secondary rounded-full"
+                                >
+                                    {area}
+                                </span>
+                            ))}
+                            {eventConfig.focusAreas.length > 4 && (
+                                <span className="px-2 py-1 text-xs text-text-muted">
+                                    +{eventConfig.focusAreas.length - 4} more
+                                </span>
+                            )}
+                        </div>
                     </div>
                 </div>
 
@@ -170,7 +248,7 @@ const JudgeSpeech = ({ apiKey }) => {
                             className="btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-                            {loading ? 'Analyzing...' : 'Judge Speech'}
+                            {loading ? 'Analyzing...' : `Judge ${eventConfig.name}`}
                         </button>
                     </div>
                 </div>
@@ -188,7 +266,7 @@ const JudgeSpeech = ({ apiKey }) => {
                 <div className="p-4 border-b border-slate-700/50 bg-slate-900/50 flex justify-between items-center">
                     <h3 className="font-bold text-white flex items-center gap-2">
                         <Gavel className="w-4 h-4 text-primary" />
-                        Adjudication
+                        {eventConfig.name} Evaluation
                     </h3>
                     {result && (
                         <div className="flex items-center gap-2">
@@ -215,8 +293,14 @@ const JudgeSpeech = ({ apiKey }) => {
                         </div>
                     ) : (
                         <div className="h-full flex flex-col items-center justify-center text-text-muted opacity-50">
-                            <Gavel className="w-16 h-16 mb-4" />
-                            <p>Ready to judge. Enter details and click Analyze.</p>
+                            <span className="text-5xl mb-4">{categoryLabel?.icon || '⚖️'}</span>
+                            <p className="text-center">
+                                Ready to evaluate your {eventConfig.name.toLowerCase()} speech.
+                                <br />
+                                <span className="text-xs">
+                                    Enter details and click Analyze.
+                                </span>
+                            </p>
                         </div>
                     )}
                 </div>
@@ -224,8 +308,5 @@ const JudgeSpeech = ({ apiKey }) => {
         </div>
     );
 };
-
-// Helper icon component since I can't import Gavel inside the component definition easily without destructuring it from lucide-react above
-import { Gavel } from 'lucide-react';
 
 export default JudgeSpeech;

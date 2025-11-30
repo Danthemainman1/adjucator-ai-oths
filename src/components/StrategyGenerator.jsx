@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { 
@@ -12,15 +12,25 @@ import {
     BookOpen,
     Swords,
     Shield,
-    Clock,
-    Lightbulb
+    Lightbulb,
+    Info
 } from 'lucide-react';
 import { speechTypes, sides } from '../data/constants';
+import { 
+    eventCategoryMap, 
+    EVENT_CATEGORIES,
+    getApplicableSides 
+} from '../data/eventConfig';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { useSessionHistory } from '../hooks/useSessionHistory';
 
 const StrategyGenerator = ({ apiKey }) => {
-    const [speechType, setSpeechType] = useState('Public Forum (PF)');
+    // Only show debate events for strategy generator
+    const debateEvents = useMemo(() => 
+        speechTypes.filter(type => eventCategoryMap[type] === EVENT_CATEGORIES.DEBATE),
+    []);
+
+    const [speechType, setSpeechType] = useState(debateEvents[0] || 'Public Forum (PF)');
     const [side, setSide] = useState('Proposition/Affirmative');
     const [topic, setTopic] = useState('');
     const [context, setContext] = useState('');
@@ -31,6 +41,8 @@ const StrategyGenerator = ({ apiKey }) => {
     const [copied, setCopied] = useState(false);
     const [saved, setSaved] = useState(false);
     const { addSession } = useSessionHistory();
+
+    const applicableSides = useMemo(() => getApplicableSides(speechType), [speechType]);
 
     const strategyTypes = [
         { id: 'comprehensive', label: 'Full Strategy', icon: Target, description: 'Complete debate strategy with arguments, rebuttals, and flow' },
@@ -402,13 +414,13 @@ Crossfire zingers (use sparingly):
 
                     <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-text-secondary mb-1">Format</label>
+                            <label className="block text-sm font-medium text-text-secondary mb-1">Debate Format</label>
                             <select
                                 value={speechType}
                                 onChange={(e) => setSpeechType(e.target.value)}
                                 className="input-field"
                             >
-                                {speechTypes.map(t => <option key={t} value={t}>{t}</option>)}
+                                {debateEvents.map(t => <option key={t} value={t}>{t}</option>)}
                             </select>
                         </div>
                         <div>
@@ -418,8 +430,16 @@ Crossfire zingers (use sparingly):
                                 onChange={(e) => setSide(e.target.value)}
                                 className="input-field"
                             >
-                                {sides.map(s => <option key={s} value={s}>{s}</option>)}
+                                {applicableSides.map(s => <option key={s} value={s}>{s}</option>)}
                             </select>
+                        </div>
+                    </div>
+
+                    {/* Info banner about debate-only */}
+                    <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                        <div className="flex items-center gap-2 text-blue-400 text-sm">
+                            <Info className="w-4 h-4 flex-shrink-0" />
+                            <span>Strategy Generator is designed for competitive debate events. For individual speaking events, use Judge Speech.</span>
                         </div>
                     </div>
 

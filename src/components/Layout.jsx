@@ -12,10 +12,13 @@ import {
     History,
     Target
 } from 'lucide-react';
+import UserProfileMenu from './UserProfileMenu';
+import { useAuth } from '../contexts/AuthContext';
 
 const Layout = ({ children, activeTab, setActiveTab, showSettings, setShowSettings }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(true);
+    const { isAuthenticated } = useAuth();
 
     const toggleTheme = () => {
         setIsDarkMode(!isDarkMode);
@@ -81,6 +84,13 @@ const Layout = ({ children, activeTab, setActiveTab, showSettings, setShowSettin
                         {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                         <span className="font-medium">{isDarkMode ? 'Light Mode' : 'Dark Mode'}</span>
                     </button>
+
+                    {/* User Profile Menu */}
+                    {isAuthenticated && (
+                        <div className="pt-2 border-t border-slate-800/50 mt-2">
+                            <UserProfileMenu onSettingsClick={() => setShowSettings(true)} />
+                        </div>
+                    )}
                 </div>
             </aside>
 

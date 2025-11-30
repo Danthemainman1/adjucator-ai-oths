@@ -6,7 +6,19 @@ import LiveCoach from './components/LiveCoach';
 import ExtempGenerator from './components/ExtempGenerator';
 import StrategyGenerator from './components/StrategyGenerator';
 import HistoryPanel from './components/HistoryPanel';
-import { Settings, AlertCircle } from 'lucide-react';
+import AuthPage from './components/AuthPage';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { Settings, AlertCircle, Loader2 } from 'lucide-react';
+
+// Loading spinner component
+const LoadingScreen = () => (
+  <div className="min-h-screen bg-bg-primary flex items-center justify-center">
+    <div className="text-center space-y-4">
+      <Loader2 className="w-12 h-12 text-primary animate-spin mx-auto" />
+      <p className="text-text-secondary">Loading Adjudicator AI...</p>
+    </div>
+  </div>
+);
 
 // Placeholder components for now
 const Placeholder = ({ title }) => (
@@ -69,11 +81,14 @@ const SettingsModal = ({ isOpen, onClose, apiKey, setApiKey, openaiKey, setOpena
   );
 };
 
-function App() {
+// Main authenticated app content
+function AppContent() {
   const [activeTab, setActiveTab] = useState('judge');
   const [showSettings, setShowSettings] = useState(false);
   const [apiKey, setApiKey] = useState(localStorage.getItem('gemini_key') || '');
   const [openaiKey, setOpenaiKey] = useState(localStorage.getItem('openai_key') || '');
+  const [isGuest, setIsGuest] = useState(localStorage.getItem('guest_mode') === 'true');
+  const { user, loading, isAuthenticated } = useAuth();
 
   useEffect(() => {
     localStorage.setItem('gemini_key', apiKey);
@@ -82,6 +97,23 @@ function App() {
   useEffect(() => {
     localStorage.setItem('openai_key', openaiKey);
   }, [openaiKey]);
+
+  // Show loading screen while checking auth state
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  // Show auth page if not authenticated and not in guest mode
+  if (!isAuthenticated && !isGuest) {
+    return (
+      <AuthPage 
+        onSkip={() => {
+          setIsGuest(true);
+          localStorage.setItem('guest_mode', 'true');
+        }} 
+      />
+    );
+  }
 
   return (
     <Layout
@@ -106,6 +138,14 @@ function App() {
         setOpenaiKey={setOpenaiKey}
       />
     </Layout>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 
