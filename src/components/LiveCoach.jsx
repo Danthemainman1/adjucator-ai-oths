@@ -340,147 +340,159 @@ const LiveCoach = ({ apiKey }) => {
     };
 
     return (
-        <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-8rem)]">
-            {/* Input Panel */}
-            <div className="w-full lg:w-1/2 flex flex-col gap-4">
-                <div className="glass-card space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            <label className="block text-sm font-medium text-text-secondary mb-1">Format</label>
-                            <select
-                                value={speechType}
-                                onChange={(e) => setSpeechType(e.target.value)}
-                                className="input-field"
-                            >
-                                {speechTypes.map(t => <option key={t} value={t}>{t}</option>)}
-                            </select>
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-text-secondary mb-1">Side</label>
-                            <select
-                                value={side}
-                                onChange={(e) => setSide(e.target.value)}
-                                className="input-field"
-                            >
-                                {sides.map(s => <option key={s} value={s}>{s}</option>)}
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-text-secondary mb-1">Topic</label>
-                        <input
-                            type="text"
-                            value={topic}
-                            onChange={(e) => setTopic(e.target.value)}
-                            placeholder="Topic or Resolution..."
-                            className="input-field"
-                        />
-                    </div>
-                </div>
+        <div className="space-y-6">
+            {/* Page Header */}
+            <div>
+                <h1 className="text-2xl font-bold text-white tracking-tight">Live Coaching</h1>
+                <p className="text-slate-400 mt-1">Record and analyze your speech in real-time</p>
+            </div>
 
-                <div className="flex-1 glass-card flex flex-col p-0 overflow-hidden">
-                    <div className="p-4 border-b border-slate-700/50 bg-slate-900/50">
-                        <label className="text-sm font-medium text-text-secondary">Live Recording</label>
-                    </div>
-
-                    <div className="flex-1 p-8 flex flex-col items-center justify-center space-y-8">
-                        {/* Timer */}
-                        <div className={`text-6xl font-mono font-bold tracking-tighter ${isRecording ? 'text-red-500 animate-pulse' : 'text-text-primary'}`}>
-                            {formatTime(recordingTime)}
-                        </div>
-
-                        {/* Visualizer */}
-                        <div className="w-full max-w-md">
-                            <AudioVisualizer analyser={analyser} isRecording={isRecording} />
-                            <ToneIndicator analyser={analyser} isRecording={isRecording} />
-                        </div>
-
-                        {/* Controls */}
-                        <div className="flex items-center gap-4">
-                            {!isRecording ? (
-                                <button
-                                    onClick={startRecording}
-                                    className="w-16 h-16 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center shadow-lg shadow-red-500/30 transition-all hover:scale-110 active:scale-95"
+            <div className="flex flex-col lg:flex-row gap-6">
+                {/* Input Panel */}
+                <div className="w-full lg:w-1/2 flex flex-col gap-4">
+                    <div className="p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-medium text-slate-400 mb-2">Format</label>
+                                <select
+                                    value={speechType}
+                                    onChange={(e) => setSpeechType(e.target.value)}
+                                    className="w-full px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-800 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
                                 >
-                                    <Mic className="w-8 h-8 text-white" />
-                                </button>
-                            ) : (
-                                <button
-                                    onClick={stopRecording}
-                                    className="w-16 h-16 rounded-full bg-slate-700 hover:bg-slate-600 flex items-center justify-center shadow-lg transition-all hover:scale-110 active:scale-95"
+                                    {speechTypes.map(t => <option key={t} value={t}>{t}</option>)}
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-400 mb-2">Side</label>
+                                <select
+                                    value={side}
+                                    onChange={(e) => setSide(e.target.value)}
+                                    className="w-full px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-800 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
                                 >
-                                    <Square className="w-6 h-6 text-white fill-current" />
-                                </button>
+                                    {sides.map(s => <option key={s} value={s}>{s}</option>)}
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-slate-400 mb-2">Topic</label>
+                            <input
+                                type="text"
+                                value={topic}
+                                onChange={(e) => setTopic(e.target.value)}
+                                placeholder="Topic or Resolution..."
+                                className="w-full px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-800 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="flex-1 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm overflow-hidden flex flex-col">
+                        <div className="p-4 border-b border-slate-800/60 bg-slate-900/50">
+                            <label className="text-sm font-medium text-slate-300">Live Recording</label>
+                        </div>
+
+                        <div className="flex-1 p-8 flex flex-col items-center justify-center space-y-8">
+                            {/* Timer */}
+                            <div className={`text-6xl font-mono font-bold tracking-tighter ${isRecording ? 'text-red-500 animate-pulse' : 'text-white'}`}>
+                                {formatTime(recordingTime)}
+                            </div>
+
+                            {/* Visualizer */}
+                            <div className="w-full max-w-md">
+                                <AudioVisualizer analyser={analyser} isRecording={isRecording} />
+                                <ToneIndicator analyser={analyser} isRecording={isRecording} />
+                            </div>
+
+                            {/* Controls */}
+                            <div className="flex items-center gap-4">
+                                {!isRecording ? (
+                                    <button
+                                        onClick={startRecording}
+                                        className="w-20 h-20 rounded-full bg-gradient-to-br from-red-500 to-red-600 hover:from-red-400 hover:to-red-500 flex items-center justify-center shadow-lg shadow-red-500/30 transition-all hover:scale-110 active:scale-95"
+                                    >
+                                        <Mic className="w-8 h-8 text-white" />
+                                    </button>
+                                ) : (
+                                    <button
+                                        onClick={stopRecording}
+                                        className="w-20 h-20 rounded-full bg-slate-700 hover:bg-slate-600 flex items-center justify-center shadow-lg transition-all hover:scale-110 active:scale-95"
+                                    >
+                                        <Square className="w-6 h-6 text-white fill-current" />
+                                    </button>
+                                )}
+                            </div>
+
+                            {audioBlob && !isRecording && (
+                                <div className="flex items-center gap-4 animate-in fade-in">
+                                    <audio controls src={URL.createObjectURL(audioBlob)} className="h-12 rounded-xl" />
+                                    <button onClick={resetRecording} className="p-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-all">
+                                        <RotateCcw className="w-5 h-5" />
+                                    </button>
+                                </div>
                             )}
                         </div>
 
-                        {audioBlob && !isRecording && (
-                            <div className="flex items-center gap-4 animate-in fade-in">
-                                <audio controls src={URL.createObjectURL(audioBlob)} className="h-10 rounded-lg" />
-                                <button onClick={resetRecording} className="p-2 text-text-muted hover:text-white transition-colors">
-                                    <RotateCcw className="w-5 h-5" />
+                        <div className="p-4 border-t border-slate-800/60 bg-slate-900/50 flex justify-between items-center">
+                            <span className="text-xs text-slate-500 font-medium">{audioBlob ? 'Audio recorded' : 'Ready to record'}</span>
+                            <button
+                                onClick={handleAnalyze}
+                                disabled={loading || !audioData}
+                                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-2"
+                            >
+                                {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Activity className="w-4 h-4" />}
+                                {loading ? 'Analyzing...' : 'Analyze Audio'}
+                            </button>
+                        </div>
+                    </div>
+
+                    {error && (
+                        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center gap-3 text-red-400">
+                            <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                            <span className="text-sm">{error}</span>
+                        </div>
+                    )}
+                </div>
+
+                {/* Output Panel */}
+                <div className="w-full lg:w-1/2 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm overflow-hidden flex flex-col">
+                    <div className="p-4 border-b border-slate-800/60 bg-slate-900/50 flex justify-between items-center">
+                        <h3 className="font-semibold text-white flex items-center gap-2">
+                            <Activity className="w-5 h-5 text-purple-400" />
+                            Coaching Feedback
+                        </h3>
+                        {result && (
+                            <div className="flex items-center gap-3">
+                                {saved && (
+                                    <span className="text-xs text-emerald-400 flex items-center gap-1 font-medium">
+                                        <History className="w-3 h-3" /> Saved
+                                    </span>
+                                )}
+                                <button
+                                    onClick={copyToClipboard}
+                                    className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+                                    title="Copy to clipboard"
+                                >
+                                    {copied ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
                                 </button>
                             </div>
                         )}
                     </div>
 
-                    <div className="p-4 border-t border-slate-700/50 bg-slate-900/50 flex justify-between items-center">
-                        <span className="text-xs text-text-muted">{audioBlob ? 'Audio recorded' : 'Ready to record'}</span>
-                        <button
-                            onClick={handleAnalyze}
-                            disabled={loading || !audioData}
-                            className="btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Activity className="w-4 h-4" />}
-                            {loading ? 'Analyzing...' : 'Analyze Audio'}
-                        </button>
+                    <div className="flex-1 overflow-y-auto p-6">
+                        {result ? (
+                            <div className="prose prose-invert prose-sm max-w-none prose-headings:text-purple-400 prose-headings:font-semibold prose-a:text-purple-400 prose-strong:text-white prose-table:border-collapse prose-th:border prose-th:border-slate-700 prose-td:border prose-td:border-slate-700 prose-th:p-3 prose-td:p-3 prose-th:bg-slate-800/50 prose-th:text-left">
+                                <ReactMarkdown remarkPlugins={[remarkGfm]}>{result}</ReactMarkdown>
+                            </div>
+                        ) : (
+                            <div className="h-full flex flex-col items-center justify-center text-slate-500 py-16">
+                                <div className="w-16 h-16 rounded-2xl bg-slate-800/50 flex items-center justify-center mb-4">
+                                    <Mic className="w-8 h-8" />
+                                </div>
+                                <p className="text-center max-w-xs">
+                                    Record your speech and click Analyze to get AI coaching feedback.
+                                </p>
+                            </div>
+                        )}
                     </div>
-                </div>
-
-                {error && (
-                    <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg flex items-center gap-2 text-red-400 text-sm">
-                        <AlertCircle className="w-4 h-4" />
-                        {error}
-                    </div>
-                )}
-            </div>
-
-            {/* Output Panel */}
-            <div className="w-full lg:w-1/2 glass-card overflow-hidden flex flex-col p-0">
-                <div className="p-4 border-b border-slate-700/50 bg-slate-900/50 flex justify-between items-center">
-                    <h3 className="font-bold text-white flex items-center gap-2">
-                        <Activity className="w-4 h-4 text-primary" />
-                        Coaching Feedback
-                    </h3>
-                    {result && (
-                        <div className="flex items-center gap-2">
-                            {saved && (
-                                <span className="text-xs text-emerald-400 flex items-center gap-1">
-                                    <History className="w-3 h-3" /> Saved
-                                </span>
-                            )}
-                            <button
-                                onClick={copyToClipboard}
-                                className="text-text-secondary hover:text-white transition-colors"
-                                title="Copy to clipboard"
-                            >
-                                {copied ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
-                            </button>
-                        </div>
-                    )}
-                </div>
-
-                <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
-                    {result ? (
-                        <div className="prose prose-invert prose-sm max-w-none prose-headings:text-cyan-400 prose-a:text-accent prose-strong:text-white prose-table:border-collapse prose-th:border prose-th:border-slate-700 prose-td:border prose-td:border-slate-700 prose-th:p-2 prose-td:p-2 prose-th:bg-slate-800/50">
-                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{result}</ReactMarkdown>
-                        </div>
-                    ) : (
-                        <div className="h-full flex flex-col items-center justify-center text-text-muted opacity-50">
-                            <Mic className="w-16 h-16 mb-4" />
-                            <p>Record speech and click Analyze.</p>
-                        </div>
-                    )}
                 </div>
             </div>
         </div>

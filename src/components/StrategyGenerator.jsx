@@ -398,169 +398,169 @@ Crossfire zingers (use sparingly):
     };
 
     return (
-        <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-8rem)]">
-            {/* Input Panel */}
-            <div className="w-full lg:w-1/2 flex flex-col gap-4">
-                <div className="glass-card space-y-4">
-                    <div className="flex items-center gap-3 mb-2">
-                        <div className="p-2 rounded-lg bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/30">
-                            <Target className="w-5 h-5 text-primary" />
-                        </div>
-                        <div>
-                            <h2 className="text-lg font-bold text-white">Strategy Generator</h2>
-                            <p className="text-xs text-text-muted">AI-powered debate preparation</p>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            <label className="block text-sm font-medium text-text-secondary mb-1">Debate Format</label>
-                            <select
-                                value={speechType}
-                                onChange={(e) => setSpeechType(e.target.value)}
-                                className="input-field"
-                            >
-                                {debateEvents.map(t => <option key={t} value={t}>{t}</option>)}
-                            </select>
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-text-secondary mb-1">Side</label>
-                            <select
-                                value={side}
-                                onChange={(e) => setSide(e.target.value)}
-                                className="input-field"
-                            >
-                                {applicableSides.map(s => <option key={s} value={s}>{s}</option>)}
-                            </select>
-                        </div>
-                    </div>
-
-                    {/* Info banner about debate-only */}
-                    <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                        <div className="flex items-center gap-2 text-blue-400 text-sm">
-                            <Info className="w-4 h-4 flex-shrink-0" />
-                            <span>Strategy Generator is designed for competitive debate events. For individual speaking events, use Judge Speech.</span>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-medium text-text-secondary mb-1">Topic / Resolution</label>
-                        <input
-                            type="text"
-                            value={topic}
-                            onChange={(e) => setTopic(e.target.value)}
-                            placeholder="Resolved: The United States should substantially increase..."
-                            className="input-field"
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-medium text-text-secondary mb-1">
-                            Additional Context <span className="text-text-muted">(optional)</span>
-                        </label>
-                        <textarea
-                            value={context}
-                            onChange={(e) => setContext(e.target.value)}
-                            placeholder="E.g., specific arguments you want to focus on, your opponent's known style, judge preferences..."
-                            className="input-field resize-none h-20"
-                        />
-                    </div>
-                </div>
-
-                {/* Strategy Type Selection */}
-                <div className="glass-card p-4">
-                    <label className="block text-sm font-medium text-text-secondary mb-3">Strategy Type</label>
-                    <div className="grid grid-cols-2 gap-3">
-                        {strategyTypes.map((type) => {
-                            const Icon = type.icon;
-                            return (
-                                <button
-                                    key={type.id}
-                                    onClick={() => setStrategyType(type.id)}
-                                    className={`p-4 rounded-xl border text-left transition-all ${
-                                        strategyType === type.id
-                                            ? 'bg-primary/10 border-primary/30 shadow-lg shadow-primary/10'
-                                            : 'bg-slate-900/30 border-slate-700 hover:border-slate-600 hover:bg-slate-800/50'
-                                    }`}
-                                >
-                                    <div className="flex items-center gap-3 mb-2">
-                                        <Icon className={`w-5 h-5 ${strategyType === type.id ? 'text-primary' : 'text-text-muted'}`} />
-                                        <span className={`font-medium ${strategyType === type.id ? 'text-white' : 'text-text-secondary'}`}>
-                                            {type.label}
-                                        </span>
-                                    </div>
-                                    <p className="text-xs text-text-muted">{type.description}</p>
-                                </button>
-                            );
-                        })}
-                    </div>
-                </div>
-
-                {/* Generate Button */}
-                <button
-                    onClick={handleGenerate}
-                    disabled={loading || !topic.trim()}
-                    className="btn-primary py-4 text-lg flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                    {loading ? (
-                        <>
-                            <Loader2 className="w-5 h-5 animate-spin" />
-                            Generating Strategy...
-                        </>
-                    ) : (
-                        <>
-                            <Sparkles className="w-5 h-5" />
-                            Generate Strategy
-                        </>
-                    )}
-                </button>
-
-                {error && (
-                    <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg flex items-center gap-2 text-red-400 text-sm">
-                        <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                        {error}
-                    </div>
-                )}
+        <div className="space-y-6">
+            {/* Page Header */}
+            <div>
+                <h1 className="text-2xl font-bold text-white tracking-tight">Strategy Generator</h1>
+                <p className="text-slate-400 mt-1">Build winning debate strategies with AI</p>
             </div>
 
-            {/* Output Panel */}
-            <div className="w-full lg:w-1/2 glass-card overflow-hidden flex flex-col p-0">
-                <div className="p-4 border-b border-slate-700/50 bg-slate-900/50 flex justify-between items-center">
-                    <h3 className="font-bold text-white flex items-center gap-2">
-                        <BookOpen className="w-4 h-4 text-primary" />
-                        Strategy Playbook
-                    </h3>
-                    {result && (
-                        <div className="flex items-center gap-2">
-                            {saved && (
-                                <span className="text-xs text-emerald-400 flex items-center gap-1">
-                                    <History className="w-3 h-3" /> Saved
-                                </span>
-                            )}
-                            <button
-                                onClick={copyToClipboard}
-                                className="text-text-secondary hover:text-white transition-colors"
-                                title="Copy to clipboard"
-                            >
-                                {copied ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
-                            </button>
+            <div className="flex flex-col lg:flex-row gap-6">
+                {/* Input Panel */}
+                <div className="w-full lg:w-1/2 flex flex-col gap-4">
+                    <div className="p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-medium text-slate-400 mb-2">Debate Format</label>
+                                <select
+                                    value={speechType}
+                                    onChange={(e) => setSpeechType(e.target.value)}
+                                    className="w-full px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-800 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
+                                >
+                                    {debateEvents.map(t => <option key={t} value={t}>{t}</option>)}
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-400 mb-2">Side</label>
+                                <select
+                                    value={side}
+                                    onChange={(e) => setSide(e.target.value)}
+                                    className="w-full px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-800 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
+                                >
+                                    {applicableSides.map(s => <option key={s} value={s}>{s}</option>)}
+                                </select>
+                            </div>
+                        </div>
+
+                        {/* Info banner */}
+                        <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                            <div className="flex items-center gap-3 text-blue-400 text-sm">
+                                <Info className="w-5 h-5 flex-shrink-0" />
+                                <span>Strategy Generator is optimized for competitive debate events.</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-slate-400 mb-2">Topic / Resolution</label>
+                            <input
+                                type="text"
+                                value={topic}
+                                onChange={(e) => setTopic(e.target.value)}
+                                placeholder="Resolved: The United States should substantially increase..."
+                                className="w-full px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-800 text-white placeholder-slate-500 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-slate-400 mb-2">
+                                Additional Context <span className="text-slate-600">(optional)</span>
+                            </label>
+                            <textarea
+                                value={context}
+                                onChange={(e) => setContext(e.target.value)}
+                                placeholder="E.g., specific arguments you want to focus on, your opponent's known style..."
+                                className="w-full px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-800 text-white placeholder-slate-500 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all resize-none h-24"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Strategy Type Selection */}
+                    <div className="p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm">
+                        <label className="block text-sm font-medium text-slate-300 mb-4">Strategy Type</label>
+                        <div className="grid grid-cols-2 gap-3">
+                            {strategyTypes.map((type) => {
+                                const Icon = type.icon;
+                                return (
+                                    <button
+                                        key={type.id}
+                                        onClick={() => setStrategyType(type.id)}
+                                        className={`p-4 rounded-xl border text-left transition-all ${
+                                            strategyType === type.id
+                                                ? 'bg-orange-500/10 border-orange-500/30 shadow-lg shadow-orange-500/10'
+                                                : 'bg-slate-900/30 border-slate-800 hover:border-slate-700 hover:bg-slate-800/50'
+                                        }`}
+                                    >
+                                        <div className="flex items-center gap-3 mb-2">
+                                            <Icon className={`w-5 h-5 ${strategyType === type.id ? 'text-orange-400' : 'text-slate-500'}`} />
+                                            <span className={`font-medium ${strategyType === type.id ? 'text-white' : 'text-slate-400'}`}>
+                                                {type.label}
+                                            </span>
+                                        </div>
+                                        <p className="text-xs text-slate-500">{type.description}</p>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    {/* Generate Button */}
+                    <button
+                        onClick={handleGenerate}
+                        disabled={loading || !topic.trim()}
+                        className="w-full py-4 rounded-xl bg-gradient-to-r from-orange-500 to-red-500 text-white text-lg font-semibold shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-[1.01] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-3"
+                    >
+                        {loading ? (
+                            <>
+                                <Loader2 className="w-5 h-5 animate-spin" />
+                                Generating Strategy...
+                            </>
+                        ) : (
+                            <>
+                                <Sparkles className="w-5 h-5" />
+                                Generate Strategy
+                            </>
+                        )}
+                    </button>
+
+                    {error && (
+                        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center gap-3 text-red-400">
+                            <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                            <span className="text-sm">{error}</span>
                         </div>
                     )}
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
-                    {result ? (
-                        <div className="prose prose-invert prose-sm max-w-none prose-headings:text-cyan-400 prose-a:text-accent prose-strong:text-white prose-table:border-collapse prose-th:border prose-th:border-slate-700 prose-td:border prose-td:border-slate-700 prose-th:p-2 prose-td:p-2 prose-th:bg-slate-800/50 prose-code:bg-slate-800 prose-code:px-1 prose-code:rounded prose-pre:bg-slate-900 prose-pre:border prose-pre:border-slate-700 prose-blockquote:border-l-primary prose-blockquote:bg-slate-900/50 prose-blockquote:py-1">
-                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{result}</ReactMarkdown>
-                        </div>
-                    ) : (
-                        <div className="h-full flex flex-col items-center justify-center text-text-muted opacity-50">
-                            <Target className="w-16 h-16 mb-4" />
-                            <p className="text-center max-w-xs">
-                                Enter your debate topic and select a strategy type to generate your personalized playbook.
-                            </p>
-                        </div>
-                    )}
+                {/* Output Panel */}
+                <div className="w-full lg:w-1/2 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm overflow-hidden flex flex-col">
+                    <div className="p-4 border-b border-slate-800/60 bg-slate-900/50 flex justify-between items-center">
+                        <h3 className="font-semibold text-white flex items-center gap-2">
+                            <BookOpen className="w-5 h-5 text-orange-400" />
+                            Strategy Playbook
+                        </h3>
+                        {result && (
+                            <div className="flex items-center gap-3">
+                                {saved && (
+                                    <span className="text-xs text-emerald-400 flex items-center gap-1 font-medium">
+                                        <History className="w-3 h-3" /> Saved
+                                    </span>
+                                )}
+                                <button
+                                    onClick={copyToClipboard}
+                                    className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+                                    title="Copy to clipboard"
+                                >
+                                    {copied ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="flex-1 overflow-y-auto p-6">
+                        {result ? (
+                            <div className="prose prose-invert prose-sm max-w-none prose-headings:text-orange-400 prose-headings:font-semibold prose-a:text-orange-400 prose-strong:text-white prose-table:border-collapse prose-th:border prose-th:border-slate-700 prose-td:border prose-td:border-slate-700 prose-th:p-3 prose-td:p-3 prose-th:bg-slate-800/50 prose-th:text-left prose-code:bg-slate-800 prose-code:px-1.5 prose-code:rounded prose-pre:bg-slate-900 prose-pre:border prose-pre:border-slate-700 prose-blockquote:border-l-orange-500 prose-blockquote:bg-slate-900/50 prose-blockquote:py-1">
+                                <ReactMarkdown remarkPlugins={[remarkGfm]}>{result}</ReactMarkdown>
+                            </div>
+                        ) : (
+                            <div className="h-full flex flex-col items-center justify-center text-slate-500 py-16">
+                                <div className="w-16 h-16 rounded-2xl bg-slate-800/50 flex items-center justify-center mb-4">
+                                    <Target className="w-8 h-8" />
+                                </div>
+                                <p className="text-center max-w-xs">
+                                    Enter your debate topic and select a strategy type to generate your personalized playbook.
+                                </p>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

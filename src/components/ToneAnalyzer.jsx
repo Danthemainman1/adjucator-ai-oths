@@ -261,243 +261,205 @@ Provide your analysis in the following JSON format (ONLY output valid JSON, no m
     : null;
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-8rem)]">
-      {/* Input Panel */}
-      <div className="w-full lg:w-1/2 flex flex-col gap-4">
-        <div className="glass-card space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30">
-              <Brain className="w-5 h-5 text-purple-400" />
-            </div>
-            <div>
-              <h2 className="text-lg font-bold text-white">Tone Analyzer</h2>
-              <p className="text-xs text-text-muted">Advanced rhetorical analysis</p>
-            </div>
-          </div>
-
-          <div className="p-3 bg-slate-800/50 rounded-lg">
-            <div className="flex items-center gap-2 mb-2">
-              <Info className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-text-secondary">
-                This analysis will detect:
-              </span>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {['Confidence Level', 'Emotional Tone', 'Ethos/Pathos/Logos', 'Rhetorical Techniques'].map((item, idx) => (
-                <span key={idx} className="px-2 py-1 text-xs bg-slate-700/50 text-text-secondary rounded-full">
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex-1 glass-card flex flex-col p-0 overflow-hidden">
-          <div className="p-4 border-b border-slate-700/50 bg-slate-900/50">
-            <label className="text-sm font-medium text-text-secondary">Speech Transcript</label>
-          </div>
-          <textarea
-            value={transcript}
-            onChange={(e) => setTranscript(e.target.value)}
-            placeholder="Paste your speech text here for detailed tone and rhetorical analysis..."
-            className="flex-1 w-full bg-transparent p-4 resize-none focus:outline-none font-mono text-sm text-text-primary"
-          />
-          <div className="p-4 border-t border-slate-700/50 bg-slate-900/50 flex justify-between items-center">
-            <span className="text-xs text-text-muted">{transcript.length} chars</span>
-            <button
-              onClick={handleAnalyze}
-              disabled={loading}
-              className="btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-              {loading ? 'Analyzing...' : 'Analyze Tone'}
-            </button>
-          </div>
-        </div>
-
-        {error && (
-          <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg flex items-center gap-2 text-red-400 text-sm">
-            <AlertCircle className="w-4 h-4" />
-            {error}
-          </div>
-        )}
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div>
+        <h1 className="text-2xl font-bold text-white tracking-tight">Tone Analysis</h1>
+        <p className="text-slate-400 mt-1">Analyze rhetorical impact and emotional tone</p>
       </div>
 
-      {/* Output Panel */}
-      <div className="w-full lg:w-1/2 glass-card overflow-hidden flex flex-col p-0">
-        <div className="p-4 border-b border-slate-700/50 bg-slate-900/50 flex justify-between items-center">
-          <h3 className="font-bold text-white flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-purple-400" />
-            Rhetorical Analysis
-          </h3>
-          {analysisData && (
-            <div className="flex items-center gap-2">
-              {saved && (
-                <span className="text-xs text-emerald-400 flex items-center gap-1">
-                  <History className="w-3 h-3" /> Saved
-                </span>
-              )}
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* Input Panel */}
+        <div className="w-full lg:w-1/2 flex flex-col gap-4">
+          <div className="p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm space-y-4">
+            <div className="p-4 rounded-xl bg-slate-800/30 border border-slate-700/30">
+              <div className="flex items-center gap-2 mb-3">
+                <Info className="w-4 h-4 text-purple-400" />
+                <span className="text-sm font-medium text-slate-300">This analysis detects:</span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {['Confidence Level', 'Emotional Tone', 'Ethos/Pathos/Logos', 'Rhetorical Techniques'].map((item, idx) => (
+                  <span key={idx} className="px-3 py-1.5 text-xs font-medium bg-slate-900/50 text-slate-400 rounded-lg border border-slate-700/50">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex-1 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm overflow-hidden flex flex-col">
+            <div className="p-4 border-b border-slate-800/60 bg-slate-900/50">
+              <label className="text-sm font-medium text-slate-300">Speech Transcript</label>
+            </div>
+            <textarea
+              value={transcript}
+              onChange={(e) => setTranscript(e.target.value)}
+              placeholder="Paste your speech text here for detailed tone and rhetorical analysis..."
+              className="flex-1 w-full bg-transparent p-4 resize-none focus:outline-none font-mono text-sm text-slate-200 placeholder-slate-600 min-h-[300px]"
+            />
+            <div className="p-4 border-t border-slate-800/60 bg-slate-900/50 flex justify-between items-center">
+              <span className="text-xs text-slate-500 font-medium">{transcript.length.toLocaleString()} characters</span>
               <button
-                onClick={copyToClipboard}
-                className="text-text-secondary hover:text-white transition-colors"
-                title="Copy to clipboard"
+                onClick={handleAnalyze}
+                disabled={loading}
+                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-2"
               >
-                {copied ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+                {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+                {loading ? 'Analyzing...' : 'Analyze Tone'}
               </button>
+            </div>
+          </div>
+
+          {error && (
+            <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center gap-3 text-red-400">
+              <AlertCircle className="w-5 h-5 flex-shrink-0" />
+              <span className="text-sm">{error}</span>
             </div>
           )}
         </div>
 
-        <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
-          {analysisData ? (
-            <div className="space-y-6">
-              {/* Overall Metrics */}
-              <div className="grid grid-cols-2 gap-4">
-                {/* Confidence Level */}
-                {confidenceConfig && (
-                  <div className={`p-4 rounded-xl ${confidenceConfig.bgColor} border border-slate-700/50`}>
-                    <div className="flex items-center gap-2 mb-2">
-                      <confidenceConfig.icon className={`w-5 h-5 ${confidenceConfig.color}`} />
-                      <span className="text-sm text-text-secondary">Confidence</span>
-                    </div>
-                    <div className={`text-xl font-bold ${confidenceConfig.color}`}>
-                      {confidenceConfig.label}
-                    </div>
-                  </div>
+        {/* Output Panel */}
+        <div className="w-full lg:w-1/2 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm overflow-hidden flex flex-col">
+          <div className="p-4 border-b border-slate-800/60 bg-slate-900/50 flex justify-between items-center">
+            <h3 className="font-semibold text-white flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-purple-400" />
+              Rhetorical Analysis
+            </h3>
+            {analysisData && (
+              <div className="flex items-center gap-3">
+                {saved && (
+                  <span className="text-xs text-emerald-400 flex items-center gap-1 font-medium">
+                    <History className="w-3 h-3" /> Saved
+                  </span>
                 )}
-
-                {/* Dominant Tone */}
-                {toneConfig && (
-                  <div className={`p-4 rounded-xl ${toneConfig.bgColor} border border-slate-700/50`}>
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-xl">{toneConfig.emoji}</span>
-                      <span className="text-sm text-text-secondary">Dominant Tone</span>
-                    </div>
-                    <div className={`text-xl font-bold ${toneConfig.color}`}>
-                      {toneConfig.label}
-                    </div>
-                  </div>
-                )}
+                <button
+                  onClick={copyToClipboard}
+                  className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+                  title="Copy to clipboard"
+                >
+                  {copied ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
+                </button>
               </div>
+            )}
+          </div>
 
-              {/* Rhetorical Appeals */}
-              <div className="glass p-4 rounded-xl space-y-4">
-                <h4 className="font-semibold text-white flex items-center gap-2">
-                  <Scale className="w-4 h-4 text-primary" />
-                  Rhetorical Appeals
-                </h4>
-                {analysisData.rhetoricalAppeals && (
-                  <div className="space-y-4">
-                    <AppealGauge type="ethos" score={analysisData.rhetoricalAppeals.ethos} />
-                    <AppealGauge type="pathos" score={analysisData.rhetoricalAppeals.pathos} />
-                    <AppealGauge type="logos" score={analysisData.rhetoricalAppeals.logos} />
-                  </div>
-                )}
-              </div>
-
-              {/* Tone Progression */}
-              {analysisData.toneProgression && (
-                <div className="glass p-4 rounded-xl">
-                  <ToneProgressBar sections={analysisData.toneProgression} />
-                </div>
-              )}
-
-              {/* Confidence Indicators */}
-              {analysisData.confidenceIndicators && (
-                <div className="glass p-4 rounded-xl space-y-3">
-                  <h4 className="font-semibold text-white">Confidence Indicators</h4>
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <div className="text-text-muted mb-1">Hedging Phrases</div>
-                      <div className="text-yellow-400 font-medium">
-                        {analysisData.confidenceIndicators.hedgeCount || 0} found
+          <div className="flex-1 overflow-y-auto p-6">
+            {analysisData ? (
+              <div className="space-y-6">
+                {/* Overall Metrics */}
+                <div className="grid grid-cols-2 gap-4">
+                  {confidenceConfig && (
+                    <div className={`p-4 rounded-xl ${confidenceConfig.bgColor} border border-slate-700/50`}>
+                      <div className="flex items-center gap-2 mb-2">
+                        <confidenceConfig.icon className={`w-5 h-5 ${confidenceConfig.color}`} />
+                        <span className="text-sm text-slate-400">Confidence</span>
                       </div>
-                      <div className="text-xs text-text-muted mt-1">
-                        {analysisData.confidenceIndicators.hedgingPhrases?.slice(0, 3).join(', ')}
+                      <div className={`text-xl font-bold ${confidenceConfig.color}`}>
+                        {confidenceConfig.label}
                       </div>
                     </div>
-                    <div>
-                      <div className="text-text-muted mb-1">Assertive Phrases</div>
-                      <div className="text-green-400 font-medium">
-                        {analysisData.confidenceIndicators.assertiveCount || 0} found
+                  )}
+
+                  {toneConfig && (
+                    <div className={`p-4 rounded-xl ${toneConfig.bgColor} border border-slate-700/50`}>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-xl">{toneConfig.emoji}</span>
+                        <span className="text-sm text-slate-400">Dominant Tone</span>
                       </div>
-                      <div className="text-xs text-text-muted mt-1">
-                        {analysisData.confidenceIndicators.assertivePhrases?.slice(0, 3).join(', ')}
+                      <div className={`text-xl font-bold ${toneConfig.color}`}>
+                        {toneConfig.label}
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
-              )}
 
-              {/* Techniques */}
-              {analysisData.techniques && analysisData.techniques.length > 0 && (
-                <div className="glass p-4 rounded-xl space-y-3">
-                  <h4 className="font-semibold text-white">Rhetorical Techniques Detected</h4>
-                  <div className="space-y-3">
-                    {analysisData.techniques.map((tech, idx) => (
-                      <div key={idx} className="p-3 bg-slate-800/50 rounded-lg">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="font-medium text-white">{tech.name}</span>
-                          <span className={`px-2 py-0.5 rounded-full text-xs ${
-                            tech.effectiveness === 'high' ? 'bg-green-500/20 text-green-400' :
-                            tech.effectiveness === 'medium' ? 'bg-yellow-500/20 text-yellow-400' :
-                            'bg-red-500/20 text-red-400'
-                          }`}>
-                            {tech.effectiveness}
-                          </span>
-                        </div>
-                        <p className="text-sm text-text-muted">{tech.description}</p>
-                        {tech.example && (
-                          <p className="text-sm text-text-secondary mt-1 italic">"{tech.example}"</p>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Recommendations */}
-              {analysisData.recommendations && (
-                <div className="glass p-4 rounded-xl space-y-3">
+                {/* Rhetorical Appeals */}
+                <div className="p-5 rounded-xl bg-slate-800/30 border border-slate-700/30 space-y-4">
                   <h4 className="font-semibold text-white flex items-center gap-2">
-                    <Lightbulb className="w-4 h-4 text-yellow-400" />
-                    Recommendations
+                    <Scale className="w-4 h-4 text-purple-400" />
+                    Rhetorical Appeals
                   </h4>
-                  <ul className="space-y-2">
-                    {analysisData.recommendations.map((rec, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-text-secondary">
-                        <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                        {rec}
-                      </li>
-                    ))}
-                  </ul>
+                  {analysisData.rhetoricalAppeals && (
+                    <div className="space-y-4">
+                      <AppealGauge type="ethos" score={analysisData.rhetoricalAppeals.ethos} />
+                      <AppealGauge type="pathos" score={analysisData.rhetoricalAppeals.pathos} />
+                      <AppealGauge type="logos" score={analysisData.rhetoricalAppeals.logos} />
+                    </div>
+                  )}
                 </div>
-              )}
 
-              {/* Summary */}
-              {analysisData.summary && (
-                <div className="p-4 bg-primary/10 border border-primary/20 rounded-xl">
-                  <h4 className="font-semibold text-primary mb-2">Summary</h4>
-                  <p className="text-text-secondary">{analysisData.summary}</p>
+                {/* Tone Progression */}
+                {analysisData.toneProgression && (
+                  <div className="p-5 rounded-xl bg-slate-800/30 border border-slate-700/30">
+                    <ToneProgressBar sections={analysisData.toneProgression} />
+                  </div>
+                )}
+
+                {/* Techniques */}
+                {analysisData.techniques && analysisData.techniques.length > 0 && (
+                  <div className="p-5 rounded-xl bg-slate-800/30 border border-slate-700/30 space-y-3">
+                    <h4 className="font-semibold text-white">Rhetorical Techniques</h4>
+                    <div className="space-y-3">
+                      {analysisData.techniques.map((tech, idx) => (
+                        <div key={idx} className="p-3 bg-slate-900/50 rounded-lg border border-slate-800">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="font-medium text-white">{tech.name}</span>
+                            <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                              tech.effectiveness === 'high' ? 'bg-emerald-500/20 text-emerald-400' :
+                              tech.effectiveness === 'medium' ? 'bg-amber-500/20 text-amber-400' :
+                              'bg-red-500/20 text-red-400'
+                            }`}>
+                              {tech.effectiveness}
+                            </span>
+                          </div>
+                          <p className="text-sm text-slate-500">{tech.description}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Recommendations */}
+                {analysisData.recommendations && (
+                  <div className="p-5 rounded-xl bg-slate-800/30 border border-slate-700/30 space-y-3">
+                    <h4 className="font-semibold text-white flex items-center gap-2">
+                      <Lightbulb className="w-4 h-4 text-amber-400" />
+                      Recommendations
+                    </h4>
+                    <ul className="space-y-2">
+                      {analysisData.recommendations.map((rec, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-sm text-slate-400">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                          {rec}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Summary */}
+                {analysisData.summary && (
+                  <div className="p-5 rounded-xl bg-purple-500/10 border border-purple-500/20">
+                    <h4 className="font-semibold text-purple-400 mb-2">Summary</h4>
+                    <p className="text-slate-300">{analysisData.summary}</p>
+                  </div>
+                )}
+              </div>
+            ) : result ? (
+              <div className="prose prose-invert prose-sm max-w-none">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{result}</ReactMarkdown>
+              </div>
+            ) : (
+              <div className="h-full flex flex-col items-center justify-center text-slate-500 py-16">
+                <div className="w-16 h-16 rounded-2xl bg-slate-800/50 flex items-center justify-center mb-4">
+                  <Brain className="w-8 h-8" />
                 </div>
-              )}
-            </div>
-          ) : result ? (
-            <div className="prose prose-invert prose-sm max-w-none">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{result}</ReactMarkdown>
-            </div>
-          ) : (
-            <div className="h-full flex flex-col items-center justify-center text-text-muted opacity-50">
-              <Brain className="w-16 h-16 mb-4" />
-              <p className="text-center">
-                Ready to analyze your speech's rhetorical impact.
-                <br />
-                <span className="text-xs">
-                  Paste your transcript and click Analyze.
-                </span>
-              </p>
-            </div>
-          )}
+                <p className="text-center max-w-xs">
+                  Paste your speech transcript to analyze rhetorical impact and emotional tone.
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

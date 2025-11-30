@@ -1,0 +1,265 @@
+import React, { useState } from 'react';
+import { 
+  Gavel, 
+  Bell, 
+  Settings, 
+  ChevronDown,
+  LogOut,
+  User,
+  CreditCard,
+  HelpCircle,
+  Search,
+  Command
+} from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
+import { useTheme } from '../../contexts/ThemeContext';
+
+const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const { user, logout, isAuthenticated } = useAuth();
+  const { theme, setTheme } = useTheme();
+
+  const navItems = [
+    { id: 'dashboard', label: 'Dashboard' },
+    { id: 'judge', label: 'Analyze' },
+    { id: 'coach', label: 'Live Coach' },
+    { id: 'strategy', label: 'Strategy' },
+    { id: 'extemp', label: 'Extemp' },
+    { id: 'tone', label: 'Tone Analysis' },
+    { id: 'history', label: 'History' },
+  ];
+
+  const notifications = [
+    { id: 1, title: 'Analysis Complete', message: 'Your PF speech analysis is ready', time: '2m ago', unread: true },
+    { id: 2, title: 'New Feature', message: 'Team collaboration now available', time: '1h ago', unread: true },
+    { id: 3, title: 'Weekly Report', message: 'Your performance summary is ready', time: '1d ago', unread: false },
+  ];
+
+  const unreadCount = notifications.filter(n => n.unread).length;
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 h-16 border-b border-slate-800/60 bg-slate-950/95 backdrop-blur-xl">
+      <div className="h-full max-w-[1800px] mx-auto px-6 flex items-center justify-between">
+        {/* Left: Logo */}
+        <div className="flex items-center gap-8">
+          <button 
+            onClick={() => setActiveTab('dashboard')}
+            className="flex items-center gap-3 group"
+          >
+            <div className="relative">
+              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl blur opacity-40 group-hover:opacity-60 transition-opacity" />
+              <div className="relative w-9 h-9 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Gavel className="w-5 h-5 text-white" />
+              </div>
+            </div>
+            <div className="hidden sm:block">
+              <span className="text-lg font-bold text-white tracking-tight">Adjudicator</span>
+              <span className="text-lg font-light text-slate-400 ml-1">AI</span>
+            </div>
+          </button>
+
+          {/* Center: Navigation */}
+          <div className="hidden lg:flex items-center">
+            <div className="flex items-center bg-slate-900/50 rounded-xl p-1 border border-slate-800/50">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveTab(item.id)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    activeTab === item.id
+                      ? 'bg-slate-800 text-white shadow-sm'
+                      : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Right: Actions */}
+        <div className="flex items-center gap-2">
+          {/* Search Shortcut */}
+          <button className="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-900/50 border border-slate-800/50 text-slate-500 hover:text-slate-300 hover:border-slate-700 transition-all">
+            <Search className="w-4 h-4" />
+            <span className="text-sm">Search...</span>
+            <kbd className="ml-2 px-1.5 py-0.5 text-xs bg-slate-800 rounded border border-slate-700">⌘K</kbd>
+          </button>
+
+          {/* Notifications */}
+          <div className="relative">
+            <button 
+              onClick={() => setShowNotifications(!showNotifications)}
+              className="relative p-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
+            >
+              <Bell className="w-5 h-5" />
+              {unreadCount > 0 && (
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-cyan-500 rounded-full ring-2 ring-slate-950" />
+              )}
+            </button>
+
+            {/* Notifications Dropdown */}
+            {showNotifications && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowNotifications(false)} />
+                <div className="absolute right-0 top-full mt-2 w-80 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl shadow-black/50 overflow-hidden z-50">
+                  <div className="p-4 border-b border-slate-800">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-semibold text-white">Notifications</h3>
+                      {unreadCount > 0 && (
+                        <span className="px-2 py-0.5 text-xs font-medium bg-cyan-500/10 text-cyan-400 rounded-full">
+                          {unreadCount} new
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="max-h-80 overflow-y-auto">
+                    {notifications.map((notification) => (
+                      <div 
+                        key={notification.id}
+                        className={`p-4 border-b border-slate-800/50 hover:bg-slate-800/30 transition-colors cursor-pointer ${
+                          notification.unread ? 'bg-slate-800/20' : ''
+                        }`}
+                      >
+                        <div className="flex items-start gap-3">
+                          {notification.unread && (
+                            <span className="w-2 h-2 mt-2 bg-cyan-500 rounded-full flex-shrink-0" />
+                          )}
+                          <div className={notification.unread ? '' : 'ml-5'}>
+                            <p className="text-sm font-medium text-white">{notification.title}</p>
+                            <p className="text-xs text-slate-400 mt-0.5">{notification.message}</p>
+                            <p className="text-xs text-slate-500 mt-1">{notification.time}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="p-3 border-t border-slate-800">
+                    <button className="w-full py-2 text-sm text-cyan-400 hover:text-cyan-300 transition-colors">
+                      View all notifications
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* Settings */}
+          <button 
+            onClick={onSettingsClick}
+            className="p-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
+          >
+            <Settings className="w-5 h-5" />
+          </button>
+
+          {/* User Menu */}
+          <div className="relative ml-2">
+            <button 
+              onClick={() => setShowUserMenu(!showUserMenu)}
+              className="flex items-center gap-3 p-1.5 pr-3 rounded-xl hover:bg-slate-800/50 transition-all"
+            >
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white font-semibold text-sm shadow-lg">
+                {user?.displayName?.[0] || user?.email?.[0]?.toUpperCase() || 'G'}
+              </div>
+              <ChevronDown className="w-4 h-4 text-slate-400" />
+            </button>
+
+            {/* User Dropdown */}
+            {showUserMenu && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowUserMenu(false)} />
+                <div className="absolute right-0 top-full mt-2 w-64 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl shadow-black/50 overflow-hidden z-50">
+                  {/* User Info */}
+                  <div className="p-4 border-b border-slate-800">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white font-semibold shadow-lg">
+                        {user?.displayName?.[0] || user?.email?.[0]?.toUpperCase() || 'G'}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-white truncate">
+                          {user?.displayName || 'Guest User'}
+                        </p>
+                        <p className="text-xs text-slate-500 truncate">
+                          {user?.email || 'guest@adjudicator.ai'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Menu Items */}
+                  <div className="p-2">
+                    <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all text-left">
+                      <User className="w-4 h-4" />
+                      <span className="text-sm">Profile Settings</span>
+                    </button>
+                    <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all text-left">
+                      <CreditCard className="w-4 h-4" />
+                      <span className="text-sm">Subscription</span>
+                    </button>
+                    <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all text-left">
+                      <HelpCircle className="w-4 h-4" />
+                      <span className="text-sm">Help & Support</span>
+                    </button>
+                    
+                    {/* Theme Toggle */}
+                    <div className="px-3 py-2.5">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-slate-300">Dark Mode</span>
+                        <button 
+                          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                          className={`relative w-11 h-6 rounded-full transition-colors ${
+                            theme === 'dark' ? 'bg-cyan-500' : 'bg-slate-700'
+                          }`}
+                        >
+                          <span className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${
+                            theme === 'dark' ? 'left-6' : 'left-1'
+                          }`} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Logout */}
+                  {isAuthenticated && (
+                    <div className="p-2 border-t border-slate-800">
+                      <button 
+                        onClick={logout}
+                        className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all text-left"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        <span className="text-sm">Sign Out</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Navigation */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-950/95 backdrop-blur-xl border-t border-slate-800/60 px-2 py-2 z-50">
+        <div className="flex items-center justify-around">
+          {navItems.slice(0, 5).map((item) => (
+            <button
+              key={item.id}
+              onClick={() => setActiveTab(item.id)}
+              className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-all ${
+                activeTab === item.id
+                  ? 'text-cyan-400'
+                  : 'text-slate-500 hover:text-slate-300'
+              }`}
+            >
+              <span className="text-xs font-medium">{item.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default TopNav;

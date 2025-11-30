@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Layout from './components/Layout';
+import EnterpriseLayout from './components/enterprise/EnterpriseLayout';
+import Dashboard from './components/enterprise/Dashboard';
 import JudgeSpeech from './components/JudgeSpeech';
 import EvaluateBoard from './components/EvaluateBoard';
 import LiveCoach from './components/LiveCoach';
@@ -86,7 +87,7 @@ const SettingsModal = ({ isOpen, onClose, apiKey, setApiKey, openaiKey, setOpena
 
 // Main authenticated app content
 function AppContent() {
-  const [activeTab, setActiveTab] = useState('judge');
+  const [activeTab, setActiveTab] = useState('dashboard');
   const [showSettings, setShowSettings] = useState(false);
   const [showLanding, setShowLanding] = useState(true);
   const [apiKey, setApiKey] = useState(localStorage.getItem('gemini_key') || '');
@@ -141,12 +142,12 @@ function AppContent() {
   }
 
   return (
-    <Layout
+    <EnterpriseLayout
       activeTab={activeTab}
       setActiveTab={setActiveTab}
-      showSettings={showSettings}
-      setShowSettings={setShowSettings}
+      onSettingsClick={() => setShowSettings(true)}
     >
+      {activeTab === 'dashboard' && <Dashboard setActiveTab={setActiveTab} />}
       {activeTab === 'judge' && <JudgeSpeech apiKey={apiKey} />}
       {activeTab === 'board' && <EvaluateBoard apiKey={apiKey} />}
       {activeTab === 'coach' && <LiveCoach apiKey={apiKey} />}
@@ -163,7 +164,7 @@ function AppContent() {
         openaiKey={openaiKey}
         setOpenaiKey={setOpenaiKey}
       />
-    </Layout>
+    </EnterpriseLayout>
   );
 }
 
