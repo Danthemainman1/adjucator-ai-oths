@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { HelpCircle, Loader2, AlertCircle, RefreshCw, Copy, CheckCircle2 } from 'lucide-react';
+import { HelpCircle, Loader2, AlertCircle, RefreshCw, Copy, CheckCircle2, History } from 'lucide-react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { useSessionHistory } from '../hooks/useSessionHistory';
 
 const ExtempGenerator = ({ apiKey }) => {
     const [category, setCategory] = useState('DX'); // DX or NX
@@ -9,6 +10,8 @@ const ExtempGenerator = ({ apiKey }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [copied, setCopied] = useState(false);
+    const [saved, setSaved] = useState(false);
+    const { addSession } = useSessionHistory();
 
     const generateQuestion = async () => {
         if (!apiKey) {
@@ -30,7 +33,19 @@ const ExtempGenerator = ({ apiKey }) => {
             const response = await result.response;
             const text = response.text();
 
-            setQuestion(text.trim().replace(/^"|"$/g, ''));
+            const generatedQuestion = text.trim().replace(/^"|"$/g, '');
+            setQuestion(generatedQuestion);
+            
+            // Auto-save to history
+            addSession({
+                type: 'extemp',
+                title: `${category} Question - ${difficulty}`,
+                input: { question: generatedQuestion },
+                result: generatedQuestion,
+                metadata: { category, difficulty }
+            });
+            setSaved(true);
+            setTimeout(() => setSaved(false), 2000);
         } catch (err) {
             console.error("Gemini Error:", err);
             try {
@@ -126,6 +141,11 @@ const ExtempGenerator = ({ apiKey }) => {
                             >
                                 {copied ? <CheckCircle2 className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5" />}
                             </button>
+                            {saved && (
+                                <span className="absolute top-4 left-4 text-xs text-emerald-400 flex items-center gap-1 bg-emerald-500/10 px-2 py-1 rounded-full">
+                                    <History className="w-3 h-3" /> Saved to history
+                                </span>
+                            )}
                         </div>
                     </div>
                 )}

@@ -8,7 +8,8 @@ import {
     X,
     Moon,
     Sun,
-    HelpCircle
+    HelpCircle,
+    History
 } from 'lucide-react';
 
 const Layout = ({ children, activeTab, setActiveTab, showSettings, setShowSettings }) => {

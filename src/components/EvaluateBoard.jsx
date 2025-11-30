@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { Send, Loader2, AlertCircle, Upload, X, Image as ImageIcon, CheckCircle2, Copy } from 'lucide-react';
+import { Send, Loader2, AlertCircle, Upload, X, Image as ImageIcon, CheckCircle2, Copy, History } from 'lucide-react';
 import { speechTypes, sides } from '../data/constants';
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { useSessionHistory } from '../hooks/useSessionHistory';
 
 const EvaluateBoard = ({ apiKey }) => {
     const [speechType, setSpeechType] = useState('Public Forum (PF)');
@@ -15,7 +16,9 @@ const EvaluateBoard = ({ apiKey }) => {
     const [result, setResult] = useState(null);
     const [error, setError] = useState('');
     const [copied, setCopied] = useState(false);
+    const [saved, setSaved] = useState(false);
     const fileInputRef = useRef(null);
+    const { addSession } = useSessionHistory();
 
     const handleImageUpload = (e) => {
         const files = Array.from(e.target.files);
@@ -99,6 +102,17 @@ const EvaluateBoard = ({ apiKey }) => {
             const text = response.text();
 
             setResult(text);
+            
+            // Auto-save to history
+            addSession({
+                type: 'board',
+                title: topic || 'Board Evaluation',
+                input: { imageCount: images.length, description: description.substring(0, 200) },
+                result: text,
+                metadata: { speechType, side, topic }
+            });
+            setSaved(true);
+            setTimeout(() => setSaved(false), 2000);
         } catch (err) {
             console.error("Gemini Error:", err);
             try {
@@ -241,13 +255,20 @@ const EvaluateBoard = ({ apiKey }) => {
                         Evaluation
                     </h3>
                     {result && (
-                        <button
-                            onClick={copyToClipboard}
-                            className="text-text-secondary hover:text-white transition-colors"
-                            title="Copy to clipboard"
-                        >
-                            {copied ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
-                        </button>
+                        <div className="flex items-center gap-2">
+                            {saved && (
+                                <span className="text-xs text-emerald-400 flex items-center gap-1">
+                                    <History className="w-3 h-3" /> Saved
+                                </span>
+                            )}
+                            <button
+                                onClick={copyToClipboard}
+                                className="text-text-secondary hover:text-white transition-colors"
+                                title="Copy to clipboard"
+                            >
+                                {copied ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+                            </button>
+                        </div>
                     )}
                 </div>
 

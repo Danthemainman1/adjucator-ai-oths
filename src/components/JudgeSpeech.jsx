@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { Send, Loader2, AlertCircle, RefreshCw, Copy, CheckCircle2 } from 'lucide-react';
+import { Send, Loader2, AlertCircle, RefreshCw, Copy, CheckCircle2, History } from 'lucide-react';
 import { speechTypes, sides, rubrics } from '../data/constants';
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { useSessionHistory } from '../hooks/useSessionHistory';
 
 const JudgeSpeech = ({ apiKey }) => {
     const [speechType, setSpeechType] = useState('Public Forum (PF)');
@@ -14,6 +15,8 @@ const JudgeSpeech = ({ apiKey }) => {
     const [result, setResult] = useState(null);
     const [error, setError] = useState('');
     const [copied, setCopied] = useState(false);
+    const [saved, setSaved] = useState(false);
+    const { addSession } = useSessionHistory();
 
     const handleAnalyze = async () => {
         if (!apiKey) {
@@ -73,6 +76,17 @@ const JudgeSpeech = ({ apiKey }) => {
             const text = response.text();
 
             setResult(text);
+            
+            // Auto-save to history
+            addSession({
+                type: 'judge',
+                title: topic || 'Speech Analysis',
+                input: { transcript: transcript.substring(0, 500) + (transcript.length > 500 ? '...' : '') },
+                result: text,
+                metadata: { speechType, side, topic }
+            });
+            setSaved(true);
+            setTimeout(() => setSaved(false), 2000);
         } catch (err) {
             console.error("Gemini Error:", err);
             // Fallback to 1.5-flash if 2.0 fails
@@ -177,13 +191,20 @@ const JudgeSpeech = ({ apiKey }) => {
                         Adjudication
                     </h3>
                     {result && (
-                        <button
-                            onClick={copyToClipboard}
-                            className="text-text-secondary hover:text-white transition-colors"
-                            title="Copy to clipboard"
-                        >
-                            {copied ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
-                        </button>
+                        <div className="flex items-center gap-2">
+                            {saved && (
+                                <span className="text-xs text-emerald-400 flex items-center gap-1">
+                                    <History className="w-3 h-3" /> Saved
+                                </span>
+                            )}
+                            <button
+                                onClick={copyToClipboard}
+                                className="text-text-secondary hover:text-white transition-colors"
+                                title="Copy to clipboard"
+                            >
+                                {copied ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+                            </button>
+                        </div>
                     )}
                 </div>
 
