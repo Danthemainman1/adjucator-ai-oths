@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   Gavel, 
   Bell, 
@@ -9,7 +9,19 @@ import {
   CreditCard,
   HelpCircle,
   Search,
-  Command
+  Command,
+  BarChart3,
+  Target,
+  BookOpen,
+  Dumbbell,
+  Users,
+  Trophy,
+  Mic,
+  Brain,
+  Lightbulb,
+  FileText,
+  History,
+  MoreHorizontal
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -17,18 +29,33 @@ import { useTheme } from '../../contexts/ThemeContext';
 const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showMoreMenu, setShowMoreMenu] = useState(false);
   const { user, logout, isAuthenticated } = useAuth();
   const { theme, setTheme } = useTheme();
 
-  const navItems = [
-    { id: 'dashboard', label: 'Dashboard' },
-    { id: 'judge', label: 'Analyze' },
-    { id: 'coach', label: 'Live Coach' },
-    { id: 'strategy', label: 'Strategy' },
-    { id: 'extemp', label: 'Extemp' },
-    { id: 'tone', label: 'Tone Analysis' },
-    { id: 'history', label: 'History' },
+  // Primary nav - most used features
+  const primaryNavItems = [
+    { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
+    { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+    { id: 'judge', label: 'Analyze', icon: Mic },
+    { id: 'coach', label: 'Live Coach', icon: Brain },
+    { id: 'practice', label: 'Practice', icon: Dumbbell },
+    { id: 'tournaments', label: 'Tournaments', icon: Trophy },
   ];
+
+  // Secondary nav - in "More" dropdown
+  const secondaryNavItems = [
+    { id: 'opponents', label: 'Opponents', icon: Target },
+    { id: 'evidence', label: 'Evidence Library', icon: BookOpen },
+    { id: 'team', label: 'Team', icon: Users },
+    { id: 'strategy', label: 'Strategy', icon: Lightbulb },
+    { id: 'extemp', label: 'Extemp', icon: FileText },
+    { id: 'tone', label: 'Tone Analysis', icon: Mic },
+    { id: 'history', label: 'History', icon: History },
+  ];
+
+  // All nav items for mobile
+  const allNavItems = [...primaryNavItems, ...secondaryNavItems];
 
   const notifications = [
     { id: 1, title: 'Analysis Complete', message: 'Your PF speech analysis is ready', time: '2m ago', unread: true },
@@ -60,21 +87,65 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
           </button>
 
           {/* Center: Navigation */}
-          <div className="hidden lg:flex items-center">
+          <div className="hidden lg:flex items-center gap-2">
             <div className="flex items-center bg-slate-900/50 rounded-xl p-1 border border-slate-800/50">
-              {navItems.map((item) => (
+              {primaryNavItems.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                     activeTab === item.id
                       ? 'bg-slate-800 text-white shadow-sm'
                       : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
                   }`}
                 >
+                  <item.icon className="w-4 h-4" />
                   {item.label}
                 </button>
               ))}
+            </div>
+            
+            {/* More dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setShowMoreMenu(!showMoreMenu)}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 border ${
+                  secondaryNavItems.some(item => item.id === activeTab)
+                    ? 'bg-slate-800 text-white border-slate-700'
+                    : 'text-slate-400 hover:text-white hover:bg-slate-800/50 border-slate-800/50'
+                }`}
+              >
+                <MoreHorizontal className="w-4 h-4" />
+                More
+                <ChevronDown className="w-3 h-3" />
+              </button>
+
+              {showMoreMenu && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setShowMoreMenu(false)} />
+                  <div className="absolute left-0 top-full mt-2 w-56 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl shadow-black/50 overflow-hidden z-50">
+                    <div className="p-2">
+                      {secondaryNavItems.map((item) => (
+                        <button
+                          key={item.id}
+                          onClick={() => {
+                            setActiveTab(item.id);
+                            setShowMoreMenu(false);
+                          }}
+                          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-left ${
+                            activeTab === item.id
+                              ? 'bg-cyan-500/10 text-cyan-400'
+                              : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
+                          }`}
+                        >
+                          <item.icon className="w-4 h-4" />
+                          <span className="text-sm">{item.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -243,19 +314,61 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
       {/* Mobile Navigation */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-950/95 backdrop-blur-xl border-t border-slate-800/60 px-2 py-2 z-50">
         <div className="flex items-center justify-around">
-          {navItems.slice(0, 5).map((item) => (
+          {primaryNavItems.slice(0, 5).map((item) => (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-all ${
+              className={`flex flex-col items-center gap-1 px-2 py-2 rounded-lg transition-all ${
                 activeTab === item.id
                   ? 'text-cyan-400'
                   : 'text-slate-500 hover:text-slate-300'
               }`}
             >
-              <span className="text-xs font-medium">{item.label}</span>
+              <item.icon className="w-5 h-5" />
+              <span className="text-[10px] font-medium">{item.label}</span>
             </button>
           ))}
+          {/* More button for mobile */}
+          <div className="relative">
+            <button
+              onClick={() => setShowMoreMenu(!showMoreMenu)}
+              className={`flex flex-col items-center gap-1 px-2 py-2 rounded-lg transition-all ${
+                secondaryNavItems.some(item => item.id === activeTab)
+                  ? 'text-cyan-400'
+                  : 'text-slate-500 hover:text-slate-300'
+              }`}
+            >
+              <MoreHorizontal className="w-5 h-5" />
+              <span className="text-[10px] font-medium">More</span>
+            </button>
+            
+            {showMoreMenu && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowMoreMenu(false)} />
+                <div className="absolute bottom-full right-0 mb-2 w-48 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl shadow-black/50 overflow-hidden z-50">
+                  <div className="p-2 max-h-64 overflow-y-auto">
+                    {secondaryNavItems.map((item) => (
+                      <button
+                        key={item.id}
+                        onClick={() => {
+                          setActiveTab(item.id);
+                          setShowMoreMenu(false);
+                        }}
+                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-left ${
+                          activeTab === item.id
+                            ? 'bg-cyan-500/10 text-cyan-400'
+                            : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
+                        }`}
+                      >
+                        <item.icon className="w-4 h-4" />
+                        <span className="text-sm">{item.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </nav>

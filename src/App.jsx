@@ -10,6 +10,13 @@ import HistoryPanel from './components/HistoryPanel';
 import ToneAnalyzer from './components/ToneAnalyzer';
 import AuthPage from './components/AuthPage';
 import LandingPage from './components/LandingPage';
+// New Feature Components
+import AnalyticsDashboard from './components/features/AnalyticsDashboard';
+import OpponentIntelligence from './components/features/OpponentIntelligence';
+import EvidenceLibrary from './components/features/EvidenceLibrary';
+import PracticeMode from './components/features/PracticeMode';
+import TeamCollaboration from './components/features/TeamCollaboration';
+import TournamentManagement from './components/features/TournamentManagement';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { Settings, Loader2 } from 'lucide-react';
@@ -148,9 +155,15 @@ function AppContent() {
       onSettingsClick={() => setShowSettings(true)}
     >
       {activeTab === 'dashboard' && <Dashboard setActiveTab={setActiveTab} />}
+      {activeTab === 'analytics' && <AnalyticsDashboard />}
       {activeTab === 'judge' && <JudgeSpeech apiKey={apiKey} />}
       {activeTab === 'board' && <EvaluateBoard apiKey={apiKey} />}
       {activeTab === 'coach' && <LiveCoach apiKey={apiKey} />}
+      {activeTab === 'practice' && <PracticeMode apiKey={apiKey} />}
+      {activeTab === 'tournaments' && <TournamentManagement />}
+      {activeTab === 'opponents' && <OpponentIntelligence apiKey={apiKey} />}
+      {activeTab === 'evidence' && <EvidenceLibrary />}
+      {activeTab === 'team' && <TeamCollaboration />}
       {activeTab === 'strategy' && <StrategyGenerator apiKey={apiKey} />}
       {activeTab === 'extemp' && <ExtempGenerator apiKey={apiKey} />}
       {activeTab === 'tone' && <ToneAnalyzer apiKey={apiKey} />}
