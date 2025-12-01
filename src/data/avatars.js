@@ -448,3 +448,8 @@ export const getAllCategories = () => {
 
 // Default avatar if none selected
 export const DEFAULT_AVATAR = avatars[0];
+
+// Get default avatar
+export const getDefaultAvatar = () => {
+  return DEFAULT_AVATAR;
+};

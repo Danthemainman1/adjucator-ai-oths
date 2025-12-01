@@ -61,7 +61,7 @@ const AvatarSelectionPrompt = () => {
                 onClick={() => setShowSelector(true)}
                 className="group relative"
               >
-                <div className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${currentAvatar.color} flex items-center justify-center text-4xl shadow-lg transition-transform group-hover:scale-105`}>
+                <div className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${currentAvatar.gradient || currentAvatar.color} flex items-center justify-center text-4xl shadow-lg transition-transform group-hover:scale-105`}>
                   {currentAvatar.emoji}
                 </div>
                 <div className="absolute inset-0 rounded-2xl bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">

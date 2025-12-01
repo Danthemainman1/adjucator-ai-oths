@@ -136,7 +136,7 @@ const Profile = () => {
           <div className="text-center">
             <div className="relative inline-block">
               {currentAvatar ? (
-                <div className={`w-24 h-24 rounded-full bg-gradient-to-br ${currentAvatar.color} flex items-center justify-center text-4xl shadow-lg`}>
+                <div className={`w-24 h-24 rounded-full bg-gradient-to-br ${currentAvatar.gradient || currentAvatar.color} flex items-center justify-center text-4xl shadow-lg`}>
                   {currentAvatar.emoji}
                 </div>
               ) : userProfile?.photoURL ? (

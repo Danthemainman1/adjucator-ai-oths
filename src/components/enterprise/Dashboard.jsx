@@ -24,7 +24,14 @@ const Dashboard = ({ setActiveTab }) => {
     { 
       label: 'Speech Analysis', 
       icon: Mic, 
-      color: 'cyan',
+      colorClasses: {
+        bg: 'bg-cyan-500/10',
+        border: 'border-cyan-500/20',
+        text: 'text-cyan-400',
+        buttonBg: 'bg-cyan-500/10',
+        buttonBorder: 'border-cyan-500/30',
+        buttonHover: 'hover:bg-cyan-500/20'
+      },
       title: 'No speeches analyzed yet',
       description: 'Upload or record a speech to get AI-powered feedback on delivery, structure, and argumentation.',
       action: 'Analyze First Speech',
@@ -33,7 +40,14 @@ const Dashboard = ({ setActiveTab }) => {
     { 
       label: 'Live Coaching', 
       icon: Activity, 
-      color: 'purple',
+      colorClasses: {
+        bg: 'bg-purple-500/10',
+        border: 'border-purple-500/20',
+        text: 'text-purple-400',
+        buttonBg: 'bg-purple-500/10',
+        buttonBorder: 'border-purple-500/30',
+        buttonHover: 'hover:bg-purple-500/20'
+      },
       title: 'No coaching sessions yet',
       description: 'Start a live session to get real-time feedback as you practice your speech or debate.',
       action: 'Start Coaching',
@@ -42,7 +56,14 @@ const Dashboard = ({ setActiveTab }) => {
     { 
       label: 'Strategy Builder', 
       icon: Target, 
-      color: 'orange',
+      colorClasses: {
+        bg: 'bg-orange-500/10',
+        border: 'border-orange-500/20',
+        text: 'text-orange-400',
+        buttonBg: 'bg-orange-500/10',
+        buttonBorder: 'border-orange-500/30',
+        buttonHover: 'hover:bg-orange-500/20'
+      },
       title: 'No strategies created yet',
       description: 'Build winning debate strategies with AI-powered case analysis and argument mapping.',
       action: 'Build Strategy',
@@ -51,7 +72,14 @@ const Dashboard = ({ setActiveTab }) => {
     { 
       label: 'Tone Analysis', 
       icon: MessageSquare, 
-      color: 'emerald',
+      colorClasses: {
+        bg: 'bg-emerald-500/10',
+        border: 'border-emerald-500/20',
+        text: 'text-emerald-400',
+        buttonBg: 'bg-emerald-500/10',
+        buttonBorder: 'border-emerald-500/30',
+        buttonHover: 'hover:bg-emerald-500/20'
+      },
       title: 'No tone analyses yet',
       description: 'Analyze the rhetorical tone and persuasive elements of your speeches.',
       action: 'Analyze Tone',
@@ -78,6 +106,7 @@ const Dashboard = ({ setActiveTab }) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {getStartedCards.map((card, index) => {
           const Icon = card.icon;
+          const colors = card.colorClasses;
           return (
             <motion.div
               key={card.label}
@@ -89,8 +118,8 @@ const Dashboard = ({ setActiveTab }) => {
               <div className="absolute inset-0 bg-gradient-to-r from-slate-800/50 to-slate-900/50 rounded-2xl" />
               <div className="relative p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm hover:border-slate-700/60 transition-all h-full flex flex-col">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className={`p-3 rounded-xl bg-${card.color}-500/10 border border-${card.color}-500/20`}>
-                    <Icon className={`w-6 h-6 text-${card.color}-400`} />
+                  <div className={`p-3 rounded-xl ${colors.bg} border ${colors.border}`}>
+                    <Icon className={`w-6 h-6 ${colors.text}`} />
                   </div>
                   <div className="flex-1">
                     <p className="text-sm text-slate-500 font-medium">{card.label}</p>
@@ -100,7 +129,7 @@ const Dashboard = ({ setActiveTab }) => {
                 <p className="text-slate-400 text-sm flex-1 mb-4">{card.description}</p>
                 <button
                   onClick={() => setActiveTab(card.tab)}
-                  className={`w-full py-2.5 px-4 rounded-lg bg-${card.color}-500/10 border border-${card.color}-500/30 text-${card.color}-400 font-medium hover:bg-${card.color}-500/20 transition-all flex items-center justify-center gap-2`}
+                  className={`w-full py-2.5 px-4 rounded-lg ${colors.buttonBg} border ${colors.buttonBorder} ${colors.text} font-medium ${colors.buttonHover} transition-all flex items-center justify-center gap-2`}
                 >
                   <Sparkles className="w-4 h-4" />
                   {card.action}

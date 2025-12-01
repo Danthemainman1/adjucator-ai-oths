@@ -55,9 +55,13 @@ export const AuthProvider = ({ children }) => {
             await createUserProfile(firebaseUser.uid, profile);
             // New users need to select an avatar
             setNeedsAvatarSelection(true);
-          } else if (!profile.avatarId && !profile.photoURL) {
-            // Existing users without avatar should select one
-            setNeedsAvatarSelection(true);
+          } else {
+            // Check if existing user needs avatar selection
+            // Show prompt if no custom avatar is set (regardless of Google photoURL)
+            const hasCustomAvatar = profile.avatarId && profile.avatarId !== null && profile.avatarId !== '';
+            if (!hasCustomAvatar) {
+              setNeedsAvatarSelection(true);
+            }
           }
           
           setUserProfile(profile);

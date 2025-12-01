@@ -50,7 +50,7 @@ const UserProfileMenu = ({ onSettingsClick }) => {
     
     if (customAvatar) {
       return (
-        <div className={`${sizeClasses} rounded-full bg-gradient-to-br ${customAvatar.color} flex items-center justify-center`}>
+        <div className={`${sizeClasses} rounded-full bg-gradient-to-br ${customAvatar.gradient || customAvatar.color} flex items-center justify-center`}>
           {customAvatar.emoji}
         </div>
       );

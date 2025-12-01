@@ -318,10 +318,27 @@ const ChatMessage = ({ message, isOwn, senderName, senderAvatar, timestamp }) =>
 
 // Chat Panel
 const ChatPanel = ({ teamId, members }) => {
-  // Start with empty chat for new teams - messages load from Firebase in production
-  const [messages, setMessages] = useState([]);
+  // Load messages from localStorage for persistence
+  const storageKey = `team_chat_${teamId || 'default'}`;
+  const [messages, setMessages] = useState(() => {
+    try {
+      const saved = localStorage.getItem(storageKey);
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef(null);
+
+  // Save messages to localStorage whenever they change
+  useEffect(() => {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(messages));
+    } catch (err) {
+      console.error('Failed to save chat messages:', err);
+    }
+  }, [messages, storageKey]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -334,13 +351,16 @@ const ChatPanel = ({ teamId, members }) => {
   const handleSend = () => {
     if (!newMessage.trim()) return;
     
-    setMessages([...messages, {
+    const newMsg = {
       id: Date.now(),
       sender: 'You',
       message: newMessage,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      date: new Date().toISOString(),
       isOwn: true
-    }]);
+    };
+    
+    setMessages(prev => [...prev, newMsg]);
     setNewMessage('');
   };
 
