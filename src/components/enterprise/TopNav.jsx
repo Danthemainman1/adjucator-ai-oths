@@ -158,7 +158,7 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setShowMoreMenu(false)} />
                   <div className="absolute left-0 top-full mt-2 w-56 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl shadow-black/50 overflow-hidden z-50">
-                    <div className="p-2">
+                    <div className="p-2 max-h-[60vh] overflow-y-auto">
                       {secondaryNavItems.map((item) => (
                         <button
                           key={item.id}
@@ -379,8 +379,8 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
             {showMoreMenu && (
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setShowMoreMenu(false)} />
-                <div className="absolute bottom-full right-0 mb-2 w-48 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl shadow-black/50 overflow-hidden z-50">
-                  <div className="p-2 max-h-64 overflow-y-auto">
+                <div className="absolute bottom-full right-0 mb-2 w-56 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl shadow-black/50 overflow-hidden z-50">
+                  <div className="p-2 max-h-[50vh] overflow-y-auto">
                     {secondaryNavItems.map((item) => (
                       <button
                         key={item.id}
