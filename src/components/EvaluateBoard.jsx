@@ -2,13 +2,14 @@ import React, { useState, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Send, Loader2, AlertCircle, Upload, X, Image as ImageIcon, CheckCircle2, Copy, History } from 'lucide-react';
-import { speechTypes, sides } from '../data/constants';
+import { speechTypes } from '../data/constants';
+import { EVENT_SUBCATEGORIES, getApplicableSides } from '../data/eventConfig';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { useSessionHistory } from '../hooks/useSessionHistory';
 
 const EvaluateBoard = ({ apiKey }) => {
     const [speechType, setSpeechType] = useState('Public Forum (PF)');
-    const [side, setSide] = useState('Proposition/Affirmative');
+    const [side, setSide] = useState('Pro/Affirmative');
     const [topic, setTopic] = useState('');
     const [description, setDescription] = useState('');
     const [images, setImages] = useState([]);
@@ -19,6 +20,18 @@ const EvaluateBoard = ({ apiKey }) => {
     const [saved, setSaved] = useState(false);
     const fileInputRef = useRef(null);
     const { addSession } = useSessionHistory();
+    
+    // Get applicable sides based on event type
+    const applicableSides = getApplicableSides(speechType);
+    
+    // Update side when speech type changes
+    const handleSpeechTypeChange = (newType) => {
+        setSpeechType(newType);
+        const newSides = getApplicableSides(newType);
+        if (!newSides.includes(side)) {
+            setSide(newSides[0]);
+        }
+    };
 
     const handleImageUpload = (e) => {
         const files = Array.from(e.target.files);
@@ -148,10 +161,14 @@ const EvaluateBoard = ({ apiKey }) => {
                             <label className="block text-sm font-medium text-text-secondary mb-1">Format</label>
                             <select
                                 value={speechType}
-                                onChange={(e) => setSpeechType(e.target.value)}
+                                onChange={(e) => handleSpeechTypeChange(e.target.value)}
                                 className="input-field"
                             >
-                                {speechTypes.map(t => <option key={t} value={t}>{t}</option>)}
+                                {Object.entries(EVENT_SUBCATEGORIES).map(([subcategory, types]) => (
+                                    <optgroup key={subcategory} label={subcategory}>
+                                        {types.map(t => <option key={t} value={t}>{t}</option>)}
+                                    </optgroup>
+                                ))}
                             </select>
                         </div>
                         <div>
@@ -161,7 +178,7 @@ const EvaluateBoard = ({ apiKey }) => {
                                 onChange={(e) => setSide(e.target.value)}
                                 className="input-field"
                             >
-                                {sides.map(s => <option key={s} value={s}>{s}</option>)}
+                                {applicableSides.map(s => <option key={s} value={s}>{s}</option>)}
                             </select>
                         </div>
                     </div>

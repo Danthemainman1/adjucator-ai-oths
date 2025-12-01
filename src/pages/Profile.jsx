@@ -1,13 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { User, Mail, Trophy, Clock, TrendingUp, Calendar, Edit, Camera, Award, Target, Zap } from 'lucide-react'
 import { Card, CardHeader, Button, Badge, Progress } from '../components/ui'
 import { useAppStore } from '../store'
+import { useAuth } from '../contexts/AuthContext'
 import { cn, formatTime, getTimeAgo } from '../utils/helpers'
 import { RadarChart, PolarGrid, PolarAngleAxis, Radar, ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts'
+import AvatarSelector from '../components/AvatarSelector'
+import { getAvatarById, getDefaultAvatar } from '../data/avatars'
 
 const Profile = () => {
   const { user, history, getStats } = useAppStore()
+  const { userProfile, setAvatar } = useAuth()
   const stats = getStats()
+  const [showAvatarSelector, setShowAvatarSelector] = useState(false)
+
+  // Get current avatar from profile
+  const currentAvatar = userProfile?.avatarId 
+    ? getAvatarById(userProfile.avatarId) 
+    : null
+
+  const handleAvatarSelect = async (avatar) => {
+    await setAvatar(avatar)
+    setShowAvatarSelector(false)
+  }
 
   // Calculate skill levels from history
   const calculateSkills = () => {
@@ -120,20 +135,39 @@ const Profile = () => {
         <Card className="p-6">
           <div className="text-center">
             <div className="relative inline-block">
-              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center text-3xl font-bold text-white">
-                {user?.displayName?.charAt(0) || user?.email?.charAt(0) || 'U'}
-              </div>
-              <button className="absolute bottom-0 right-0 p-2 bg-slate-800 rounded-full border border-slate-700 hover:bg-slate-700 transition-colors">
+              {currentAvatar ? (
+                <div className={`w-24 h-24 rounded-full bg-gradient-to-br ${currentAvatar.color} flex items-center justify-center text-4xl shadow-lg`}>
+                  {currentAvatar.emoji}
+                </div>
+              ) : userProfile?.photoURL ? (
+                <img 
+                  src={userProfile.photoURL} 
+                  alt="Profile" 
+                  className="w-24 h-24 rounded-full object-cover border-4 border-slate-700"
+                />
+              ) : (
+                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center text-3xl font-bold text-white">
+                  {user?.displayName?.charAt(0) || userProfile?.displayName?.charAt(0) || user?.email?.charAt(0) || 'U'}
+                </div>
+              )}
+              <button 
+                onClick={() => setShowAvatarSelector(true)}
+                className="absolute bottom-0 right-0 p-2 bg-slate-800 rounded-full border border-slate-700 hover:bg-slate-700 transition-colors"
+              >
                 <Camera className="h-4 w-4 text-slate-300" />
               </button>
             </div>
             
+            {currentAvatar && (
+              <p className="mt-2 text-xs text-slate-500">{currentAvatar.name}</p>
+            )}
+            
             <h2 className="mt-4 text-xl font-bold text-white">
-              {user?.displayName || 'Debater'}
+              {userProfile?.displayName || user?.displayName || 'Debater'}
             </h2>
             <p className="text-slate-400 text-sm flex items-center justify-center gap-1 mt-1">
               <Mail className="h-3 w-3" />
-              {user?.email || 'Not signed in'}
+              {userProfile?.email || user?.email || 'Not signed in'}
             </p>
 
             <div className="mt-4 flex justify-center gap-2">
@@ -304,6 +338,14 @@ const Profile = () => {
           ))}
         </div>
       </Card>
+
+      {/* Avatar Selector Modal */}
+      <AvatarSelector
+        isOpen={showAvatarSelector}
+        onClose={() => setShowAvatarSelector(false)}
+        onSelect={handleAvatarSelect}
+        currentAvatarId={userProfile?.avatarId}
+      />
     </div>
   )
 }

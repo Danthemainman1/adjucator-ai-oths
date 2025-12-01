@@ -14,7 +14,8 @@ import {
   RefreshCw
 } from 'lucide-react'
 import { cn, copyToClipboard, downloadFile, generateId } from '../utils/helpers'
-import { speechTypes, sides, rubrics } from '../utils/constants'
+import { speechTypes, rubrics, getSidesForEvent } from '../utils/constants'
+import { EVENT_SUBCATEGORIES } from '../data/eventConfig'
 import { callGeminiAPI, callOpenAI, buildAnalysisPrompt, parseRadarData } from '../utils/api'
 import { 
   RadarChart, 
@@ -38,6 +39,18 @@ const SpeechAnalysis = () => {
   } = useAppStore()
 
   const [copied, setCopied] = useState(false)
+  
+  // Get applicable sides for selected event
+  const applicableSides = getSidesForEvent(speechForm.type || 'Public Forum (PF)')
+  
+  // Update side when speech type changes
+  const handleTypeChange = (newType) => {
+    setSpeechForm({ type: newType })
+    const newSides = getSidesForEvent(newType)
+    if (!newSides.includes(speechForm.side)) {
+      setSpeechForm({ side: newSides[0] })
+    }
+  }
 
   const handleAnalyze = async () => {
     const apiKey = apiKeys[provider]
@@ -104,20 +117,37 @@ const SpeechAnalysis = () => {
       downloadFile(currentSession.result, filename)
     }
   }
-
-  return (
-    <div className="h-full flex">
-      {/* Left Panel - Input */}
-      <div className="w-full lg:w-5/12 flex flex-col border-r border-slate-800/50 bg-slate-950/50">
-        {/* Form Header */}
-        <div className="p-6 border-b border-slate-800/50">
-          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <Mic className="w-5 h-5 text-cyan-400" />
-            Speech Analysis
-          </h2>
-          
           <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="w-full">
+              <label className="block text-sm font-medium text-slate-400 mb-2">Format</label>
+              <div className="relative">
+                <select
+                  value={speechForm.type}
+                  onChange={(e) => handleTypeChange(e.target.value)}
+                  className="w-full bg-slate-800/50 border border-slate-700/50 text-cyan-400 px-4 py-3 rounded-xl outline-none appearance-none cursor-pointer transition-all duration-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20"
+                >
+                  {Object.entries(EVENT_SUBCATEGORIES).map(([subcategory, events]) => (
+                    <optgroup key={subcategory} label={subcategory}>
+                      {events.map(event => (
+                        <option key={event} value={event}>{event}</option>
+                      ))}
+                    </optgroup>
+                  ))}
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                  <svg className="w-4 h-4 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+            </div>
             <Select
+              label="Side"
+              value={speechForm.side}
+              onChange={(e) => setSpeechForm({ side: e.target.value })}
+              options={applicableSides}
+            />
+          </div>ect
               label="Format"
               value={speechForm.type}
               onChange={(e) => setSpeechForm({ type: e.target.value })}

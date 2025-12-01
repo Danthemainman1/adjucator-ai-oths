@@ -7,6 +7,7 @@ import {
   Loader2
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { getAvatarById } from '../data/avatars';
 
 const UserProfileMenu = ({ onSettingsClick }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,6 +40,40 @@ const UserProfileMenu = ({ onSettingsClick }) => {
   const displayName = userProfile?.displayName || user?.displayName || user?.email?.split('@')[0] || 'User';
   const photoURL = userProfile?.photoURL || user?.photoURL;
   const email = user?.email;
+  
+  // Get custom avatar if set
+  const customAvatar = userProfile?.avatarId ? getAvatarById(userProfile.avatarId) : null;
+
+  // Avatar rendering helper
+  const renderAvatar = (size = 'small') => {
+    const sizeClasses = size === 'small' ? 'w-8 h-8 text-base' : 'w-10 h-10 text-lg';
+    
+    if (customAvatar) {
+      return (
+        <div className={`${sizeClasses} rounded-full bg-gradient-to-br ${customAvatar.color} flex items-center justify-center`}>
+          {customAvatar.emoji}
+        </div>
+      );
+    }
+    
+    if (photoURL) {
+      return (
+        <img 
+          src={photoURL} 
+          alt={displayName} 
+          className={`${sizeClasses} rounded-full object-cover border-2 border-primary/30`}
+        />
+      );
+    }
+    
+    return (
+      <div className={`${sizeClasses} rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center`}>
+        <span className="text-white font-medium">
+          {displayName.charAt(0).toUpperCase()}
+        </span>
+      </div>
+    );
+  };
 
   return (
     <div className="relative" ref={menuRef}>
@@ -46,19 +81,7 @@ const UserProfileMenu = ({ onSettingsClick }) => {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-slate-800/50 transition-all group"
       >
-        {photoURL ? (
-          <img 
-            src={photoURL} 
-            alt={displayName} 
-            className="w-8 h-8 rounded-full object-cover border-2 border-primary/30"
-          />
-        ) : (
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-            <span className="text-white text-sm font-medium">
-              {displayName.charAt(0).toUpperCase()}
-            </span>
-          </div>
-        )}
+        {renderAvatar('small')}
         <span className="hidden lg:block text-sm font-medium text-text-secondary group-hover:text-white transition-colors">
           {displayName}
         </span>
@@ -70,19 +93,7 @@ const UserProfileMenu = ({ onSettingsClick }) => {
           {/* User Info Header */}
           <div className="p-4 bg-slate-900/50 border-b border-slate-700/50">
             <div className="flex items-center gap-3">
-              {photoURL ? (
-                <img 
-                  src={photoURL} 
-                  alt={displayName} 
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-              ) : (
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                  <span className="text-white font-medium">
-                    {displayName.charAt(0).toUpperCase()}
-                  </span>
-                </div>
-              )}
+              {renderAvatar('large')}
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-white truncate">
                   {displayName}
@@ -90,6 +101,11 @@ const UserProfileMenu = ({ onSettingsClick }) => {
                 <p className="text-xs text-text-muted truncate">
                   {email}
                 </p>
+                {customAvatar && (
+                  <p className="text-xs text-slate-500 truncate">
+                    {customAvatar.name}
+                  </p>
+                )}
               </div>
             </div>
           </div>

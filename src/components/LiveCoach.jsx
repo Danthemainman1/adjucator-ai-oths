@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Mic, Square, Loader2, AlertCircle, Activity, Play, RotateCcw, CheckCircle2, Copy, History } from 'lucide-react';
-import { speechTypes, sides } from '../data/constants';
+import { speechTypes } from '../data/constants';
+import { EVENT_SUBCATEGORIES, getApplicableSides } from '../data/eventConfig';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { useSessionHistory } from '../hooks/useSessionHistory';
 
@@ -157,7 +158,7 @@ const ToneIndicator = ({ analyser, isRecording }) => {
 
 const LiveCoach = ({ apiKey }) => {
     const [speechType, setSpeechType] = useState('Public Forum (PF)');
-    const [side, setSide] = useState('Proposition/Affirmative');
+    const [side, setSide] = useState('Pro/Affirmative');
     const [topic, setTopic] = useState('');
 
     const [isRecording, setIsRecording] = useState(false);
@@ -179,6 +180,18 @@ const LiveCoach = ({ apiKey }) => {
     const chunksRef = useRef([]);
     const audioContextRef = useRef(null);
     const streamRef = useRef(null);
+    
+    // Get applicable sides based on selected event
+    const applicableSides = getApplicableSides(speechType);
+    
+    // Update side when speech type changes
+    const handleSpeechTypeChange = (newType) => {
+        setSpeechType(newType);
+        const newSides = getApplicableSides(newType);
+        if (!newSides.includes(side)) {
+            setSide(newSides[0]);
+        }
+    };
 
     const formatTime = (seconds) => {
         const mins = Math.floor(seconds / 60);
@@ -356,10 +369,14 @@ const LiveCoach = ({ apiKey }) => {
                                 <label className="block text-sm font-medium text-slate-400 mb-2">Format</label>
                                 <select
                                     value={speechType}
-                                    onChange={(e) => setSpeechType(e.target.value)}
+                                    onChange={(e) => handleSpeechTypeChange(e.target.value)}
                                     className="w-full px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-800 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
                                 >
-                                    {speechTypes.map(t => <option key={t} value={t}>{t}</option>)}
+                                    {Object.entries(EVENT_SUBCATEGORIES).map(([subcategory, types]) => (
+                                        <optgroup key={subcategory} label={subcategory}>
+                                            {types.map(t => <option key={t} value={t}>{t}</option>)}
+                                        </optgroup>
+                                    ))}
                                 </select>
                             </div>
                             <div>
@@ -369,7 +386,7 @@ const LiveCoach = ({ apiKey }) => {
                                     onChange={(e) => setSide(e.target.value)}
                                     className="w-full px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-800 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
                                 >
-                                    {sides.map(s => <option key={s} value={s}>{s}</option>)}
+                                    {applicableSides.map(s => <option key={s} value={s}>{s}</option>)}
                                 </select>
                             </div>
                         </div>

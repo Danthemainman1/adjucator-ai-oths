@@ -15,23 +15,39 @@ import {
     Lightbulb,
     Info
 } from 'lucide-react';
-import { speechTypes, sides } from '../data/constants';
+import { speechTypes } from '../data/constants';
 import { 
     eventCategoryMap, 
     EVENT_CATEGORIES,
+    EVENT_SUBCATEGORIES,
     getApplicableSides 
 } from '../data/eventConfig';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { useSessionHistory } from '../hooks/useSessionHistory';
 
 const StrategyGenerator = ({ apiKey }) => {
-    // Only show debate events for strategy generator
+    // Only show debate and congress events for strategy generator
     const debateEvents = useMemo(() => 
-        speechTypes.filter(type => eventCategoryMap[type] === EVENT_CATEGORIES.DEBATE),
+        speechTypes.filter(type => 
+            eventCategoryMap[type] === EVENT_CATEGORIES.DEBATE || 
+            eventCategoryMap[type] === EVENT_CATEGORIES.CONGRESS
+        ),
     []);
+    
+    // Group debate events by subcategory
+    const groupedDebateEvents = useMemo(() => {
+        const groups = {};
+        Object.entries(EVENT_SUBCATEGORIES).forEach(([subcategory, events]) => {
+            const debateOnly = events.filter(e => debateEvents.includes(e));
+            if (debateOnly.length > 0) {
+                groups[subcategory] = debateOnly;
+            }
+        });
+        return groups;
+    }, [debateEvents]);
 
     const [speechType, setSpeechType] = useState(debateEvents[0] || 'Public Forum (PF)');
-    const [side, setSide] = useState('Proposition/Affirmative');
+    const [side, setSide] = useState('Pro/Affirmative');
     const [topic, setTopic] = useState('');
     const [context, setContext] = useState('');
     const [strategyType, setStrategyType] = useState('comprehensive');
@@ -43,6 +59,15 @@ const StrategyGenerator = ({ apiKey }) => {
     const { addSession } = useSessionHistory();
 
     const applicableSides = useMemo(() => getApplicableSides(speechType), [speechType]);
+    
+    // Update side when speech type changes
+    const handleSpeechTypeChange = (newType) => {
+        setSpeechType(newType);
+        const newSides = getApplicableSides(newType);
+        if (!newSides.includes(side)) {
+            setSide(newSides[0]);
+        }
+    };
 
     const strategyTypes = [
         { id: 'comprehensive', label: 'Full Strategy', icon: Target, description: 'Complete debate strategy with arguments, rebuttals, and flow' },
@@ -414,10 +439,14 @@ Crossfire zingers (use sparingly):
                                 <label className="block text-sm font-medium text-slate-400 mb-2">Debate Format</label>
                                 <select
                                     value={speechType}
-                                    onChange={(e) => setSpeechType(e.target.value)}
+                                    onChange={(e) => handleSpeechTypeChange(e.target.value)}
                                     className="w-full px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-800 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
                                 >
-                                    {debateEvents.map(t => <option key={t} value={t}>{t}</option>)}
+                                    {Object.entries(groupedDebateEvents).map(([subcategory, types]) => (
+                                        <optgroup key={subcategory} label={subcategory}>
+                                            {types.map(t => <option key={t} value={t}>{t}</option>)}
+                                        </optgroup>
+                                    ))}
                                 </select>
                             </div>
                             <div>
@@ -436,7 +465,7 @@ Crossfire zingers (use sparingly):
                         <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
                             <div className="flex items-center gap-3 text-blue-400 text-sm">
                                 <Info className="w-5 h-5 flex-shrink-0" />
-                                <span>Strategy Generator is optimized for competitive debate events.</span>
+                                <span>Strategy Generator is optimized for all NSDA debate formats including Congressional, Parli, and World Schools.</span>
                             </div>
                         </div>
 

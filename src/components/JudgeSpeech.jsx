@@ -2,13 +2,15 @@ import React, { useState, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Send, Loader2, AlertCircle, RefreshCw, Copy, CheckCircle2, History, Info, Gavel } from 'lucide-react';
-import { speechTypes, sides } from '../data/constants';
+import { speechTypes } from '../data/constants';
 import { 
   getEventConfig, 
   getApplicableSides, 
   generateEventPrompt,
   eventCategoryMap,
-  EVENT_CATEGORY_LABELS
+  EVENT_CATEGORY_LABELS,
+  EVENT_SUBCATEGORIES,
+  getEventDescription
 } from '../data/eventConfig';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { useSessionHistory } from '../hooks/useSessionHistory';
@@ -109,18 +111,15 @@ const JudgeSpeech = ({ apiKey }) => {
         }
     };
 
-    // Group speech types by category for the dropdown
+    // Group speech types by subcategory for better organized dropdown
     const groupedSpeechTypes = useMemo(() => {
-        const groups = {};
-        speechTypes.forEach(type => {
-            const cat = eventCategoryMap[type];
-            if (!groups[cat]) {
-                groups[cat] = [];
-            }
-            groups[cat].push(type);
-        });
-        return groups;
+        return EVENT_SUBCATEGORIES;
     }, []);
+    
+    // Get event description for tooltip
+    const currentEventDescription = useMemo(() => {
+        return getEventDescription(speechType);
+    }, [speechType]);
 
     return (
         <div className="space-y-6">
@@ -152,15 +151,14 @@ const JudgeSpeech = ({ apiKey }) => {
                                     onChange={(e) => handleSpeechTypeChange(e.target.value)}
                                     className="w-full px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-800 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
                                 >
-                                    {Object.entries(groupedSpeechTypes).map(([category, types]) => {
-                                        const catLabel = EVENT_CATEGORY_LABELS[category];
-                                        return (
-                                            <optgroup key={category} label={`${catLabel?.icon || ''} ${catLabel?.label || category}`}>
-                                                {types.map(t => <option key={t} value={t}>{t}</option>)}
-                                            </optgroup>
-                                        );
-                                    })}
+                                    {Object.entries(groupedSpeechTypes).map(([subcategory, types]) => (
+                                        <optgroup key={subcategory} label={subcategory}>
+                                            {types.map(t => <option key={t} value={t}>{t}</option>)}
+                                        </optgroup>
+                                    ))}
                                 </select>
+                                {/* Event description tooltip */}
+                                <p className="mt-2 text-xs text-slate-500">{currentEventDescription}</p>
                             </div>
                             
                             {eventConfig.showOpposingArguments ? (

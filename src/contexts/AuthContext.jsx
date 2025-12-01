@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }) => {
   const [userProfile, setUserProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [needsAvatarSelection, setNeedsAvatarSelection] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthChange(async (firebaseUser) => {
@@ -43,13 +44,20 @@ export const AuthProvider = ({ children }) => {
               displayName: firebaseUser.displayName || '',
               username: firebaseUser.displayName?.toLowerCase().replace(/\s+/g, '_') || firebaseUser.email.split('@')[0],
               photoURL: firebaseUser.photoURL || '',
+              avatarId: null, // New field for custom avatar
               preferredEvents: [],
               settings: {
                 theme: 'dark',
                 autoSaveHistory: true
-              }
+              },
+              createdAt: new Date().toISOString()
             };
             await createUserProfile(firebaseUser.uid, profile);
+            // New users need to select an avatar
+            setNeedsAvatarSelection(true);
+          } else if (!profile.avatarId && !profile.photoURL) {
+            // Existing users without avatar should select one
+            setNeedsAvatarSelection(true);
           }
           
           setUserProfile(profile);
@@ -58,6 +66,7 @@ export const AuthProvider = ({ children }) => {
         }
       } else {
         setUserProfile(null);
+        setNeedsAvatarSelection(false);
       }
       
       setLoading(false);
@@ -88,12 +97,17 @@ export const AuthProvider = ({ children }) => {
         displayName,
         username: displayName?.toLowerCase().replace(/\s+/g, '_') || email.split('@')[0],
         photoURL: '',
+        avatarId: null,
         preferredEvents: [],
         settings: {
           theme: 'dark',
           autoSaveHistory: true
-        }
+        },
+        createdAt: new Date().toISOString()
       });
+      
+      // New registration needs avatar selection
+      setNeedsAvatarSelection(true);
       
       return result;
     } catch (err) {
@@ -116,12 +130,18 @@ export const AuthProvider = ({ children }) => {
           displayName: result.user.displayName || '',
           username: result.user.displayName?.toLowerCase().replace(/\s+/g, '_') || result.user.email.split('@')[0],
           photoURL: result.user.photoURL || '',
+          avatarId: null,
           preferredEvents: [],
           settings: {
             theme: 'dark',
             autoSaveHistory: true
-          }
+          },
+          createdAt: new Date().toISOString()
         });
+        // New Google users need avatar selection too
+        setNeedsAvatarSelection(true);
+      } else if (!profile.avatarId && !profile.photoURL) {
+        setNeedsAvatarSelection(true);
       }
       
       return result;
@@ -153,6 +173,24 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const setAvatar = async (avatar) => {
+    if (!user) return;
+    
+    try {
+      const updates = { avatarId: avatar?.id || null };
+      await updateUserProfile(user.uid, updates);
+      setUserProfile(prev => ({ ...prev, ...updates }));
+      setNeedsAvatarSelection(false);
+    } catch (err) {
+      setError('Failed to update avatar');
+      throw err;
+    }
+  };
+
+  const skipAvatarSelection = () => {
+    setNeedsAvatarSelection(false);
+  };
+
   const clearError = () => setError(null);
 
   const value = {
@@ -165,8 +203,11 @@ export const AuthProvider = ({ children }) => {
     loginWithGoogle,
     logout,
     updateProfile,
+    setAvatar,
     clearError,
-    isAuthenticated: !!user
+    isAuthenticated: !!user,
+    needsAvatarSelection,
+    skipAvatarSelection
   };
 
   return (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { Clock, Play, Pause, RotateCcw, Bell, Shuffle, FileText, Users, Timer, Volume2, VolumeX } from 'lucide-react'
 import { Card, CardHeader, Button, Select, Input, Badge } from '../components/ui'
-import { speechTimes } from '../utils/constants'
+import { speechTimes, formatCategories } from '../utils/constants'
 import { cn, formatTime } from '../utils/helpers'
 
 const JudgeTools = () => {
@@ -48,7 +48,7 @@ const JudgeTools = () => {
 
 // Timer Tool
 const TimerTool = () => {
-  const [format, setFormat] = useState('BP')
+  const [format, setFormat] = useState('Public Forum (PF)')
   const [speechType, setSpeechType] = useState('')
   const [timeLeft, setTimeLeft] = useState(0)
   const [totalTime, setTotalTime] = useState(0)
@@ -60,21 +60,23 @@ const TimerTool = () => {
   const timerRef = useRef(null)
   const audioRef = useRef(null)
 
-  const speechTypes = speechTimes[format] 
-    ? Object.entries(speechTimes[format]).map(([key, value]) => ({
-        value: key,
-        label: `${key} (${value})`
+  // Get speech stages for the selected format
+  const speechStages = speechTimes[format] 
+    ? speechTimes[format].map(stage => ({
+        value: stage.name,
+        label: `${stage.name} (${Math.floor(stage.time / 60)}:${String(stage.time % 60).padStart(2, '0')})`
       }))
     : []
 
+  // Get all format names for the dropdown
+  const formatOptions = Object.keys(speechTimes).filter(f => f !== 'default').map(f => ({ value: f, label: f }))
+
   useEffect(() => {
-    if (speechType && speechTimes[format]?.[speechType]) {
-      const timeStr = speechTimes[format][speechType]
-      const match = timeStr.match(/(\d+)/)
-      if (match) {
-        const seconds = parseInt(match[1]) * 60
-        setTimeLeft(seconds)
-        setTotalTime(seconds)
+    if (speechType && speechTimes[format]) {
+      const stage = speechTimes[format].find(s => s.name === speechType)
+      if (stage) {
+        setTimeLeft(stage.time)
+        setTotalTime(stage.time)
         setWarned(false)
       }
     }
@@ -242,7 +244,7 @@ const TimerTool = () => {
                 setFormat(e.target.value)
                 setSpeechType('')
               }}
-              options={Object.keys(speechTimes).map(f => ({ value: f, label: f }))}
+              options={formatOptions}
             />
           </div>
           
@@ -251,7 +253,7 @@ const TimerTool = () => {
             <Select
               value={speechType}
               onChange={(e) => setSpeechType(e.target.value)}
-              options={[{ value: '', label: 'Select speech...' }, ...speechTypes]}
+              options={[{ value: '', label: 'Select speech...' }, ...speechStages]}
             />
           </div>
 

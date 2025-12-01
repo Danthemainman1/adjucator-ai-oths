@@ -10,6 +10,7 @@ import HistoryPanel from './components/HistoryPanel';
 import ToneAnalyzer from './components/ToneAnalyzer';
 import AuthPage from './components/AuthPage';
 import LandingPage from './components/LandingPage';
+import AvatarSelectionPrompt from './components/AvatarSelectionPrompt';
 // New Feature Components
 import AnalyticsDashboard from './components/features/AnalyticsDashboard';
 import OpponentIntelligence from './components/features/OpponentIntelligence';
@@ -118,7 +119,7 @@ function AppContent() {
   const [apiKey, setApiKey] = useState(localStorage.getItem('gemini_key') || '');
   const [openaiKey, setOpenaiKey] = useState(localStorage.getItem('openai_key') || '');
   const [isGuest, setIsGuest] = useState(localStorage.getItem('guest_mode') === 'true');
-  const { user, loading, isAuthenticated } = useAuth();
+  const { user, loading, isAuthenticated, needsAvatarSelection } = useAuth();
 
   useEffect(() => {
     localStorage.setItem('gemini_key', apiKey);
@@ -167,7 +168,11 @@ function AppContent() {
   }
 
   return (
-    <EnterpriseLayout
+    <>
+      {/* Avatar Selection Prompt - shows for new users or users without avatar */}
+      {isAuthenticated && <AvatarSelectionPrompt />}
+      
+      <EnterpriseLayout
       activeTab={activeTab}
       setActiveTab={setActiveTab}
       onSettingsClick={() => setShowSettings(true)}
@@ -214,6 +219,7 @@ function AppContent() {
         setOpenaiKey={setOpenaiKey}
       />
     </EnterpriseLayout>
+    </>
   );
 }
 
