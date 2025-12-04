@@ -111,13 +111,13 @@ const FORMATS = {
   bp: { label: 'British Parliamentary', short: 'BP' }
 };
 
-// Difficulty levels
+// Difficulty levels with static Tailwind classes
 const DIFFICULTY_LEVELS = [
-  { value: 1, label: 'Novice', color: 'emerald' },
-  { value: 2, label: 'JV', color: 'cyan' },
-  { value: 3, label: 'Varsity', color: 'amber' },
-  { value: 4, label: 'Elite', color: 'purple' },
-  { value: 5, label: 'Championship', color: 'rose' }
+  { value: 1, label: 'Novice', color: 'emerald', activeClass: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/50' },
+  { value: 2, label: 'JV', color: 'cyan', activeClass: 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/50' },
+  { value: 3, label: 'Varsity', color: 'amber', activeClass: 'bg-amber-500/20 text-amber-400 border border-amber-500/50' },
+  { value: 4, label: 'Elite', color: 'purple', activeClass: 'bg-purple-500/20 text-purple-400 border border-purple-500/50' },
+  { value: 5, label: 'Championship', color: 'rose', activeClass: 'bg-rose-500/20 text-rose-400 border border-rose-500/50' }
 ];
 
 // Generate unique ID
@@ -1120,7 +1120,7 @@ const MotionCard = ({ motion, onEdit, onDelete, onToggleFavorite, onCopy, viewMo
         className={`p-4 rounded-lg border ${category.bgColor} ${category.borderColor} hover:border-opacity-60 transition-colors`}
       >
         <div className="flex items-start gap-3">
-          <div className={`p-2 rounded-lg bg-gradient-to-br from-${category.color}-500/20 to-${category.color}-600/20`}>
+          <div className={`p-2 rounded-lg ${category.bgColor}`}>
             <CategoryIcon className={`w-4 h-4 ${category.textColor}`} />
           </div>
           <div className="flex-1 min-w-0">
@@ -1168,7 +1168,7 @@ const MotionCard = ({ motion, onEdit, onDelete, onToggleFavorite, onCopy, viewMo
       <div className="p-4 border-b border-slate-700/50">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-start gap-3">
-            <div className={`p-2.5 rounded-xl bg-gradient-to-br from-${category.color}-500/20 to-${category.color}-600/20`}>
+            <div className={`p-2.5 rounded-xl ${category.bgColor}`}>
               <CategoryIcon className={`w-5 h-5 ${category.textColor}`} />
             </div>
             <div>
@@ -1467,7 +1467,7 @@ const MotionModal = ({ isOpen, onClose, motion, onSave }) => {
                     onClick={() => setFormData(prev => ({ ...prev, difficulty: level.value }))}
                     className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                       formData.difficulty === level.value
-                        ? `bg-${level.color}-500/20 text-${level.color}-400 border border-${level.color}-500/50`
+                        ? level.activeClass
                         : 'bg-slate-700/50 text-slate-400 border border-slate-600 hover:bg-slate-700'
                     }`}
                   >
