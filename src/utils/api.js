@@ -1,6 +1,6 @@
 // AI API utilities
 
-const GEMINI_MODELS = ['gemini-2.0-flash-exp', 'gemini-1.5-flash']
+const GEMINI_MODELS = ['gemini-1.5-flash', 'gemini-2.0-flash-exp']
 
 export async function callGeminiAPI(apiKey, prompt, images = []) {
   for (const model of GEMINI_MODELS) {
