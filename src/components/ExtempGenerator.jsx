@@ -25,7 +25,7 @@ const ExtempGenerator = ({ apiKey }) => {
 
         try {
             const genAI = new GoogleGenerativeAI(apiKey);
-            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
             const prompt = `Generate a single ${difficulty} difficulty Extemporaneous Speaking question for the category ${category === 'DX' ? 'United States Domestic Extemp (DX)' : 'International Extemp (NX)'}. The question should be current, relevant to 2024-2025 events, and formatted as a question. Do not include any other text.`;
 
@@ -51,7 +51,7 @@ const ExtempGenerator = ({ apiKey }) => {
             try {
                 // Fallback
                 const genAI = new GoogleGenerativeAI(apiKey);
-                const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+                const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
                 // ... same prompt ...
                 setError(`Error: ${err.message}. Please try again.`);
             } catch (fallbackErr) {

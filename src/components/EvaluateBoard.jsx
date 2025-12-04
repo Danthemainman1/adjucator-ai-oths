@@ -78,7 +78,7 @@ const EvaluateBoard = ({ apiKey }) => {
 
         try {
             const genAI = new GoogleGenerativeAI(apiKey);
-            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
             const prompt = `
         Expert Debate Coach (Flowing). Evaluate board/flow. 
@@ -130,7 +130,7 @@ const EvaluateBoard = ({ apiKey }) => {
             console.error("Gemini Error:", err);
             try {
                 const genAI = new GoogleGenerativeAI(apiKey);
-                const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+                const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
                 // Fallback logic
                 const prompt = `... (same prompt) ...`;
                 // Simplified for brevity in this artifact

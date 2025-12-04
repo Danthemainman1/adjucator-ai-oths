@@ -151,7 +151,7 @@ const ToneAnalyzer = ({ apiKey }) => {
 
     try {
       const genAI = new GoogleGenerativeAI(apiKey);
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
       const prompt = `You are an expert rhetorical analyst and speech coach. Analyze the following speech for tone, rhetorical techniques, and emotional impact.
 
