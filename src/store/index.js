@@ -13,7 +13,7 @@ export const useAppStore = create(
       settings: {
         apiKey: '',
         apiProvider: 'gemini',
-        model: 'gemini-1.5-flash',
+        model: 'gemini-pro',
         theme: 'dark',
         accentColor: 'cyan',
         soundEnabled: true,

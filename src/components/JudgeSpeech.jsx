@@ -58,7 +58,7 @@ const JudgeSpeech = ({ apiKey }) => {
 
         try {
             const genAI = new GoogleGenerativeAI(apiKey);
-            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+            const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
             // Use event-specific prompt generation
             const prompt = generateEventPrompt(speechType, topic, side, transcript);
@@ -89,7 +89,7 @@ const JudgeSpeech = ({ apiKey }) => {
             // Fallback to 1.5-flash if 2.0 fails
             try {
                 const genAI = new GoogleGenerativeAI(apiKey);
-                const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+                const model = genAI.getGenerativeModel({ model: "gemini-pro" });
                 const prompt = generateEventPrompt(speechType, topic, side, transcript);
                 const genResult = await model.generateContent(prompt);
                 const response = await genResult.response;
