@@ -95,7 +95,7 @@ Format your response in clear markdown with headers.`
       const response = await callGeminiAPI(
         settings.apiKey,
         prompt,
-        settings.model || 'gemini-pro',
+        settings.model || 'gemini-2.5-flash',
         imagePreview
       )
 

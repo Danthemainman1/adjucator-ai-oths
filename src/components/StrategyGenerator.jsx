@@ -92,7 +92,7 @@ const StrategyGenerator = ({ apiKey }) => {
 
         try {
             const genAI = new GoogleGenerativeAI(apiKey);
-            const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+            const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
             const prompts = {
                 comprehensive: `You are an expert Debate Coach preparing a student for a ${speechType} debate.

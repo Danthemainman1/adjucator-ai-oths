@@ -24,7 +24,7 @@ const Settings = () => {
     gemini: [
       { value: 'gemini-1.5-pro', label: 'Gemini 1.5 Pro' },
       { value: 'gemini-1.5-flash', label: 'Gemini 1.5 Flash' },
-      { value: 'gemini-pro', label: 'Gemini Pro' }
+      { value: 'gemini-2.5-flash', label: 'Gemini Pro' }
     ],
     openai: [
       { value: 'gpt-4o', label: 'GPT-4o' },
