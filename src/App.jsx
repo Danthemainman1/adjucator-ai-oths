@@ -42,67 +42,57 @@ import { Settings, Loader2 } from 'lucide-react';
 
 // Loading spinner component
 const LoadingScreen = () => (
-  <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--bg-primary)' }}>
+  <div className="min-h-screen flex items-center justify-center bg-slate-950">
     <div className="text-center space-y-4">
-      <Loader2 className="w-12 h-12 animate-spin mx-auto" style={{ color: 'var(--primary)' }} />
-      <p style={{ color: 'var(--text-secondary)' }}>Loading Adjudicator AI...</p>
+      <Loader2 className="w-12 h-12 animate-spin mx-auto text-cyan-400" />
+      <p className="text-slate-400">Loading Adjudicator AI...</p>
     </div>
-  </div>
-);
-
-// Placeholder components for now
-const Placeholder = ({ title }) => (
-  <div className="glass-card flex flex-col items-center justify-center min-h-[60vh] text-center space-y-4">
-    <div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center animate-float">
-      <span className="text-4xl">🚧</span>
-    </div>
-    <h2 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>{title}</h2>
-    <p style={{ color: 'var(--text-secondary)' }} className="max-w-md">
-      This feature is currently being revamped with premium aesthetics. Check back soon!
-    </p>
   </div>
 );
 
 const SettingsModal = ({ isOpen, onClose, apiKey, setApiKey, openaiKey, setOpenaiKey }) => {
   if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
-      <div className="glass-card w-full max-w-md space-y-6 animate-in zoom-in-95">
-        <h2 className="text-xl font-bold flex items-center" style={{ color: 'var(--text-primary)' }}>
-          <Settings className="w-5 h-5 mr-2" style={{ color: 'var(--primary)' }} />
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in">
+      <div className="glass-panel w-full max-w-md space-y-6 animate-in zoom-in-95 p-6">
+        <h2 className="text-xl font-bold flex items-center text-white">
+          <Settings className="w-5 h-5 mr-2 text-cyan-400" />
           Configuration
         </h2>
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>Google Gemini API Key</label>
+            <label className="block text-sm font-medium mb-1 text-slate-300">Google Gemini API Key</label>
             <input
               type="password"
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
               placeholder="AIzaSy..."
-              className="input-field"
+              className="glass-input"
             />
-            <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Required for most features.</p>
+            <p className="text-xs mt-1 text-slate-500">Required for most features.</p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>OpenAI API Key (Optional)</label>
+            <label className="block text-sm font-medium mb-1 text-slate-300">OpenAI API Key (Optional)</label>
             <input
               type="password"
               value={openaiKey}
               onChange={(e) => setOpenaiKey(e.target.value)}
               placeholder="sk-..."
-              className="input-field"
+              className="glass-input"
             />
           </div>
         </div>
 
-        <div className="flex justify-end space-x-3 pt-4">
-          <button onClick={onClose} className="px-4 py-2 rounded-lg transition-colors" style={{ color: 'var(--text-secondary)' }}>
+        <div className="flex justify-end space-x-3 pt-4 border-t border-white/10">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
+          >
             Close
           </button>
-          <button onClick={onClose} className="btn-primary">
+          <button onClick={onClose} className="glass-button-primary">
             Save Changes
           </button>
         </div>

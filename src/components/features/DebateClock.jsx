@@ -43,6 +43,7 @@ const DebateClock = () => {
       intervalRef.current = setInterval(() => {
         setTimeLeft(prev => {
           if (prev <= 1) {
+            // State update is fine here as it's within interval callback
             setIsRunning(false);
             if (soundEnabled) playBeep();
             return 0;

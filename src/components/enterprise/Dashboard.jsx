@@ -115,8 +115,7 @@ const Dashboard = ({ setActiveTab }) => {
               transition={{ delay: index * 0.1 }}
               className="relative group"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-800/50 to-slate-900/50 rounded-2xl" />
-              <div className="relative p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm hover:border-slate-700/60 transition-all h-full flex flex-col">
+              <div className="glass-panel h-full flex flex-col p-6 hover:scale-[1.02] transition-all duration-300">
                 <div className="flex items-start gap-4 mb-4">
                   <div className={`p-3 rounded-xl ${colors.bg} border ${colors.border}`}>
                     <Icon className={`w-6 h-6 ${colors.text}`} />
@@ -148,7 +147,7 @@ const Dashboard = ({ setActiveTab }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm h-full"
+            className="glass-panel p-6 h-full"
           >
             <div className="flex items-center justify-between mb-6">
               <div>
@@ -187,7 +186,7 @@ const Dashboard = ({ setActiveTab }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm h-full"
+            className="glass-panel p-6 h-full"
           >
             <h2 className="text-lg font-semibold text-white mb-4">Quick Actions</h2>
             <div className="space-y-3">
@@ -197,7 +196,7 @@ const Dashboard = ({ setActiveTab }) => {
                   <button
                     key={action.label}
                     onClick={() => setActiveTab(action.tab)}
-                    className="w-full flex items-center gap-4 p-4 rounded-xl border border-slate-800/60 bg-slate-900/50 hover:bg-slate-800/50 hover:border-slate-700 transition-all group"
+                    className="w-full flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-slate-900/30 hover:bg-slate-800/50 hover:border-white/10 transition-all group"
                   >
                     <div className={`p-2.5 rounded-lg bg-gradient-to-br ${action.color} shadow-lg`}>
                       <Icon className="w-5 h-5 text-white" />
@@ -217,7 +216,7 @@ const Dashboard = ({ setActiveTab }) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm"
+        className="glass-panel p-6"
       >
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-semibold text-white">Recent Activity</h2>
@@ -247,7 +246,7 @@ const Dashboard = ({ setActiveTab }) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="relative overflow-hidden rounded-2xl border border-slate-800/60"
+        className="glass-panel relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10" />
         <div className="relative p-6 flex items-center gap-6">

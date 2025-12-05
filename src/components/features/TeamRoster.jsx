@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
   Users,
   Plus,
@@ -49,7 +49,10 @@ const TeamRoster = () => {
   useEffect(() => {
     const saved = localStorage.getItem('team-roster');
     if (saved) {
-      setMembers(JSON.parse(saved));
+        // Defer state update
+        setTimeout(() => {
+            setMembers(JSON.parse(saved));
+        }, 0);
     }
   }, []);
 
@@ -85,10 +88,6 @@ const TeamRoster = () => {
 
   const deleteMember = (id) => {
     setMembers(members.filter(m => m.id !== id));
-  };
-
-  const getRoleData = (roleId) => {
-    return ROLES.find(r => r.id === roleId) || ROLES[2];
   };
 
   // Group by role

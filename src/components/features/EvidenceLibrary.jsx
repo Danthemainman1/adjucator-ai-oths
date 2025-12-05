@@ -205,7 +205,7 @@ const EvidenceCard = ({ evidence, onClick, onCopy, isExpanded }) => {
       {/* Glow effect */}
       <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
       
-      <div className="relative p-5 rounded-2xl border border-slate-800/60 bg-gradient-to-br from-slate-900/80 to-slate-950/80 backdrop-blur-sm hover:border-slate-700/60 transition-all overflow-hidden">
+      <div className="glass-panel relative p-5 overflow-hidden group-hover:border-white/20 transition-all">
         {/* Background decoration */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-cyan-500/5 to-transparent rounded-full -translate-y-1/2 translate-x-1/2" />
         
@@ -326,7 +326,7 @@ const CitationFormatter = ({ evidence, format = 'mla' }) => {
   };
 
   return (
-    <div className="p-4 rounded-xl bg-slate-800/50 border border-slate-700">
+    <div className="p-4 rounded-xl bg-slate-950/30 border border-white/10">
       <p className="text-slate-300 text-sm font-mono">{formatCitation()}</p>
       <motion.button
         whileHover={{ scale: 1.02 }}
@@ -365,10 +365,10 @@ const EvidenceDetailModal = ({ evidence, isOpen, onClose, onEdit, onDelete }) =>
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="w-full max-w-3xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 rounded-3xl shadow-2xl max-h-[90vh] overflow-hidden"
+        className="glass-panel w-full max-w-3xl max-h-[90vh] overflow-hidden p-0"
       >
         {/* Header */}
-        <div className="relative p-6 border-b border-slate-800 overflow-hidden">
+        <div className="relative p-6 border-b border-white/10 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-blue-500/10" />
           <div className="relative flex items-start justify-between">
             <div className="flex-1">
@@ -423,7 +423,7 @@ const EvidenceDetailModal = ({ evidence, isOpen, onClose, onEdit, onDelete }) =>
                 {copied ? 'Copied!' : 'Copy'}
               </motion.button>
             </div>
-            <div className="relative p-5 rounded-xl bg-slate-800/30 border border-slate-800/50">
+            <div className="relative p-5 rounded-xl bg-slate-950/30 border border-white/5">
               <div className="absolute left-0 top-0 bottom-0 w-1 rounded-full bg-gradient-to-b from-cyan-500 to-blue-600" />
               <p className="pl-4 text-slate-300 leading-relaxed whitespace-pre-wrap">
                 {evidence.content}
@@ -433,7 +433,7 @@ const EvidenceDetailModal = ({ evidence, isOpen, onClose, onEdit, onDelete }) =>
 
           {/* Source */}
           {evidence.source && (
-            <div className="flex items-center gap-3 p-4 rounded-xl bg-slate-800/30 border border-slate-800/50">
+            <div className="flex items-center gap-3 p-4 rounded-xl bg-slate-950/30 border border-white/5">
               <Link2 className="w-5 h-5 text-slate-500" />
               <a 
                 href={evidence.url} 
@@ -490,15 +490,15 @@ const EvidenceDetailModal = ({ evidence, isOpen, onClose, onEdit, onDelete }) =>
 
           {/* Usage Stats */}
           <div className="grid grid-cols-3 gap-4">
-            <div className="p-4 rounded-xl bg-slate-800/30 text-center">
+            <div className="p-4 rounded-xl bg-slate-950/30 text-center border border-white/5">
               <p className="text-2xl font-bold text-white">{evidence.usageCount || 0}</p>
               <p className="text-slate-500 text-sm">Times Used</p>
             </div>
-            <div className="p-4 rounded-xl bg-slate-800/30 text-center">
+            <div className="p-4 rounded-xl bg-slate-950/30 text-center border border-white/5">
               <p className="text-2xl font-bold text-white">{evidence.quality || 0}</p>
               <p className="text-slate-500 text-sm">Quality Rating</p>
             </div>
-            <div className="p-4 rounded-xl bg-slate-800/30 text-center">
+            <div className="p-4 rounded-xl bg-slate-950/30 text-center border border-white/5">
               <p className="text-2xl font-bold text-white">
                 {evidence.lastUsed ? new Date(evidence.lastUsed).toLocaleDateString() : 'Never'}
               </p>
@@ -558,9 +558,9 @@ const AddEvidenceModal = ({ isOpen, onClose, onSave }) => {
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="w-full max-w-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 rounded-3xl shadow-2xl max-h-[90vh] overflow-hidden"
+        className="glass-panel w-full max-w-2xl max-h-[90vh] overflow-hidden p-0"
       >
-        <div className="relative p-6 border-b border-slate-800 overflow-hidden">
+        <div className="relative p-6 border-b border-white/10 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-blue-500/10" />
           <div className="relative flex items-center justify-between">
             <div>

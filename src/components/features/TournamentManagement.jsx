@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
   Calendar,
   Trophy,
@@ -36,8 +36,6 @@ import {
   Info
 } from 'lucide-react';
 import { useTournaments, useJudges } from '../../hooks/useDebateData';
-import { useAuth } from '../../contexts/AuthContext';
-
 // Empty State
 const EmptyTournaments = ({ onAdd }) => (
   <div className="text-center py-16">
@@ -349,7 +347,7 @@ const TournamentCard = ({ tournament, onEdit, onDelete, onClick }) => {
 };
 
 // Tournament Detail View
-const TournamentDetail = ({ tournament, onBack, onAddRound, onUpdateTournament }) => {
+const TournamentDetail = ({ tournament, onBack, onAddRound }) => {
   const [showRoundModal, setShowRoundModal] = useState(false);
 
   const rounds = tournament.rounds || [];
@@ -486,11 +484,13 @@ const TournamentDetail = ({ tournament, onBack, onAddRound, onUpdateTournament }
       {/* Add Round Modal */}
       <AnimatePresence>
         {showRoundModal && (
-          <AddRoundModal
-            isOpen={showRoundModal}
-            onClose={() => setShowRoundModal(false)}
-            onSave={(round) => onAddRound(tournament.id, round)}
-          />
+          <div className="fixed inset-0 z-50">
+            <AddRoundModal
+              isOpen={showRoundModal}
+              onClose={() => setShowRoundModal(false)}
+              onSave={(round) => onAddRound(tournament.id, round)}
+            />
+          </div>
         )}
       </AnimatePresence>
     </div>
@@ -639,7 +639,7 @@ const AddRoundModal = ({ isOpen, onClose, onSave }) => {
 };
 
 // Judge Preferences Section
-const JudgePreferences = ({ judges, onAddJudge, onUpdateJudge }) => {
+const JudgePreferences = ({ judges, onAddJudge }) => {
   const [showAddModal, setShowAddModal] = useState(false);
 
   return (
@@ -724,11 +724,13 @@ const JudgePreferences = ({ judges, onAddJudge, onUpdateJudge }) => {
       {/* Add Judge Modal */}
       <AnimatePresence>
         {showAddModal && (
-          <AddJudgeModal
-            isOpen={showAddModal}
-            onClose={() => setShowAddModal(false)}
-            onSave={onAddJudge}
-          />
+          <div className="fixed inset-0 z-50">
+            <AddJudgeModal
+              isOpen={showAddModal}
+              onClose={() => setShowAddModal(false)}
+              onSave={onAddJudge}
+            />
+          </div>
         )}
       </AnimatePresence>
     </div>
@@ -843,7 +845,7 @@ const AddJudgeModal = ({ isOpen, onClose, onSave }) => {
 };
 
 // Main Component
-const TournamentManagement = ({ apiKey }) => {
+const TournamentManagement = () => {
   const { tournaments, loading, addTournament, updateTournament, deleteTournament, addRound } = useTournaments();
   const { judges, addJudge, updateJudge } = useJudges();
   const [showAddModal, setShowAddModal] = useState(false);
@@ -960,15 +962,17 @@ const TournamentManagement = ({ apiKey }) => {
       {/* Modal */}
       <AnimatePresence>
         {showAddModal && (
-          <TournamentModal
-            isOpen={showAddModal}
-            onClose={() => {
-              setShowAddModal(false);
-              setEditingTournament(null);
-            }}
-            onSave={handleSaveTournament}
-            tournament={editingTournament}
-          />
+          <div className="fixed inset-0 z-50">
+            <TournamentModal
+              isOpen={showAddModal}
+              onClose={() => {
+                setShowAddModal(false);
+                setEditingTournament(null);
+              }}
+              onSave={handleSaveTournament}
+              tournament={editingTournament}
+            />
+          </div>
         )}
       </AnimatePresence>
     </div>
