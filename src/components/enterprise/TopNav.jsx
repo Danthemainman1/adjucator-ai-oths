@@ -100,10 +100,10 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
   const unreadCount = notifications.filter(n => n.unread).length;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 h-16 border-b border-slate-800/60 bg-slate-950/95 backdrop-blur-xl">
-      <div className="h-full max-w-[1800px] mx-auto px-6 flex items-center justify-between">
+    <nav className="fixed top-4 left-4 right-4 z-50 h-16 rounded-2xl border border-white/10 bg-slate-900/60 backdrop-blur-xl shadow-lg">
+      <div className="h-full px-4 flex items-center justify-between">
         {/* Left: Logo */}
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-6">
           <button 
             onClick={() => setActiveTab('dashboard')}
             className="flex items-center gap-3 group"
@@ -121,32 +121,30 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
           </button>
 
           {/* Center: Navigation */}
-          <div className="hidden lg:flex items-center gap-2">
-            <div className="flex items-center bg-slate-900/50 rounded-xl p-1 border border-slate-800/50">
-              {primaryNavItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => setActiveTab(item.id)}
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    activeTab === item.id
-                      ? 'bg-slate-800 text-white shadow-sm'
-                      : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
-                  }`}
-                >
-                  <item.icon className="w-4 h-4" />
-                  {item.label}
-                </button>
-              ))}
-            </div>
+          <div className="hidden lg:flex items-center gap-1">
+            {primaryNavItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(item.id)}
+                className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
+                  activeTab === item.id
+                    ? 'bg-white/10 text-white shadow-inner border border-white/5'
+                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                <item.icon className="w-4 h-4" />
+                {item.label}
+              </button>
+            ))}
             
             {/* More dropdown */}
-            <div className="relative">
+            <div className="relative ml-1">
               <button
                 onClick={() => setShowMoreMenu(!showMoreMenu)}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 border ${
+                className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
                   secondaryNavItems.some(item => item.id === activeTab)
-                    ? 'bg-slate-800 text-white border-slate-700'
-                    : 'text-slate-400 hover:text-white hover:bg-slate-800/50 border-slate-800/50'
+                    ? 'bg-white/10 text-white shadow-inner border border-white/5'
+                    : 'text-slate-400 hover:text-white hover:bg-white/5'
                 }`}
               >
                 <MoreHorizontal className="w-4 h-4" />
@@ -157,8 +155,8 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
               {showMoreMenu && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setShowMoreMenu(false)} />
-                  <div className="absolute left-0 top-full mt-2 w-56 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl shadow-black/50 overflow-hidden z-50">
-                    <div className="p-2 max-h-[60vh] overflow-y-auto">
+                  <div className="absolute left-0 top-full mt-2 w-64 glass-panel p-2 z-50 animate-in fade-in zoom-in-95">
+                    <div className="max-h-[60vh] overflow-y-auto custom-scrollbar">
                       {secondaryNavItems.map((item) => (
                         <button
                           key={item.id}
@@ -169,7 +167,7 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
                           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-left ${
                             activeTab === item.id
                               ? 'bg-cyan-500/10 text-cyan-400'
-                              : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
+                              : 'text-slate-300 hover:text-white hover:bg-white/5'
                           }`}
                         >
                           <item.icon className="w-4 h-4" />
@@ -187,17 +185,20 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
         {/* Right: Actions */}
         <div className="flex items-center gap-2">
           {/* Search Shortcut */}
-          <button className="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-900/50 border border-slate-800/50 text-slate-500 hover:text-slate-300 hover:border-slate-700 transition-all">
-            <Search className="w-4 h-4" />
-            <span className="text-sm">Search...</span>
-            <kbd className="ml-2 px-1.5 py-0.5 text-xs bg-slate-800 rounded border border-slate-700">⌘K</kbd>
-          </button>
+          <div className="hidden md:flex relative group">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
+            <button className="relative flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-900/50 border border-white/10 text-slate-400 hover:text-white transition-all">
+              <Search className="w-4 h-4" />
+              <span className="text-sm">Search...</span>
+              <kbd className="ml-2 px-1.5 py-0.5 text-xs bg-white/5 rounded border border-white/10 font-mono">⌘K</kbd>
+            </button>
+          </div>
 
           {/* Notifications */}
           <div className="relative">
             <button 
               onClick={() => setShowNotifications(!showNotifications)}
-              className="relative p-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
+              className="relative p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all"
             >
               <Bell className="w-5 h-5" />
               {unreadCount > 0 && (

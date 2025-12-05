@@ -21,7 +21,9 @@ const SpeakerPointsTracker = () => {
   useEffect(() => {
     const saved = localStorage.getItem('speaker-points');
     if (saved) {
-      setEntries(JSON.parse(saved));
+        setTimeout(() => {
+            setEntries(JSON.parse(saved));
+        }, 0);
     }
   }, []);
 

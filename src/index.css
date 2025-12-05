@@ -2,32 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
-/* CSS Custom Properties for theming */
+/* CSS Custom Properties for Liquid Glass Theme (Deep Space Palette) */
 :root {
-  --bg-primary: #020617;
-  --bg-secondary: #0f172a;
-  --bg-tertiary: #1e293b;
+  /* Core Palette */
+  --bg-deep: #020617; /* Deepest Slate/Black */
+  --bg-surface: #0f172a; /* Slightly lighter slate */
+  --bg-glass: rgba(15, 23, 42, 0.4); /* Translucent glass */
+  --bg-glass-heavy: rgba(2, 6, 23, 0.85); /* Darker glass for overlays */
+
+  /* Text */
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
-  --primary: #06b6d4;
-  --primary-hover: #22d3ee;
-  --accent: #a855f7;
-  --border: rgba(51, 65, 85, 0.5);
-  --glass: rgba(15, 23, 42, 0.8);
-  --card-bg: rgba(15, 23, 42, 0.5);
-  --input-bg: #020617;
-  --success: #22c55e;
-  --warning: #f59e0b;
-  --error: #ef4444;
+  --text-glow: #e2e8f0;
+
+  /* Accents */
+  --cyan-glow: rgba(6, 182, 212, 0.5);
+  --purple-glow: rgba(168, 85, 247, 0.5);
+  --emerald-glow: rgba(16, 185, 129, 0.5);
+  --amber-glow: rgba(245, 158, 11, 0.5);
+
+  /* Borders */
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --border-glass-highlight: rgba(255, 255, 255, 0.15);
+
+  /* Transitions */
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @layer base {
   body {
-    background-color: var(--bg-primary);
+    background-color: var(--bg-deep);
     color: var(--text-secondary);
+    background-image:
+      radial-gradient(circle at 15% 50%, rgba(6, 182, 212, 0.08), transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.08), transparent 25%);
+    background-attachment: fixed;
     @apply font-sans antialiased;
-    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   /* Custom Scrollbar */
@@ -36,145 +47,92 @@
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background-color: var(--bg-primary);
+    background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background-color: var(--bg-tertiary);
-    @apply rounded-full;
+    background-color: rgba(148, 163, 184, 0.2);
+    @apply rounded-full backdrop-blur-sm;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background-color: var(--text-muted);
+    background-color: rgba(148, 163, 184, 0.4);
   }
 
   h1, h2, h3, h4, h5, h6 {
     color: var(--text-primary);
-    @apply font-bold;
+    @apply font-bold tracking-tight;
   }
 }
 
 @layer components {
-  .glass {
-    background-color: var(--glass);
-    border-color: var(--border);
-    @apply backdrop-blur-xl border;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+  /* Liquid Glass Panels */
+  .glass-panel {
+    @apply backdrop-blur-xl bg-slate-900/40 border border-white/10 rounded-2xl shadow-xl;
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+    transition: var(--transition-smooth);
+  }
+
+  .glass-panel:hover {
+    @apply border-white/20 bg-slate-900/50;
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.2),
+      0 4px 6px -2px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  }
+
+  /* Interactive Elements */
+  .glass-button {
+    @apply px-4 py-2 rounded-xl backdrop-blur-md transition-all duration-300 border border-transparent font-medium flex items-center justify-center gap-2;
+  }
+
+  .glass-button-primary {
+    @apply bg-cyan-500/10 text-cyan-400 border-cyan-500/20 hover:bg-cyan-500/20 hover:border-cyan-500/40 hover:shadow-[0_0_15px_rgba(6,182,212,0.3)];
+  }
+
+  .glass-button-secondary {
+    @apply bg-slate-800/40 text-slate-300 border-white/5 hover:bg-slate-800/60 hover:text-white hover:border-white/10;
+  }
+
+  .glass-input {
+    @apply w-full px-4 py-3 rounded-xl bg-slate-950/30 border border-white/10 text-slate-200 placeholder-slate-500 backdrop-blur-sm focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 focus:bg-slate-950/50 transition-all;
+  }
+
+  /* Text Effects */
+  .text-glow {
+    text-shadow: 0 0 20px currentColor;
   }
   
-  .glass-card {
-    background-color: var(--card-bg);
-    border-color: var(--border);
-    @apply backdrop-blur-xl border rounded-xl p-6 shadow-lg transition-all duration-300;
-  }
-
-  .glass-card:hover {
-    box-shadow: 0 0 30px rgba(var(--primary-rgb, 6, 182, 212), 0.1);
-  }
-
-  .btn-primary {
-    background-color: var(--primary);
-    color: white;
-    @apply font-medium py-2 px-4 rounded-lg transition-all active:scale-95;
-    box-shadow: 0 4px 14px rgba(var(--primary-rgb, 6, 182, 212), 0.25);
-  }
-
-  .btn-primary:hover {
-    background-color: var(--primary-hover);
-    box-shadow: 0 6px 20px rgba(var(--primary-rgb, 6, 182, 212), 0.35);
-  }
-
-  .input-field {
-    background-color: var(--input-bg);
-    border-color: var(--border);
-    color: var(--text-primary);
-    @apply font-mono rounded-lg px-4 py-2 focus:outline-none w-full transition-all border;
-  }
-
-  .input-field:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 2px rgba(var(--primary-rgb, 6, 182, 212), 0.2);
-  }
-
-  /* Theme-specific prose overrides */
-  .prose-themed {
-    --tw-prose-body: var(--text-secondary);
-    --tw-prose-headings: var(--primary);
-    --tw-prose-links: var(--accent);
-    --tw-prose-bold: var(--text-primary);
-    --tw-prose-code: var(--primary);
-    --tw-prose-th-borders: var(--border);
-    --tw-prose-td-borders: var(--border);
-  }
-}
-
-/* Theme transition */
-* {
-  transition-property: background-color, border-color, color;
-  transition-duration: 0.2s;
-  transition-timing-function: ease-out;
-}
-
-/* Disable transitions on page load */
-.no-transitions * {
-  transition: none !important;
-}
-
-/* Light theme overrides */
-.theme-light .glass-card {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border: 1px solid rgba(15, 23, 42, 0.1);
-}
-
-.theme-light .glass-card:hover {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-
-/* Light theme text contrast fixes */
-.theme-light {
-  --text-secondary: #334155;
-  --text-muted: #64748b;
-}
-
-/* Mobile-friendly touch targets and interactions */
-@media (max-width: 1024px) {
-  /* Ensure touch targets are at least 44px */
-  button, a, [role="button"] {
-    min-height: 44px;
-    min-width: 44px;
+  .text-gradient-cyan {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500;
   }
   
-  /* Better tap highlight */
-  button, a {
-    -webkit-tap-highlight-color: rgba(6, 182, 212, 0.2);
+  .text-gradient-purple {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500;
+  }
+
+  /* Animations */
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
   }
   
-  /* Prevent text selection on interactive elements */
-  button, a, [role="button"] {
-    -webkit-user-select: none;
-    user-select: none;
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
   }
-  
-  /* Add padding to main content for bottom nav */
-  main {
-    padding-bottom: 80px;
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.05); }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
   }
 }
 
-/* Smooth scrolling for dropdowns */
-.overflow-y-auto {
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-}
-
-/* Hide scrollbar when not needed but allow scroll */
-.overflow-y-auto::-webkit-scrollbar {
-  width: 4px;
-}
-
-.overflow-y-auto::-webkit-scrollbar-thumb {
-  background-color: rgba(100, 116, 139, 0.3);
-  border-radius: 4px;
-}
-
-.overflow-y-auto::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(100, 116, 139, 0.5);
+/* Base Transition for all interactive elements */
+button, a, input, select, textarea {
+  transition: all 0.2s ease-out;
 }
