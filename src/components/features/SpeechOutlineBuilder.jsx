@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { motion, AnimatePresence, Reorder } from 'framer-motion';
+import React, { useState } from 'react';
+import { AnimatePresence, Reorder, motion } from 'framer-motion';
 import {
   FileText,
   Plus,
@@ -583,11 +583,7 @@ const EvidenceTag = ({ evidence, onChange, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9 }}
+    <div
       className="bg-slate-700/50 border border-slate-600 rounded-lg p-3 space-y-2"
     >
       <div className="flex items-start gap-2">
@@ -634,7 +630,7 @@ const EvidenceTag = ({ evidence, onChange, onDelete }) => {
           {evidence.notes || '+ Add notes...'}
         </div>
       )}
-    </motion.div>
+    </div>
   );
 };
 
@@ -670,11 +666,7 @@ const SubPoint = ({ subPoint, onChange, onDelete, index }) => {
   };
 
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
+    <div
       className="ml-6 border-l-2 border-slate-600 pl-4"
     >
       <div className="bg-slate-800/30 rounded-lg p-3 space-y-3">
@@ -716,10 +708,7 @@ const SubPoint = ({ subPoint, onChange, onDelete, index }) => {
 
         <AnimatePresence>
           {isExpanded && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
+            <div
               className="space-y-3"
             >
               {/* Notes */}
@@ -753,11 +742,11 @@ const SubPoint = ({ subPoint, onChange, onDelete, index }) => {
                   ))}
                 </AnimatePresence>
               </div>
-            </motion.div>
+            </div>
           )}
         </AnimatePresence>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -806,11 +795,7 @@ const Contention = ({ contention, onChange, onDelete, index }) => {
   };
 
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
+    <div
       className="bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden"
     >
       {/* Contention Header */}
@@ -871,10 +856,7 @@ const Contention = ({ contention, onChange, onDelete, index }) => {
       {/* Contention Body */}
       <AnimatePresence>
         {!isCollapsed && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
+          <div
             className="p-4 space-y-4"
           >
             {/* Notes */}
@@ -916,10 +898,10 @@ const Contention = ({ contention, onChange, onDelete, index }) => {
                 Add Sub-Point
               </button>
             </div>
-          </motion.div>
+          </div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 };
 
@@ -1065,7 +1047,7 @@ const SpeechOutlineBuilder = () => {
           md += `${sp.notes}\n\n`;
         }
 
-        sp.evidence.forEach((ev, evIdx) => {
+        sp.evidence.forEach((ev) => {
           md += `- **[${ev.tag || 'Evidence'}]** ${ev.source || ''}\n`;
           if (ev.notes) {
             md += `  - ${ev.notes}\n`;
@@ -1234,19 +1216,13 @@ const SpeechOutlineBuilder = () => {
       {/* Template Selector Modal */}
       <AnimatePresence>
         {showTemplates && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <div
             className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
             onClick={() => setShowTemplates(false)}
           >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-slate-800 border border-slate-700 rounded-2xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+            <div
               onClick={(e) => e.stopPropagation()}
+              className="bg-slate-800 border border-slate-700 rounded-2xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
             >
               <h2 className="text-xl font-bold text-white mb-4">Choose a Template</h2>
               <div className="grid grid-cols-2 gap-4">
@@ -1264,27 +1240,21 @@ const SpeechOutlineBuilder = () => {
                   </button>
                 ))}
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
       </AnimatePresence>
 
       {/* Saved Outlines Modal */}
       <AnimatePresence>
         {showSavedOutlines && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <div
             className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
             onClick={() => setShowSavedOutlines(false)}
           >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-slate-800 border border-slate-700 rounded-2xl p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto"
+            <div
               onClick={(e) => e.stopPropagation()}
+              className="bg-slate-800 border border-slate-700 rounded-2xl p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto"
             >
               <h2 className="text-xl font-bold text-white mb-4">Saved Outlines</h2>
               {savedOutlines.length === 0 ? (
@@ -1305,8 +1275,8 @@ const SpeechOutlineBuilder = () => {
                   ))}
                 </div>
               )}
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
       </AnimatePresence>
 

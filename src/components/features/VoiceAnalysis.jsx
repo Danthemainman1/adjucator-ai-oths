@@ -34,7 +34,8 @@ import {
   Check,
   Info,
   Radio,
-  Waves
+  Waves,
+  MessageSquare
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -75,7 +76,7 @@ const WaveformVisualizer = ({ analyser, isRecording, audioData }) => {
     const height = canvas.height;
 
     const draw = () => {
-      if (!analyser) {
+      if (!analyser || !analyser.current) {
         // Draw static waveform when not recording
         ctx.fillStyle = '#0f172a';
         ctx.fillRect(0, 0, width, height);
@@ -89,9 +90,9 @@ const WaveformVisualizer = ({ analyser, isRecording, audioData }) => {
         return;
       }
 
-      const bufferLength = analyser.frequencyBinCount;
+      const bufferLength = analyser.current.frequencyBinCount;
       const dataArray = new Uint8Array(bufferLength);
-      analyser.getByteTimeDomainData(dataArray);
+      analyser.current.getByteTimeDomainData(dataArray);
 
       ctx.fillStyle = '#0f172a';
       ctx.fillRect(0, 0, width, height);
@@ -169,7 +170,7 @@ const SpectrumAnalyzer = ({ analyser, isRecording }) => {
     const height = canvas.height;
 
     const draw = () => {
-      if (!analyser) {
+      if (!analyser || !analyser.current) {
         ctx.fillStyle = '#0f172a';
         ctx.fillRect(0, 0, width, height);
         
@@ -183,9 +184,9 @@ const SpectrumAnalyzer = ({ analyser, isRecording }) => {
         return;
       }
 
-      const bufferLength = analyser.frequencyBinCount;
+      const bufferLength = analyser.current.frequencyBinCount;
       const dataArray = new Uint8Array(bufferLength);
-      analyser.getByteFrequencyData(dataArray);
+      analyser.current.getByteFrequencyData(dataArray);
 
       ctx.fillStyle = '#0f172a';
       ctx.fillRect(0, 0, width, height);
@@ -671,7 +672,12 @@ const VoiceAnalysis = () => {
     const baseScore = 70;
     const score = Math.max(0, Math.min(100, baseScore - fillerPenalty + pitchVariation + rateScore));
     
-    setConfidenceScore(Math.round(score));
+    // Defer state update to avoid synchronous loop
+    const timer = setTimeout(() => {
+      setConfidenceScore(Math.round(score));
+    }, 0);
+
+    return () => clearTimeout(timer);
   }, [fillerWords, pitchHistory, speakingRate]);
 
   // Timer
@@ -837,7 +843,7 @@ const VoiceAnalysis = () => {
           {/* Main Recording Area */}
           <div className="lg:col-span-2 space-y-6">
             {/* Waveform */}
-            <div className="p-6 rounded-2xl border border-slate-800/60 bg-gradient-to-br from-slate-900/80 to-slate-950/80">
+            <div className="glass-panel p-6 bg-gradient-to-br from-slate-900/80 to-slate-950/80">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-white font-semibold flex items-center gap-2">
                   <Activity className="w-5 h-5 text-cyan-400" />
@@ -855,7 +861,7 @@ const VoiceAnalysis = () => {
               </div>
               
               <WaveformVisualizer 
-                analyser={analyserRef.current} 
+                analyser={analyserRef}
                 isRecording={isRecording && !isPaused}
               />
 
@@ -880,7 +886,7 @@ const VoiceAnalysis = () => {
                       className={`p-4 rounded-xl ${
                         isPaused 
                           ? 'bg-emerald-500 text-white' 
-                          : 'bg-slate-700 text-white hover:bg-slate-600'
+                          : 'glass-button-secondary'
                       }`}
                     >
                       {isPaused ? <Play className="w-6 h-6" /> : <Pause className="w-6 h-6" />}
@@ -909,12 +915,12 @@ const VoiceAnalysis = () => {
 
               {/* Post-recording actions */}
               {audioBlob && !isRecording && (
-                <div className="flex items-center justify-center gap-3 mt-4 pt-4 border-t border-slate-800">
+                <div className="flex items-center justify-center gap-3 mt-4 pt-4 border-t border-white/10">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={saveRecording}
-                    className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-medium shadow-lg shadow-cyan-500/25 flex items-center gap-2"
+                    className="glass-button-primary"
                   >
                     <Save className="w-4 h-4" />
                     Save Recording
@@ -923,7 +929,7 @@ const VoiceAnalysis = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={downloadRecording}
-                    className="px-6 py-2.5 rounded-xl bg-slate-700 text-white font-medium hover:bg-slate-600 flex items-center gap-2"
+                    className="glass-button-secondary"
                   >
                     <Download className="w-4 h-4" />
                     Download
@@ -935,19 +941,19 @@ const VoiceAnalysis = () => {
             {/* Visualizations */}
             <div className="grid md:grid-cols-2 gap-4">
               {/* Spectrum Analyzer */}
-              <div className="p-4 rounded-xl border border-slate-800/60 bg-slate-900/50">
+              <div className="glass-panel p-4">
                 <h4 className="text-white font-medium mb-3 flex items-center gap-2">
                   <BarChart3 className="w-4 h-4 text-purple-400" />
                   Frequency Spectrum
                 </h4>
                 <SpectrumAnalyzer 
-                  analyser={analyserRef.current}
+                  analyser={analyserRef}
                   isRecording={isRecording && !isPaused}
                 />
               </div>
 
               {/* Pitch Tracker */}
-              <div className="p-4 rounded-xl border border-slate-800/60 bg-slate-900/50">
+              <div className="glass-panel p-4">
                 <h4 className="text-white font-medium mb-3 flex items-center gap-2">
                   <TrendingUp className="w-4 h-4 text-cyan-400" />
                   Pitch Variation
@@ -960,7 +966,7 @@ const VoiceAnalysis = () => {
             </div>
 
             {/* Filler Words */}
-            <div className="p-5 rounded-xl border border-slate-800/60 bg-slate-900/50">
+            <div className="glass-panel p-5">
               <div className="flex items-center justify-between mb-4">
                 <h4 className="text-white font-medium flex items-center gap-2">
                   <AlertTriangle className="w-4 h-4 text-amber-400" />
@@ -1030,7 +1036,7 @@ const VoiceAnalysis = () => {
             </div>
 
             {/* Confidence Score */}
-            <div className="p-5 rounded-xl border border-slate-800/60 bg-gradient-to-br from-slate-900/80 to-slate-950/80">
+            <div className="glass-panel p-5">
               <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-cyan-400" />
                 Confidence Analysis
@@ -1039,7 +1045,7 @@ const VoiceAnalysis = () => {
             </div>
 
             {/* Saved Recordings */}
-            <div className="p-5 rounded-xl border border-slate-800/60 bg-gradient-to-br from-slate-900/80 to-slate-950/80">
+            <div className="glass-panel p-5">
               <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
                 <Radio className="w-5 h-5 text-purple-400" />
                 Saved Recordings

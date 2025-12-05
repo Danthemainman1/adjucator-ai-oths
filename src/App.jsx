@@ -50,19 +50,6 @@ const LoadingScreen = () => (
   </div>
 );
 
-// Placeholder components for now
-const Placeholder = ({ title }) => (
-  <div className="glass-card flex flex-col items-center justify-center min-h-[60vh] text-center space-y-4">
-    <div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center animate-float">
-      <span className="text-4xl">🚧</span>
-    </div>
-    <h2 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>{title}</h2>
-    <p style={{ color: 'var(--text-secondary)' }} className="max-w-md">
-      This feature is currently being revamped with premium aesthetics. Check back soon!
-    </p>
-  </div>
-);
-
 const SettingsModal = ({ isOpen, onClose, apiKey, setApiKey, openaiKey, setOpenaiKey }) => {
   if (!isOpen) return null;
   return (

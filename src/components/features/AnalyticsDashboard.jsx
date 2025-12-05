@@ -1043,7 +1043,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
                 <div className="grid lg:grid-cols-2 gap-6">
                   <motion.div
                     variants={itemVariants}
-                    className="p-6 rounded-2xl border border-slate-800/60 bg-gradient-to-br from-slate-900/50 to-slate-950/50"
+                    className="glass-panel p-6"
                   >
                     <h3 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
                       <PieChart className="w-5 h-5 text-cyan-400" />
@@ -1054,7 +1054,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
 
                   <motion.div
                     variants={itemVariants}
-                    className="p-6 rounded-2xl border border-slate-800/60 bg-gradient-to-br from-slate-900/50 to-slate-950/50"
+                    className="glass-panel p-6"
                   >
                     <h3 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
                       <BarChart3 className="w-5 h-5 text-purple-400" />
@@ -1066,7 +1066,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
 
                 <motion.div
                   variants={itemVariants}
-                  className="p-6 rounded-2xl border border-slate-800/60 bg-gradient-to-br from-slate-900/50 to-slate-950/50"
+                  className="glass-panel p-6"
                 >
                   <h3 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
                     <Clock className="w-5 h-5 text-amber-400" />
@@ -1080,7 +1080,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
             {activeView === 'trends' && (
               <motion.div
                 variants={itemVariants}
-                className="p-6 rounded-2xl border border-slate-800/60 bg-gradient-to-br from-slate-900/50 to-slate-950/50"
+                className="glass-panel p-6"
               >
                 <h3 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-emerald-400" />
@@ -1093,7 +1093,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
             {activeView === 'opponents' && (
               <motion.div
                 variants={itemVariants}
-                className="p-6 rounded-2xl border border-slate-800/60 bg-gradient-to-br from-slate-900/50 to-slate-950/50"
+                className="glass-panel p-6"
               >
                 <h3 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
                   <Users className="w-5 h-5 text-cyan-400" />
@@ -1117,7 +1117,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
                       whileHover={{ scale: 1.02, y: -4 }}
-                      className="p-6 rounded-2xl border border-slate-800/60 bg-gradient-to-br from-slate-900/50 to-slate-950/50 hover:border-slate-700/60 transition-all"
+                      className="glass-panel p-6 hover:border-white/20 transition-all"
                     >
                       <div className="flex items-center justify-between mb-6">
                         <h4 className="text-white font-semibold text-lg">{format}</h4>

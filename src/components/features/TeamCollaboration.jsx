@@ -3,8 +3,8 @@
  * Beautiful team management with chat, documents, and checklists
  */
 
-import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
   Users,
   MessageSquare,
@@ -49,8 +49,6 @@ import {
   Phone
 } from 'lucide-react';
 import { useTeams } from '../../hooks/useDebateData';
-import { useAuth } from '../../contexts/AuthContext';
-
 // Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -212,7 +210,7 @@ const MemberCard = ({ member, isCurrentUser, onMessage, onRemove }) => {
     >
       <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/5 to-purple-500/5 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-all" />
       
-      <div className="relative p-4 rounded-xl border border-slate-800/60 bg-gradient-to-br from-slate-900/80 to-slate-950/80 hover:border-slate-700/60 transition-all">
+      <div className="glass-panel p-4 hover:border-white/20 transition-all">
         <div className="flex items-center gap-4">
           <Avatar 
             name={member.name} 
@@ -365,9 +363,9 @@ const ChatPanel = ({ teamId, members }) => {
   };
 
   return (
-    <div className="flex flex-col h-[500px] rounded-2xl border border-slate-800/60 bg-gradient-to-b from-slate-900/80 to-slate-950/80 overflow-hidden">
+    <div className="glass-panel flex flex-col h-[500px] overflow-hidden p-0">
       {/* Chat Header */}
-      <div className="p-4 border-b border-slate-800 bg-slate-900/50">
+      <div className="p-4 border-b border-white/10">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <MessageSquare className="w-5 h-5 text-cyan-400" />
@@ -418,7 +416,7 @@ const ChatPanel = ({ teamId, members }) => {
       </div>
 
       {/* Input */}
-      <div className="p-4 border-t border-slate-800 bg-slate-900/50">
+      <div className="p-4 border-t border-white/10">
         <div className="flex items-center gap-3">
           <motion.button
             whileHover={{ scale: 1.1 }}
@@ -465,7 +463,7 @@ const DocumentCard = ({ doc, onClick }) => {
     <motion.div
       whileHover={{ scale: 1.02, y: -2 }}
       onClick={onClick}
-      className="p-4 rounded-xl border border-slate-800/60 bg-gradient-to-br from-slate-900/80 to-slate-950/80 hover:border-slate-700/60 transition-all cursor-pointer group"
+      className="glass-panel p-4 hover:border-white/20 transition-all cursor-pointer group"
     >
       <div className="flex items-start gap-3">
         <div className={`p-2 rounded-lg ${config.bg}`}>
@@ -513,7 +511,7 @@ const PrepChecklist = ({ tournament }) => {
   const progress = (completedCount / items.length) * 100;
 
   return (
-    <div className="p-5 rounded-2xl border border-slate-800/60 bg-gradient-to-br from-slate-900/80 to-slate-950/80">
+    <div className="glass-panel p-5">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-lg bg-amber-500/10">
@@ -595,8 +593,7 @@ const PrepChecklist = ({ tournament }) => {
 
 // Main Component
 const TeamCollaboration = () => {
-  const { user } = useAuth();
-  const { teams, loading, createTeam, joinTeam } = useTeams();
+  const { teams, createTeam } = useTeams();
   const [activeView, setActiveView] = useState('overview');
   const [showInviteModal, setShowInviteModal] = useState(false);
 
@@ -637,7 +634,7 @@ const TeamCollaboration = () => {
             </p>
           </div>
 
-          <div className="p-8 rounded-3xl border border-slate-800/60 bg-gradient-to-b from-slate-900/50 to-slate-950/50">
+          <div className="glass-panel p-8">
             <EmptyTeam onCreateTeam={() => createTeam?.({ name: 'My Team' })} />
           </div>
         </div>
@@ -720,7 +717,7 @@ const TeamCollaboration = () => {
                       key={member.id}
                       member={member}
                       isCurrentUser={member.name === 'You'}
-                      onMessage={(m) => setActiveView('chat')}
+                      onMessage={() => setActiveView('chat')}
                       onRemove={() => console.log('Remove member:', member.id)}
                     />
                   ))}
@@ -730,7 +727,7 @@ const TeamCollaboration = () => {
               {/* Sidebar */}
               <div className="space-y-6">
                 {/* Quick Stats */}
-                <div className="p-5 rounded-2xl border border-slate-800/60 bg-gradient-to-br from-slate-900/80 to-slate-950/80">
+                <div className="glass-panel p-5">
                   <h3 className="text-white font-semibold mb-4">Team Stats</h3>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
@@ -827,7 +824,7 @@ const TeamCollaboration = () => {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="w-full max-w-md bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 rounded-3xl shadow-2xl p-6"
+              className="glass-panel w-full max-w-md p-6"
             >
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold text-white flex items-center gap-2">

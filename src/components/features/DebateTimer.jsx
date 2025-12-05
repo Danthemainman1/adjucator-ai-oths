@@ -375,7 +375,7 @@ const PrepTimePanel = ({ prepTime, usedPrepTime, onUsePrep, onStopPrep, activePr
   const sides = Object.keys(prepTime);
   
   return (
-    <div className="p-4 rounded-xl border border-slate-800/60 bg-slate-900/50">
+    <div>
       <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
         <Clock className="w-4 h-4 text-amber-400" />
         Prep Time
@@ -1029,7 +1029,7 @@ const DebateTimer = () => {
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Main Timer Display */}
           <div className="lg:col-span-2">
-            <div className="p-8 rounded-2xl border border-slate-800/60 bg-gradient-to-br from-slate-900/80 to-slate-950/80">
+            <div className="glass-panel p-8">
               {/* Current Segment Info */}
               <div className="text-center mb-6">
                 <h2 className="text-2xl font-bold text-white">
@@ -1120,7 +1120,7 @@ const DebateTimer = () => {
 
             {/* Prep Time */}
             {Object.keys(prepTime).length > 0 && prepTime[Object.keys(prepTime)[0]] > 0 && (
-              <div className="mt-6">
+              <div className="mt-6 glass-panel p-4">
                 <PrepTimePanel
                   prepTime={prepTime}
                   usedPrepTime={usedPrepTime}
@@ -1153,7 +1153,7 @@ const DebateTimer = () => {
             </div>
 
             {/* Progress summary */}
-            <div className="p-4 rounded-xl bg-slate-800/30 border border-slate-800/60">
+            <div className="glass-panel p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-slate-400 text-sm">Progress</span>
                 <span className="text-white font-medium">

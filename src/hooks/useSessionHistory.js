@@ -15,8 +15,11 @@ export function useSessionHistory() {
   // Load history from storage on mount
   useEffect(() => {
     const stored = storage.get(HISTORY_KEY, []);
-    setHistory(stored);
-    setIsLoading(false);
+    // Defer state update to next tick to avoid synchronous update in effect
+    setTimeout(() => {
+        setHistory(stored);
+        setIsLoading(false);
+    }, 0);
   }, []);
 
   // Save history to storage whenever it changes
