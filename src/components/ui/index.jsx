@@ -1,7 +1,7 @@
 import React from 'react'
 import { cn } from '../../utils/helpers'
 
-// Button Component - Sophisticated / Authoritative
+// Button Component - Gold/Teal/Emerald/Red
 export const Button = React.forwardRef(({
   className,
   variant = 'primary',
@@ -12,19 +12,26 @@ export const Button = React.forwardRef(({
   ...props
 }, ref) => {
   const variants = {
-    primary: 'bg-midnight-navy text-bone hover:bg-petrol-blue active:bg-anthracite shadow-[0_2px_4px_rgba(10,17,40,0.15)] border border-transparent',
-    secondary: 'bg-white text-midnight-navy border border-greige hover:border-taupe hover:bg-bone active:bg-greige',
-    ghost: 'bg-transparent text-taupe hover:text-midnight-navy hover:bg-greige/30',
-    danger: 'bg-oxblood text-white border border-transparent hover:bg-red-950 shadow-sm',
-    success: 'bg-verdigris text-white border border-transparent hover:bg-emerald-700 shadow-sm',
-    accent: 'bg-ochre text-midnight-navy hover:bg-amber-500 font-bold'
+    // Teal-Gold (Primary)
+    primary: 'bg-teal text-white border border-teal-dark hover:bg-teal-dark shadow-sm hover:shadow-gold/20',
+    
+    // Emerald-Gold (Success/Alternative)
+    success: 'bg-emerald text-white border border-emerald-dark hover:bg-emerald-dark shadow-sm',
+    
+    // Red-Gold (Danger/Action)
+    danger: 'bg-red text-white border border-red-dark hover:bg-red-dark shadow-sm',
+    
+    // Gold (Accent)
+    gold: 'bg-base-white text-gold-dim border border-gold hover:bg-gold hover:text-white',
+    
+    // Ghost
+    ghost: 'bg-transparent text-teal-dark hover:bg-gold-light/20 hover:text-gold-dim',
   }
 
   const sizes = {
-    sm: 'px-4 py-2 text-[10px] tracking-[0.1em]',
-    md: 'px-6 py-3 text-xs tracking-[0.12em]',
-    lg: 'px-8 py-4 text-xs tracking-[0.15em]',
-    xl: 'px-10 py-5 text-sm tracking-[0.15em]'
+    sm: 'px-4 py-1.5 text-xs uppercase tracking-widest',
+    md: 'px-6 py-2.5 text-xs uppercase tracking-widest font-bold',
+    lg: 'px-8 py-3.5 text-sm uppercase tracking-widest font-bold',
   }
 
   return (
@@ -32,9 +39,9 @@ export const Button = React.forwardRef(({
       ref={ref}
       disabled={disabled || loading}
       className={cn(
-        'relative inline-flex items-center justify-center gap-3 font-bold uppercase rounded-[2px] transition-all duration-300',
-        'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-2 focus-visible:ring-taupe',
-        'disabled:opacity-60 disabled:cursor-not-allowed disabled:saturate-0',
+        'relative inline-flex items-center justify-center gap-3 transition-all duration-300',
+        'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold focus-visible:ring-offset-2',
+        'disabled:opacity-60 disabled:cursor-not-allowed',
         variants[variant],
         sizes[size],
         className
@@ -42,7 +49,7 @@ export const Button = React.forwardRef(({
       {...props}
     >
       {loading && (
-        <svg className="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24">
+        <svg className="animate-spin h-3.5 w-3.5 text-current" viewBox="0 0 24 24">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
         </svg>
@@ -54,7 +61,7 @@ export const Button = React.forwardRef(({
 
 Button.displayName = 'Button'
 
-// Card Component - Atelier Style
+// Card Component - Gold Bordered
 export const Card = React.forwardRef(({
   className,
   hover = false,
@@ -66,13 +73,14 @@ export const Card = React.forwardRef(({
     <div
       ref={ref}
       className={cn(
-        'bg-white border border-greige rounded-[2px] shadow-clean',
-        'transition-all duration-500 ease-out',
-        hover && 'hover:border-taupe hover:shadow-float cursor-pointer hover:-translate-y-[2px]',
+        'gold-card', // Using the custom utility from index.css
+        hover && 'cursor-pointer',
         className
       )}
       {...props}
     >
+      {/* Optional Gold Top Line for Sophistication */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent opacity-50" />
       {children}
     </div>
   )
@@ -80,20 +88,24 @@ export const Card = React.forwardRef(({
 
 Card.displayName = 'Card'
 
-// Card Header Component
+// Card Header Component - Refined Icons
 export const CardHeader = ({ title, icon, action, className }) => {
   return (
     <div className={cn(
-      'flex items-center justify-between pb-5 border-b border-greige/50 mb-6',
+      'flex items-center justify-between pb-4 border-b border-gold/10 mb-6',
       className
     )}>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         {icon && (
-          <div className="p-2.5 rounded-sm bg-bone text-midnight-navy border border-greige">
-            {icon}
+          // Icon Container: Transparent with Gold Icon
+          <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gold/20 text-gold-dim">
+            {React.cloneElement(icon, { 
+              size: 16, 
+              strokeWidth: 1.5 // Force thin stroke for sophistication
+            })}
           </div>
         )}
-        <h3 className="text-lg font-serif font-bold text-midnight-navy tracking-tight">{title}</h3>
+        <h3 className="text-xl font-serif text-teal-dark tracking-wide">{title}</h3>
       </div>
       {action}
     </div>
@@ -111,7 +123,7 @@ export const Input = React.forwardRef(({
   return (
     <div className="w-full group">
       {label && (
-        <label className="block text-[11px] font-bold uppercase tracking-[0.1em] text-taupe mb-2 group-focus-within:text-midnight-navy transition-colors">
+        <label className="block text-[10px] font-bold uppercase tracking-widest text-gold-dim mb-2">
           {label}
         </label>
       )}
@@ -119,26 +131,24 @@ export const Input = React.forwardRef(({
         ref={ref}
         type={type}
         className={cn(
-          'w-full bg-white border border-greige text-anthracite px-4 py-3 rounded-[2px]',
+          'w-full bg-base-white border border-gold/30 text-teal-dark px-4 py-3',
           'outline-none transition-all duration-300',
-          'placeholder:text-stone-300',
-          'focus:border-slate-blue focus:ring-0 focus:bg-bone',
+          'placeholder:text-gray-300',
+          'focus:border-gold focus:ring-1 focus:ring-gold/20',
           error 
-            ? 'border-oxblood/40 focus:border-oxblood bg-red-50/10' 
-            : 'hover:border-taupe',
+            ? 'border-red text-red focus:border-red focus:ring-red/20' 
+            : 'hover:border-gold/60',
           className
         )}
         {...props}
       />
       {error && (
-        <p className="mt-2 text-xs text-oxblood font-medium flex items-center gap-1">
-          <span className="inline-block w-1 h-1 rounded-full bg-oxblood"></span>
-          {error}
-        </p>
+        <p className="mt-2 text-xs text-red font-serif italic">{error}</p>
       )}
     </div>
   )
 })
+
 
 Input.displayName = 'Input'
 

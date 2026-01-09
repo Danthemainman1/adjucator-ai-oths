@@ -1,52 +1,50 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Theme definitions - Luxury Triad
+// Theme definitions - Royal / Gold-Flow
 export const THEMES = {
-  light: {
-    id: 'light',
-    name: 'Gilded Light',
-    icon: '⚜️',
+  // Theme 1: Teal-Gold Dominance
+  teal: {
+    id: 'teal',
+    name: 'Royal Teal',
+    icon: '🔷',
     colors: {
-      bgPrimary: '#FDFBF7', // Cream
-      bgSecondary: '#FFFFFF',
-      textPrimary: '#121212',
-      textSecondary: '#525252',
-      
-      primary: '#C5A059', // Gold as primary interaction
-      primaryHover: '#9F7D3D',
-      
-      // The Triad available as semnatics
-      teal: '#0F4C5C',
-      emerald: '#1B4D3E',
-      red: '#722F37',
-      
-      border: '#E6C67E', // Gold border
-      success: '#1B4D3E', // Emerald
-      warning: '#C5A059', // Gold
-      error: '#722F37', // Red
+      bgPrimary: '#faf9f6',
+      bgSecondary: '#ffffff',
+      textPrimary: '#08313d',
+      textSecondary: '#666666',
+      primary: '#0f4c5c',
+      accent: '#d4af37',
+      border: 'rgba(212, 175, 55, 0.3)',
     }
   },
-  dark: {
-    id: 'dark',
-    name: 'Gilded Dark',
-    icon: '🌑',
+  // Theme 2: Emerald-Gold
+  emerald: {
+    id: 'emerald',
+    name: 'Noble Emerald',
+    icon: '🌿',
     colors: {
-      bgPrimary: '#0A0A0A',
-      bgSecondary: '#121212',
-      textPrimary: '#FDFBF7',
-      textSecondary: '#A3A3A3',
-      
-      primary: '#D4AF37', // Metallic Gold
-      primaryHover: '#C5A059',
-      
-      teal: '#2DD4BF', // Brightened for dark mode
-      emerald: '#34D399',
-      red: '#F87171',
-      
-      border: '#C5A059', // Gold
-      success: '#34D399',
-      warning: '#D4AF37',
-      error: '#F87171',
+      bgPrimary: '#fcfdfc',
+      bgSecondary: '#ffffff',
+      textPrimary: '#052910',
+      textSecondary: '#666666',
+      primary: '#10451d',
+      accent: '#d4af37',
+      border: 'rgba(212, 175, 55, 0.3)',
+    }
+  },
+  // Theme 3: Red-Gold
+  red: {
+    id: 'red',
+    name: 'Imperial Red',
+    icon: '👑',
+    colors: {
+      bgPrimary: '#fdfcfc',
+      bgSecondary: '#ffffff',
+      textPrimary: '#5c0f0f',
+      textSecondary: '#666666',
+      primary: '#8a1c1c',
+      accent: '#d4af37',
+      border: 'rgba(212, 175, 55, 0.3)',
     }
   }
 
