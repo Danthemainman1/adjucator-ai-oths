@@ -10,11 +10,20 @@ export const THEMES = {
     colors: {
       bgPrimary: '#faf9f6',
       bgSecondary: '#ffffff',
+      bgTertiary: '#f0f4f8',
       textPrimary: '#08313d',
-      textSecondary: '#666666',
+      textSecondary: '#4a5568',
+      textMuted: '#9aa5b1',
       primary: '#0f4c5c',
+      primaryHover: '#08313d',
       accent: '#d4af37',
       border: 'rgba(212, 175, 55, 0.3)',
+      glass: 'rgba(255, 255, 255, 0.8)',
+      cardBg: '#ffffff',
+      inputBg: '#f8fafc',
+      success: '#10451d',
+      warning: '#d4af37',
+      error: '#8a1c1c'
     }
   },
   // Theme 2: Emerald-Gold
@@ -25,11 +34,20 @@ export const THEMES = {
     colors: {
       bgPrimary: '#fcfdfc',
       bgSecondary: '#ffffff',
+      bgTertiary: '#e8f5e9',
       textPrimary: '#052910',
-      textSecondary: '#666666',
+      textSecondary: '#4a5568',
+      textMuted: '#9aa5b1',
       primary: '#10451d',
+      primaryHover: '#052910',
       accent: '#d4af37',
       border: 'rgba(212, 175, 55, 0.3)',
+      glass: 'rgba(255, 255, 255, 0.8)',
+      cardBg: '#ffffff',
+      inputBg: '#f6fff6',
+      success: '#10451d',
+      warning: '#d4af37',
+      error: '#8a1c1c'
     }
   },
   // Theme 3: Red-Gold
@@ -40,16 +58,22 @@ export const THEMES = {
     colors: {
       bgPrimary: '#fdfcfc',
       bgSecondary: '#ffffff',
+      bgTertiary: '#fff5f5',
       textPrimary: '#5c0f0f',
-      textSecondary: '#666666',
+      textSecondary: '#4a5568',
+      textMuted: '#9aa5b1',
       primary: '#8a1c1c',
+      primaryHover: '#5c0f0f',
       accent: '#d4af37',
       border: 'rgba(212, 175, 55, 0.3)',
+      glass: 'rgba(255, 255, 255, 0.8)',
+      cardBg: '#ffffff',
+      inputBg: '#fffbfb',
+      success: '#10451d',
+      warning: '#d4af37',
+      error: '#8a1c1c'
     }
   }
-
-
-
 };
 
 const ThemeContext = createContext(null);
@@ -64,10 +88,12 @@ export const useTheme = () => {
 
 export const ThemeProvider = ({ children }) => {
   const [themeId, setThemeId] = useState(() => {
-    return localStorage.getItem('theme') || 'dark';
+    const saved = localStorage.getItem('theme');
+    // Default to 'teal' if saved is invalid or 'dark' (legacy)
+    return (saved && THEMES[saved]) ? saved : 'teal';
   });
 
-  const theme = THEMES[themeId] || THEMES.dark;
+  const theme = THEMES[themeId] || THEMES.teal;
 
   // Apply theme CSS variables
   useEffect(() => {

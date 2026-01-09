@@ -21,8 +21,8 @@ const Header = ({ onNavigate }) => {
     }
   }
 
-  // Icon common styles: Thin stroke, Gold color
-  const iconStyle = { strokeWidth: 1.5 }
+  // Icon common styles: Extra thin stroke for elegance, Gold color
+  const iconStyle = { strokeWidth: 1.25 }
 
   return (
     <header 
