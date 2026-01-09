@@ -1,57 +1,55 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Theme definitions - Sophisticated / Distinguished Palette
+// Theme definitions - Luxury Triad
 export const THEMES = {
   light: {
     id: 'light',
-    name: 'Atelier',
-    icon: '🏛️',
+    name: 'Gilded Light',
+    icon: '⚜️',
     colors: {
-      bgPrimary: '#F9F8F4', // Bone
+      bgPrimary: '#FDFBF7', // Cream
       bgSecondary: '#FFFFFF',
-      bgTertiary: '#E5E4DE', // Greige
-      textPrimary: '#282C35', // Anthracite
-      textSecondary: '#8C847E', // Taupe
-      textMuted: '#8E9BAC', // Pewter
+      textPrimary: '#121212',
+      textSecondary: '#525252',
       
-      primary: '#0A1128', // Midnight Navy
-      primaryHover: '#1F4F59', // Petrol Blue
-      accent: '#C06C54', // Terracotta
+      primary: '#C5A059', // Gold as primary interaction
+      primaryHover: '#9F7D3D',
       
-      border: '#E5E4DE', // Greige
-      glass: 'rgba(255, 255, 255, 0.95)',
-      cardBg: '#FFFFFF',
+      // The Triad available as semnatics
+      teal: '#0F4C5C',
+      emerald: '#1B4D3E',
+      red: '#722F37',
       
-      success: '#40826D', // Verdigris
-      warning: '#D69E2E', // Ochre
-      error: '#4A0404', // Oxblood
+      border: '#E6C67E', // Gold border
+      success: '#1B4D3E', // Emerald
+      warning: '#C5A059', // Gold
+      error: '#722F37', // Red
     }
   },
   dark: {
     id: 'dark',
-    name: 'Midnight',
-    icon: '🕯️',
+    name: 'Gilded Dark',
+    icon: '🌑',
     colors: {
-      bgPrimary: '#0A1128', // Midnight Navy
-      bgSecondary: '#152238', // Slightly lighter navy
-      bgTertiary: '#1F4F59', // Petrol Blue
-      textPrimary: '#F9F8F4', // Bone
-      textSecondary: '#8E9BAC', // Pewter
-      textMuted: '#5B6C86', // Slate Blue
+      bgPrimary: '#0A0A0A',
+      bgSecondary: '#121212',
+      textPrimary: '#FDFBF7',
+      textSecondary: '#A3A3A3',
       
-      primary: '#B2D3C2', // Celadon (Light Contrast)
-      primaryHover: '#9CAF88', // Sage
-      accent: '#D69E2E', // Ochre
+      primary: '#D4AF37', // Metallic Gold
+      primaryHover: '#C5A059',
       
-      border: '#1F4F59', // Petrol Blue
-      glass: 'rgba(10, 17, 40, 0.9)',
-      cardBg: '#152238',
+      teal: '#2DD4BF', // Brightened for dark mode
+      emerald: '#34D399',
+      red: '#F87171',
       
-      success: '#9CAF88', // Sage
-      warning: '#D69E2E', // Ochre
-      error: '#9A463D', // Cognac
+      border: '#C5A059', // Gold
+      success: '#34D399',
+      warning: '#D4AF37',
+      error: '#F87171',
     }
   }
+
 
 
 };

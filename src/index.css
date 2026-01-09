@@ -2,58 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
-/* CSS Custom Properties for "Sophisticated / Distinguished" Theme */
+/* CSS Custom Properties for Luxury Gold Palette */
 :root {
-  /* Core Palette */
-  --bg-primary: #F9F8F4; /* Bone */
-  --bg-secondary: #FFFFFF;
-  --bg-tertiary: #E5E4DE; /* Greige */
+  /* Backgrounds */
+  --bg-page: #FDFBF7; /* Cream/White */
+  --bg-card: #FFFFFF;
   
-  /* Text */
-  --text-primary: #282C35; /* Anthracite */
-  --text-secondary: #8C847E; /* Taupe */
-  --text-muted: #8E9BAC; /* Pewter */
-  --text-inverse: #F9F8F4; /* Bone */
-
-  /* Semantic - Sophisticated Mapping */
-  --color-brand: #0A1128; /* Midnight Navy */
-  --color-brand-light: #1F4F59; /* Petrol Blue */
+  /* Typography */
+  --text-main: #121212;
+  --text-muted: #525252;
   
-  --color-success: #40826D; /* Verdigris */
-  --color-warning: #D69E2E; /* Ochre */
-  --color-danger: #4A0404; /* Oxblood */
-  --color-accent: #C06C54; /* Terracotta */
-
-  /* Borders */
-  --border-fine: #E5E4DE; /* Greige */
-  --border-strong: #8C847E; /* Taupe */
+  /* The Trinity + Gold */
+  --color-teal: #0F4C5C;
+  --color-emerald: #1B4D3E;
+  --color-red: #722F37;
+  --color-gold: #C5A059;
   
-  /* Layout */
-  --radius-default: 2px;
+  /* UI Elements */
+  --border-color: #E6C67E; /* Light Gold Border */
 }
 
 @layer base {
   body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    @apply font-sans antialiased text-anthracite selection:bg-ochre selection:text-white;
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    @apply font-sans antialiased text-ink selection:bg-gold selection:text-white;
   }
 
-  /* HEADINGS - Distinct, Editorial */
+  /* HEADINGS - High Fashion / Editorial */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif font-semibold tracking-normal text-midnight-navy;
+    @apply font-serif text-ink tracking-tight;
   }
   
   h1 {
-    @apply text-4xl md:text-5xl leading-tight; 
+    @apply text-5xl font-medium;
   }
   
-  /* BUTTONS - Refined */
-  button {
-    @apply font-sans tracking-widest uppercase text-xs font-bold transition-all duration-300;
+  /* ICONS - Sophisticated overrides (Lucide) */
+  /* Make all SVGs thinner by default via CSS global override */
+  svg {
+    stroke-width: 1.5px !important; 
   }
-
-  /* Custom Scrollbar - Slim & Tonal */
+  
+  /* Scrollbar - Gold Accent */
   ::-webkit-scrollbar {
     width: 6px;
   }
@@ -61,29 +52,25 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-taupe/30 rounded-full;
+    @apply bg-gold/50 rounded-none;
   }
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-taupe/60;
+    @apply bg-gold;
   }
 }
 
 @layer components {
-  /* Editorial Card */
-  .paper-card {
-    @apply bg-white border border-greige p-8 shadow-sm rounded-sm;
-  }
-
-  /* Buttons */
-  .btn-primary {
-    @apply bg-midnight-navy text-bone px-6 py-3 hover:bg-petrol-blue active:translate-y-[1px] shadow-sm;
-  }
-
-  .btn-secondary {
-    @apply border border-midnight-navy text-midnight-navy bg-transparent px-6 py-3 hover:bg-bone;
+  /* THE BUTTONS - Gold Standard */
+  .btn-gold {
+    @apply bg-gold text-white font-serif uppercase tracking-widest text-xs px-8 py-3 hover:bg-gold-dark transition-all duration-300;
   }
   
-  .text-highlight {
-    color: var(--color-accent);
+  .btn-outline-gold {
+    @apply border border-gold text-gold font-serif uppercase tracking-widest text-xs px-8 py-3 hover:bg-gold hover:text-white transition-all duration-300;
+  }
+
+  /* Card - Museum Style */
+  .luxury-card {
+    @apply bg-white border border-gold/20 p-8 shadow-elegant relative overflow-hidden;
   }
 }
