@@ -1,53 +1,58 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Theme definitions - Scholarly / Editorial Design
+// Theme definitions - Sophisticated / Distinguished Palette
 export const THEMES = {
   light: {
     id: 'light',
-    name: 'Paper',
-    icon: '📜',
+    name: 'Atelier',
+    icon: '🏛️',
     colors: {
-      bgPrimary: '#F9F9F7',
+      bgPrimary: '#F9F8F4', // Bone
       bgSecondary: '#FFFFFF',
-      bgTertiary: '#F0F0F0',
-      textPrimary: '#1A1A1A',
-      textSecondary: '#4A4A4A',
-      textMuted: '#717171',
-      primary: '#002147', // Oxford Blue
-      primaryHover: '#243b53',
-      accent: '#800020', // Burgundy
-      border: '#E5E5E5',
+      bgTertiary: '#E5E4DE', // Greige
+      textPrimary: '#282C35', // Anthracite
+      textSecondary: '#8C847E', // Taupe
+      textMuted: '#8E9BAC', // Pewter
+      
+      primary: '#0A1128', // Midnight Navy
+      primaryHover: '#1F4F59', // Petrol Blue
+      accent: '#C06C54', // Terracotta
+      
+      border: '#E5E4DE', // Greige
       glass: 'rgba(255, 255, 255, 0.95)',
       cardBg: '#FFFFFF',
-      inputBg: '#FFFFFF',
-      success: '#355E3B',
-      warning: '#C5A059',
-      error: '#800020',
+      
+      success: '#40826D', // Verdigris
+      warning: '#D69E2E', // Ochre
+      error: '#4A0404', // Oxblood
     }
   },
   dark: {
     id: 'dark',
-    name: 'Dark Academia',
+    name: 'Midnight',
     icon: '🕯️',
     colors: {
-      bgPrimary: '#1A1A1A',
-      bgSecondary: '#242424',
-      bgTertiary: '#2D2D2D',
-      textPrimary: '#EAEAEA',
-      textSecondary: '#B0B0B0',
-      textMuted: '#717171',
-      primary: '#486581',
-      primaryHover: '#627d98',
-      accent: '#C5A059', // Muted Gold
-      border: '#333333',
-      glass: 'rgba(26, 26, 26, 0.95)',
-      cardBg: '#242424',
-      inputBg: '#1A1A1A',
-      success: '#4A7A53',
-      warning: '#C5A059',
-      error: '#A34040',
+      bgPrimary: '#0A1128', // Midnight Navy
+      bgSecondary: '#152238', // Slightly lighter navy
+      bgTertiary: '#1F4F59', // Petrol Blue
+      textPrimary: '#F9F8F4', // Bone
+      textSecondary: '#8E9BAC', // Pewter
+      textMuted: '#5B6C86', // Slate Blue
+      
+      primary: '#B2D3C2', // Celadon (Light Contrast)
+      primaryHover: '#9CAF88', // Sage
+      accent: '#D69E2E', // Ochre
+      
+      border: '#1F4F59', // Petrol Blue
+      glass: 'rgba(10, 17, 40, 0.9)',
+      cardBg: '#152238',
+      
+      success: '#9CAF88', // Sage
+      warning: '#D69E2E', // Ochre
+      error: '#9A463D', // Cognac
     }
   }
+
 
 };
 
