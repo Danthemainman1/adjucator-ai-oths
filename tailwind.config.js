@@ -8,89 +8,70 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Redefined Palette: Scholarly / Intellectual / Upper Class
         primary: {
-          DEFAULT: '#06b6d4',
-          50: '#ecfeff',
-          100: '#cffafe',
-          200: '#a5f3fc',
-          300: '#67e8f9',
-          400: '#22d3ee',
-          500: '#06b6d4',
-          600: '#0891b2',
-          700: '#0e7490',
-          800: '#155e75',
-          900: '#164e63',
-          950: '#083344',
+          DEFAULT: '#002147', // Oxford Blue
+          50: '#f0f4f8',
+          100: '#d9e2ec',
+          200: '#bcccdc',
+          300: '#9fb3c8',
+          400: '#829ab1',
+          500: '#627d98',
+          600: '#486581',
+          700: '#334e68',
+          800: '#243b53', // Dark Blue
+          900: '#102a43', // Very Dark Blue
+          950: '#002147', // Oxford Blue Base
+        },
+        secondary: {
+          DEFAULT: '#355E3B', // Hunter Green
+          50: '#f2fcf5',
+          100: '#e3f9e9',
+          200: '#c6f2d4',
+          300: '#9ceeb5',
+          400: '#68e296',
+          500: '#3bd27b',
+          600: '#26ad60',
+          700: '#355E3B', // Base
+          800: '#215c3f',
+          900: '#1b4d36',
         },
         accent: {
-          DEFAULT: '#a855f7',
-          50: '#faf5ff',
-          100: '#f3e8ff',
-          200: '#e9d5ff',
-          300: '#d8b4fe',
-          400: '#c084fc',
-          500: '#a855f7',
-          600: '#9333ea',
-          700: '#7c3aed',
-          800: '#6b21a8',
-          900: '#581c87',
-          950: '#3b0764',
+          DEFAULT: '#800020', // Burgundy
+          gold: '#C5A059', // Muted Gold/Bronze
+          bronze: '#CD7F32',
         },
         // Background colors
-        'bg-primary': '#020617',
-        'bg-secondary': '#0f172a',
-        'bg-tertiary': '#1e293b',
+        'paper': '#F9F9F7', // Main background (Paper)
+        'paper-light': '#F5F5F0', 
+        'dark-academia': '#1A1A1A', // Dark mode bg
+        
         // Text colors
-        'text-primary': '#f8fafc',
-        'text-secondary': '#94a3b8',
-        'text-muted': '#64748b',
+        'ink-black': '#1A1A1A', // Primary text
+        'ink-gray': '#4A4A4A', // Secondary text
+        'ink-light': '#717171', // Muted text
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        // Typography: Serif for Headers, Sans for Body
+        serif: ['"Playfair Display"', 'Merriweather', 'serif'],
+        sans: ['"Inter"', 'Roboto', 'sans-serif'],
       },
-      animation: {
-        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
-        'float': 'float 3s ease-in-out infinite',
-        'gradient-shift': 'gradient-shift 15s ease infinite',
-        'shimmer': 'shimmer 2s infinite',
-        'slide-up': 'slide-up 0.3s ease-out',
-        'slide-down': 'slide-down 0.3s ease-out',
-        'fade-in': 'fade-in 0.3s ease-out',
+      borderRadius: {
+        // Sharp/Minimal corners
+        'none': '0',
+        'sm': '2px',
+        DEFAULT: '4px',
+        'md': '4px',
+        'lg': '6px',
+        'xl': '8px', 
+        '2xl': '12px', // drastically reduced
+        '3xl': '16px',
       },
-      keyframes: {
-        'pulse-glow': {
-          '0%, 100%': { boxShadow: '0 0 5px rgba(6, 182, 212, 0.5)' },
-          '50%': { boxShadow: '0 0 20px rgba(6, 182, 212, 0.8)' },
-        },
-        'float': {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' },
-        },
-        'gradient-shift': {
-          '0%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-          '100%': { backgroundPosition: '0% 50%' },
-        },
-        'shimmer': {
-          '0%': { backgroundPosition: '-200% 0' },
-          '100%': { backgroundPosition: '200% 0' },
-        },
-        'slide-up': {
-          '0%': { transform: 'translateY(10px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        'slide-down': {
-          '0%': { transform: 'translateY(-10px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        'fade-in': {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-      },
-      backdropBlur: {
-        xs: '2px',
+      boxShadow: {
+        // Minimal shadows, distinct borders
+        'clean': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+        'float': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        'sharp': '2px 2px 0px 0px rgba(0,0,0,0.1)', // Brutalist/print feel
       }
     },
   },

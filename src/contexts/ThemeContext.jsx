@@ -1,53 +1,54 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Theme definitions - Dark and Light only with proper contrast
+// Theme definitions - Scholarly / Editorial Design
 export const THEMES = {
-  dark: {
-    id: 'dark',
-    name: 'Dark',
-    icon: '🌙',
-    colors: {
-      bgPrimary: '#020617',
-      bgSecondary: '#0f172a',
-      bgTertiary: '#1e293b',
-      textPrimary: '#f8fafc',
-      textSecondary: '#94a3b8',
-      textMuted: '#64748b',
-      primary: '#06b6d4',
-      primaryHover: '#22d3ee',
-      accent: '#a855f7',
-      border: 'rgba(51, 65, 85, 0.5)',
-      glass: 'rgba(15, 23, 42, 0.8)',
-      cardBg: 'rgba(15, 23, 42, 0.5)',
-      inputBg: '#020617',
-      success: '#22c55e',
-      warning: '#f59e0b',
-      error: '#ef4444',
-    }
-  },
   light: {
     id: 'light',
-    name: 'Light',
-    icon: '☀️',
+    name: 'Paper',
+    icon: '📜',
     colors: {
-      bgPrimary: '#ffffff',
-      bgSecondary: '#f8fafc',
-      bgTertiary: '#e2e8f0',
-      textPrimary: '#0f172a',
-      textSecondary: '#334155',
-      textMuted: '#64748b',
-      primary: '#0891b2',
-      primaryHover: '#0e7490',
-      accent: '#7c3aed',
-      border: 'rgba(15, 23, 42, 0.15)',
+      bgPrimary: '#F9F9F7',
+      bgSecondary: '#FFFFFF',
+      bgTertiary: '#F0F0F0',
+      textPrimary: '#1A1A1A',
+      textSecondary: '#4A4A4A',
+      textMuted: '#717171',
+      primary: '#002147', // Oxford Blue
+      primaryHover: '#243b53',
+      accent: '#800020', // Burgundy
+      border: '#E5E5E5',
       glass: 'rgba(255, 255, 255, 0.95)',
-      cardBg: 'rgba(248, 250, 252, 0.9)',
-      inputBg: '#ffffff',
-      success: '#16a34a',
-      warning: '#d97706',
-      error: '#dc2626',
+      cardBg: '#FFFFFF',
+      inputBg: '#FFFFFF',
+      success: '#355E3B',
+      warning: '#C5A059',
+      error: '#800020',
+    }
+  },
+  dark: {
+    id: 'dark',
+    name: 'Dark Academia',
+    icon: '🕯️',
+    colors: {
+      bgPrimary: '#1A1A1A',
+      bgSecondary: '#242424',
+      bgTertiary: '#2D2D2D',
+      textPrimary: '#EAEAEA',
+      textSecondary: '#B0B0B0',
+      textMuted: '#717171',
+      primary: '#486581',
+      primaryHover: '#627d98',
+      accent: '#C5A059', // Muted Gold
+      border: '#333333',
+      glass: 'rgba(26, 26, 26, 0.95)',
+      cardBg: '#242424',
+      inputBg: '#1A1A1A',
+      success: '#4A7A53',
+      warning: '#C5A059',
+      error: '#A34040',
     }
   }
+
 };
 
 const ThemeContext = createContext(null);

@@ -1,7 +1,7 @@
 import React from 'react'
 import { cn } from '../../utils/helpers'
 
-// Button Component
+// Button Component - Scholarly / Authoritative
 export const Button = React.forwardRef(({
   className,
   variant = 'primary',
@@ -12,18 +12,18 @@ export const Button = React.forwardRef(({
   ...props
 }, ref) => {
   const variants = {
-    primary: 'bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.02] active:scale-[0.98]',
-    secondary: 'bg-slate-800/50 border border-slate-700/50 text-slate-300 hover:text-white hover:bg-slate-700/50 hover:border-slate-600/50',
-    ghost: 'bg-transparent text-slate-400 hover:text-white hover:bg-slate-800/50',
-    danger: 'bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20 hover:border-red-500/50',
-    success: 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 hover:border-emerald-500/50'
+    primary: 'bg-primary text-white hover:bg-primary-800 active:bg-primary-900 shadow-sm border border-transparent',
+    secondary: 'bg-white text-primary border border-primary hover:bg-gray-50 active:bg-gray-100',
+    ghost: 'bg-transparent text-ink-secondary hover:text-ink-black hover:bg-gray-100',
+    danger: 'bg-red-50 text-red-700 border border-red-200 hover:bg-red-100 active:bg-red-200',
+    success: 'bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 active:bg-green-200'
   }
 
   const sizes = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2.5 text-sm',
-    lg: 'px-6 py-3 text-base',
-    xl: 'px-8 py-4 text-lg'
+    sm: 'px-3 py-1.5 text-xs tracking-wider uppercase',
+    md: 'px-5 py-2.5 text-sm tracking-wide uppercase',
+    lg: 'px-7 py-3 text-base tracking-wide uppercase',
+    xl: 'px-8 py-4 text-base tracking-wide uppercase'
   }
 
   return (
@@ -31,8 +31,8 @@ export const Button = React.forwardRef(({
       ref={ref}
       disabled={disabled || loading}
       className={cn(
-        'relative inline-flex items-center justify-center gap-2 font-medium rounded-xl transition-all duration-200',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900',
+        'relative inline-flex items-center justify-center gap-2 font-semibold rounded-sm transition-all duration-200',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/50 focus-visible:ring-offset-2',
         'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100',
         variants[variant],
         sizes[size],
@@ -53,7 +53,7 @@ export const Button = React.forwardRef(({
 
 Button.displayName = 'Button'
 
-// Card Component
+// Card Component - Paper / Document style
 export const Card = React.forwardRef(({
   className,
   hover = false,
@@ -65,10 +65,9 @@ export const Card = React.forwardRef(({
     <div
       ref={ref}
       className={cn(
-        'bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 rounded-2xl',
+        'bg-white border border-[#E5E5E5] rounded-sm shadow-clean',
         'transition-all duration-300',
-        hover && 'hover:border-slate-700/50 hover:shadow-xl hover:shadow-cyan-500/5 cursor-pointer',
-        glow && 'shadow-lg shadow-cyan-500/10',
+        hover && 'hover:border-gray-300 hover:shadow-float cursor-pointer',
         className
       )}
       {...props}
@@ -84,16 +83,16 @@ Card.displayName = 'Card'
 export const CardHeader = ({ title, icon, action, className }) => {
   return (
     <div className={cn(
-      'flex items-center justify-between pb-4 border-b border-slate-800/50',
+      'flex items-center justify-between pb-4 border-b border-gray-100 mb-4',
       className
     )}>
       <div className="flex items-center gap-3">
         {icon && (
-          <div className="p-2 rounded-lg bg-slate-800/50">
+          <div className="p-2 rounded-sm bg-gray-50 text-primary">
             {icon}
           </div>
         )}
-        <h3 className="text-lg font-semibold text-white">{title}</h3>
+        <h3 className="text-lg font-serif font-bold text-ink-black tracking-tight">{title}</h3>
       </div>
       {action}
     </div>
@@ -111,7 +110,7 @@ export const Input = React.forwardRef(({
   return (
     <div className="w-full">
       {label && (
-        <label className="block text-sm font-medium text-slate-400 mb-2">
+        <label className="block text-xs font-semibold uppercase tracking-wider text-ink-secondary mb-1.5">
           {label}
         </label>
       )}
@@ -119,19 +118,19 @@ export const Input = React.forwardRef(({
         ref={ref}
         type={type}
         className={cn(
-          'w-full bg-slate-800/50 border text-white px-4 py-3 rounded-xl',
+          'w-full bg-white border text-ink-black px-3 py-2.5 rounded-sm',
           'outline-none transition-all duration-200',
-          'placeholder:text-slate-500',
-          'focus:ring-2 focus:ring-offset-0',
+          'placeholder:text-gray-400',
+          'focus:border-primary focus:ring-1 focus:ring-primary',
           error 
-            ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/20' 
-            : 'border-slate-700/50 focus:border-cyan-500 focus:ring-cyan-500/20',
+            ? 'border-red-300 focus:border-red-500 focus:ring-red-200' 
+            : 'border-gray-300',
           className
         )}
         {...props}
       />
       {error && (
-        <p className="mt-1.5 text-sm text-red-400">{error}</p>
+        <p className="mt-1.5 text-sm text-red-600 font-medium">{error}</p>
       )}
     </div>
   )
@@ -149,26 +148,26 @@ export const Textarea = React.forwardRef(({
   return (
     <div className="w-full">
       {label && (
-        <label className="block text-sm font-medium text-slate-400 mb-2">
+        <label className="block text-xs font-semibold uppercase tracking-wider text-ink-secondary mb-1.5">
           {label}
         </label>
       )}
       <textarea
         ref={ref}
         className={cn(
-          'w-full bg-slate-800/50 border text-white px-4 py-3 rounded-xl',
-          'outline-none transition-all duration-200 resize-none',
-          'placeholder:text-slate-500',
-          'focus:ring-2 focus:ring-offset-0',
+          'w-full bg-white border text-ink-black px-3 py-2.5 rounded-sm',
+          'outline-none transition-all duration-200 resize-y min-h-[100px]',
+          'placeholder:text-gray-400',
+          'focus:border-primary focus:ring-1 focus:ring-primary',
           error 
-            ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/20' 
-            : 'border-slate-700/50 focus:border-cyan-500 focus:ring-cyan-500/20',
+            ? 'border-red-300 focus:border-red-500 focus:ring-red-200' 
+            : 'border-gray-300',
           className
         )}
         {...props}
       />
       {error && (
-        <p className="mt-1.5 text-sm text-red-400">{error}</p>
+        <p className="mt-1.5 text-sm text-red-600 font-medium">{error}</p>
       )}
     </div>
   )
@@ -186,7 +185,7 @@ export const Select = React.forwardRef(({
   return (
     <div className="w-full">
       {label && (
-        <label className="block text-sm font-medium text-slate-400 mb-2">
+        <label className="block text-xs font-semibold uppercase tracking-wider text-ink-secondary mb-1.5">
           {label}
         </label>
       )}
@@ -194,10 +193,11 @@ export const Select = React.forwardRef(({
         <select
           ref={ref}
           className={cn(
-            'w-full bg-slate-800/50 border border-slate-700/50 text-cyan-400 px-4 py-3 rounded-xl',
+            'w-full bg-white border text-ink-black px-3 py-2.5 rounded-sm',
             'outline-none appearance-none cursor-pointer',
             'transition-all duration-200',
-            'focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20',
+            'focus:border-primary focus:ring-1 focus:ring-primary',
+            'border-gray-300',
             className
           )}
           {...props}
@@ -211,8 +211,8 @@ export const Select = React.forwardRef(({
             </option>
           ))}
         </select>
-        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-          <svg className="w-4 h-4 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+          <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
         </div>
@@ -223,21 +223,21 @@ export const Select = React.forwardRef(({
 
 Select.displayName = 'Select'
 
-// Badge Component
+// Badge Component - Minimalist Labels
 export const Badge = ({ className, variant = 'primary', children, ...props }) => {
   const variants = {
-    primary: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20',
-    secondary: 'bg-slate-500/10 text-slate-400 border-slate-500/20',
-    success: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-    warning: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-    danger: 'bg-red-500/10 text-red-400 border-red-500/20',
-    purple: 'bg-purple-500/10 text-purple-400 border-purple-500/20'
+    primary: 'bg-primary-50 text-primary-900 border-primary-200',
+    secondary: 'bg-gray-100 text-gray-700 border-gray-200',
+    success: 'bg-green-50 text-green-800 border-green-200',
+    warning: 'bg-amber-50 text-amber-800 border-amber-200',
+    danger: 'bg-red-50 text-red-800 border-red-200',
+    purple: 'bg-purple-50 text-purple-900 border-purple-200'
   }
 
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full border',
+        'inline-flex items-center gap-1.5 px-2 py-0.5 text-xs font-semibold uppercase tracking-wide rounded-sm border',
         variants[variant],
         className
       )}
@@ -248,32 +248,33 @@ export const Badge = ({ className, variant = 'primary', children, ...props }) =>
   )
 }
 
-// Progress Bar Component
-export const Progress = ({ value = 0, max = 100, className, showLabel = false, color = 'cyan' }) => {
+// Progress Bar Component - Clean and thin
+export const Progress = ({ value = 0, max = 100, className, showLabel = false, color = 'primary' }) => {
   const percentage = Math.min(100, Math.max(0, (value / max) * 100))
   
   const colors = {
-    cyan: 'from-cyan-500 to-cyan-400',
-    purple: 'from-purple-500 to-purple-400',
-    emerald: 'from-emerald-500 to-emerald-400',
-    amber: 'from-amber-500 to-amber-400',
-    red: 'from-red-500 to-red-400',
-    gradient: 'from-cyan-500 via-purple-500 to-pink-500'
+    primary: 'bg-primary',
+    cyan: 'bg-cyan-600', // Keeping for legacy support if needed
+    purple: 'bg-purple-600',
+    emerald: 'bg-emerald-600',
+    amber: 'bg-amber-600',
+    red: 'bg-red-600',
+    gradient: 'bg-primary'
   }
 
   return (
     <div className={cn('w-full', className)}>
-      <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+      <div className="h-1.5 bg-gray-100 rounded-sm overflow-hidden border border-gray-200">
         <div
           className={cn(
-            'h-full bg-gradient-to-r transition-all duration-500 ease-out rounded-full',
-            colors[color]
+            'h-full transition-all duration-500 ease-out',
+            colors[color] || colors.primary
           )}
           style={{ width: `${percentage}%` }}
         />
       </div>
       {showLabel && (
-        <div className="mt-1 text-xs text-slate-400 text-right">
+        <div className="mt-1 text-xs text-ink-light text-right font-mono">
           {Math.round(percentage)}%
         </div>
       )}
@@ -286,7 +287,7 @@ export const Skeleton = ({ className, ...props }) => {
   return (
     <div
       className={cn(
-        'bg-slate-800/50 rounded animate-pulse',
+        'bg-gray-100 rounded-sm animate-pulse',
         className
       )}
       {...props}
@@ -308,8 +309,8 @@ export const Tooltip = ({ children, content, side = 'top' }) => {
       {children}
       <div
         className={cn(
-          'absolute z-50 px-3 py-2 text-sm whitespace-nowrap',
-          'bg-slate-900 border border-slate-700 rounded-lg shadow-xl',
+          'absolute z-50 px-3 py-1.5 text-xs font-medium whitespace-nowrap',
+          'bg-gray-900 text-white rounded-sm shadow-md',
           'invisible opacity-0 group-hover:visible group-hover:opacity-100',
           'transition-all duration-200',
           positions[side]
@@ -321,7 +322,7 @@ export const Tooltip = ({ children, content, side = 'top' }) => {
   )
 }
 
-// Modal Component
+// Modal Component - Clean, high contrast
 export const Modal = ({ isOpen, onClose, title, children, size = 'md' }) => {
   if (!isOpen) return null
 
@@ -338,26 +339,26 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'md' }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
         onClick={onClose}
       />
       
       {/* Modal content */}
       <div 
         className={cn(
-          'relative w-full bg-slate-900/95 backdrop-blur-xl',
-          'border border-slate-700/50 rounded-2xl shadow-2xl',
+          'relative w-full bg-white',
+          'border border-gray-200 rounded-sm shadow-2xl',
           'animate-slide-up',
           sizes[size]
         )}
       >
         {/* Header */}
         {title && (
-          <div className="flex items-center justify-between p-6 border-b border-slate-800/50">
-            <h2 className="text-xl font-bold text-white">{title}</h2>
+          <div className="flex items-center justify-between p-6 border-b border-gray-100">
+            <h2 className="text-2xl font-serif font-bold text-ink-black">{title}</h2>
             <button
               onClick={onClose}
-              className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+              className="p-2 text-gray-400 hover:text-ink-black hover:bg-gray-100 rounded-sm transition-colors"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -375,19 +376,19 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'md' }) => {
   )
 }
 
-// Tabs Component
+// Tabs Component - Minimalist text tabs
 export const Tabs = ({ tabs, activeTab, onChange, className }) => {
   return (
-    <div className={cn('flex gap-1 p-1 bg-slate-800/50 rounded-xl', className)}>
+    <div className={cn('flex gap-6 border-b border-gray-200 mb-6', className)}>
       {tabs.map((tab) => (
         <button
           key={tab.id}
           onClick={() => onChange(tab.id)}
           className={cn(
-            'flex-1 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200',
+            'px-1 py-3 text-sm font-semibold tracking-wide uppercase transition-all duration-200 border-b-2',
             activeTab === tab.id
-              ? 'bg-slate-700 text-white shadow-lg'
-              : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
+              ? 'border-primary text-primary'
+              : 'border-transparent text-gray-500 hover:text-ink-black hover:border-gray-300'
           )}
         >
           {tab.label}
@@ -400,15 +401,15 @@ export const Tabs = ({ tabs, activeTab, onChange, className }) => {
 // Empty State Component
 export const EmptyState = ({ icon: Icon, title, description, action }) => {
   return (
-    <div className="flex flex-col items-center justify-center py-12 text-center">
+    <div className="flex flex-col items-center justify-center py-16 text-center border-2 border-dashed border-gray-200 rounded-sm bg-gray-50/50">
       {Icon && (
-        <div className="w-16 h-16 bg-slate-800/50 rounded-2xl flex items-center justify-center mb-4">
-          <Icon className="w-8 h-8 text-slate-600" />
+        <div className="w-16 h-16 bg-white border border-gray-200 rounded-full flex items-center justify-center mb-4 shadow-sm">
+          <Icon className="w-6 h-6 text-gray-400" />
         </div>
       )}
-      <h3 className="text-lg font-semibold text-slate-400 mb-2">{title}</h3>
+      <h3 className="text-lg font-serif font-semibold text-ink-black mb-2">{title}</h3>
       {description && (
-        <p className="text-sm text-slate-500 max-w-sm mb-4">{description}</p>
+        <p className="text-sm text-gray-500 max-w-sm mb-6">{description}</p>
       )}
       {action}
     </div>

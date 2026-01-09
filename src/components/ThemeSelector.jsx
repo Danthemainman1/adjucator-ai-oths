@@ -15,9 +15,9 @@ const ThemeSelector = ({ compact = false }) => {
     return (
       <button
         onClick={toggleTheme}
-        className="p-2 rounded-lg transition-colors"
+        className="p-2 rounded-sm transition-colors hover:bg-black/5"
         style={{ color: 'var(--text-secondary)' }}
-        title={isDark ? 'Switch to Light mode' : 'Switch to Dark mode'}
+        title={isDark ? 'Switch to Paper mode' : 'Switch to Scholar mode'}
       >
         <motion.div
           initial={false}
@@ -33,7 +33,7 @@ const ThemeSelector = ({ compact = false }) => {
   return (
     <button
       onClick={toggleTheme}
-      className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all"
+      className="w-full flex items-center space-x-3 px-4 py-3 rounded-md transition-all hover:bg-black/5"
       style={{ color: 'var(--text-secondary)' }}
     >
       <motion.div
@@ -41,9 +41,9 @@ const ThemeSelector = ({ compact = false }) => {
         animate={{ rotate: isDark ? 0 : 180 }}
         transition={{ duration: 0.3 }}
       >
-        {isDark ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+        {isDark ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
       </motion.div>
-      <span className="font-medium flex-1 text-left">{isDark ? 'Dark Mode' : 'Light Mode'}</span>
+      <span className="font-sans text-sm tracking-wide uppercase font-medium flex-1 text-left">{isDark ? 'Dark Academia' : 'Paper Mode'}</span>
     </button>
   );
 };
