@@ -8,70 +8,68 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Redefined Palette: Scholarly / Intellectual / Upper Class
-        primary: {
-          DEFAULT: '#002147', // Oxford Blue
-          50: '#f0f4f8',
-          100: '#d9e2ec',
-          200: '#bcccdc',
-          300: '#9fb3c8',
-          400: '#829ab1',
-          500: '#627d98',
-          600: '#486581',
-          700: '#334e68',
-          800: '#243b53', // Dark Blue
-          900: '#102a43', // Very Dark Blue
-          950: '#002147', // Oxford Blue Base
-        },
-        secondary: {
-          DEFAULT: '#355E3B', // Hunter Green
-          50: '#f2fcf5',
-          100: '#e3f9e9',
-          200: '#c6f2d4',
-          300: '#9ceeb5',
-          400: '#68e296',
-          500: '#3bd27b',
-          600: '#26ad60',
-          700: '#355E3B', // Base
-          800: '#215c3f',
-          900: '#1b4d36',
-        },
-        accent: {
-          DEFAULT: '#800020', // Burgundy
-          gold: '#C5A059', // Muted Gold/Bronze
-          bronze: '#CD7F32',
-        },
-        // Background colors
-        'paper': '#F9F9F7', // Main background (Paper)
-        'paper-light': '#F5F5F0', 
-        'dark-academia': '#1A1A1A', // Dark mode bg
+        // Sophisticated Palette
         
-        // Text colors
-        'ink-black': '#1A1A1A', // Primary text
-        'ink-gray': '#4A4A4A', // Secondary text
-        'ink-light': '#717171', // Muted text
+        // Foundations (Neutrals)
+        anthracite: '#282C35', // Deep matte dark (Text/Primary Bg)
+        'anthracite-light': '#3F4451',
+        bone: '#F9F8F4', // Warm Off-White (Main Bg)
+        greige: '#E5E4DE', // Grey-Beige (Borders/Secondary Bg)
+        taupe: '#8C847E', // Warm Grey (Secondary Text)
+        'mauve-taupe': '#91797B',
+        pewter: '#8E9BAC', // Metallic Blue-Grey (Accents/Icons)
+        
+        // Primary Brand Colors
+        'midnight-navy': '#0A1128', // Deepest Blue (Headers/Sidebar)
+        'petrol-blue': '#1F4F59', // Rich Teal-Blue
+        'slate-blue': '#5B6C86', // Muted Blue
+        
+        // Accents & Functional Colors
+        oxblood: '#4A0404', // Deep Red (Danger/Buttons)
+        cognac: '#9A463D', // Warm Brown-Red
+        ochre: '#D69E2E', // Muted Gold/Yellow (Warning)
+        'burnt-sienna': '#E97451',
+        terracotta: '#C06C54',
+        
+        // Garden / Nature Tones (Success/ Info)
+        sage: '#9CAF88', // Muted Green
+        celadon: '#B2D3C2', // Pale Blue-Green
+        verdigris: '#40826D', // Green-Blue
+        'muted-chartreuse': '#B8C74A',
+        aubergine: '#3B1F2B', // Deep Purple
+        champagne: '#F7E7CE', 
+        
+        // Semantic Mapping (Aliasing to standard utilitarian names for compatibility)
+        primary: {
+          DEFAULT: '#0A1128', // Midnight Navy
+          50: '#F0F4F8',
+          100: '#D9E2EC',
+          500: '#334E68',
+          900: '#0A1128',
+          950: '#050914',
+        },
+        paper: '#F9F8F4', // Bone
+        ink: {
+          DEFAULT: '#282C35', // Anthracite
+          light: '#8C847E', // Taupe
+          lighter: '#8E9BAC', // Pewter
+        }
       },
       fontFamily: {
-        // Typography: Serif for Headers, Sans for Body
         serif: ['"Playfair Display"', 'Merriweather', 'serif'],
         sans: ['"Inter"', 'Roboto', 'sans-serif'],
       },
       borderRadius: {
-        // Sharp/Minimal corners
         'none': '0',
-        'sm': '2px',
-        DEFAULT: '4px',
+        'sm': '1px',
+        DEFAULT: '2px', // Sharper - Editorial
         'md': '4px',
         'lg': '6px',
         'xl': '8px', 
-        '2xl': '12px', // drastically reduced
-        '3xl': '16px',
       },
       boxShadow: {
-        // Minimal shadows, distinct borders
-        'clean': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-        'float': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-        'sharp': '2px 2px 0px 0px rgba(0,0,0,0.1)', // Brutalist/print feel
+        'clean': '0 1px 2px 0 rgba(40, 44, 53, 0.05)', // Anthracite shadow
+        'float': '0 4px 12px -2px rgba(10, 17, 40, 0.1)', // Midnight shadow
       }
     },
   },

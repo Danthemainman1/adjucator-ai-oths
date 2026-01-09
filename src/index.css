@@ -2,65 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
-/* CSS Custom Properties for "Intellectual / Scholarly" Theme */
-/* Replacing previous "Liquid Glass" variables with Paper/Ink paradigm */
+/* CSS Custom Properties for "Sophisticated / Distinguished" Theme */
 :root {
   /* Core Palette */
-  --bg-paper: #F9F9F7;
-  --bg-surface: #FFFFFF;
-  --bg-overlay: rgba(255, 255, 255, 0.95);
+  --bg-primary: #F9F8F4; /* Bone */
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #E5E4DE; /* Greige */
   
   /* Text */
-  --text-primary: #1A1A1A; /* Ink Black */
-  --text-secondary: #4A4A4A;
-  --text-muted: #717171;
-  --text-inverse: #F9F9F7;
+  --text-primary: #282C35; /* Anthracite */
+  --text-secondary: #8C847E; /* Taupe */
+  --text-muted: #8E9BAC; /* Pewter */
+  --text-inverse: #F9F8F4; /* Bone */
 
-  /* Accents */
-  --oxford-blue: #002147;
-  --hunter-green: #355E3B;
-  --burgundy: #800020;
-  --muted-gold: #C5A059;
+  /* Semantic - Sophisticated Mapping */
+  --color-brand: #0A1128; /* Midnight Navy */
+  --color-brand-light: #1F4F59; /* Petrol Blue */
+  
+  --color-success: #40826D; /* Verdigris */
+  --color-warning: #D69E2E; /* Ochre */
+  --color-danger: #4A0404; /* Oxblood */
+  --color-accent: #C06C54; /* Terracotta */
 
   /* Borders */
-  --border-fine: #E5E5E5;
-  --border-strong: #1A1A1A;
+  --border-fine: #E5E4DE; /* Greige */
+  --border-strong: #8C847E; /* Taupe */
   
   /* Layout */
-  --radius-sm: 2px;
-  --radius-md: 4px;
+  --radius-default: 2px;
 }
 
 @layer base {
   body {
-    background-color: var(--bg-paper);
+    background-color: var(--bg-primary);
     color: var(--text-primary);
-    @apply font-sans antialiased text-ink-black;
+    @apply font-sans antialiased text-anthracite selection:bg-ochre selection:text-white;
   }
 
-  /* HEADINGS - Serif font for Authority, like NY Times */
+  /* HEADINGS - Distinct, Editorial */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif font-bold tracking-tight text-ink-black;
+    @apply font-serif font-semibold tracking-normal text-midnight-navy;
   }
   
   h1 {
-    @apply text-4xl md:text-5xl leading-tight;
+    @apply text-4xl md:text-5xl leading-tight; 
   }
   
-  h2 {
-    @apply text-3xl md:text-4xl;
-  }
-
-  h3 {
-    @apply text-2xl md:text-3xl;
-  }
-
-  /* BUTTONS - Strict, sharp, authoritative */
+  /* BUTTONS - Refined */
   button {
-    @apply font-sans tracking-wide uppercase text-sm font-semibold transition-all duration-200;
+    @apply font-sans tracking-widest uppercase text-xs font-bold transition-all duration-300;
   }
 
-  /* Custom Scrollbar - Minimal */
+  /* Custom Scrollbar - Slim & Tonal */
   ::-webkit-scrollbar {
     width: 6px;
   }
@@ -68,31 +61,29 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 rounded-sm;
+    @apply bg-taupe/30 rounded-full;
   }
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-400;
+    @apply bg-taupe/60;
   }
 }
 
 @layer components {
-  /* Paper Card Component - Resembles a physical card or page */
+  /* Editorial Card */
   .paper-card {
-    @apply bg-white border border-[#E5E5E5] p-6 shadow-clean rounded-sm;
+    @apply bg-white border border-greige p-8 shadow-sm rounded-sm;
   }
 
-  /* Primary Button - Oxford Blue, Sharp */
+  /* Buttons */
   .btn-primary {
-    @apply bg-primary-950 text-white px-6 py-3 hover:bg-primary-900 active:translate-y-[1px] shadow-sm;
+    @apply bg-midnight-navy text-bone px-6 py-3 hover:bg-petrol-blue active:translate-y-[1px] shadow-sm;
   }
 
-  /* Secondary Button - Outline Style */
   .btn-secondary {
-    @apply border border-primary-950 text-primary-950 bg-transparent px-6 py-3 hover:bg-gray-50;
+    @apply border border-midnight-navy text-midnight-navy bg-transparent px-6 py-3 hover:bg-bone;
   }
   
-  /* Accent Text - Muted Gold for emphasis */
-  .text-gold {
-    color: var(--muted-gold);
+  .text-highlight {
+    color: var(--color-accent);
   }
 }

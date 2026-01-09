@@ -1,7 +1,7 @@
 import React from 'react'
 import { cn } from '../../utils/helpers'
 
-// Button Component - Scholarly / Authoritative
+// Button Component - Sophisticated / Authoritative
 export const Button = React.forwardRef(({
   className,
   variant = 'primary',
@@ -12,18 +12,19 @@ export const Button = React.forwardRef(({
   ...props
 }, ref) => {
   const variants = {
-    primary: 'bg-primary text-white hover:bg-primary-800 active:bg-primary-900 shadow-sm border border-transparent',
-    secondary: 'bg-white text-primary border border-primary hover:bg-gray-50 active:bg-gray-100',
-    ghost: 'bg-transparent text-ink-secondary hover:text-ink-black hover:bg-gray-100',
-    danger: 'bg-red-50 text-red-700 border border-red-200 hover:bg-red-100 active:bg-red-200',
-    success: 'bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 active:bg-green-200'
+    primary: 'bg-midnight-navy text-bone hover:bg-petrol-blue active:bg-anthracite shadow-[0_2px_4px_rgba(10,17,40,0.15)] border border-transparent',
+    secondary: 'bg-white text-midnight-navy border border-greige hover:border-taupe hover:bg-bone active:bg-greige',
+    ghost: 'bg-transparent text-taupe hover:text-midnight-navy hover:bg-greige/30',
+    danger: 'bg-oxblood text-white border border-transparent hover:bg-red-950 shadow-sm',
+    success: 'bg-verdigris text-white border border-transparent hover:bg-emerald-700 shadow-sm',
+    accent: 'bg-ochre text-midnight-navy hover:bg-amber-500 font-bold'
   }
 
   const sizes = {
-    sm: 'px-3 py-1.5 text-xs tracking-wider uppercase',
-    md: 'px-5 py-2.5 text-sm tracking-wide uppercase',
-    lg: 'px-7 py-3 text-base tracking-wide uppercase',
-    xl: 'px-8 py-4 text-base tracking-wide uppercase'
+    sm: 'px-4 py-2 text-[10px] tracking-[0.1em]',
+    md: 'px-6 py-3 text-xs tracking-[0.12em]',
+    lg: 'px-8 py-4 text-xs tracking-[0.15em]',
+    xl: 'px-10 py-5 text-sm tracking-[0.15em]'
   }
 
   return (
@@ -31,9 +32,9 @@ export const Button = React.forwardRef(({
       ref={ref}
       disabled={disabled || loading}
       className={cn(
-        'relative inline-flex items-center justify-center gap-2 font-semibold rounded-sm transition-all duration-200',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/50 focus-visible:ring-offset-2',
-        'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100',
+        'relative inline-flex items-center justify-center gap-3 font-bold uppercase rounded-[2px] transition-all duration-300',
+        'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-2 focus-visible:ring-taupe',
+        'disabled:opacity-60 disabled:cursor-not-allowed disabled:saturate-0',
         variants[variant],
         sizes[size],
         className
@@ -41,7 +42,7 @@ export const Button = React.forwardRef(({
       {...props}
     >
       {loading && (
-        <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+        <svg className="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
         </svg>
@@ -53,7 +54,7 @@ export const Button = React.forwardRef(({
 
 Button.displayName = 'Button'
 
-// Card Component - Paper / Document style
+// Card Component - Atelier Style
 export const Card = React.forwardRef(({
   className,
   hover = false,
@@ -65,9 +66,9 @@ export const Card = React.forwardRef(({
     <div
       ref={ref}
       className={cn(
-        'bg-white border border-[#E5E5E5] rounded-sm shadow-clean',
-        'transition-all duration-300',
-        hover && 'hover:border-gray-300 hover:shadow-float cursor-pointer',
+        'bg-white border border-greige rounded-[2px] shadow-clean',
+        'transition-all duration-500 ease-out',
+        hover && 'hover:border-taupe hover:shadow-float cursor-pointer hover:-translate-y-[2px]',
         className
       )}
       {...props}
@@ -83,16 +84,16 @@ Card.displayName = 'Card'
 export const CardHeader = ({ title, icon, action, className }) => {
   return (
     <div className={cn(
-      'flex items-center justify-between pb-4 border-b border-gray-100 mb-4',
+      'flex items-center justify-between pb-5 border-b border-greige/50 mb-6',
       className
     )}>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-4">
         {icon && (
-          <div className="p-2 rounded-sm bg-gray-50 text-primary">
+          <div className="p-2.5 rounded-sm bg-bone text-midnight-navy border border-greige">
             {icon}
           </div>
         )}
-        <h3 className="text-lg font-serif font-bold text-ink-black tracking-tight">{title}</h3>
+        <h3 className="text-lg font-serif font-bold text-midnight-navy tracking-tight">{title}</h3>
       </div>
       {action}
     </div>
@@ -108,9 +109,9 @@ export const Input = React.forwardRef(({
   ...props
 }, ref) => {
   return (
-    <div className="w-full">
+    <div className="w-full group">
       {label && (
-        <label className="block text-xs font-semibold uppercase tracking-wider text-ink-secondary mb-1.5">
+        <label className="block text-[11px] font-bold uppercase tracking-[0.1em] text-taupe mb-2 group-focus-within:text-midnight-navy transition-colors">
           {label}
         </label>
       )}
@@ -118,19 +119,22 @@ export const Input = React.forwardRef(({
         ref={ref}
         type={type}
         className={cn(
-          'w-full bg-white border text-ink-black px-3 py-2.5 rounded-sm',
-          'outline-none transition-all duration-200',
-          'placeholder:text-gray-400',
-          'focus:border-primary focus:ring-1 focus:ring-primary',
+          'w-full bg-white border border-greige text-anthracite px-4 py-3 rounded-[2px]',
+          'outline-none transition-all duration-300',
+          'placeholder:text-stone-300',
+          'focus:border-slate-blue focus:ring-0 focus:bg-bone',
           error 
-            ? 'border-red-300 focus:border-red-500 focus:ring-red-200' 
-            : 'border-gray-300',
+            ? 'border-oxblood/40 focus:border-oxblood bg-red-50/10' 
+            : 'hover:border-taupe',
           className
         )}
         {...props}
       />
       {error && (
-        <p className="mt-1.5 text-sm text-red-600 font-medium">{error}</p>
+        <p className="mt-2 text-xs text-oxblood font-medium flex items-center gap-1">
+          <span className="inline-block w-1 h-1 rounded-full bg-oxblood"></span>
+          {error}
+        </p>
       )}
     </div>
   )
@@ -146,28 +150,31 @@ export const Textarea = React.forwardRef(({
   ...props
 }, ref) => {
   return (
-    <div className="w-full">
+    <div className="w-full group">
       {label && (
-        <label className="block text-xs font-semibold uppercase tracking-wider text-ink-secondary mb-1.5">
+        <label className="block text-[11px] font-bold uppercase tracking-[0.1em] text-taupe mb-2 group-focus-within:text-midnight-navy transition-colors">
           {label}
         </label>
       )}
       <textarea
         ref={ref}
         className={cn(
-          'w-full bg-white border text-ink-black px-3 py-2.5 rounded-sm',
-          'outline-none transition-all duration-200 resize-y min-h-[100px]',
-          'placeholder:text-gray-400',
-          'focus:border-primary focus:ring-1 focus:ring-primary',
+          'w-full bg-white border border-greige text-anthracite px-4 py-3 rounded-[2px]',
+          'outline-none transition-all duration-300 resize-y min-h-[100px]',
+          'placeholder:text-stone-300',
+          'focus:border-slate-blue focus:ring-0 focus:bg-bone',
           error 
-            ? 'border-red-300 focus:border-red-500 focus:ring-red-200' 
-            : 'border-gray-300',
+            ? 'border-oxblood/40 focus:border-oxblood bg-red-50/10' 
+            : 'hover:border-taupe',
           className
         )}
         {...props}
       />
       {error && (
-        <p className="mt-1.5 text-sm text-red-600 font-medium">{error}</p>
+        <p className="mt-2 text-xs text-oxblood font-medium flex items-center gap-1">
+          <span className="inline-block w-1 h-1 rounded-full bg-oxblood"></span>
+          {error}
+        </p>
       )}
     </div>
   )
@@ -183,9 +190,9 @@ export const Select = React.forwardRef(({
   ...props
 }, ref) => {
   return (
-    <div className="w-full">
+    <div className="w-full group">
       {label && (
-        <label className="block text-xs font-semibold uppercase tracking-wider text-ink-secondary mb-1.5">
+        <label className="block text-[11px] font-bold uppercase tracking-[0.1em] text-taupe mb-2 group-focus-within:text-midnight-navy transition-colors">
           {label}
         </label>
       )}
@@ -193,11 +200,11 @@ export const Select = React.forwardRef(({
         <select
           ref={ref}
           className={cn(
-            'w-full bg-white border text-ink-black px-3 py-2.5 rounded-sm',
+            'w-full bg-white border border-greige text-anthracite px-4 py-3 rounded-[2px]',
             'outline-none appearance-none cursor-pointer',
-            'transition-all duration-200',
-            'focus:border-primary focus:ring-1 focus:ring-primary',
-            'border-gray-300',
+            'transition-all duration-300',
+            'focus:border-slate-blue focus:ring-0 focus:bg-bone',
+            'hover:border-taupe',
             className
           )}
           {...props}
@@ -211,8 +218,8 @@ export const Select = React.forwardRef(({
             </option>
           ))}
         </select>
-        <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-          <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+          <svg className="w-4 h-4 text-taupe group-hover:text-midnight-navy transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
         </div>
@@ -223,21 +230,21 @@ export const Select = React.forwardRef(({
 
 Select.displayName = 'Select'
 
-// Badge Component - Minimalist Labels
+// Badge Component - Fine Labels
 export const Badge = ({ className, variant = 'primary', children, ...props }) => {
   const variants = {
-    primary: 'bg-primary-50 text-primary-900 border-primary-200',
-    secondary: 'bg-gray-100 text-gray-700 border-gray-200',
-    success: 'bg-green-50 text-green-800 border-green-200',
-    warning: 'bg-amber-50 text-amber-800 border-amber-200',
-    danger: 'bg-red-50 text-red-800 border-red-200',
-    purple: 'bg-purple-50 text-purple-900 border-purple-200'
+    primary: 'bg-midnight-navy text-bone border-transparent',
+    secondary: 'bg-bone text-taupe border-greige',
+    success: 'bg-sage/20 text-verdigris border-sage/30',
+    warning: 'bg-champagne text-ochre border-ochre/20',
+    danger: 'bg-red-50 text-oxblood border-red-100',
+    purple: 'bg-mauve-taupe/10 text-mauve-taupe border-mauve-taupe/20'
   }
 
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 px-2 py-0.5 text-xs font-semibold uppercase tracking-wide rounded-sm border',
+        'inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] rounded-[1px] border',
         variants[variant],
         className
       )}
