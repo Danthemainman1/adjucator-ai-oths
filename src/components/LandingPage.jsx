@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from 'react';
 import {
   Gavel,
   Mic,
   Target,
   Brain,
-  Sparkles,
   ChevronRight,
   ArrowRight,
   Star,
@@ -13,11 +11,10 @@ import {
   Shield,
   Users,
   Trophy,
-  Play,
   CheckCircle,
-  MessageSquare,
   BarChart3,
-  BookOpen
+  BookOpen,
+  Play,
 } from 'lucide-react';
 
 const LandingPage = ({ onGetStarted, onContinueAsGuest }) => {
@@ -28,474 +25,289 @@ const LandingPage = ({ onGetStarted, onContinueAsGuest }) => {
       icon: Zap,
       title: 'Real-time Analysis',
       description: 'Get instant AI feedback on speeches with event-specific rubrics. Identify strengths, weaknesses, and actionable improvements in seconds.',
-      color: 'from-cyan-500 to-blue-500',
-      delay: 0.1
+      color: 'bg-teal-DEFAULT',
+      accent: '#0f4c5c',
     },
     {
       icon: Users,
       title: 'Team Collaboration',
       description: 'Manage your entire debate squad in one place. Share strategies, track individual progress, and coordinate team preparation.',
-      color: 'from-purple-500 to-pink-500',
-      delay: 0.2
+      color: 'bg-emerald-DEFAULT',
+      accent: '#10451d',
     },
     {
       icon: BarChart3,
       title: 'Performance Insights',
       description: 'Deep analytics on speaking patterns, argument effectiveness, and improvement trends. Data-driven coaching for measurable results.',
-      color: 'from-orange-500 to-red-500',
-      delay: 0.3
+      color: 'bg-gold-DEFAULT',
+      accent: '#d4af37',
     },
     {
       icon: Trophy,
       title: 'Tournament Tracking',
       description: 'Log competition results, monitor rankings, and analyze performance across events. See what strategies win at the highest levels.',
-      color: 'from-green-500 to-emerald-500',
-      delay: 0.4
-    }
-  ];
-
-  const benefits = [
-    { icon: Zap, text: 'Instant AI feedback in seconds' },
-    { icon: Shield, text: 'Event-specific evaluation rubrics' },
-    { icon: BarChart3, text: 'Track progress over time' },
-    { icon: BookOpen, text: 'Personalized improvement drills' }
+      color: 'bg-teal-light',
+      accent: '#0f4c5c',
+    },
   ];
 
   const testimonials = [
     {
-      quote: "This completely transformed how I prepare for tournaments. My speaker points jumped 2 points!",
-      author: "Sarah M.",
-      role: "Public Forum Debater",
-      avatar: "👩‍🎓"
-    },
-    {
       quote: "The strategy generator helped me anticipate every argument my opponents made at State.",
       author: "Marcus T.",
       role: "Lincoln-Douglas Champion",
-      avatar: "👨‍🎓"
+      avatar: "👨‍🎓",
     },
     {
-      quote: "Finally, feedback that understands the difference between Informative and Extemp. Game changer.",
-      author: "Emily R.",
-      role: "Speech Coach",
-      avatar: "👩‍🏫"
-    }
+      quote: "This completely transformed how I prepare for tournaments. My speaker points jumped 2 points!",
+      author: "Sarah M.",
+      role: "Public Forum Debater",
+      avatar: "👩‍🎓",
+    },
+    {
+      quote: "Our whole team uses it. The analytics show us exactly where we need to improve week over week.",
+      author: "Coach Rivera",
+      role: "State Championship Coach",
+      avatar: "🏆",
+    },
   ];
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
+  const benefits = [
+    'Instant AI feedback in seconds',
+    'Event-specific evaluation rubrics',
+    'Track progress over time',
+    'Personalized improvement drills',
+  ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { type: 'spring', stiffness: 100 }
-    }
-  };
+  const stats = [
+    { value: '10,000+', label: 'Active Debaters', icon: Users },
+    { value: '500+', label: 'Teams & Schools', icon: Trophy },
+    { value: '1M+', label: 'Speeches Analyzed', icon: Mic },
+  ];
 
   return (
-    <div className="min-h-screen bg-bg-primary overflow-hidden">
-      {/* Animated Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-primary/20 via-transparent to-transparent rounded-full blur-3xl animate-pulse" />
-        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-accent/20 via-transparent to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 rounded-full blur-3xl animate-float" />
-      </div>
+    <div style={{ background: '#0a1628', minHeight: '100vh', color: '#ffffff', fontFamily: 'Inter, Arial, sans-serif' }}>
 
-      {/* Navigation */}
-      <nav className="relative z-10 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-3"
-          >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg shadow-primary/25">
-              <Gavel className="w-5 h-5 text-white" />
+      {/* NAV */}
+      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, borderBottom: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(12px)', background: 'rgba(10,22,40,0.85)' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg, #0f4c5c, #22d3ee)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Gavel size={18} color="#fff" />
             </div>
-            <span className="text-xl font-bold text-white">Adjudicator AI</span>
-          </motion.div>
-          
-          <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-4"
-          >
+            <span style={{ fontWeight: 700, fontSize: 18, letterSpacing: '-0.3px' }}>Adjudicator AI</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <button
-              onClick={onContinueAsGuest}
-              className="text-text-secondary hover:text-white transition-colors px-4 py-2"
+              onClick={onGetStarted}
+              style={{ padding: '8px 20px', borderRadius: 8, background: 'linear-gradient(135deg, #0f4c5c, #22d3ee)', color: '#fff', fontWeight: 600, fontSize: 14, border: 'none', cursor: 'pointer' }}
             >
               Try Free
             </button>
             <button
               onClick={onGetStarted}
-              className="btn-primary flex items-center gap-2"
+              style={{ padding: '8px 20px', borderRadius: 8, background: 'transparent', color: '#cbd5e1', fontWeight: 500, fontSize: 14, border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}
             >
-              Sign In
-              <ArrowRight className="w-4 h-4" />
+              Sign In <ArrowRight size={14} />
             </button>
-          </motion.div>
+          </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative z-10 px-6 pt-16 pb-24">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={containerVariants}
-            className="text-center max-w-4xl mx-auto"
-          >
-            {/* Badge */}
-            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8">
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm text-primary font-medium">Trusted by 500+ Competitive Teams</span>
-            </motion.div>
+      {/* HERO */}
+      <section style={{ paddingTop: 140, paddingBottom: 100, paddingLeft: 24, paddingRight: 24, position: 'relative', overflow: 'hidden' }}>
+        {/* BG decorations */}
+        <div style={{ position: 'absolute', top: -80, right: -80, width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(15,76,92,0.35) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', bottom: 0, left: -100, width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(212,175,55,0.12) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
-            {/* Headline */}
-            <motion.h1 
-              variants={itemVariants}
-              className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
+        <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center', position: 'relative' }}>
+          {/* Badge */}
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '6px 16px', borderRadius: 100, border: '1px solid rgba(34,211,238,0.3)', background: 'rgba(34,211,238,0.08)', marginBottom: 32, fontSize: 13, color: '#22d3ee', fontWeight: 500 }}>
+            <Star size={12} fill="#22d3ee" />
+            Trusted by 500+ Competitive Teams
+          </div>
+
+          <h1 style={{ fontSize: 'clamp(40px, 7vw, 80px)', fontWeight: 800, lineHeight: 1.08, letterSpacing: '-2px', marginBottom: 24 }}>
+            <span style={{ color: '#ffffff' }}>AI-Powered</span>
+            <br />
+            <span style={{ background: 'linear-gradient(135deg, #22d3ee, #0f4c5c 60%, #d4af37)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Debate Coaching</span>
+            <br />
+            <span style={{ color: '#ffffff' }}>for Competitive Teams</span>
+          </h1>
+
+          <p style={{ fontSize: 18, lineHeight: 1.7, color: '#94a3b8', maxWidth: 600, margin: '0 auto 40px', fontWeight: 400 }}>
+            Elite debate programs use Adjudicator AI to analyze speeches in real-time, track team performance, and gain competitive insights that win tournaments.
+          </p>
+
+          {/* CTA Buttons */}
+          <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 72 }}>
+            <button
+              onClick={onGetStarted}
+              style={{ padding: '16px 36px', borderRadius: 12, background: 'linear-gradient(135deg, #0f4c5c, #22d3ee)', color: '#fff', fontWeight: 700, fontSize: 16, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, boxShadow: '0 8px 32px rgba(34,211,238,0.25)', transition: 'transform 0.2s' }}
+              onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+              onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
             >
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-cyan-400 to-accent">
-                AI-Powered
-              </span>
-              <span className="text-white"> Debate Coaching</span>
-              <br />
-              <span className="text-white">for </span>
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-accent">
-                Competitive Teams
-              </span>
-            </motion.h1>
-
-            {/* Subheadline */}
-            <motion.p 
-              variants={itemVariants}
-              className="text-xl text-text-secondary mb-10 max-w-2xl mx-auto"
+              Start Free Trial <ChevronRight size={18} />
+            </button>
+            <button
+              style={{ padding: '16px 36px', borderRadius: 12, background: 'rgba(255,255,255,0.06)', color: '#fff', fontWeight: 600, fontSize: 16, border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, backdropFilter: 'blur(8px)' }}
             >
-              Elite debate programs use Adjudicator AI to analyze speeches in real-time, 
-              track team performance, and gain competitive insights that win tournaments.
-            </motion.p>
+              <Play size={16} fill="white" /> Watch Demo
+            </button>
+          </div>
 
-            {/* CTA Buttons */}
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-              <button
-                onClick={onGetStarted}
-                className="group relative px-8 py-4 bg-gradient-to-r from-primary to-cyan-400 rounded-xl font-semibold text-white shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all hover:scale-105"
-              >
-                <span className="flex items-center gap-2">
-                  Start Free Trial
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </button>
-              <button
-                onClick={onContinueAsGuest}
-                className="group px-8 py-4 rounded-xl font-semibold text-text-secondary hover:text-white border border-slate-700 hover:border-slate-600 hover:bg-slate-800/50 transition-all flex items-center gap-2"
-              >
-                <Play className="w-5 h-5" />
-                Watch Demo
-              </button>
-            </motion.div>
-
-            {/* Enterprise Social Proof */}
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 text-text-muted">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center">
-                  <Users className="w-5 h-5 text-cyan-400" />
+          {/* Stats */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 48, flexWrap: 'wrap' }}>
+            {stats.map((stat, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(15,76,92,0.5)', border: '1px solid rgba(34,211,238,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <stat.icon size={20} color="#22d3ee" />
                 </div>
-                <div className="text-left">
-                  <div className="text-lg font-bold text-white">10,000+</div>
-                  <div className="text-xs text-text-muted">Active Debaters</div>
+                <div style={{ textAlign: 'left' }}>
+                  <div style={{ fontSize: 22, fontWeight: 800, color: '#ffffff', lineHeight: 1.1 }}>{stat.value}</div>
+                  <div style={{ fontSize: 12, color: '#64748b', fontWeight: 500, marginTop: 2 }}>{stat.label}</div>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center">
-                  <Trophy className="w-5 h-5 text-yellow-500" />
-                </div>
-                <div className="text-left">
-                  <div className="text-lg font-bold text-white">500+</div>
-                  <div className="text-xs text-text-muted">Teams & Schools</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center">
-                  <MessageSquare className="w-5 h-5 text-green-400" />
-                </div>
-                <div className="text-left">
-                  <div className="text-lg font-bold text-white">1M+</div>
-                  <div className="text-xs text-text-muted">Speeches Analyzed</div>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="relative z-10 px-6 py-24 bg-gradient-to-b from-transparent via-slate-900/50 to-transparent">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Everything You Need to Excel
-            </h2>
-            <p className="text-text-secondary max-w-2xl mx-auto">
-              From speech analysis to strategy building, we've got every aspect of your debate prep covered.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: feature.delay }}
-                whileHover={{ y: -5, scale: 1.02 }}
-                className="group relative"
-              >
-                <div className="glass-card h-full cursor-pointer">
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg`}>
-                    <feature.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">{feature.title}</h3>
-                  <p className="text-text-secondary text-sm">{feature.description}</p>
-                </div>
-              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Benefits Section */}
-      <section className="relative z-10 px-6 py-24">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Why Debaters Choose Us
-              </h2>
-              <p className="text-text-secondary mb-8">
-                We built this for debaters, by debaters. Every feature is designed to give you a competitive edge.
-              </p>
-              
-              <div className="space-y-4">
-                {benefits.map((benefit, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex items-center gap-4 p-4 rounded-xl bg-slate-900/50 border border-slate-800 hover:border-primary/30 transition-colors"
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <benefit.icon className="w-5 h-5 text-primary" />
-                    </div>
-                    <span className="text-text-primary font-medium">{benefit.text}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Testimonials Carousel */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="relative"
-            >
-              <div className="glass-card relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-3xl" />
-                
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentTestimonial}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3 }}
-                    className="relative z-10"
-                  >
-                    <div className="flex items-center gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 fill-yellow-500 text-yellow-500" />
-                      ))}
-                    </div>
-                    
-                    <blockquote className="text-xl text-white font-medium mb-6 leading-relaxed">
-                      "{testimonials[currentTestimonial].quote}"
-                    </blockquote>
-                    
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center text-2xl">
-                        {testimonials[currentTestimonial].avatar}
-                      </div>
-                      <div>
-                        <div className="text-white font-semibold">
-                          {testimonials[currentTestimonial].author}
-                        </div>
-                        <div className="text-text-muted text-sm">
-                          {testimonials[currentTestimonial].role}
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-
-                {/* Dots */}
-                <div className="flex items-center gap-2 mt-6">
-                  {testimonials.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentTestimonial(index)}
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        index === currentTestimonial
-                          ? 'w-6 bg-primary'
-                          : 'bg-slate-700 hover:bg-slate-600'
-                      }`}
-                    />
-                  ))}
+      {/* FEATURES */}
+      <section style={{ padding: '100px 24px', background: 'rgba(255,255,255,0.02)', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: 64 }}>
+            <h2 style={{ fontSize: 40, fontWeight: 800, color: '#ffffff', marginBottom: 16, letterSpacing: '-1px' }}>Everything You Need to Excel</h2>
+            <p style={{ fontSize: 17, color: '#64748b', maxWidth: 500, margin: '0 auto' }}>From speech analysis to strategy building, we've got every aspect of your debate prep covered.</p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 24 }}>
+            {features.map((f, i) => (
+              <div key={i} style={{ padding: 32, borderRadius: 20, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', transition: 'border-color 0.2s, background 0.2s', cursor: 'default' }}
+                onMouseOver={e => { e.currentTarget.style.borderColor = 'rgba(34,211,238,0.3)'; e.currentTarget.style.background = 'rgba(34,211,238,0.04)'; }}
+                onMouseOut={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}
+              >
+                <div style={{ width: 48, height: 48, borderRadius: 14, background: `rgba(15,76,92,0.5)`, border: '1px solid rgba(34,211,238,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
+                  <f.icon size={22} color="#22d3ee" />
                 </div>
+                <h3 style={{ fontSize: 19, fontWeight: 700, color: '#f1f5f9', marginBottom: 10 }}>{f.title}</h3>
+                <p style={{ fontSize: 14, color: '#64748b', lineHeight: 1.7 }}>{f.description}</p>
               </div>
-            </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="relative z-10 px-6 py-24">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="max-w-4xl mx-auto"
-        >
-          <div className="relative rounded-3xl overflow-hidden">
-            {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20" />
-            <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-xl" />
-            
-            <div className="relative z-10 p-12 text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent mb-6 shadow-lg shadow-primary/25">
-                <Trophy className="w-8 h-8 text-white" />
-              </div>
-              
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                Ready to Win Your Next Round?
-              </h2>
-              <p className="text-text-secondary mb-8 max-w-lg mx-auto">
-                Join thousands of debaters already using AI to sharpen their skills and dominate competitions.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <button
-                  onClick={onGetStarted}
-                  className="group px-8 py-4 bg-white text-slate-900 rounded-xl font-semibold hover:bg-gray-100 transition-all hover:scale-105 flex items-center gap-2"
-                >
-                  Start Free Today
-                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </button>
-                <button
-                  onClick={onContinueAsGuest}
-                  className="px-8 py-4 text-white font-semibold hover:underline underline-offset-4"
-                >
-                  Continue as Guest
-                </button>
-              </div>
+      {/* WHY US */}
+      <section style={{ padding: '100px 24px' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
+          <div>
+            <h2 style={{ fontSize: 40, fontWeight: 800, color: '#ffffff', marginBottom: 16, letterSpacing: '-1px', lineHeight: 1.15 }}>Why Debaters Choose Us</h2>
+            <p style={{ fontSize: 16, color: '#64748b', marginBottom: 36, lineHeight: 1.7 }}>We built this for debaters, by debaters. Every feature is designed to give you a competitive edge.</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              {benefits.map((b, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'rgba(34,211,238,0.15)', border: '1px solid rgba(34,211,238,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <CheckCircle size={13} color="#22d3ee" />
+                  </div>
+                  <span style={{ color: '#cbd5e1', fontSize: 15, fontWeight: 500 }}>{b}</span>
+                </div>
+              ))}
             </div>
           </div>
-        </motion.div>
+
+          {/* Testimonial card */}
+          <div style={{ position: 'relative' }}>
+            <div style={{ padding: 36, borderRadius: 24, background: 'linear-gradient(135deg, rgba(15,76,92,0.4), rgba(10,22,40,0.8))', border: '1px solid rgba(34,211,238,0.2)', backdropFilter: 'blur(12px)' }}>
+              <div style={{ fontSize: 48, marginBottom: 4, color: '#d4af37' }}>"</div>
+              <p style={{ fontSize: 17, color: '#e2e8f0', lineHeight: 1.7, fontStyle: 'italic', marginBottom: 28 }}>
+                {testimonials[currentTestimonial].quote}
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(15,76,92,0.6)', border: '1px solid rgba(34,211,238,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>
+                  {testimonials[currentTestimonial].avatar}
+                </div>
+                <div>
+                  <div style={{ fontWeight: 700, color: '#ffffff', fontSize: 15 }}>{testimonials[currentTestimonial].author}</div>
+                  <div style={{ fontSize: 12, color: '#64748b' }}>{testimonials[currentTestimonial].role}</div>
+                </div>
+              </div>
+            </div>
+            {/* Dots */}
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginTop: 20 }}>
+              {testimonials.map((_, i) => (
+                <button key={i} onClick={() => setCurrentTestimonial(i)}
+                  style={{ width: i === currentTestimonial ? 24 : 8, height: 8, borderRadius: 4, background: i === currentTestimonial ? '#22d3ee' : 'rgba(255,255,255,0.2)', border: 'none', cursor: 'pointer', transition: 'all 0.2s' }}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* Footer */}
-      <footer className="relative z-10 px-6 py-16 border-t border-slate-800 bg-slate-900/50">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-            {/* Brand Column */}
-            <div className="col-span-2 md:col-span-1">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg shadow-primary/25">
-                  <Gavel className="w-5 h-5 text-white" />
-                </div>
-                <span className="text-lg font-bold text-white">Adjudicator AI</span>
-              </div>
-              <p className="text-text-muted text-sm mb-4">
-                AI-powered debate coaching platform for competitive teams and speech programs.
-              </p>
-              <div className="flex items-center gap-1 mb-2">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-                ))}
-                <span className="text-sm text-text-muted ml-2">4.9/5</span>
-              </div>
-            </div>
-
-            {/* Product Column */}
-            <div>
-              <h4 className="text-white font-semibold mb-4">Product</h4>
-              <ul className="space-y-3">
-                <li><a href="#" className="text-text-muted hover:text-white transition-colors text-sm">Speech Analysis</a></li>
-                <li><a href="#" className="text-text-muted hover:text-white transition-colors text-sm">Strategy Generator</a></li>
-                <li><a href="#" className="text-text-muted hover:text-white transition-colors text-sm">Live Coaching</a></li>
-                <li><a href="#" className="text-text-muted hover:text-white transition-colors text-sm">Team Analytics</a></li>
-              </ul>
-            </div>
-
-            {/* Resources Column */}
-            <div>
-              <h4 className="text-white font-semibold mb-4">Resources</h4>
-              <ul className="space-y-3">
-                <li><a href="#" className="text-text-muted hover:text-white transition-colors text-sm">Documentation</a></li>
-                <li><a href="#" className="text-text-muted hover:text-white transition-colors text-sm">Debate Guides</a></li>
-                <li><a href="#" className="text-text-muted hover:text-white transition-colors text-sm">Event Rubrics</a></li>
-                <li><a href="#" className="text-text-muted hover:text-white transition-colors text-sm">API Access</a></li>
-              </ul>
-            </div>
-
-            {/* Company Column */}
-            <div>
-              <h4 className="text-white font-semibold mb-4">Company</h4>
-              <ul className="space-y-3">
-                <li><a href="#" className="text-text-muted hover:text-white transition-colors text-sm">About Us</a></li>
-                <li><a href="#" className="text-text-muted hover:text-white transition-colors text-sm">Contact</a></li>
-                <li><a href="#" className="text-text-muted hover:text-white transition-colors text-sm">Privacy Policy</a></li>
-                <li><a href="#" className="text-text-muted hover:text-white transition-colors text-sm">Terms of Service</a></li>
-              </ul>
+      {/* CTA SECTION */}
+      <section style={{ padding: '80px 24px' }}>
+        <div style={{ maxWidth: 800, margin: '0 auto' }}>
+          <div style={{ padding: '64px 48px', borderRadius: 28, background: 'linear-gradient(135deg, #0f4c5c 0%, #0a1628 50%, #0f4c5c 100%)', border: '1px solid rgba(34,211,238,0.25)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', top: -60, right: -60, width: 240, height: 240, borderRadius: '50%', background: 'radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%)', pointerEvents: 'none' }} />
+            <Trophy size={40} color="#d4af37" style={{ marginBottom: 20 }} />
+            <h2 style={{ fontSize: 36, fontWeight: 800, color: '#ffffff', marginBottom: 16, letterSpacing: '-0.5px' }}>Ready to Win Your Next Round?</h2>
+            <p style={{ fontSize: 16, color: '#94a3b8', marginBottom: 36, lineHeight: 1.6 }}>Join thousands of debaters already using AI to sharpen their skills and dominate competitions.</p>
+            <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
+              <button
+                onClick={onGetStarted}
+                style={{ padding: '14px 32px', borderRadius: 12, background: 'linear-gradient(135deg, #22d3ee, #0f4c5c)', color: '#fff', fontWeight: 700, fontSize: 16, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, boxShadow: '0 4px 20px rgba(34,211,238,0.3)' }}
+              >
+                Start Free Today <ChevronRight size={18} />
+              </button>
+              <button
+                onClick={onContinueAsGuest}
+                style={{ padding: '14px 32px', borderRadius: 12, background: 'transparent', color: '#cbd5e1', fontWeight: 600, fontSize: 16, border: '1px solid rgba(255,255,255,0.2)', cursor: 'pointer' }}
+              >
+                Continue as Guest
+              </button>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Bottom Bar */}
-          <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-text-muted text-sm">
-              © 2025 Adjudicator AI. All rights reserved.
+      {/* FOOTER */}
+      <footer style={{ borderTop: '1px solid rgba(255,255,255,0.08)', padding: '60px 24px 40px' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 40, marginBottom: 48 }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
+                <div style={{ width: 32, height: 32, borderRadius: 8, background: 'linear-gradient(135deg, #0f4c5c, #22d3ee)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Gavel size={14} color="#fff" />
+                </div>
+                <span style={{ fontWeight: 700, fontSize: 16, color: '#fff' }}>Adjudicator AI</span>
+              </div>
+              <p style={{ color: '#475569', fontSize: 14, lineHeight: 1.7, maxWidth: 240 }}>AI-powered debate coaching platform for competitive teams and speech programs.</p>
+              <div style={{ display: 'flex', gap: 4, marginTop: 16 }}>
+                {[1,2,3,4,5].map(n => <Star key={n} size={14} fill="#d4af37" color="#d4af37" />)}
+                <span style={{ color: '#64748b', fontSize: 13, marginLeft: 6 }}>4.9/5</span>
+              </div>
             </div>
-            <div className="flex items-center gap-6">
-              <span className="text-text-muted text-sm">Built for debaters, by debaters.</span>
-            </div>
+            {[
+              { title: 'Product', links: ['Speech Analysis', 'Strategy Generator', 'Live Coaching', 'Team Analytics'] },
+              { title: 'Resources', links: ['Documentation', 'Debate Guides', 'Event Rubrics', 'API Access'] },
+              { title: 'Company', links: ['About Us', 'Contact', 'Privacy Policy', 'Terms of Service'] },
+            ].map((col, i) => (
+              <div key={i}>
+                <h4 style={{ fontWeight: 700, fontSize: 14, color: '#fff', marginBottom: 16, letterSpacing: '0.5px', textTransform: 'uppercase' }}>{col.title}</h4>
+                {col.links.map(link => (
+                  <div key={link} style={{ marginBottom: 10 }}>
+                    <a href="#" style={{ color: '#475569', fontSize: 14, textDecoration: 'none', transition: 'color 0.15s' }}
+                      onMouseOver={e => e.currentTarget.style.color = '#22d3ee'}
+                      onMouseOut={e => e.currentTarget.style.color = '#475569'}
+                    >{link}</a>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 28, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+            <span style={{ color: '#334155', fontSize: 14 }}>© 2025 Adjudicator AI. All rights reserved.</span>
+            <span style={{ color: '#334155', fontSize: 14 }}>Built for debaters, by debaters.</span>
           </div>
         </div>
       </footer>

@@ -38,7 +38,18 @@ export default {
           white: '#ffffff',
           cream: '#faf9f6', // Off-white
           dark: '#121212',  // Rich Black
-        }
+        },
+
+        // CSS Variable-based theme colors (for LandingPage and dynamic theming)
+        primary: 'var(--primary)',
+        accent: 'var(--accent)',
+        'bg-primary': 'var(--bg-primary)',
+        'bg-secondary': 'var(--bg-secondary)',
+        'bg-tertiary': 'var(--bg-tertiary)',
+        'text-primary': 'var(--text-primary)',
+        'text-secondary': 'var(--text-secondary)',
+        'text-muted': 'var(--text-muted)',
+        'border-color': 'var(--border)',
       },
       fontFamily: {
         serif: ['"Playfair Display"', 'Times New Roman', 'serif'],
