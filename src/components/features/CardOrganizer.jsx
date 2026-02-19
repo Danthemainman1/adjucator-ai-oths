@@ -26,7 +26,7 @@ const getColorClasses = (color) => {
     red: { bg: 'bg-red-500/20', border: 'border-red-500/50', text: 'text-red-400', badge: 'bg-red-500' },
     blue: { bg: 'bg-blue-500/20', border: 'border-blue-500/50', text: 'text-blue-400', badge: 'bg-blue-500' },
     purple: { bg: 'bg-purple-500/20', border: 'border-purple-500/50', text: 'text-purple-400', badge: 'bg-purple-500' },
-    slate: { bg: 'bg-slate-500/20', border: 'border-slate-500/50', text: 'text-slate-400', badge: 'bg-slate-500' }
+    slate: { bg: 'bg-slate-500/20', border: 'border-slate-500/50', text: 'text-[var(--text-muted)]', badge: 'bg-slate-500' }
   };
   return colors[color] || colors.slate;
 };
@@ -99,11 +99,11 @@ const CardOrganizer = () => {
               <Layers className="w-6 h-6 text-violet-400" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-white">Card Organizer</h1>
-              <p className="text-slate-400 text-sm">Organize debate arguments by category</p>
+              <h1 className="text-2xl font-bold text-[var(--text-primary)]">Card Organizer</h1>
+              <p className="text-[var(--text-muted)] text-sm">Organize debate arguments by category</p>
             </div>
           </div>
-          <div className="text-slate-400 text-sm">
+          <div className="text-[var(--text-muted)] text-sm">
             {cards.length} card{cards.length !== 1 ? 's' : ''} total
           </div>
         </div>
@@ -120,13 +120,13 @@ const CardOrganizer = () => {
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
                   activeCategory === category.id
                     ? `${catColors.bg} ${catColors.border} border ${catColors.text}`
-                    : 'bg-slate-800/50 border border-slate-700/50 text-slate-400 hover:text-white hover:border-slate-600'
+                    : 'bg-[var(--card-bg)]/50 border border-[var(--border)]/50 text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:border-[var(--border)]'
                 }`}
               >
                 <span className={`w-2 h-2 rounded-full ${catColors.badge}`} />
                 {category.name}
                 {count > 0 && (
-                  <span className="px-1.5 py-0.5 bg-slate-900/50 rounded text-xs">
+                  <span className="px-1.5 py-0.5 bg-[var(--bg-primary)]/50 rounded text-xs">
                     {count}
                   </span>
                 )}
@@ -136,7 +136,7 @@ const CardOrganizer = () => {
         </div>
 
         {/* Cards Area */}
-        <div className={`bg-slate-800/50 border ${colors.border} rounded-xl p-4 min-h-[500px]`}>
+        <div className={`bg-[var(--card-bg)]/50 border ${colors.border} rounded-xl p-4 min-h-[500px]`}>
           {/* Add Card Button */}
           {!showAddForm ? (
             <button
@@ -152,21 +152,21 @@ const CardOrganizer = () => {
                 value={newCardText}
                 onChange={(e) => setNewCardText(e.target.value)}
                 placeholder="Enter argument, evidence, or note..."
-                className="w-full bg-slate-900/50 border border-slate-700 rounded-lg p-3 text-white placeholder-slate-500 focus:outline-none focus:border-slate-600 resize-none"
+                className="w-full bg-[var(--bg-primary)]/50 border border-[var(--border)] rounded-lg p-3 text-[var(--text-primary)] placeholder-slate-500 focus:outline-none focus:border-[var(--border)] resize-none"
                 rows={3}
                 autoFocus
               />
               <div className="flex justify-end gap-2 mt-3">
                 <button
                   onClick={() => { setShowAddForm(false); setNewCardText(''); }}
-                  className="px-3 py-1.5 text-slate-400 hover:text-white transition-colors"
+                  className="px-3 py-1.5 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={addCard}
                   disabled={!newCardText.trim()}
-                  className={`px-4 py-1.5 ${colors.badge} text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed`}
+                  className={`px-4 py-1.5 ${colors.badge} text-[var(--text-primary)] rounded-lg disabled:opacity-50 disabled:cursor-not-allowed`}
                 >
                   Add Card
                 </button>
@@ -176,7 +176,7 @@ const CardOrganizer = () => {
 
           {/* Cards List */}
           {activeCards.length === 0 ? (
-            <div className="text-center py-16 text-slate-500">
+            <div className="text-center py-16 text-[var(--text-muted)]">
               <FolderOpen className="w-12 h-12 mx-auto mb-3 opacity-50" />
               <p>No cards in {activeCategoryData?.name}</p>
               <p className="text-sm">Add a card to get started</p>
@@ -226,21 +226,21 @@ const CardItem = ({ card, colors, isEditing, onEdit, onSave, onCancel, onDelete,
   return (
     <motion.div
       layout
-      className={`group p-4 bg-slate-900/50 border border-slate-700/50 rounded-lg hover:border-slate-600 transition-colors`}
+      className={`group p-4 bg-[var(--bg-primary)]/50 border border-[var(--border)]/50 rounded-lg hover:border-[var(--border)] transition-colors`}
     >
       {isEditing ? (
         <div>
           <textarea
             value={editText}
             onChange={(e) => setEditText(e.target.value)}
-            className="w-full bg-slate-800 border border-slate-600 rounded-lg p-3 text-white focus:outline-none resize-none"
+            className="w-full bg-[var(--card-bg)] border border-[var(--border)] rounded-lg p-3 text-[var(--text-primary)] focus:outline-none resize-none"
             rows={3}
             autoFocus
           />
           <div className="flex justify-end gap-2 mt-2">
             <button
               onClick={onCancel}
-              className="p-1.5 text-slate-400 hover:text-white"
+              className="p-1.5 text-[var(--text-muted)] hover:text-[var(--text-primary)]"
             >
               <X className="w-4 h-4" />
             </button>
@@ -257,19 +257,19 @@ const CardItem = ({ card, colors, isEditing, onEdit, onSave, onCancel, onDelete,
           <div className="text-slate-600 mt-1">
             <GripVertical className="w-4 h-4" />
           </div>
-          <p className="flex-1 text-white whitespace-pre-wrap">{card.text}</p>
+          <p className="flex-1 text-[var(--text-primary)] whitespace-pre-wrap">{card.text}</p>
           <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
             {/* Move to category */}
             <div className="relative">
               <button
                 onClick={() => setShowMoveMenu(!showMoveMenu)}
-                className="p-1.5 text-slate-500 hover:text-white transition-colors"
+                className="p-1.5 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
                 title="Move to category"
               >
                 <Tag className="w-4 h-4" />
               </button>
               {showMoveMenu && (
-                <div className="absolute right-0 top-8 bg-slate-800 border border-slate-700 rounded-lg shadow-xl z-10 py-1 min-w-[150px]">
+                <div className="absolute right-0 top-8 bg-[var(--card-bg)] border border-[var(--border)] rounded-lg shadow-xl z-10 py-1 min-w-[150px]">
                   {categories
                     .filter(c => c.id !== currentCategory)
                     .map(cat => {
@@ -281,7 +281,7 @@ const CardItem = ({ card, colors, isEditing, onEdit, onSave, onCancel, onDelete,
                             onMove(cat.id);
                             setShowMoveMenu(false);
                           }}
-                          className="w-full px-3 py-2 text-left text-sm text-slate-300 hover:bg-slate-700 flex items-center gap-2"
+                          className="w-full px-3 py-2 text-left text-sm text-[var(--text-secondary)] hover:bg-[var(--input-bg)] flex items-center gap-2"
                         >
                           <span className={`w-2 h-2 rounded-full ${catColors.badge}`} />
                           {cat.name}
@@ -293,14 +293,14 @@ const CardItem = ({ card, colors, isEditing, onEdit, onSave, onCancel, onDelete,
             </div>
             <button
               onClick={onEdit}
-              className="p-1.5 text-slate-500 hover:text-white transition-colors"
+              className="p-1.5 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
               title="Edit"
             >
               <Edit3 className="w-4 h-4" />
             </button>
             <button
               onClick={onDelete}
-              className="p-1.5 text-slate-500 hover:text-red-400 transition-colors"
+              className="p-1.5 text-[var(--text-muted)] hover:text-red-400 transition-colors"
               title="Delete"
             >
               <Trash2 className="w-4 h-4" />

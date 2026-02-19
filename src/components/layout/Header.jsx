@@ -106,7 +106,7 @@ const Header = ({ onNavigate }) => {
         ) : (
           <button
             onClick={() => openModal('login')}
-            className="px-6 py-2 bg-teal text-white text-xs font-bold tracking-widest uppercase border border-teal-dark hover:bg-teal-dark transition-all shadow-gold"
+            className="px-6 py-2 bg-teal text-[var(--text-primary)] text-xs font-bold tracking-widest uppercase border border-teal-dark hover:bg-teal-dark transition-all shadow-gold"
           >
             Sign In
           </button>

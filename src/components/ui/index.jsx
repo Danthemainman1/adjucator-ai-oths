@@ -13,16 +13,16 @@ export const Button = React.forwardRef(({
 }, ref) => {
   const variants = {
     // Teal-Gold (Primary)
-    primary: 'bg-teal text-white border border-teal-dark hover:bg-teal-dark shadow-sm hover:shadow-gold/20',
+    primary: 'bg-teal text-[var(--text-primary)] border border-teal-dark hover:bg-teal-dark shadow-sm hover:shadow-gold/20',
     
     // Emerald-Gold (Success/Alternative)
-    success: 'bg-emerald text-white border border-emerald-dark hover:bg-emerald-dark shadow-sm',
+    success: 'bg-emerald text-[var(--text-primary)] border border-emerald-dark hover:bg-emerald-dark shadow-sm',
     
     // Red-Gold (Danger/Action)
-    danger: 'bg-red text-white border border-red-dark hover:bg-red-dark shadow-sm',
+    danger: 'bg-red text-[var(--text-primary)] border border-red-dark hover:bg-red-dark shadow-sm',
     
     // Gold (Accent)
-    gold: 'bg-base-white text-gold-dim border border-gold hover:bg-gold hover:text-white',
+    gold: 'bg-base-white text-gold-dim border border-gold hover:bg-gold hover:text-[var(--text-primary)]',
     
     // Ghost
     ghost: 'bg-transparent text-teal-dark hover:bg-gold-light/20 hover:text-gold-dim',
@@ -133,7 +133,7 @@ export const Input = React.forwardRef(({
         className={cn(
           'w-full bg-base-white border border-gold/30 text-teal-dark px-4 py-3',
           'outline-none transition-all duration-300',
-          'placeholder:text-gray-300',
+          'placeholder:text-[var(--text-secondary)]',
           'focus:border-gold focus:ring-1 focus:ring-gold/20',
           error 
             ? 'border-red text-red focus:border-red focus:ring-red/20' 
@@ -327,7 +327,7 @@ export const Tooltip = ({ children, content, side = 'top' }) => {
       <div
         className={cn(
           'absolute z-50 px-3 py-1.5 text-xs font-medium whitespace-nowrap',
-          'bg-gray-900 text-white rounded-sm shadow-md',
+          'bg-[var(--bg-primary)] text-[var(--text-primary)] rounded-sm shadow-md',
           'invisible opacity-0 group-hover:visible group-hover:opacity-100',
           'transition-all duration-200',
           positions[side]
@@ -375,7 +375,7 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'md' }) => {
             <h2 className="text-2xl font-serif font-bold text-ink-black">{title}</h2>
             <button
               onClick={onClose}
-              className="p-2 text-gray-400 hover:text-ink-black hover:bg-gray-100 rounded-sm transition-colors"
+              className="p-2 text-[var(--text-muted)] hover:text-ink-black hover:bg-gray-100 rounded-sm transition-colors"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -405,7 +405,7 @@ export const Tabs = ({ tabs, activeTab, onChange, className }) => {
             'px-1 py-3 text-sm font-semibold tracking-wide uppercase transition-all duration-200 border-b-2',
             activeTab === tab.id
               ? 'border-primary text-primary'
-              : 'border-transparent text-gray-500 hover:text-ink-black hover:border-gray-300'
+              : 'border-transparent text-[var(--text-muted)] hover:text-ink-black hover:border-gray-300'
           )}
         >
           {tab.label}
@@ -421,12 +421,12 @@ export const EmptyState = ({ icon: Icon, title, description, action }) => {
     <div className="flex flex-col items-center justify-center py-16 text-center border-2 border-dashed border-gray-200 rounded-sm bg-gray-50/50">
       {Icon && (
         <div className="w-16 h-16 bg-white border border-gray-200 rounded-full flex items-center justify-center mb-4 shadow-sm">
-          <Icon className="w-6 h-6 text-gray-400" />
+          <Icon className="w-6 h-6 text-[var(--text-muted)]" />
         </div>
       )}
       <h3 className="text-lg font-serif font-semibold text-ink-black mb-2">{title}</h3>
       {description && (
-        <p className="text-sm text-gray-500 max-w-sm mb-6">{description}</p>
+        <p className="text-sm text-[var(--text-muted)] max-w-sm mb-6">{description}</p>
       )}
       {action}
     </div>

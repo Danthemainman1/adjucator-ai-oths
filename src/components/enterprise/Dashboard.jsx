@@ -98,8 +98,8 @@ const Dashboard = ({ setActiveTab }) => {
     <div className="space-y-8">
       {/* Page Header */}
       <div>
-        <h1 className="text-3xl font-bold text-white tracking-tight">Dashboard</h1>
-        <p className="text-slate-400 mt-1">Welcome! Let's get started on improving your debate skills.</p>
+        <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight">Dashboard</h1>
+        <p className="text-[var(--text-muted)] mt-1">Welcome! Let's get started on improving your debate skills.</p>
       </div>
 
       {/* Get Started Cards Grid */}
@@ -121,11 +121,11 @@ const Dashboard = ({ setActiveTab }) => {
                     <Icon className={`w-6 h-6 ${colors.text}`} />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm text-slate-500 font-medium">{card.label}</p>
-                    <p className="text-lg font-semibold text-white mt-0.5">{card.title}</p>
+                    <p className="text-sm text-[var(--text-muted)] font-medium">{card.label}</p>
+                    <p className="text-lg font-semibold text-[var(--text-primary)] mt-0.5">{card.title}</p>
                   </div>
                 </div>
-                <p className="text-slate-400 text-sm flex-1 mb-4">{card.description}</p>
+                <p className="text-[var(--text-muted)] text-sm flex-1 mb-4">{card.description}</p>
                 <button
                   onClick={() => setActiveTab(card.tab)}
                   className={`w-full py-2.5 px-4 rounded-lg ${colors.buttonBg} border ${colors.buttonBorder} ${colors.text} font-medium ${colors.buttonHover} transition-all flex items-center justify-center gap-2`}
@@ -151,8 +151,8 @@ const Dashboard = ({ setActiveTab }) => {
           >
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="text-lg font-semibold text-white">Performance Trend</h2>
-                <p className="text-sm text-slate-400">Track your improvement over time</p>
+                <h2 className="text-lg font-semibold text-[var(--text-primary)]">Performance Trend</h2>
+                <p className="text-sm text-[var(--text-muted)]">Track your improvement over time</p>
               </div>
             </div>
 
@@ -170,11 +170,11 @@ const Dashboard = ({ setActiveTab }) => {
               </div>
               
               <div className="relative z-10 text-center">
-                <div className="p-4 rounded-full bg-slate-800/50 border border-slate-700/50 mb-4 mx-auto w-fit">
-                  <BarChart3 className="w-8 h-8 text-slate-500" />
+                <div className="p-4 rounded-full bg-[var(--card-bg)]/50 border border-[var(--border)]/50 mb-4 mx-auto w-fit">
+                  <BarChart3 className="w-8 h-8 text-[var(--text-muted)]" />
                 </div>
-                <p className="text-slate-400 font-medium">No performance data yet</p>
-                <p className="text-slate-500 text-sm mt-1">Complete your first analysis to start tracking progress</p>
+                <p className="text-[var(--text-muted)] font-medium">No performance data yet</p>
+                <p className="text-[var(--text-muted)] text-sm mt-1">Complete your first analysis to start tracking progress</p>
               </div>
             </div>
           </motion.div>
@@ -188,7 +188,7 @@ const Dashboard = ({ setActiveTab }) => {
             transition={{ delay: 0.3 }}
             className="glass-panel p-6 h-full"
           >
-            <h2 className="text-lg font-semibold text-white mb-4">Quick Actions</h2>
+            <h2 className="text-lg font-semibold text-[var(--text-primary)] mb-4">Quick Actions</h2>
             <div className="space-y-3">
               {quickActions.map((action, index) => {
                 const Icon = action.icon;
@@ -196,13 +196,13 @@ const Dashboard = ({ setActiveTab }) => {
                   <button
                     key={action.label}
                     onClick={() => setActiveTab(action.tab)}
-                    className="w-full flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-slate-900/30 hover:bg-slate-800/50 hover:border-white/10 transition-all group"
+                    className="w-full flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-[var(--bg-primary)]/30 hover:bg-[var(--card-bg)]/50 hover:border-white/10 transition-all group"
                   >
                     <div className={`p-2.5 rounded-lg bg-gradient-to-br ${action.color} shadow-lg`}>
-                      <Icon className="w-5 h-5 text-white" />
+                      <Icon className="w-5 h-5 text-[var(--text-primary)]" />
                     </div>
-                    <span className="flex-1 text-left text-white font-medium">{action.label}</span>
-                    <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-slate-300 group-hover:translate-x-1 transition-all" />
+                    <span className="flex-1 text-left text-[var(--text-primary)] font-medium">{action.label}</span>
+                    <ChevronRight className="w-5 h-5 text-[var(--text-muted)] group-hover:text-[var(--text-secondary)] group-hover:translate-x-1 transition-all" />
                   </button>
                 );
               })}
@@ -219,16 +219,16 @@ const Dashboard = ({ setActiveTab }) => {
         className="glass-panel p-6"
       >
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold text-white">Recent Activity</h2>
+          <h2 className="text-lg font-semibold text-[var(--text-primary)]">Recent Activity</h2>
         </div>
 
         {/* Empty State */}
         <div className="py-12 flex flex-col items-center justify-center">
-          <div className="p-4 rounded-full bg-slate-800/50 border border-slate-700/50 mb-4">
-            <History className="w-8 h-8 text-slate-500" />
+          <div className="p-4 rounded-full bg-[var(--card-bg)]/50 border border-[var(--border)]/50 mb-4">
+            <History className="w-8 h-8 text-[var(--text-muted)]" />
           </div>
-          <p className="text-slate-400 font-medium">No recent activity</p>
-          <p className="text-slate-500 text-sm mt-1 text-center max-w-md">
+          <p className="text-[var(--text-muted)] font-medium">No recent activity</p>
+          <p className="text-[var(--text-muted)] text-sm mt-1 text-center max-w-md">
             Your recent analyses, coaching sessions, and strategies will appear here as you use the platform.
           </p>
           <button
@@ -251,11 +251,11 @@ const Dashboard = ({ setActiveTab }) => {
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10" />
         <div className="relative p-6 flex items-center gap-6">
           <div className="p-3 rounded-xl bg-gradient-to-br from-cyan-500 to-purple-600 shadow-lg">
-            <Lightbulb className="w-6 h-6 text-white" />
+            <Lightbulb className="w-6 h-6 text-[var(--text-primary)]" />
           </div>
           <div className="flex-1">
-            <h3 className="text-white font-semibold">Getting Started</h3>
-            <p className="text-slate-400 text-sm mt-1">
+            <h3 className="text-[var(--text-primary)] font-semibold">Getting Started</h3>
+            <p className="text-[var(--text-muted)] text-sm mt-1">
               Start by analyzing your first speech. Upload a recording or paste your speech text to get detailed AI-powered feedback.
             </p>
           </div>

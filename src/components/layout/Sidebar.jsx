@@ -53,7 +53,7 @@ const Sidebar = ({ onNavigate, currentPage }) => {
               className={cn(
                 'flex items-center gap-4 w-full p-3 rounded-sm transition-all duration-300 group',
                 isActive 
-                  ? 'bg-teal text-white shadow-md shadow-teal/20' 
+                  ? 'bg-teal text-[var(--text-primary)] shadow-md shadow-teal/20' 
                   : 'text-teal-dark hover:bg-gold/10'
               )}
               title={!sidebarOpen ? item.label : undefined}

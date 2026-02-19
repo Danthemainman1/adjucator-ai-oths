@@ -421,13 +421,13 @@ const TeamBrowser = ({ setActiveTab }) => {
       <div className="min-h-[80vh] flex flex-col items-center justify-center text-center space-y-6 px-4">
         <div className="relative">
           <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full blur opacity-30" />
-          <div className="relative w-24 h-24 bg-slate-900 rounded-full flex items-center justify-center border-2 border-slate-800">
+          <div className="relative w-24 h-24 bg-[var(--bg-primary)] rounded-full flex items-center justify-center border-2 border-[var(--border)]">
             <Lock className="w-12 h-12 text-cyan-400" />
           </div>
         </div>
         <div className="space-y-2">
-          <h2 className="text-3xl font-bold text-white">Authentication Required</h2>
-          <p className="text-slate-400 max-w-md">
+          <h2 className="text-3xl font-bold text-[var(--text-primary)]">Authentication Required</h2>
+          <p className="text-[var(--text-muted)] max-w-md">
             Please sign in to browse teams, create your own team, and collaborate with other debaters.
           </p>
         </div>
@@ -446,7 +446,7 @@ const TeamBrowser = ({ setActiveTab }) => {
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="text-slate-400">Loading teams...</p>
+          <p className="text-[var(--text-muted)]">Loading teams...</p>
         </div>
       </div>
     );
@@ -463,7 +463,7 @@ const TeamBrowser = ({ setActiveTab }) => {
           {notification.type === 'success' && <Check className="w-5 h-5 text-green-400" />}
           {notification.type === 'error' && <AlertCircle className="w-5 h-5 text-red-400" />}
           {notification.type === 'info' && <AlertCircle className="w-5 h-5 text-blue-400" />}
-          <span className="text-white">{notification.message}</span>
+          <span className="text-[var(--text-primary)]">{notification.message}</span>
         </div>
       )}
 
@@ -471,11 +471,11 @@ const TeamBrowser = ({ setActiveTab }) => {
       <div className="glass-card space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-[var(--text-primary)] flex items-center gap-3">
               <Users className="w-8 h-8 text-cyan-400" />
               Team Browser
             </h1>
-            <p className="text-slate-400 mt-2">
+            <p className="text-[var(--text-muted)] mt-2">
               Find, join, or create teams to collaborate with other debaters
             </p>
           </div>
@@ -491,7 +491,7 @@ const TeamBrowser = ({ setActiveTab }) => {
         {/* Search and Filters */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)]" />
             <input
               type="text"
               placeholder="Search teams..."
@@ -503,7 +503,7 @@ const TeamBrowser = ({ setActiveTab }) => {
           <button
             onClick={() => setShowFilters(!showFilters)}
             className={`px-4 py-2 rounded-lg transition-all flex items-center gap-2 ${
-              showFilters ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/50' : 'bg-slate-800 text-slate-300 border-slate-700'
+              showFilters ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/50' : 'bg-[var(--card-bg)] text-[var(--text-secondary)] border-[var(--border)]'
             } border`}
           >
             <Filter className="w-4 h-4" />
@@ -513,7 +513,7 @@ const TeamBrowser = ({ setActiveTab }) => {
 
         {/* Filter Options */}
         {showFilters && (
-          <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-800">
+          <div className="flex flex-wrap gap-2 pt-2 border-t border-[var(--border)]">
             {['all', 'debate', 'interpretation', 'limited_prep'].map((cat) => (
               <button
                 key={cat}
@@ -521,7 +521,7 @@ const TeamBrowser = ({ setActiveTab }) => {
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                   filterCategory === cat
                     ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/50'
-                    : 'bg-slate-800 text-slate-400 border-slate-700 hover:border-slate-600'
+                    : 'bg-[var(--card-bg)] text-[var(--text-muted)] border-[var(--border)] hover:border-[var(--border)]'
                 } border`}
               >
                 {cat.charAt(0).toUpperCase() + cat.slice(1).replace('_', ' ')}
@@ -534,7 +534,7 @@ const TeamBrowser = ({ setActiveTab }) => {
       {/* My Teams */}
       {myTeams.length > 0 && (
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
+          <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Crown className="w-5 h-5 text-yellow-400" />
             My Teams ({myTeams.length})
           </h2>
@@ -561,7 +561,7 @@ const TeamBrowser = ({ setActiveTab }) => {
 
       {/* All Teams */}
       <div className="space-y-4">
-        <h2 className="text-xl font-bold text-white flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
           <Users className="w-5 h-5 text-cyan-400" />
           Browse Teams ({filteredTeams.length})
         </h2>
@@ -569,8 +569,8 @@ const TeamBrowser = ({ setActiveTab }) => {
         {filteredTeams.length === 0 ? (
           <div className="glass-card text-center py-12">
             <Users className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-white mb-2">No teams found</h3>
-            <p className="text-slate-400 mb-6">
+            <h3 className="text-xl font-semibold text-[var(--text-primary)] mb-2">No teams found</h3>
+            <p className="text-[var(--text-muted)] mb-6">
               {searchQuery || filterCategory !== 'all' 
                 ? 'Try adjusting your search or filters'
                 : 'Be the first to create a team!'}
@@ -610,15 +610,15 @@ const TeamBrowser = ({ setActiveTab }) => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
           <div className="glass-card w-full max-w-2xl max-h-[90vh] overflow-y-auto animate-in zoom-in-95">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+              <h2 className="text-2xl font-bold text-[var(--text-primary)] flex items-center gap-3">
                 <Plus className="w-6 h-6 text-cyan-400" />
                 Create New Team
               </h2>
               <button
                 onClick={() => setShowCreateModal(false)}
-                className="p-2 rounded-lg hover:bg-slate-800 transition-colors"
+                className="p-2 rounded-lg hover:bg-[var(--card-bg)] transition-colors"
               >
-                <X className="w-5 h-5 text-slate-400" />
+                <X className="w-5 h-5 text-[var(--text-muted)]" />
               </button>
             </div>
 
@@ -626,7 +626,7 @@ const TeamBrowser = ({ setActiveTab }) => {
               {/* Basic Info */}
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                  <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
                     Team Name *
                   </label>
                   <input
@@ -640,7 +640,7 @@ const TeamBrowser = ({ setActiveTab }) => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                  <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
                     Description
                   </label>
                   <textarea
@@ -654,7 +654,7 @@ const TeamBrowser = ({ setActiveTab }) => {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-slate-300 mb-2">
+                    <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
                       Category
                     </label>
                     <select
@@ -669,7 +669,7 @@ const TeamBrowser = ({ setActiveTab }) => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-slate-300 mb-2">
+                    <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
                       Max Members
                     </label>
                     <input
@@ -689,9 +689,9 @@ const TeamBrowser = ({ setActiveTab }) => {
                     id="isPrivate"
                     checked={formData.isPrivate}
                     onChange={(e) => setFormData({ ...formData, isPrivate: e.target.checked })}
-                    className="w-4 h-4 rounded border-slate-700 bg-slate-800 text-cyan-500"
+                    className="w-4 h-4 rounded border-[var(--border)] bg-[var(--card-bg)] text-cyan-500"
                   />
-                  <label htmlFor="isPrivate" className="text-sm text-slate-300 flex items-center gap-2">
+                  <label htmlFor="isPrivate" className="text-sm text-[var(--text-secondary)] flex items-center gap-2">
                     {formData.isPrivate ? <Lock className="w-4 h-4" /> : <Unlock className="w-4 h-4" />}
                     Private Team (invite-only)
                   </label>
@@ -700,13 +700,13 @@ const TeamBrowser = ({ setActiveTab }) => {
 
               {/* Event Selection */}
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-3">
+                <label className="block text-sm font-medium text-[var(--text-secondary)] mb-3">
                   Select Events
                 </label>
                 <div className="space-y-4">
                   {Object.entries(SPEECH_EVENTS).map(([category, events]) => (
                     <div key={category}>
-                      <h4 className="text-xs font-semibold text-slate-500 uppercase mb-2">
+                      <h4 className="text-xs font-semibold text-[var(--text-muted)] uppercase mb-2">
                         {category.replace('_', ' ')}
                       </h4>
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -718,7 +718,7 @@ const TeamBrowser = ({ setActiveTab }) => {
                             className={`p-3 rounded-lg border transition-all text-left ${
                               formData.events.includes(event.id)
                                 ? 'bg-cyan-500/20 border-cyan-500/50 text-cyan-400'
-                                : 'bg-slate-800 border-slate-700 text-slate-400 hover:border-slate-600'
+                                : 'bg-[var(--card-bg)] border-[var(--border)] text-[var(--text-muted)] hover:border-[var(--border)]'
                             }`}
                           >
                             <div className="flex items-center gap-2">
@@ -735,11 +735,11 @@ const TeamBrowser = ({ setActiveTab }) => {
               </div>
 
               {/* Actions */}
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex justify-end gap-3 pt-4 border-t border-[var(--border)]">
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="px-6 py-2 rounded-lg text-slate-400 hover:text-white transition-colors"
+                  className="px-6 py-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
                 >
                   Cancel
                 </button>
@@ -756,13 +756,13 @@ const TeamBrowser = ({ setActiveTab }) => {
       {showChatModal && selectedTeam && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
           <div className="glass-card w-full max-w-2xl h-[600px] flex flex-col animate-in zoom-in-95">
-            <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-800">
+            <div className="flex items-center justify-between mb-4 pb-4 border-b border-[var(--border)]">
               <div>
-                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
                   <MessageSquare className="w-5 h-5 text-cyan-400" />
                   {selectedTeam.name} Chat
                 </h2>
-                <p className="text-sm text-slate-400">{selectedTeam.members?.length || 0} members</p>
+                <p className="text-sm text-[var(--text-muted)]">{selectedTeam.members?.length || 0} members</p>
               </div>
               <button
                 onClick={() => {
@@ -770,9 +770,9 @@ const TeamBrowser = ({ setActiveTab }) => {
                   setSelectedTeam(null);
                   setChatMessages([]);
                 }}
-                className="p-2 rounded-lg hover:bg-slate-800 transition-colors"
+                className="p-2 rounded-lg hover:bg-[var(--card-bg)] transition-colors"
               >
-                <X className="w-5 h-5 text-slate-400" />
+                <X className="w-5 h-5 text-[var(--text-muted)]" />
               </button>
             </div>
 
@@ -781,7 +781,7 @@ const TeamBrowser = ({ setActiveTab }) => {
               {chatMessages.length === 0 ? (
                 <div className="text-center py-12">
                   <MessageSquare className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-                  <p className="text-slate-400">No messages yet. Start the conversation!</p>
+                  <p className="text-[var(--text-muted)]">No messages yet. Start the conversation!</p>
                 </div>
               ) : (
                 chatMessages.map((message) => (
@@ -792,8 +792,8 @@ const TeamBrowser = ({ setActiveTab }) => {
                     <div
                       className={`max-w-[70%] rounded-lg p-3 ${
                         message.userId === user.uid
-                          ? 'bg-cyan-500 text-white'
-                          : 'bg-slate-800 text-slate-200'
+                          ? 'bg-cyan-500 text-[var(--text-primary)]'
+                          : 'bg-[var(--card-bg)] text-[var(--text-secondary)]'
                       }`}
                     >
                       {message.userId !== user.uid && (
@@ -812,7 +812,7 @@ const TeamBrowser = ({ setActiveTab }) => {
             </div>
 
             {/* Message Input */}
-            <form onSubmit={handleSendMessage} className="flex gap-2 pt-4 border-t border-slate-800">
+            <form onSubmit={handleSendMessage} className="flex gap-2 pt-4 border-t border-[var(--border)]">
               <input
                 type="text"
                 value={newMessage}
@@ -837,7 +837,7 @@ const TeamBrowser = ({ setActiveTab }) => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
           <div className="glass-card w-full max-w-lg animate-in zoom-in-95">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
                 <Settings className="w-5 h-5 text-cyan-400" />
                 Team Settings
               </h2>
@@ -846,15 +846,15 @@ const TeamBrowser = ({ setActiveTab }) => {
                   setShowTeamSettings(false);
                   setSelectedTeam(null);
                 }}
-                className="p-2 rounded-lg hover:bg-slate-800 transition-colors"
+                className="p-2 rounded-lg hover:bg-[var(--card-bg)] transition-colors"
               >
-                <X className="w-5 h-5 text-slate-400" />
+                <X className="w-5 h-5 text-[var(--text-muted)]" />
               </button>
             </div>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
+                <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
                   Team Name
                 </label>
                 <input
@@ -866,7 +866,7 @@ const TeamBrowser = ({ setActiveTab }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
+                <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
                   Description
                 </label>
                 <textarea
@@ -878,7 +878,7 @@ const TeamBrowser = ({ setActiveTab }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
+                <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
                   Max Members
                 </label>
                 <input
@@ -897,21 +897,21 @@ const TeamBrowser = ({ setActiveTab }) => {
                   id="editPrivate"
                   defaultChecked={selectedTeam.isPrivate}
                   onChange={(e) => setSelectedTeam({ ...selectedTeam, isPrivate: e.target.checked })}
-                  className="w-4 h-4 rounded border-slate-700 bg-slate-800 text-cyan-500"
+                  className="w-4 h-4 rounded border-[var(--border)] bg-[var(--card-bg)] text-cyan-500"
                 />
-                <label htmlFor="editPrivate" className="text-sm text-slate-300 flex items-center gap-2">
+                <label htmlFor="editPrivate" className="text-sm text-[var(--text-secondary)] flex items-center gap-2">
                   {selectedTeam.isPrivate ? <Lock className="w-4 h-4" /> : <Unlock className="w-4 h-4" />}
                   Private Team (invite-only)
                 </label>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex justify-end gap-3 pt-4 border-t border-[var(--border)]">
                 <button
                   onClick={() => {
                     setShowTeamSettings(false);
                     setSelectedTeam(null);
                   }}
-                  className="px-4 py-2 rounded-lg text-slate-400 hover:text-white transition-colors"
+                  className="px-4 py-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
                 >
                   Cancel
                 </button>
@@ -936,8 +936,8 @@ const TeamBrowser = ({ setActiveTab }) => {
       {showJoinRequests && selectedTeam && selectedTeam.owner === user.uid && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
           <div className="glass-card w-full max-w-lg max-h-[600px] flex flex-col animate-in zoom-in-95">
-            <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-800">
-              <h2 className="text-xl font-bold text-white flex items-center gap-2">
+            <div className="flex items-center justify-between mb-4 pb-4 border-b border-[var(--border)]">
+              <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
                 <Bell className="w-5 h-5 text-cyan-400" />
                 Join Requests
               </h2>
@@ -947,9 +947,9 @@ const TeamBrowser = ({ setActiveTab }) => {
                   setSelectedTeam(null);
                   setJoinRequests([]);
                 }}
-                className="p-2 rounded-lg hover:bg-slate-800 transition-colors"
+                className="p-2 rounded-lg hover:bg-[var(--card-bg)] transition-colors"
               >
-                <X className="w-5 h-5 text-slate-400" />
+                <X className="w-5 h-5 text-[var(--text-muted)]" />
               </button>
             </div>
 
@@ -957,7 +957,7 @@ const TeamBrowser = ({ setActiveTab }) => {
               {joinRequests.length === 0 ? (
                 <div className="text-center py-12">
                   <UserPlus className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-                  <p className="text-slate-400">No pending join requests</p>
+                  <p className="text-[var(--text-muted)]">No pending join requests</p>
                 </div>
               ) : (
                 joinRequests.map((request) => (
@@ -966,11 +966,11 @@ const TeamBrowser = ({ setActiveTab }) => {
                     className="glass-card p-4 flex items-center justify-between"
                   >
                     <div className="flex-1">
-                      <p className="font-semibold text-white">
+                      <p className="font-semibold text-[var(--text-primary)]">
                         @{request.username || request.displayName}
                       </p>
-                      <p className="text-sm text-slate-400">{request.email}</p>
-                      <p className="text-xs text-slate-500 mt-1">
+                      <p className="text-sm text-[var(--text-muted)]">{request.email}</p>
+                      <p className="text-xs text-[var(--text-muted)] mt-1">
                         {request.timestamp ? new Date(request.timestamp).toLocaleDateString() : 'Recently'}
                       </p>
                     </div>
@@ -1012,21 +1012,21 @@ const TeamCard = ({ team, user, onJoin, onLeave, onOpenChat, onOpenSettings, onO
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="text-lg font-bold text-white">{team.name}</h3>
-            {team.isPrivate && <Lock className="w-4 h-4 text-slate-500" />}
+            <h3 className="text-lg font-bold text-[var(--text-primary)]">{team.name}</h3>
+            {team.isPrivate && <Lock className="w-4 h-4 text-[var(--text-muted)]" />}
             {isOwner && <Crown className="w-4 h-4 text-yellow-400" />}
           </div>
-          <p className="text-sm text-slate-400 line-clamp-2">{team.description || 'No description'}</p>
+          <p className="text-sm text-[var(--text-muted)] line-clamp-2">{team.description || 'No description'}</p>
         </div>
       </div>
 
       {/* Stats */}
       <div className="flex items-center gap-4 text-sm">
-        <div className="flex items-center gap-1 text-slate-400">
+        <div className="flex items-center gap-1 text-[var(--text-muted)]">
           <Users className="w-4 h-4" />
           <span>{team.members?.length || 0}/{team.maxMembers}</span>
         </div>
-        <div className="px-2 py-1 bg-slate-800 rounded text-xs text-cyan-400 capitalize">
+        <div className="px-2 py-1 bg-[var(--card-bg)] rounded text-xs text-cyan-400 capitalize">
           {team.category}
         </div>
       </div>
@@ -1037,7 +1037,7 @@ const TeamCard = ({ team, user, onJoin, onLeave, onOpenChat, onOpenSettings, onO
           {team.events.map((eventId) => (
             <span
               key={eventId}
-              className="px-2 py-1 bg-slate-800 rounded text-xs text-slate-300"
+              className="px-2 py-1 bg-[var(--card-bg)] rounded text-xs text-[var(--text-secondary)]"
             >
               {eventId}
             </span>
@@ -1046,7 +1046,7 @@ const TeamCard = ({ team, user, onJoin, onLeave, onOpenChat, onOpenSettings, onO
       )}
 
       {/* Actions */}
-      <div className="pt-3 border-t border-slate-800 space-y-2">
+      <div className="pt-3 border-t border-[var(--border)] space-y-2">
         {isMember ? (
           <>
             <div className="flex items-center justify-between">
@@ -1058,17 +1058,17 @@ const TeamCard = ({ team, user, onJoin, onLeave, onOpenChat, onOpenSettings, onO
                 <div className="flex gap-2">
                   <button
                     onClick={() => onOpenJoinRequests && onOpenJoinRequests(team)}
-                    className="p-1.5 rounded-lg hover:bg-slate-800 transition-colors"
+                    className="p-1.5 rounded-lg hover:bg-[var(--card-bg)] transition-colors"
                     title="Join Requests"
                   >
                     <Bell className="w-4 h-4 text-cyan-400" />
                   </button>
                   <button
                     onClick={() => onOpenSettings(team)}
-                    className="p-1.5 rounded-lg hover:bg-slate-800 transition-colors"
+                    className="p-1.5 rounded-lg hover:bg-[var(--card-bg)] transition-colors"
                     title="Team Settings"
                   >
-                    <Settings className="w-4 h-4 text-slate-400" />
+                    <Settings className="w-4 h-4 text-[var(--text-muted)]" />
                   </button>
                 </div>
               )}
@@ -1097,8 +1097,8 @@ const TeamCard = ({ team, user, onJoin, onLeave, onOpenChat, onOpenSettings, onO
             disabled={isFull}
             className={`w-full py-2 rounded-lg font-medium transition-all flex items-center justify-center gap-2 ${
               isFull
-                ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
-                : 'bg-cyan-500 hover:bg-cyan-600 text-white'
+                ? 'bg-[var(--card-bg)] text-[var(--text-muted)] cursor-not-allowed'
+                : 'bg-cyan-500 hover:bg-cyan-600 text-[var(--text-primary)]'
             }`}
           >
             <UserPlus className="w-4 h-4" />

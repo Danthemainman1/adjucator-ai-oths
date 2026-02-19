@@ -376,8 +376,8 @@ const FormatGuide = () => {
             <Book className="w-6 h-6 text-cyan-400" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white">Format Guide</h1>
-            <p className="text-slate-400 text-sm">Quick reference for debate format rules</p>
+            <h1 className="text-2xl font-bold text-[var(--text-primary)]">Format Guide</h1>
+            <p className="text-[var(--text-muted)] text-sm">Quick reference for debate format rules</p>
           </div>
         </div>
 
@@ -392,7 +392,7 @@ const FormatGuide = () => {
                 className={`px-4 py-2 rounded-lg font-medium transition-all ${
                   activeFormat === f.id
                     ? `${fColors.bg} ${fColors.border} border ${fColors.text}`
-                    : 'bg-slate-800/50 border border-slate-700/50 text-slate-400 hover:text-white'
+                    : 'bg-[var(--card-bg)]/50 border border-[var(--border)]/50 text-[var(--text-muted)] hover:text-[var(--text-primary)]'
                 }`}
               >
                 {f.shortName}
@@ -402,26 +402,26 @@ const FormatGuide = () => {
         </div>
 
         {/* Format Content */}
-        <div className={`bg-slate-800/50 border ${colors.border} rounded-xl overflow-hidden`}>
+        <div className={`bg-[var(--card-bg)]/50 border ${colors.border} rounded-xl overflow-hidden`}>
           {/* Header */}
           <div className={`p-6 ${colors.bg}`}>
-            <h2 className="text-2xl font-bold text-white mb-2">{format.name}</h2>
-            <p className="text-slate-300 mb-4">{format.description}</p>
+            <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-2">{format.name}</h2>
+            <p className="text-[var(--text-secondary)] mb-4">{format.description}</p>
             <div className="flex flex-wrap gap-4 text-sm">
               <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 text-slate-400" />
-                <span className="text-white">{format.participants}</span>
+                <Users className="w-4 h-4 text-[var(--text-muted)]" />
+                <span className="text-[var(--text-primary)]">{format.participants}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-slate-400" />
-                <span className="text-white">Prep: {format.prepTime}</span>
+                <Clock className="w-4 h-4 text-[var(--text-muted)]" />
+                <span className="text-[var(--text-primary)]">Prep: {format.prepTime}</span>
               </div>
             </div>
           </div>
 
           {/* Overview */}
-          <div className="p-6 border-b border-slate-700/50">
-            <p className="text-slate-300 leading-relaxed">{format.overview}</p>
+          <div className="p-6 border-b border-[var(--border)]/50">
+            <p className="text-[var(--text-secondary)] leading-relaxed">{format.overview}</p>
           </div>
 
           {/* Collapsible Sections */}
@@ -434,18 +434,18 @@ const FormatGuide = () => {
           >
             <div className="space-y-2">
               {format.structure.map((item, i) => (
-                <div key={i} className="flex items-start gap-4 p-3 bg-slate-900/50 rounded-lg">
-                  <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 text-sm font-medium shrink-0">
+                <div key={i} className="flex items-start gap-4 p-3 bg-[var(--bg-primary)]/50 rounded-lg">
+                  <div className="w-8 h-8 rounded-full bg-[var(--card-bg)] flex items-center justify-center text-[var(--text-muted)] text-sm font-medium shrink-0">
                     {i + 1}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-white font-medium">{item.speech}</span>
+                      <span className="text-[var(--text-primary)] font-medium">{item.speech}</span>
                       <span className={`px-2 py-0.5 ${colors.bg} ${colors.text} rounded text-xs font-mono`}>
                         {item.time}
                       </span>
                     </div>
-                    <p className="text-slate-400 text-sm mt-1">{item.description}</p>
+                    <p className="text-[var(--text-muted)] text-sm mt-1">{item.description}</p>
                   </div>
                 </div>
               ))}
@@ -461,9 +461,9 @@ const FormatGuide = () => {
           >
             <div className="grid gap-3 sm:grid-cols-2">
               {format.keyTerms.map((item, i) => (
-                <div key={i} className="p-3 bg-slate-900/50 rounded-lg">
+                <div key={i} className="p-3 bg-[var(--bg-primary)]/50 rounded-lg">
                   <span className={`font-semibold ${colors.text}`}>{item.term}</span>
-                  <p className="text-slate-400 text-sm mt-1">{item.definition}</p>
+                  <p className="text-[var(--text-muted)] text-sm mt-1">{item.definition}</p>
                 </div>
               ))}
             </div>
@@ -480,7 +480,7 @@ const FormatGuide = () => {
               {format.tips.map((tip, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <CheckCircle className={`w-4 h-4 ${colors.text} shrink-0 mt-0.5`} />
-                  <span className="text-slate-300">{tip}</span>
+                  <span className="text-[var(--text-secondary)]">{tip}</span>
                 </li>
               ))}
             </ul>
@@ -492,20 +492,20 @@ const FormatGuide = () => {
 };
 
 const Section = ({ title, icon, isExpanded, onToggle, colors, children }) => (
-  <div className="border-b border-slate-700/50 last:border-b-0">
+  <div className="border-b border-[var(--border)]/50 last:border-b-0">
     <button
       onClick={onToggle}
-      className="w-full p-4 flex items-center justify-between text-left hover:bg-slate-800/30 transition-colors"
+      className="w-full p-4 flex items-center justify-between text-left hover:bg-[var(--card-bg)]/30 transition-colors"
     >
       <div className="flex items-center gap-2">
         <span className={colors.text}>{icon}</span>
-        <span className="text-white font-medium">{title}</span>
+        <span className="text-[var(--text-primary)] font-medium">{title}</span>
       </div>
       <motion.div
         animate={{ rotate: isExpanded ? 180 : 0 }}
         transition={{ duration: 0.2 }}
       >
-        <ChevronDown className="w-5 h-5 text-slate-400" />
+        <ChevronDown className="w-5 h-5 text-[var(--text-muted)]" />
       </motion.div>
     </button>
     <AnimatePresence>

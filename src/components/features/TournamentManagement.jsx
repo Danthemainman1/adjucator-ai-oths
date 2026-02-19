@@ -39,11 +39,11 @@ import { useTournaments, useJudges } from '../../hooks/useDebateData';
 // Empty State
 const EmptyTournaments = ({ onAdd }) => (
   <div className="text-center py-16">
-    <div className="p-4 rounded-full bg-slate-800/50 border border-slate-700/50 mb-6 mx-auto w-fit">
-      <Trophy className="w-12 h-12 text-slate-500" />
+    <div className="p-4 rounded-full bg-[var(--card-bg)]/50 border border-[var(--border)]/50 mb-6 mx-auto w-fit">
+      <Trophy className="w-12 h-12 text-[var(--text-muted)]" />
     </div>
-    <h3 className="text-xl font-semibold text-white mb-2">No Tournaments Scheduled</h3>
-    <p className="text-slate-400 max-w-md mx-auto mb-6">
+    <h3 className="text-xl font-semibold text-[var(--text-primary)] mb-2">No Tournaments Scheduled</h3>
+    <p className="text-[var(--text-muted)] max-w-md mx-auto mb-6">
       Add upcoming tournaments to track rounds, manage judge preferences, and stay organized.
     </p>
     <button
@@ -88,78 +88,78 @@ const TournamentModal = ({ isOpen, onClose, onSave, tournament = null }) => {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto"
+        className="w-full max-w-2xl bg-[var(--bg-primary)] border border-[var(--border)] rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto"
       >
-        <div className="p-6 border-b border-slate-800">
-          <h2 className="text-xl font-bold text-white">
+        <div className="p-6 border-b border-[var(--border)]">
+          <h2 className="text-xl font-bold text-[var(--text-primary)]">
             {tournament ? 'Edit Tournament' : 'Add Tournament'}
           </h2>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-2">Tournament Name *</label>
+            <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Tournament Name *</label>
             <input
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               placeholder="e.g., Harvard National Forensics Tournament"
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 outline-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 outline-none"
               required
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">Start Date *</label>
+              <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Start Date *</label>
               <input
                 type="date"
                 value={formData.date}
                 onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white focus:border-cyan-500 outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] focus:border-cyan-500 outline-none"
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">End Date</label>
+              <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">End Date</label>
               <input
                 type="date"
                 value={formData.endDate}
                 onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white focus:border-cyan-500 outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] focus:border-cyan-500 outline-none"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">Location</label>
+              <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Location</label>
               <input
                 type="text"
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                 placeholder="City, State"
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 outline-none"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">Registration Deadline</label>
+              <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Registration Deadline</label>
               <input
                 type="date"
                 value={formData.registrationDeadline}
                 onChange={(e) => setFormData({ ...formData, registrationDeadline: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white focus:border-cyan-500 outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] focus:border-cyan-500 outline-none"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">Format</label>
+              <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Format</label>
               <select
                 value={formData.format}
                 onChange={(e) => setFormData({ ...formData, format: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white focus:border-cyan-500 outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] focus:border-cyan-500 outline-none"
               >
                 {['Public Forum', 'Lincoln-Douglas', 'Policy', 'Congress', 'World Schools', 'Multiple'].map(f => (
                   <option key={f} value={f}>{f}</option>
@@ -167,11 +167,11 @@ const TournamentModal = ({ isOpen, onClose, onSave, tournament = null }) => {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">Level</label>
+              <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Level</label>
               <select
                 value={formData.level}
                 onChange={(e) => setFormData({ ...formData, level: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white focus:border-cyan-500 outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] focus:border-cyan-500 outline-none"
               >
                 {['Local', 'Regional', 'State', 'National', 'International'].map(l => (
                   <option key={l} value={l}>{l}</option>
@@ -181,8 +181,8 @@ const TournamentModal = ({ isOpen, onClose, onSave, tournament = null }) => {
           </div>
 
           {/* Travel Info */}
-          <div className="p-4 rounded-xl bg-slate-800/30 border border-slate-700/50">
-            <h3 className="text-sm font-medium text-slate-400 mb-4 flex items-center gap-2">
+          <div className="p-4 rounded-xl bg-[var(--card-bg)]/30 border border-[var(--border)]/50">
+            <h3 className="text-sm font-medium text-[var(--text-muted)] mb-4 flex items-center gap-2">
               <Plane className="w-4 h-4" />
               Travel Information (Optional)
             </h3>
@@ -195,7 +195,7 @@ const TournamentModal = ({ isOpen, onClose, onSave, tournament = null }) => {
                   travelInfo: { ...formData.travelInfo, flight: e.target.value }
                 })}
                 placeholder="Flight details"
-                className="w-full px-3 py-2 rounded-lg bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 text-sm focus:border-cyan-500 outline-none"
+                className="w-full px-3 py-2 rounded-lg bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 text-sm focus:border-cyan-500 outline-none"
               />
               <input
                 type="text"
@@ -205,33 +205,33 @@ const TournamentModal = ({ isOpen, onClose, onSave, tournament = null }) => {
                   travelInfo: { ...formData.travelInfo, hotel: e.target.value }
                 })}
                 placeholder="Hotel/accommodation"
-                className="w-full px-3 py-2 rounded-lg bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 text-sm focus:border-cyan-500 outline-none"
+                className="w-full px-3 py-2 rounded-lg bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 text-sm focus:border-cyan-500 outline-none"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-2">Notes</label>
+            <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Notes</label>
             <textarea
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               placeholder="Additional notes..."
               rows={3}
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 outline-none resize-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 outline-none resize-none"
             />
           </div>
 
-          <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+          <div className="flex justify-end gap-3 pt-4 border-t border-[var(--border)]">
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2.5 rounded-xl text-slate-400 hover:text-white transition-colors"
+              className="px-5 py-2.5 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-6 py-2.5 rounded-xl bg-cyan-500 text-white font-medium hover:bg-cyan-400 transition-colors"
+              className="px-6 py-2.5 rounded-xl bg-cyan-500 text-[var(--text-primary)] font-medium hover:bg-cyan-400 transition-colors"
             >
               {tournament ? 'Update' : 'Add'} Tournament
             </button>
@@ -249,7 +249,7 @@ const TournamentCard = ({ tournament, onEdit, onDelete, onClick }) => {
   const daysUntil = Math.ceil((tournamentDate - new Date()) / (1000 * 60 * 60 * 24));
   
   const levelColors = {
-    Local: 'bg-slate-500/10 text-slate-400 border-slate-500/30',
+    Local: 'bg-slate-500/10 text-[var(--text-muted)] border-slate-500/30',
     Regional: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30',
     State: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
     National: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
@@ -262,7 +262,7 @@ const TournamentCard = ({ tournament, onEdit, onDelete, onClick }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       onClick={onClick}
-      className="p-5 rounded-2xl border border-slate-800/60 bg-slate-900/30 hover:border-slate-700/60 transition-all cursor-pointer group"
+      className="p-5 rounded-2xl border border-[var(--border)]/60 bg-[var(--bg-primary)]/30 hover:border-[var(--border)]/60 transition-all cursor-pointer group"
     >
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-start gap-4">
@@ -270,15 +270,15 @@ const TournamentCard = ({ tournament, onEdit, onDelete, onClick }) => {
             <span className="text-xs text-cyan-400 font-medium">
               {tournamentDate.toLocaleString('default', { month: 'short' }).toUpperCase()}
             </span>
-            <span className="text-xl font-bold text-white">
+            <span className="text-xl font-bold text-[var(--text-primary)]">
               {tournamentDate.getDate()}
             </span>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-white group-hover:text-cyan-400 transition-colors">
+            <h3 className="text-lg font-semibold text-[var(--text-primary)] group-hover:text-cyan-400 transition-colors">
               {tournament.name}
             </h3>
-            <div className="flex items-center gap-2 mt-1 text-slate-400 text-sm">
+            <div className="flex items-center gap-2 mt-1 text-[var(--text-muted)] text-sm">
               <MapPin className="w-3 h-3" />
               {tournament.location || 'TBD'}
             </div>
@@ -290,12 +290,12 @@ const TournamentCard = ({ tournament, onEdit, onDelete, onClick }) => {
       </div>
 
       <div className="flex items-center gap-4 text-sm">
-        <span className="text-slate-400 flex items-center gap-1">
+        <span className="text-[var(--text-muted)] flex items-center gap-1">
           <Trophy className="w-4 h-4" />
           {tournament.format}
         </span>
         {tournament.rounds?.length > 0 && (
-          <span className="text-slate-400 flex items-center gap-1">
+          <span className="text-[var(--text-muted)] flex items-center gap-1">
             <Target className="w-4 h-4" />
             {tournament.rounds.length} rounds
           </span>
@@ -313,7 +313,7 @@ const TournamentCard = ({ tournament, onEdit, onDelete, onClick }) => {
         </div>
       )}
 
-      <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-800/50">
+      <div className="flex items-center justify-between mt-4 pt-4 border-t border-[var(--border)]/50">
         <div className="flex items-center gap-2">
           {tournament.rounds?.length > 0 ? (
             <span className="text-emerald-400 text-sm flex items-center gap-1">
@@ -321,7 +321,7 @@ const TournamentCard = ({ tournament, onEdit, onDelete, onClick }) => {
               Tracking
             </span>
           ) : (
-            <span className="text-slate-500 text-sm flex items-center gap-1">
+            <span className="text-[var(--text-muted)] text-sm flex items-center gap-1">
               <Circle className="w-4 h-4" />
               No rounds yet
             </span>
@@ -330,13 +330,13 @@ const TournamentCard = ({ tournament, onEdit, onDelete, onClick }) => {
         <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             onClick={(e) => { e.stopPropagation(); onEdit(tournament); }}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
+            className="p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)]/50 transition-all"
           >
             <Edit3 className="w-4 h-4" />
           </button>
           <button
             onClick={(e) => { e.stopPropagation(); onDelete(tournament.id); }}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-all"
+            className="p-1.5 rounded-lg text-[var(--text-muted)] hover:text-red-400 hover:bg-red-500/10 transition-all"
           >
             <Trash2 className="w-4 h-4" />
           </button>
@@ -361,13 +361,13 @@ const TournamentDetail = ({ tournament, onBack, onAddRound }) => {
         <div className="flex items-center gap-4">
           <button
             onClick={onBack}
-            className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
+            className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)]/50 transition-all"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <div>
-            <h1 className="text-2xl font-bold text-white">{tournament.name}</h1>
-            <div className="flex items-center gap-3 mt-1 text-slate-400">
+            <h1 className="text-2xl font-bold text-[var(--text-primary)]">{tournament.name}</h1>
+            <div className="flex items-center gap-3 mt-1 text-[var(--text-muted)]">
               <span className="flex items-center gap-1">
                 <Calendar className="w-4 h-4" />
                 {new Date(tournament.date).toLocaleDateString()}
@@ -381,7 +381,7 @@ const TournamentDetail = ({ tournament, onBack, onAddRound }) => {
         </div>
         <button
           onClick={() => setShowRoundModal(true)}
-          className="px-4 py-2.5 rounded-xl bg-cyan-500 text-white font-medium hover:bg-cyan-400 transition-colors flex items-center gap-2"
+          className="px-4 py-2.5 rounded-xl bg-cyan-500 text-[var(--text-primary)] font-medium hover:bg-cyan-400 transition-colors flex items-center gap-2"
         >
           <Plus className="w-5 h-5" />
           Add Round
@@ -390,52 +390,52 @@ const TournamentDetail = ({ tournament, onBack, onAddRound }) => {
 
       {/* Stats */}
       <div className="grid grid-cols-4 gap-4">
-        <div className="p-4 rounded-xl bg-slate-900/30 border border-slate-800/50 text-center">
-          <p className="text-2xl font-bold text-white">{rounds.length}</p>
-          <p className="text-slate-500 text-sm">Rounds</p>
+        <div className="p-4 rounded-xl bg-[var(--bg-primary)]/30 border border-[var(--border)]/50 text-center">
+          <p className="text-2xl font-bold text-[var(--text-primary)]">{rounds.length}</p>
+          <p className="text-[var(--text-muted)] text-sm">Rounds</p>
         </div>
         <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center">
           <p className="text-2xl font-bold text-emerald-400">{wins}</p>
-          <p className="text-slate-500 text-sm">Wins</p>
+          <p className="text-[var(--text-muted)] text-sm">Wins</p>
         </div>
         <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-center">
           <p className="text-2xl font-bold text-red-400">{losses}</p>
-          <p className="text-slate-500 text-sm">Losses</p>
+          <p className="text-[var(--text-muted)] text-sm">Losses</p>
         </div>
         <div className="p-4 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-center">
           <p className="text-2xl font-bold text-cyan-400">
             {rounds.length > 0 ? ((wins / rounds.length) * 100).toFixed(0) : 0}%
           </p>
-          <p className="text-slate-500 text-sm">Win Rate</p>
+          <p className="text-[var(--text-muted)] text-sm">Win Rate</p>
         </div>
       </div>
 
       {/* Rounds List */}
       <div>
-        <h2 className="text-lg font-semibold text-white mb-4">Round History</h2>
+        <h2 className="text-lg font-semibold text-[var(--text-primary)] mb-4">Round History</h2>
         {rounds.length === 0 ? (
-          <div className="text-center py-12 rounded-xl bg-slate-900/30 border border-slate-800/50">
+          <div className="text-center py-12 rounded-xl bg-[var(--bg-primary)]/30 border border-[var(--border)]/50">
             <Target className="w-10 h-10 text-slate-600 mx-auto mb-3" />
-            <p className="text-slate-400">No rounds recorded yet</p>
-            <p className="text-slate-500 text-sm">Add your first round to start tracking</p>
+            <p className="text-[var(--text-muted)]">No rounds recorded yet</p>
+            <p className="text-[var(--text-muted)] text-sm">Add your first round to start tracking</p>
           </div>
         ) : (
           <div className="space-y-3">
             {rounds.map((round, i) => (
               <div
                 key={round.id || i}
-                className="p-4 rounded-xl bg-slate-900/30 border border-slate-800/50 flex items-center gap-4"
+                className="p-4 rounded-xl bg-[var(--bg-primary)]/30 border border-[var(--border)]/50 flex items-center gap-4"
               >
                 <div className={`w-2 h-12 rounded-full ${
                   round.result === 'win' ? 'bg-emerald-500' : 'bg-red-500'
                 }`} />
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-white font-medium">{round.roundName}</span>
-                    <span className="text-slate-500">•</span>
-                    <span className="text-slate-400">{round.side}</span>
+                    <span className="text-[var(--text-primary)] font-medium">{round.roundName}</span>
+                    <span className="text-[var(--text-muted)]">•</span>
+                    <span className="text-[var(--text-muted)]">{round.side}</span>
                   </div>
-                  <p className="text-slate-500 text-sm">
+                  <p className="text-[var(--text-muted)] text-sm">
                     vs {round.opponent || 'Unknown'} {round.opponentSchool && `(${round.opponentSchool})`}
                   </p>
                 </div>
@@ -448,7 +448,7 @@ const TournamentDetail = ({ tournament, onBack, onAddRound }) => {
                     {round.result === 'win' ? 'Win' : 'Loss'}
                   </span>
                   {round.speakerPoints && (
-                    <p className="text-slate-500 text-sm mt-1">{round.speakerPoints} speaks</p>
+                    <p className="text-[var(--text-muted)] text-sm mt-1">{round.speakerPoints} speaks</p>
                   )}
                 </div>
               </div>
@@ -459,22 +459,22 @@ const TournamentDetail = ({ tournament, onBack, onAddRound }) => {
 
       {/* Travel Info */}
       {(tournament.travelInfo?.flight || tournament.travelInfo?.hotel) && (
-        <div className="p-4 rounded-xl bg-slate-900/30 border border-slate-800/50">
-          <h3 className="text-sm font-medium text-slate-400 mb-3 flex items-center gap-2">
+        <div className="p-4 rounded-xl bg-[var(--bg-primary)]/30 border border-[var(--border)]/50">
+          <h3 className="text-sm font-medium text-[var(--text-muted)] mb-3 flex items-center gap-2">
             <Plane className="w-4 h-4" />
             Travel Information
           </h3>
           <div className="space-y-2 text-sm">
             {tournament.travelInfo.flight && (
               <div className="flex items-start gap-2">
-                <span className="text-slate-500">Flight:</span>
-                <span className="text-slate-300">{tournament.travelInfo.flight}</span>
+                <span className="text-[var(--text-muted)]">Flight:</span>
+                <span className="text-[var(--text-secondary)]">{tournament.travelInfo.flight}</span>
               </div>
             )}
             {tournament.travelInfo.hotel && (
               <div className="flex items-start gap-2">
-                <span className="text-slate-500">Hotel:</span>
-                <span className="text-slate-300">{tournament.travelInfo.hotel}</span>
+                <span className="text-[var(--text-muted)]">Hotel:</span>
+                <span className="text-[var(--text-secondary)]">{tournament.travelInfo.hotel}</span>
               </div>
             )}
           </div>
@@ -527,19 +527,19 @@ const AddRoundModal = ({ isOpen, onClose, onSave }) => {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl"
+        className="w-full max-w-md bg-[var(--bg-primary)] border border-[var(--border)] rounded-2xl shadow-2xl"
       >
-        <div className="p-6 border-b border-slate-800">
-          <h2 className="text-xl font-bold text-white">Add Round</h2>
+        <div className="p-6 border-b border-[var(--border)]">
+          <h2 className="text-xl font-bold text-[var(--text-primary)]">Add Round</h2>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-2">Round</label>
+            <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Round</label>
             <select
               value={formData.roundName}
               onChange={(e) => setFormData({ ...formData, roundName: e.target.value })}
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white focus:border-cyan-500 outline-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] focus:border-cyan-500 outline-none"
             >
               {['Round 1', 'Round 2', 'Round 3', 'Round 4', 'Round 5', 'Round 6', 'Octofinals', 'Quarterfinals', 'Semifinals', 'Finals'].map(r => (
                 <option key={r} value={r}>{r}</option>
@@ -549,71 +549,71 @@ const AddRoundModal = ({ isOpen, onClose, onSave }) => {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">Opponent</label>
+              <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Opponent</label>
               <input
                 type="text"
                 value={formData.opponent}
                 onChange={(e) => setFormData({ ...formData, opponent: e.target.value })}
                 placeholder="Name"
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 outline-none"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">School</label>
+              <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">School</label>
               <input
                 type="text"
                 value={formData.opponentSchool}
                 onChange={(e) => setFormData({ ...formData, opponentSchool: e.target.value })}
                 placeholder="School"
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 outline-none"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">Side</label>
+              <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Side</label>
               <select
                 value={formData.side}
                 onChange={(e) => setFormData({ ...formData, side: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white focus:border-cyan-500 outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] focus:border-cyan-500 outline-none"
               >
                 <option value="Pro">Pro</option>
                 <option value="Con">Con</option>
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">Result</label>
+              <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Result</label>
               <select
                 value={formData.result}
                 onChange={(e) => setFormData({ ...formData, result: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white focus:border-cyan-500 outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] focus:border-cyan-500 outline-none"
               >
                 <option value="win">Win</option>
                 <option value="loss">Loss</option>
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">Speaks</label>
+              <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Speaks</label>
               <input
                 type="number"
                 step="0.1"
                 value={formData.speakerPoints}
                 onChange={(e) => setFormData({ ...formData, speakerPoints: e.target.value })}
                 placeholder="28.5"
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 outline-none"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-2">Judge</label>
+            <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Judge</label>
             <input
               type="text"
               value={formData.judge}
               onChange={(e) => setFormData({ ...formData, judge: e.target.value })}
               placeholder="Judge name"
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 outline-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 outline-none"
             />
           </div>
 
@@ -621,13 +621,13 @@ const AddRoundModal = ({ isOpen, onClose, onSave }) => {
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2.5 rounded-xl text-slate-400 hover:text-white transition-colors"
+              className="px-5 py-2.5 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-6 py-2.5 rounded-xl bg-cyan-500 text-white font-medium hover:bg-cyan-400 transition-colors"
+              className="px-6 py-2.5 rounded-xl bg-cyan-500 text-[var(--text-primary)] font-medium hover:bg-cyan-400 transition-colors"
             >
               Add Round
             </button>
@@ -645,7 +645,7 @@ const JudgePreferences = ({ judges, onAddJudge }) => {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+        <h2 className="text-lg font-semibold text-[var(--text-primary)] flex items-center gap-2">
           <Gavel className="w-5 h-5 text-cyan-400" />
           Judge Preferences
         </h2>
@@ -659,22 +659,22 @@ const JudgePreferences = ({ judges, onAddJudge }) => {
       </div>
 
       {judges.length === 0 ? (
-        <div className="text-center py-8 rounded-xl bg-slate-900/30 border border-slate-800/50">
+        <div className="text-center py-8 rounded-xl bg-[var(--bg-primary)]/30 border border-[var(--border)]/50">
           <Gavel className="w-10 h-10 text-slate-600 mx-auto mb-3" />
-          <p className="text-slate-400">No judges recorded yet</p>
-          <p className="text-slate-500 text-sm">Track judge preferences to adapt your strategy</p>
+          <p className="text-[var(--text-muted)]">No judges recorded yet</p>
+          <p className="text-[var(--text-muted)] text-sm">Track judge preferences to adapt your strategy</p>
         </div>
       ) : (
         <div className="grid md:grid-cols-2 gap-4">
           {judges.map(judge => (
             <div
               key={judge.id}
-              className="p-4 rounded-xl bg-slate-900/30 border border-slate-800/50"
+              className="p-4 rounded-xl bg-[var(--bg-primary)]/30 border border-[var(--border)]/50"
             >
               <div className="flex items-start justify-between mb-3">
                 <div>
-                  <h3 className="text-white font-medium">{judge.name}</h3>
-                  <p className="text-slate-500 text-sm">{judge.affiliation}</p>
+                  <h3 className="text-[var(--text-primary)] font-medium">{judge.name}</h3>
+                  <p className="text-[var(--text-muted)] text-sm">{judge.affiliation}</p>
                 </div>
                 <div className="flex items-center gap-1">
                   {[1, 2, 3, 4, 5].map(level => (
@@ -691,25 +691,25 @@ const JudgePreferences = ({ judges, onAddJudge }) => {
               <div className="space-y-2 text-sm">
                 {judge.paradigm && (
                   <div className="flex items-start gap-2">
-                    <span className="text-slate-500">Paradigm:</span>
-                    <span className="text-slate-300">{judge.paradigm}</span>
+                    <span className="text-[var(--text-muted)]">Paradigm:</span>
+                    <span className="text-[var(--text-secondary)]">{judge.paradigm}</span>
                   </div>
                 )}
                 <div className="flex items-center gap-3 mt-2">
                   <span className={`flex items-center gap-1 text-xs ${
-                    judge.leansPro ? 'text-emerald-400' : 'text-slate-500'
+                    judge.leansPro ? 'text-emerald-400' : 'text-[var(--text-muted)]'
                   }`}>
                     <ThumbsUp className="w-3 h-3" />
                     Pro
                   </span>
                   <span className={`flex items-center gap-1 text-xs ${
-                    judge.leansCon ? 'text-red-400' : 'text-slate-500'
+                    judge.leansCon ? 'text-red-400' : 'text-[var(--text-muted)]'
                   }`}>
                     <ThumbsDown className="w-3 h-3" />
                     Con
                   </span>
                   <span className={`flex items-center gap-1 text-xs ${
-                    !judge.leansPro && !judge.leansCon ? 'text-cyan-400' : 'text-slate-500'
+                    !judge.leansPro && !judge.leansCon ? 'text-cyan-400' : 'text-[var(--text-muted)]'
                   }`}>
                     <Minus className="w-3 h-3" />
                     Neutral
@@ -764,38 +764,38 @@ const AddJudgeModal = ({ isOpen, onClose, onSave }) => {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl"
+        className="w-full max-w-md bg-[var(--bg-primary)] border border-[var(--border)] rounded-2xl shadow-2xl"
       >
-        <div className="p-6 border-b border-slate-800">
-          <h2 className="text-xl font-bold text-white">Add Judge</h2>
+        <div className="p-6 border-b border-[var(--border)]">
+          <h2 className="text-xl font-bold text-[var(--text-primary)]">Add Judge</h2>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-2">Name *</label>
+            <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Name *</label>
             <input
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               placeholder="Judge name"
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 outline-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 outline-none"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-2">Affiliation</label>
+            <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Affiliation</label>
             <input
               type="text"
               value={formData.affiliation}
               onChange={(e) => setFormData({ ...formData, affiliation: e.target.value })}
               placeholder="School/Organization"
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 outline-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 outline-none"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-2">Rating</label>
+            <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Rating</label>
             <div className="flex items-center gap-1">
               {[1, 2, 3, 4, 5].map(level => (
                 <button
@@ -813,13 +813,13 @@ const AddJudgeModal = ({ isOpen, onClose, onSave }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-2">Paradigm</label>
+            <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Paradigm</label>
             <textarea
               value={formData.paradigm}
               onChange={(e) => setFormData({ ...formData, paradigm: e.target.value })}
               placeholder="Judge's preferred arguments, style preferences..."
               rows={3}
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 outline-none resize-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 outline-none resize-none"
             />
           </div>
 
@@ -827,13 +827,13 @@ const AddJudgeModal = ({ isOpen, onClose, onSave }) => {
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2.5 rounded-xl text-slate-400 hover:text-white transition-colors"
+              className="px-5 py-2.5 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-6 py-2.5 rounded-xl bg-cyan-500 text-white font-medium hover:bg-cyan-400 transition-colors"
+              className="px-6 py-2.5 rounded-xl bg-cyan-500 text-[var(--text-primary)] font-medium hover:bg-cyan-400 transition-colors"
             >
               Add Judge
             </button>
@@ -891,15 +891,15 @@ const TournamentManagement = () => {
       {/* Page Header */}
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+          <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-3">
             <Trophy className="w-8 h-8 text-cyan-400" />
             Tournaments
           </h1>
-          <p className="text-slate-400 mt-1">Manage your tournament schedule and track rounds</p>
+          <p className="text-[var(--text-muted)] mt-1">Manage your tournament schedule and track rounds</p>
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="px-4 py-2.5 rounded-xl bg-cyan-500 text-white font-medium hover:bg-cyan-400 transition-colors flex items-center gap-2"
+          className="px-4 py-2.5 rounded-xl bg-cyan-500 text-[var(--text-primary)] font-medium hover:bg-cyan-400 transition-colors flex items-center gap-2"
         >
           <Plus className="w-5 h-5" />
           Add Tournament
@@ -907,7 +907,7 @@ const TournamentManagement = () => {
       </div>
 
       {/* View Tabs */}
-      <div className="flex items-center gap-2 p-1 bg-slate-900/50 rounded-xl border border-slate-800/50 w-fit">
+      <div className="flex items-center gap-2 p-1 bg-[var(--bg-primary)]/50 rounded-xl border border-[var(--border)]/50 w-fit">
         {[
           { id: 'upcoming', label: `Upcoming (${upcomingTournaments.length})` },
           { id: 'past', label: `Past (${pastTournaments.length})` },
@@ -918,8 +918,8 @@ const TournamentManagement = () => {
             onClick={() => setActiveView(tab.id)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               activeView === tab.id
-                ? 'bg-slate-800 text-white'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-[var(--card-bg)] text-[var(--text-primary)]'
+                : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
             }`}
           >
             {tab.label}
@@ -937,7 +937,7 @@ const TournamentManagement = () => {
       ) : (
         <>
           {(activeView === 'upcoming' ? upcomingTournaments : pastTournaments).length === 0 ? (
-            <div className="p-8 rounded-2xl border border-slate-800/60 bg-slate-900/30">
+            <div className="p-8 rounded-2xl border border-[var(--border)]/60 bg-[var(--bg-primary)]/30">
               <EmptyTournaments onAdd={() => setShowAddModal(true)} />
             </div>
           ) : (

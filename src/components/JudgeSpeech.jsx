@@ -242,7 +242,7 @@ const JudgeSpeech = ({ apiKey }) => {
                             <button
                                 onClick={handleAnalyze}
                                 disabled={loading}
-                                className="px-8 py-3 rounded-sm bg-teal text-white font-bold uppercase tracking-widest text-xs shadow-md shadow-teal/20 hover:bg-teal-dark hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                                className="px-8 py-3 rounded-sm bg-teal text-[var(--text-primary)] font-bold uppercase tracking-widest text-xs shadow-md shadow-teal/20 hover:bg-teal-dark hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                             >
                                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                                 {loading ? 'Analyzing...' : 'Analyze Speech'}

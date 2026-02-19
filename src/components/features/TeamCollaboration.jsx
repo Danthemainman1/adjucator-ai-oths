@@ -70,7 +70,7 @@ const RoleBadge = ({ role }) => {
     coach: { label: 'Coach', icon: Shield, color: 'from-purple-500 to-indigo-600', bg: 'bg-purple-500/10', border: 'border-purple-500/30', text: 'text-purple-400' },
     varsity: { label: 'Varsity', icon: Star, color: 'from-cyan-500 to-blue-600', bg: 'bg-cyan-500/10', border: 'border-cyan-500/30', text: 'text-cyan-400' },
     jv: { label: 'JV', icon: Target, color: 'from-emerald-500 to-green-600', bg: 'bg-emerald-500/10', border: 'border-emerald-500/30', text: 'text-emerald-400' },
-    novice: { label: 'Novice', icon: Sparkles, color: 'from-slate-400 to-slate-600', bg: 'bg-slate-500/10', border: 'border-slate-500/30', text: 'text-slate-400' }
+    novice: { label: 'Novice', icon: Sparkles, color: 'from-slate-400 to-slate-600', bg: 'bg-slate-500/10', border: 'border-slate-500/30', text: 'text-[var(--text-muted)]' }
   };
 
   const config = roleConfig[role] || roleConfig.novice;
@@ -131,7 +131,7 @@ const Avatar = ({ name, image, size = 'md', showOnline, isOnline }) => {
           className={`${sizes[size]} rounded-xl object-cover ring-2 ring-slate-800`}
         />
       ) : (
-        <div className={`${sizes[size]} rounded-xl bg-gradient-to-br ${colors[colorIndex]} flex items-center justify-center text-white font-bold shadow-lg`}>
+        <div className={`${sizes[size]} rounded-xl bg-gradient-to-br ${colors[colorIndex]} flex items-center justify-center text-[var(--text-primary)] font-bold shadow-lg`}>
           {initials}
         </div>
       )}
@@ -166,7 +166,7 @@ const EmptyTeam = ({ onCreateTeam }) => (
       <motion.div
         animate={{ y: [0, -5, 0] }}
         transition={{ duration: 3, repeat: Infinity }}
-        className="relative p-6 rounded-3xl bg-gradient-to-br from-slate-800/80 to-slate-900/80 border border-slate-700/50 backdrop-blur-xl shadow-2xl"
+        className="relative p-6 rounded-3xl bg-gradient-to-br from-slate-800/80 to-slate-900/80 border border-[var(--border)]/50 backdrop-blur-xl shadow-2xl"
       >
         <Users className="w-16 h-16 text-cyan-400" />
         <motion.div
@@ -179,8 +179,8 @@ const EmptyTeam = ({ onCreateTeam }) => (
       </motion.div>
     </div>
     
-    <h3 className="text-2xl font-bold text-white mb-3">Build Your Dream Team</h3>
-    <p className="text-slate-400 max-w-md mx-auto mb-8 leading-relaxed">
+    <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-3">Build Your Dream Team</h3>
+    <p className="text-[var(--text-muted)] max-w-md mx-auto mb-8 leading-relaxed">
       Collaborate with teammates, share strategies, and prepare for tournaments together. 
       Winning teams communicate.
     </p>
@@ -189,7 +189,7 @@ const EmptyTeam = ({ onCreateTeam }) => (
       whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(6, 182, 212, 0.3)' }}
       whileTap={{ scale: 0.98 }}
       onClick={onCreateTeam}
-      className="px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold text-lg shadow-lg shadow-cyan-500/25 inline-flex items-center gap-3"
+      className="px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-[var(--text-primary)] font-semibold text-lg shadow-lg shadow-cyan-500/25 inline-flex items-center gap-3"
     >
       <Plus className="w-5 h-5" />
       Create or Join Team
@@ -222,19 +222,19 @@ const MemberCard = ({ member, isCurrentUser, onMessage, onRemove }) => {
           
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <h4 className="text-white font-semibold truncate">
+              <h4 className="text-[var(--text-primary)] font-semibold truncate">
                 {member.name}
-                {isCurrentUser && <span className="text-slate-500 ml-1">(You)</span>}
+                {isCurrentUser && <span className="text-[var(--text-muted)] ml-1">(You)</span>}
               </h4>
               {member.isOnline && (
                 <span className="text-xs text-emerald-400">Online</span>
               )}
             </div>
-            <p className="text-slate-500 text-sm truncate">{member.email}</p>
+            <p className="text-[var(--text-muted)] text-sm truncate">{member.email}</p>
             <div className="flex items-center gap-2 mt-2">
               <RoleBadge role={member.role} />
               {member.events?.map(event => (
-                <span key={event} className="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
+                <span key={event} className="text-xs px-2 py-0.5 rounded-full bg-[var(--card-bg)] text-[var(--text-muted)]">
                   {event}
                 </span>
               ))}
@@ -246,7 +246,7 @@ const MemberCard = ({ member, isCurrentUser, onMessage, onRemove }) => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={() => onMessage?.(member)}
-              className="p-2 rounded-lg text-slate-400 hover:text-cyan-400 hover:bg-cyan-500/10 transition-all"
+              className="p-2 rounded-lg text-[var(--text-muted)] hover:text-cyan-400 hover:bg-cyan-500/10 transition-all"
             >
               <MessageSquare className="w-5 h-5" />
             </motion.button>
@@ -256,7 +256,7 @@ const MemberCard = ({ member, isCurrentUser, onMessage, onRemove }) => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setShowMenu(!showMenu)}
-                className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+                className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
               >
                 <MoreVertical className="w-5 h-5" />
               </motion.button>
@@ -264,11 +264,11 @@ const MemberCard = ({ member, isCurrentUser, onMessage, onRemove }) => {
               {showMenu && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setShowMenu(false)} />
-                  <div className="absolute right-0 top-full mt-1 w-40 bg-slate-900 border border-slate-800 rounded-xl shadow-xl z-50 py-1">
-                    <button className="w-full px-4 py-2 text-left text-sm text-slate-300 hover:bg-slate-800 flex items-center gap-2">
+                  <div className="absolute right-0 top-full mt-1 w-40 bg-[var(--bg-primary)] border border-[var(--border)] rounded-xl shadow-xl z-50 py-1">
+                    <button className="w-full px-4 py-2 text-left text-sm text-[var(--text-secondary)] hover:bg-[var(--card-bg)] flex items-center gap-2">
                       <Eye className="w-4 h-4" /> View Profile
                     </button>
-                    <button className="w-full px-4 py-2 text-left text-sm text-slate-300 hover:bg-slate-800 flex items-center gap-2">
+                    <button className="w-full px-4 py-2 text-left text-sm text-[var(--text-secondary)] hover:bg-[var(--card-bg)] flex items-center gap-2">
                       <Edit3 className="w-4 h-4" /> Edit Role
                     </button>
                     {!isCurrentUser && (
@@ -300,13 +300,13 @@ const ChatMessage = ({ message, isOwn, senderName, senderAvatar, timestamp }) =>
     <Avatar name={senderName} image={senderAvatar} size="sm" />
     <div className={`max-w-[70%] ${isOwn ? 'items-end' : 'items-start'}`}>
       <div className={`flex items-center gap-2 mb-1 ${isOwn ? 'flex-row-reverse' : ''}`}>
-        <span className="text-sm font-medium text-slate-300">{senderName}</span>
-        <span className="text-xs text-slate-500">{timestamp}</span>
+        <span className="text-sm font-medium text-[var(--text-secondary)]">{senderName}</span>
+        <span className="text-xs text-[var(--text-muted)]">{timestamp}</span>
       </div>
       <div className={`p-3 rounded-2xl ${
         isOwn 
-          ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-br-md' 
-          : 'bg-slate-800 text-slate-200 rounded-bl-md'
+          ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-[var(--text-primary)] rounded-br-md' 
+          : 'bg-[var(--card-bg)] text-[var(--text-secondary)] rounded-bl-md'
       }`}>
         <p className="text-sm leading-relaxed">{message}</p>
       </div>
@@ -369,7 +369,7 @@ const ChatPanel = ({ teamId, members }) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <MessageSquare className="w-5 h-5 text-cyan-400" />
-            <h3 className="text-white font-semibold">Team Chat</h3>
+            <h3 className="text-[var(--text-primary)] font-semibold">Team Chat</h3>
             <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-xs">
               {members?.filter(m => m.isOnline).length || 0} online
             </span>
@@ -377,13 +377,13 @@ const ChatPanel = ({ teamId, members }) => {
           <div className="flex items-center gap-2">
             <motion.button
               whileHover={{ scale: 1.1 }}
-              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+              className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
             >
               <Phone className="w-4 h-4" />
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.1 }}
-              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+              className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
             >
               <Video className="w-4 h-4" />
             </motion.button>
@@ -395,11 +395,11 @@ const ChatPanel = ({ teamId, members }) => {
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-center py-8">
-            <div className="p-3 bg-slate-800/50 rounded-full mb-3">
-              <MessageSquare className="w-6 h-6 text-slate-500" />
+            <div className="p-3 bg-[var(--card-bg)]/50 rounded-full mb-3">
+              <MessageSquare className="w-6 h-6 text-[var(--text-muted)]" />
             </div>
-            <p className="text-slate-400 text-sm mb-1">No messages yet</p>
-            <p className="text-slate-500 text-xs">Start the conversation with your team!</p>
+            <p className="text-[var(--text-muted)] text-sm mb-1">No messages yet</p>
+            <p className="text-[var(--text-muted)] text-xs">Start the conversation with your team!</p>
           </div>
         ) : (
           messages.map(msg => (
@@ -420,7 +420,7 @@ const ChatPanel = ({ teamId, members }) => {
         <div className="flex items-center gap-3">
           <motion.button
             whileHover={{ scale: 1.1 }}
-            className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+            className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
           >
             <Paperclip className="w-5 h-5" />
           </motion.button>
@@ -430,14 +430,14 @@ const ChatPanel = ({ teamId, members }) => {
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && handleSend()}
             placeholder="Type a message..."
-            className="flex-1 px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+            className="flex-1 px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
           />
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleSend}
             disabled={!newMessage.trim()}
-            className="p-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="p-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-[var(--text-primary)] shadow-lg shadow-cyan-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Send className="w-5 h-5" />
           </motion.button>
@@ -470,14 +470,14 @@ const DocumentCard = ({ doc, onClick }) => {
           <Icon className={`w-5 h-5 ${config.color}`} />
         </div>
         <div className="flex-1 min-w-0">
-          <h4 className="text-white font-medium truncate group-hover:text-cyan-400 transition-colors">
+          <h4 className="text-[var(--text-primary)] font-medium truncate group-hover:text-cyan-400 transition-colors">
             {doc.title}
           </h4>
-          <p className="text-slate-500 text-sm mt-1">
+          <p className="text-[var(--text-muted)] text-sm mt-1">
             Updated {doc.updatedAt} by {doc.updatedBy}
           </p>
         </div>
-        <ChevronRight className="w-5 h-5 text-slate-600 group-hover:text-slate-400 transition-colors" />
+        <ChevronRight className="w-5 h-5 text-slate-600 group-hover:text-[var(--text-muted)] transition-colors" />
       </div>
     </motion.div>
   );
@@ -518,18 +518,18 @@ const PrepChecklist = ({ tournament }) => {
             <CheckSquare className="w-5 h-5 text-amber-400" />
           </div>
           <div>
-            <h3 className="text-white font-semibold">Tournament Prep</h3>
-            <p className="text-slate-500 text-sm">{tournament || 'Next Tournament'}</p>
+            <h3 className="text-[var(--text-primary)] font-semibold">Tournament Prep</h3>
+            <p className="text-[var(--text-muted)] text-sm">{tournament || 'Next Tournament'}</p>
           </div>
         </div>
         <div className="text-right">
-          <span className="text-2xl font-bold text-white">{completedCount}/{items.length}</span>
-          <p className="text-slate-500 text-xs">tasks complete</p>
+          <span className="text-2xl font-bold text-[var(--text-primary)]">{completedCount}/{items.length}</span>
+          <p className="text-[var(--text-muted)] text-xs">tasks complete</p>
         </div>
       </div>
 
       {/* Progress bar */}
-      <div className="h-2 rounded-full bg-slate-800 mb-4 overflow-hidden">
+      <div className="h-2 rounded-full bg-[var(--card-bg)] mb-4 overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${progress}%` }}
@@ -546,7 +546,7 @@ const PrepChecklist = ({ tournament }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className={`flex items-center gap-3 p-3 rounded-lg transition-colors ${
-              item.done ? 'bg-emerald-500/5' : 'bg-slate-800/30 hover:bg-slate-800/50'
+              item.done ? 'bg-emerald-500/5' : 'bg-[var(--card-bg)]/30 hover:bg-[var(--card-bg)]/50'
             }`}
           >
             <motion.button
@@ -556,12 +556,12 @@ const PrepChecklist = ({ tournament }) => {
               className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-colors ${
                 item.done 
                   ? 'bg-emerald-500 border-emerald-500' 
-                  : 'border-slate-600 hover:border-slate-500'
+                  : 'border-[var(--border)] hover:border-slate-500'
               }`}
             >
-              {item.done && <Check className="w-3 h-3 text-white" />}
+              {item.done && <Check className="w-3 h-3 text-[var(--text-primary)]" />}
             </motion.button>
-            <span className={`flex-1 text-sm ${item.done ? 'text-slate-500 line-through' : 'text-slate-300'}`}>
+            <span className={`flex-1 text-sm ${item.done ? 'text-[var(--text-muted)] line-through' : 'text-[var(--text-secondary)]'}`}>
               {item.text}
             </span>
           </motion.div>
@@ -576,13 +576,13 @@ const PrepChecklist = ({ tournament }) => {
           onChange={(e) => setNewItem(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && addItem()}
           placeholder="Add task..."
-          className="flex-1 px-3 py-2 rounded-lg bg-slate-800/50 border border-slate-700 text-white text-sm placeholder-slate-500 focus:border-cyan-500 outline-none transition-all"
+          className="flex-1 px-3 py-2 rounded-lg bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] text-sm placeholder-slate-500 focus:border-cyan-500 outline-none transition-all"
         />
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={addItem}
-          className="p-2 rounded-lg bg-slate-800 text-slate-400 hover:text-white transition-colors"
+          className="p-2 rounded-lg bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
         >
           <Plus className="w-4 h-4" />
         </motion.button>
@@ -623,13 +623,13 @@ const TeamCollaboration = () => {
       >
         <div className="space-y-6">
           <div>
-            <h1 className="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-3">
               <div className="p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/30">
                 <Users className="w-7 h-7 text-cyan-400" />
               </div>
               Team Collaboration
             </h1>
-            <p className="text-slate-400 mt-2">
+            <p className="text-[var(--text-muted)] mt-2">
               Work together to dominate every tournament
             </p>
           </div>
@@ -651,13 +651,13 @@ const TeamCollaboration = () => {
         {/* Header */}
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-3">
               <div className="p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/30">
                 <Users className="w-7 h-7 text-cyan-400" />
               </div>
               {currentTeam.name}
             </h1>
-            <p className="text-slate-400 mt-2">
+            <p className="text-[var(--text-muted)] mt-2">
               {teamMembers.length} members • {teamMembers.filter(m => m.isOnline).length} online
             </p>
           </div>
@@ -665,7 +665,7 @@ const TeamCollaboration = () => {
             whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(6, 182, 212, 0.3)' }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setShowInviteModal(true)}
-            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-medium shadow-lg shadow-cyan-500/25 flex items-center gap-2"
+            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-[var(--text-primary)] font-medium shadow-lg shadow-cyan-500/25 flex items-center gap-2"
           >
             <UserPlus className="w-5 h-5" />
             Invite Member
@@ -673,15 +673,15 @@ const TeamCollaboration = () => {
         </div>
 
         {/* View Tabs */}
-        <div className="flex items-center gap-2 p-1 rounded-xl bg-slate-900/50 border border-slate-800/50 w-fit">
+        <div className="flex items-center gap-2 p-1 rounded-xl bg-[var(--bg-primary)]/50 border border-[var(--border)]/50 w-fit">
           {views.map(view => (
             <button
               key={view.id}
               onClick={() => setActiveView(view.id)}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                 activeView === view.id
-                  ? 'bg-slate-800 text-white'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+                  ? 'bg-[var(--card-bg)] text-[var(--text-primary)]'
+                  : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)]/50'
               }`}
             >
               <view.icon className="w-4 h-4" />
@@ -702,7 +702,7 @@ const TeamCollaboration = () => {
             >
               {/* Members */}
               <div className="lg:col-span-2 space-y-4">
-                <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+                <h2 className="text-lg font-semibold text-[var(--text-primary)] flex items-center gap-2">
                   <Users className="w-5 h-5 text-cyan-400" />
                   Team Members
                 </h2>
@@ -728,19 +728,19 @@ const TeamCollaboration = () => {
               <div className="space-y-6">
                 {/* Quick Stats */}
                 <div className="glass-panel p-5">
-                  <h3 className="text-white font-semibold mb-4">Team Stats</h3>
+                  <h3 className="text-[var(--text-primary)] font-semibold mb-4">Team Stats</h3>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <span className="text-slate-400">Win Rate</span>
-                      <span className="text-white font-bold">{currentTeam?.stats?.winRate || '—'}%</span>
+                      <span className="text-[var(--text-muted)]">Win Rate</span>
+                      <span className="text-[var(--text-primary)] font-bold">{currentTeam?.stats?.winRate || '—'}%</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-slate-400">Tournaments</span>
-                      <span className="text-white font-bold">{currentTeam?.stats?.tournaments || 0}</span>
+                      <span className="text-[var(--text-muted)]">Tournaments</span>
+                      <span className="text-[var(--text-primary)] font-bold">{currentTeam?.stats?.tournaments || 0}</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-slate-400">Trophies</span>
-                      <span className="text-white font-bold flex items-center gap-1">
+                      <span className="text-[var(--text-muted)]">Trophies</span>
+                      <span className="text-[var(--text-primary)] font-bold flex items-center gap-1">
                         <Trophy className="w-4 h-4 text-amber-400" /> {currentTeam?.stats?.trophies || 0}
                       </span>
                     </div>
@@ -773,14 +773,14 @@ const TeamCollaboration = () => {
               className="space-y-4"
             >
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+                <h2 className="text-lg font-semibold text-[var(--text-primary)] flex items-center gap-2">
                   <FolderOpen className="w-5 h-5 text-cyan-400" />
                   Shared Documents
                 </h2>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-4 py-2 rounded-lg bg-slate-800 text-white text-sm font-medium hover:bg-slate-700 transition-colors flex items-center gap-2"
+                  className="px-4 py-2 rounded-lg bg-[var(--card-bg)] text-[var(--text-primary)] text-sm font-medium hover:bg-[var(--input-bg)] transition-colors flex items-center gap-2"
                 >
                   <Upload className="w-4 h-4" />
                   Upload
@@ -827,14 +827,14 @@ const TeamCollaboration = () => {
               className="glass-panel w-full max-w-md p-6"
             >
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
                   <UserPlus className="w-5 h-5 text-cyan-400" />
                   Invite Team Member
                 </h2>
                 <motion.button
                   whileHover={{ scale: 1.1, rotate: 90 }}
                   onClick={() => setShowInviteModal(false)}
-                  className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+                  className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
                 >
                   <X className="w-5 h-5" />
                 </motion.button>
@@ -842,17 +842,17 @@ const TeamCollaboration = () => {
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-400 mb-2">Email Address</label>
+                  <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Email Address</label>
                   <input
                     type="email"
                     placeholder="teammate@school.edu"
-                    className="w-full px-4 py-3 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-400 mb-2">Role</label>
-                  <select className="w-full px-4 py-3 rounded-xl bg-slate-800/50 border border-slate-700 text-white focus:border-cyan-500 outline-none transition-all">
+                  <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Role</label>
+                  <select className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] focus:border-cyan-500 outline-none transition-all">
                     <option value="novice">Novice</option>
                     <option value="jv">JV</option>
                     <option value="varsity">Varsity</option>
@@ -862,7 +862,7 @@ const TeamCollaboration = () => {
                 <motion.button
                   whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(6, 182, 212, 0.3)' }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold shadow-lg shadow-cyan-500/25"
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-[var(--text-primary)] font-semibold shadow-lg shadow-cyan-500/25"
                 >
                   Send Invitation
                 </motion.button>

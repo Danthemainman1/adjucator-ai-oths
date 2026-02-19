@@ -32,7 +32,7 @@ const CONFIDENCE_LEVELS = {
 // Emotional tones
 const EMOTIONAL_TONES = {
   passionate: { label: 'Passionate', color: 'text-red-400', bgColor: 'bg-red-500/20', emoji: '🔥' },
-  neutral: { label: 'Neutral', color: 'text-gray-400', bgColor: 'bg-gray-500/20', emoji: '😐' },
+  neutral: { label: 'Neutral', color: 'text-[var(--text-muted)]', bgColor: 'bg-gray-500/20', emoji: '😐' },
   analytical: { label: 'Analytical', color: 'text-cyan-400', bgColor: 'bg-cyan-500/20', emoji: '🧠' },
   inspiring: { label: 'Inspiring', color: 'text-purple-400', bgColor: 'bg-purple-500/20', emoji: '✨' },
   urgent: { label: 'Urgent', color: 'text-orange-400', bgColor: 'bg-orange-500/20', emoji: '⚡' }
@@ -105,16 +105,16 @@ const AppealGauge = ({ type, score }) => {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${appeal.color} flex items-center justify-center`}>
-            <Icon className="w-4 h-4 text-white" />
+            <Icon className="w-4 h-4 text-[var(--text-primary)]" />
           </div>
           <div>
-            <div className="text-sm font-medium text-white">{appeal.label}</div>
+            <div className="text-sm font-medium text-[var(--text-primary)]">{appeal.label}</div>
             <div className="text-xs text-text-muted">{appeal.description}</div>
           </div>
         </div>
-        <span className="text-lg font-bold text-white">{score}%</span>
+        <span className="text-lg font-bold text-[var(--text-primary)]">{score}%</span>
       </div>
-      <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+      <div className="h-2 bg-[var(--card-bg)] rounded-full overflow-hidden">
         <div
           className={`h-full bg-gradient-to-r ${appeal.color} transition-all duration-1000 ease-out`}
           style={{ width: `${score}%` }}
@@ -264,22 +264,22 @@ Provide your analysis in the following JSON format (ONLY output valid JSON, no m
     <div className="space-y-6">
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl font-bold text-white tracking-tight">Tone Analysis</h1>
-        <p className="text-slate-400 mt-1">Analyze rhetorical impact and emotional tone</p>
+        <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight">Tone Analysis</h1>
+        <p className="text-[var(--text-muted)] mt-1">Analyze rhetorical impact and emotional tone</p>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Input Panel */}
         <div className="w-full lg:w-1/2 flex flex-col gap-4">
-          <div className="p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm space-y-4">
-            <div className="p-4 rounded-xl bg-slate-800/30 border border-slate-700/30">
+          <div className="p-6 rounded-2xl border border-[var(--border)]/60 bg-[var(--bg-primary)]/30 backdrop-blur-sm space-y-4">
+            <div className="p-4 rounded-xl bg-[var(--card-bg)]/30 border border-[var(--border)]/30">
               <div className="flex items-center gap-2 mb-3">
                 <Info className="w-4 h-4 text-purple-400" />
-                <span className="text-sm font-medium text-slate-300">This analysis detects:</span>
+                <span className="text-sm font-medium text-[var(--text-secondary)]">This analysis detects:</span>
               </div>
               <div className="flex flex-wrap gap-2">
                 {['Confidence Level', 'Emotional Tone', 'Ethos/Pathos/Logos', 'Rhetorical Techniques'].map((item, idx) => (
-                  <span key={idx} className="px-3 py-1.5 text-xs font-medium bg-slate-900/50 text-slate-400 rounded-lg border border-slate-700/50">
+                  <span key={idx} className="px-3 py-1.5 text-xs font-medium bg-[var(--bg-primary)]/50 text-[var(--text-muted)] rounded-lg border border-[var(--border)]/50">
                     {item}
                   </span>
                 ))}
@@ -287,22 +287,22 @@ Provide your analysis in the following JSON format (ONLY output valid JSON, no m
             </div>
           </div>
 
-          <div className="flex-1 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm overflow-hidden flex flex-col">
-            <div className="p-4 border-b border-slate-800/60 bg-slate-900/50">
-              <label className="text-sm font-medium text-slate-300">Speech Transcript</label>
+          <div className="flex-1 rounded-2xl border border-[var(--border)]/60 bg-[var(--bg-primary)]/30 backdrop-blur-sm overflow-hidden flex flex-col">
+            <div className="p-4 border-b border-[var(--border)]/60 bg-[var(--bg-primary)]/50">
+              <label className="text-sm font-medium text-[var(--text-secondary)]">Speech Transcript</label>
             </div>
             <textarea
               value={transcript}
               onChange={(e) => setTranscript(e.target.value)}
               placeholder="Paste your speech text here for detailed tone and rhetorical analysis..."
-              className="flex-1 w-full bg-transparent p-4 resize-none focus:outline-none font-mono text-sm text-slate-200 placeholder-slate-600 min-h-[300px]"
+              className="flex-1 w-full bg-transparent p-4 resize-none focus:outline-none font-mono text-sm text-[var(--text-secondary)] placeholder-slate-600 min-h-[300px]"
             />
-            <div className="p-4 border-t border-slate-800/60 bg-slate-900/50 flex justify-between items-center">
-              <span className="text-xs text-slate-500 font-medium">{transcript.length.toLocaleString()} characters</span>
+            <div className="p-4 border-t border-[var(--border)]/60 bg-[var(--bg-primary)]/50 flex justify-between items-center">
+              <span className="text-xs text-[var(--text-muted)] font-medium">{transcript.length.toLocaleString()} characters</span>
               <button
                 onClick={handleAnalyze}
                 disabled={loading}
-                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-2"
+                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-[var(--text-primary)] font-semibold shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-2"
               >
                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                 {loading ? 'Analyzing...' : 'Analyze Tone'}
@@ -319,9 +319,9 @@ Provide your analysis in the following JSON format (ONLY output valid JSON, no m
         </div>
 
         {/* Output Panel */}
-        <div className="w-full lg:w-1/2 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm overflow-hidden flex flex-col">
-          <div className="p-4 border-b border-slate-800/60 bg-slate-900/50 flex justify-between items-center">
-            <h3 className="font-semibold text-white flex items-center gap-2">
+        <div className="w-full lg:w-1/2 rounded-2xl border border-[var(--border)]/60 bg-[var(--bg-primary)]/30 backdrop-blur-sm overflow-hidden flex flex-col">
+          <div className="p-4 border-b border-[var(--border)]/60 bg-[var(--bg-primary)]/50 flex justify-between items-center">
+            <h3 className="font-semibold text-[var(--text-primary)] flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-purple-400" />
               Rhetorical Analysis
             </h3>
@@ -334,7 +334,7 @@ Provide your analysis in the following JSON format (ONLY output valid JSON, no m
                 )}
                 <button
                   onClick={copyToClipboard}
-                  className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+                  className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
                   title="Copy to clipboard"
                 >
                   {copied ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
@@ -349,10 +349,10 @@ Provide your analysis in the following JSON format (ONLY output valid JSON, no m
                 {/* Overall Metrics */}
                 <div className="grid grid-cols-2 gap-4">
                   {confidenceConfig && (
-                    <div className={`p-4 rounded-xl ${confidenceConfig.bgColor} border border-slate-700/50`}>
+                    <div className={`p-4 rounded-xl ${confidenceConfig.bgColor} border border-[var(--border)]/50`}>
                       <div className="flex items-center gap-2 mb-2">
                         <confidenceConfig.icon className={`w-5 h-5 ${confidenceConfig.color}`} />
-                        <span className="text-sm text-slate-400">Confidence</span>
+                        <span className="text-sm text-[var(--text-muted)]">Confidence</span>
                       </div>
                       <div className={`text-xl font-bold ${confidenceConfig.color}`}>
                         {confidenceConfig.label}
@@ -361,10 +361,10 @@ Provide your analysis in the following JSON format (ONLY output valid JSON, no m
                   )}
 
                   {toneConfig && (
-                    <div className={`p-4 rounded-xl ${toneConfig.bgColor} border border-slate-700/50`}>
+                    <div className={`p-4 rounded-xl ${toneConfig.bgColor} border border-[var(--border)]/50`}>
                       <div className="flex items-center gap-2 mb-2">
                         <span className="text-xl">{toneConfig.emoji}</span>
-                        <span className="text-sm text-slate-400">Dominant Tone</span>
+                        <span className="text-sm text-[var(--text-muted)]">Dominant Tone</span>
                       </div>
                       <div className={`text-xl font-bold ${toneConfig.color}`}>
                         {toneConfig.label}
@@ -374,8 +374,8 @@ Provide your analysis in the following JSON format (ONLY output valid JSON, no m
                 </div>
 
                 {/* Rhetorical Appeals */}
-                <div className="p-5 rounded-xl bg-slate-800/30 border border-slate-700/30 space-y-4">
-                  <h4 className="font-semibold text-white flex items-center gap-2">
+                <div className="p-5 rounded-xl bg-[var(--card-bg)]/30 border border-[var(--border)]/30 space-y-4">
+                  <h4 className="font-semibold text-[var(--text-primary)] flex items-center gap-2">
                     <Scale className="w-4 h-4 text-purple-400" />
                     Rhetorical Appeals
                   </h4>
@@ -390,20 +390,20 @@ Provide your analysis in the following JSON format (ONLY output valid JSON, no m
 
                 {/* Tone Progression */}
                 {analysisData.toneProgression && (
-                  <div className="p-5 rounded-xl bg-slate-800/30 border border-slate-700/30">
+                  <div className="p-5 rounded-xl bg-[var(--card-bg)]/30 border border-[var(--border)]/30">
                     <ToneProgressBar sections={analysisData.toneProgression} />
                   </div>
                 )}
 
                 {/* Techniques */}
                 {analysisData.techniques && analysisData.techniques.length > 0 && (
-                  <div className="p-5 rounded-xl bg-slate-800/30 border border-slate-700/30 space-y-3">
-                    <h4 className="font-semibold text-white">Rhetorical Techniques</h4>
+                  <div className="p-5 rounded-xl bg-[var(--card-bg)]/30 border border-[var(--border)]/30 space-y-3">
+                    <h4 className="font-semibold text-[var(--text-primary)]">Rhetorical Techniques</h4>
                     <div className="space-y-3">
                       {analysisData.techniques.map((tech, idx) => (
-                        <div key={idx} className="p-3 bg-slate-900/50 rounded-lg border border-slate-800">
+                        <div key={idx} className="p-3 bg-[var(--bg-primary)]/50 rounded-lg border border-[var(--border)]">
                           <div className="flex items-center justify-between mb-1">
-                            <span className="font-medium text-white">{tech.name}</span>
+                            <span className="font-medium text-[var(--text-primary)]">{tech.name}</span>
                             <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
                               tech.effectiveness === 'high' ? 'bg-emerald-500/20 text-emerald-400' :
                               tech.effectiveness === 'medium' ? 'bg-amber-500/20 text-amber-400' :
@@ -412,7 +412,7 @@ Provide your analysis in the following JSON format (ONLY output valid JSON, no m
                               {tech.effectiveness}
                             </span>
                           </div>
-                          <p className="text-sm text-slate-500">{tech.description}</p>
+                          <p className="text-sm text-[var(--text-muted)]">{tech.description}</p>
                         </div>
                       ))}
                     </div>
@@ -421,14 +421,14 @@ Provide your analysis in the following JSON format (ONLY output valid JSON, no m
 
                 {/* Recommendations */}
                 {analysisData.recommendations && (
-                  <div className="p-5 rounded-xl bg-slate-800/30 border border-slate-700/30 space-y-3">
-                    <h4 className="font-semibold text-white flex items-center gap-2">
+                  <div className="p-5 rounded-xl bg-[var(--card-bg)]/30 border border-[var(--border)]/30 space-y-3">
+                    <h4 className="font-semibold text-[var(--text-primary)] flex items-center gap-2">
                       <Lightbulb className="w-4 h-4 text-amber-400" />
                       Recommendations
                     </h4>
                     <ul className="space-y-2">
                       {analysisData.recommendations.map((rec, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-sm text-slate-400">
+                        <li key={idx} className="flex items-start gap-2 text-sm text-[var(--text-muted)]">
                           <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
                           {rec}
                         </li>
@@ -441,7 +441,7 @@ Provide your analysis in the following JSON format (ONLY output valid JSON, no m
                 {analysisData.summary && (
                   <div className="p-5 rounded-xl bg-purple-500/10 border border-purple-500/20">
                     <h4 className="font-semibold text-purple-400 mb-2">Summary</h4>
-                    <p className="text-slate-300">{analysisData.summary}</p>
+                    <p className="text-[var(--text-secondary)]">{analysisData.summary}</p>
                   </div>
                 )}
               </div>
@@ -450,8 +450,8 @@ Provide your analysis in the following JSON format (ONLY output valid JSON, no m
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{result}</ReactMarkdown>
               </div>
             ) : (
-              <div className="h-full flex flex-col items-center justify-center text-slate-500 py-16">
-                <div className="w-16 h-16 rounded-2xl bg-slate-800/50 flex items-center justify-center mb-4">
+              <div className="h-full flex flex-col items-center justify-center text-[var(--text-muted)] py-16">
+                <div className="w-16 h-16 rounded-2xl bg-[var(--card-bg)]/50 flex items-center justify-center mb-4">
                   <Brain className="w-8 h-8" />
                 </div>
                 <p className="text-center max-w-xs">

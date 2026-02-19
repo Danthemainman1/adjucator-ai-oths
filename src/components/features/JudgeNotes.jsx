@@ -100,8 +100,8 @@ const JudgeNotes = () => {
               <Gavel className="w-6 h-6 text-amber-400" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-white">Judge Notes</h1>
-              <p className="text-slate-400 text-sm">Track notes during debates</p>
+              <h1 className="text-2xl font-bold text-[var(--text-primary)]">Judge Notes</h1>
+              <p className="text-[var(--text-muted)] text-sm">Track notes during debates</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -112,7 +112,7 @@ const JudgeNotes = () => {
                 className="flex items-center gap-1 text-sm"
               >
                 {saveStatus === 'saving' ? (
-                  <span className="text-slate-400">Saving...</span>
+                  <span className="text-[var(--text-muted)]">Saving...</span>
                 ) : (
                   <>
                     <Check className="w-4 h-4 text-green-400" />
@@ -123,7 +123,7 @@ const JudgeNotes = () => {
             )}
             <button
               onClick={createRound}
-              className="flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-500 text-[var(--text-primary)] rounded-lg transition-colors"
             >
               <Plus className="w-4 h-4" />
               New Round
@@ -134,10 +134,10 @@ const JudgeNotes = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Rounds List */}
           <div className="lg:col-span-1">
-            <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4">
-              <h3 className="text-white font-medium mb-3">Rounds</h3>
+            <div className="bg-[var(--card-bg)]/50 border border-[var(--border)]/50 rounded-xl p-4">
+              <h3 className="text-[var(--text-primary)] font-medium mb-3">Rounds</h3>
               {rounds.length === 0 ? (
-                <div className="text-center py-8 text-slate-500">
+                <div className="text-center py-8 text-[var(--text-muted)]">
                   <FileText className="w-8 h-8 mx-auto mb-2 opacity-50" />
                   <p className="text-sm">No rounds yet</p>
                 </div>
@@ -150,22 +150,22 @@ const JudgeNotes = () => {
                       className={`p-3 rounded-lg cursor-pointer transition-all group ${
                         activeRoundId === round.id
                           ? 'bg-amber-500/20 border border-amber-500/50'
-                          : 'bg-slate-900/50 hover:bg-slate-800/50 border border-transparent'
+                          : 'bg-[var(--bg-primary)]/50 hover:bg-[var(--card-bg)]/50 border border-transparent'
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-white font-medium truncate">{round.name}</span>
+                        <span className="text-[var(--text-primary)] font-medium truncate">{round.name}</span>
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             deleteRound(round.id);
                           }}
-                          className="p-1 text-slate-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
+                          className="p-1 text-[var(--text-muted)] hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
-                      <div className="flex items-center gap-1 text-xs text-slate-500 mt-1">
+                      <div className="flex items-center gap-1 text-xs text-[var(--text-muted)] mt-1">
                         <Clock className="w-3 h-3" />
                         {formatDate(round.createdAt)}
                       </div>
@@ -179,13 +179,13 @@ const JudgeNotes = () => {
           {/* Notes Editor */}
           <div className="lg:col-span-3">
             {activeRound ? (
-              <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4">
+              <div className="bg-[var(--card-bg)]/50 border border-[var(--border)]/50 rounded-xl p-4">
                 {/* Round Name */}
                 <input
                   type="text"
                   value={activeRound.name}
                   onChange={(e) => updateRoundName(e.target.value)}
-                  className="text-xl font-semibold bg-transparent text-white focus:outline-none w-full mb-4 border-b border-transparent focus:border-amber-500/50 pb-2"
+                  className="text-xl font-semibold bg-transparent text-[var(--text-primary)] focus:outline-none w-full mb-4 border-b border-transparent focus:border-amber-500/50 pb-2"
                 />
 
                 {/* Sections */}
@@ -202,12 +202,12 @@ const JudgeNotes = () => {
                 </div>
               </div>
             ) : (
-              <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-8 text-center">
+              <div className="bg-[var(--card-bg)]/50 border border-[var(--border)]/50 rounded-xl p-8 text-center">
                 <Gavel className="w-12 h-12 mx-auto mb-3 text-slate-600" />
-                <p className="text-slate-400">Select a round or create a new one</p>
+                <p className="text-[var(--text-muted)]">Select a round or create a new one</p>
                 <button
                   onClick={createRound}
-                  className="mt-4 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors"
+                  className="mt-4 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-primary)] rounded-lg transition-colors"
                 >
                   Create Round
                 </button>
@@ -224,14 +224,14 @@ const NoteSection = ({ label, placeholder, value, onChange }) => {
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (
-    <div className="border border-slate-700/50 rounded-lg overflow-hidden">
+    <div className="border border-[var(--border)]/50 rounded-lg overflow-hidden">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full px-4 py-3 flex items-center justify-between bg-slate-900/50 hover:bg-slate-900/70 transition-colors"
+        className="w-full px-4 py-3 flex items-center justify-between bg-[var(--bg-primary)]/50 hover:bg-[var(--bg-primary)]/70 transition-colors"
       >
-        <span className="text-white font-medium">{label}</span>
+        <span className="text-[var(--text-primary)] font-medium">{label}</span>
         <motion.div animate={{ rotate: isExpanded ? 180 : 0 }}>
-          <ChevronDown className="w-4 h-4 text-slate-400" />
+          <ChevronDown className="w-4 h-4 text-[var(--text-muted)]" />
         </motion.div>
       </button>
       {isExpanded && (
@@ -239,7 +239,7 @@ const NoteSection = ({ label, placeholder, value, onChange }) => {
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="w-full p-4 bg-slate-900/30 text-white placeholder-slate-600 focus:outline-none resize-none min-h-[100px]"
+          className="w-full p-4 bg-[var(--bg-primary)]/30 text-[var(--text-primary)] placeholder-slate-600 focus:outline-none resize-none min-h-[100px]"
         />
       )}
     </div>

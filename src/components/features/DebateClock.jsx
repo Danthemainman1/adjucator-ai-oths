@@ -128,18 +128,18 @@ const DebateClock = () => {
             <div className="p-2 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-lg">
               <Clock className="w-6 h-6 text-blue-400" />
             </div>
-            <h1 className="text-2xl font-bold text-white">Debate Clock</h1>
+            <h1 className="text-2xl font-bold text-[var(--text-primary)]">Debate Clock</h1>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setSoundEnabled(!soundEnabled)}
-              className="p-2 text-slate-400 hover:text-white transition-colors"
+              className="p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
             >
               {soundEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
             </button>
             <button
               onClick={() => setShowSettings(!showSettings)}
-              className={`p-2 transition-colors ${showSettings ? 'text-blue-400' : 'text-slate-400 hover:text-white'}`}
+              className={`p-2 transition-colors ${showSettings ? 'text-blue-400' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'}`}
             >
               <Settings className="w-5 h-5" />
             </button>
@@ -185,7 +185,7 @@ const DebateClock = () => {
             >
               {formatTime(timeLeft)}
             </motion.div>
-            <div className="text-slate-500 text-sm mt-2">
+            <div className="text-[var(--text-muted)] text-sm mt-2">
               {isRunning ? 'Running' : timeLeft === 0 ? 'Time!' : 'Paused'}
             </div>
           </div>
@@ -195,7 +195,7 @@ const DebateClock = () => {
         <div className="flex items-center justify-center gap-4 mb-8">
           <button
             onClick={resetTimer}
-            className="p-4 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-full transition-colors"
+            className="p-4 bg-[var(--card-bg)] hover:bg-[var(--input-bg)] text-[var(--text-secondary)] rounded-full transition-colors"
           >
             <RotateCcw className="w-6 h-6" />
           </button>
@@ -203,8 +203,8 @@ const DebateClock = () => {
             onClick={toggleTimer}
             className={`p-6 rounded-full transition-colors ${
               isRunning
-                ? 'bg-red-600 hover:bg-red-500 text-white'
-                : 'bg-blue-600 hover:bg-blue-500 text-white'
+                ? 'bg-red-600 hover:bg-red-500 text-[var(--text-primary)]'
+                : 'bg-blue-600 hover:bg-blue-500 text-[var(--text-primary)]'
             }`}
           >
             {isRunning ? <Pause className="w-8 h-8" /> : <Play className="w-8 h-8 ml-1" />}
@@ -213,14 +213,14 @@ const DebateClock = () => {
             <button
               onClick={() => adjustTime(30)}
               disabled={isRunning}
-              className="p-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-300 rounded-lg transition-colors"
+              className="p-2 bg-[var(--card-bg)] hover:bg-[var(--input-bg)] disabled:opacity-50 disabled:cursor-not-allowed text-[var(--text-secondary)] rounded-lg transition-colors"
             >
               <Plus className="w-4 h-4" />
             </button>
             <button
               onClick={() => adjustTime(-30)}
               disabled={isRunning}
-              className="p-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-300 rounded-lg transition-colors"
+              className="p-2 bg-[var(--card-bg)] hover:bg-[var(--input-bg)] disabled:opacity-50 disabled:cursor-not-allowed text-[var(--text-secondary)] rounded-lg transition-colors"
             >
               <Minus className="w-4 h-4" />
             </button>
@@ -232,9 +232,9 @@ const DebateClock = () => {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4"
+            className="bg-[var(--card-bg)]/50 border border-[var(--border)]/50 rounded-xl p-4"
           >
-            <h3 className="text-white font-medium mb-3">Quick Presets</h3>
+            <h3 className="text-[var(--text-primary)] font-medium mb-3">Quick Presets</h3>
             <div className="grid grid-cols-4 gap-2">
               {PRESETS.map(preset => (
                 <button
@@ -242,16 +242,16 @@ const DebateClock = () => {
                   onClick={() => setPreset(preset.seconds)}
                   className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                     totalSeconds === preset.seconds
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                      ? 'bg-blue-600 text-[var(--text-primary)]'
+                      : 'bg-[var(--input-bg)] text-[var(--text-secondary)] hover:bg-slate-600'
                   }`}
                 >
                   {preset.label}
                 </button>
               ))}
             </div>
-            <div className="mt-4 pt-4 border-t border-slate-700">
-              <label className="text-slate-400 text-sm mb-2 block">Custom Time (seconds)</label>
+            <div className="mt-4 pt-4 border-t border-[var(--border)]">
+              <label className="text-[var(--text-muted)] text-sm mb-2 block">Custom Time (seconds)</label>
               <input
                 type="number"
                 min="10"
@@ -263,7 +263,7 @@ const DebateClock = () => {
                   if (!isRunning) setTimeLeft(val);
                 }}
                 disabled={isRunning}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white disabled:opacity-50"
+                className="w-full px-3 py-2 bg-[var(--bg-primary)] border border-[var(--border)] rounded-lg text-[var(--text-primary)] disabled:opacity-50"
               />
             </div>
           </motion.div>

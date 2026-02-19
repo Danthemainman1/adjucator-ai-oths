@@ -92,9 +92,9 @@ const AuthPage = ({ onSkip }) => {
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent shadow-lg shadow-primary/25 mb-4">
-            <Gavel className="w-8 h-8 text-white" />
+            <Gavel className="w-8 h-8 text-[var(--text-primary)]" />
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Adjudicator AI</h1>
+          <h1 className="text-3xl font-bold text-[var(--text-primary)] mb-2">Adjudicator AI</h1>
           <p className="text-text-secondary">
             Your AI-powered debate coaching platform
           </p>
@@ -103,7 +103,7 @@ const AuthPage = ({ onSkip }) => {
         {/* Auth Card */}
         <div className="glass-card space-y-6">
           <div className="text-center">
-            <h2 className="text-xl font-bold text-white">
+            <h2 className="text-xl font-bold text-[var(--text-primary)]">
               {isLogin ? 'Welcome back' : 'Create your account'}
             </h2>
             <p className="text-text-muted text-sm mt-1">
@@ -130,7 +130,7 @@ const AuthPage = ({ onSkip }) => {
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-700"></div>
+              <div className="w-full border-t border-[var(--border)]"></div>
             </div>
             <div className="relative flex justify-center text-sm">
               <span className="px-4 bg-bg-secondary text-text-muted">or continue with email</span>

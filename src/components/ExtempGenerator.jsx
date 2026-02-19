@@ -74,29 +74,29 @@ const ExtempGenerator = ({ apiKey }) => {
         <div className="space-y-6">
             {/* Page Header */}
             <div>
-                <h1 className="text-2xl font-bold text-white tracking-tight">Extemp Generator</h1>
-                <p className="text-slate-400 mt-1">Generate practice questions for extemporaneous speaking</p>
+                <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight">Extemp Generator</h1>
+                <p className="text-[var(--text-muted)] mt-1">Generate practice questions for extemporaneous speaking</p>
             </div>
 
             <div className="max-w-2xl mx-auto">
-                <div className="p-8 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm space-y-8">
+                <div className="p-8 rounded-2xl border border-[var(--border)]/60 bg-[var(--bg-primary)]/30 backdrop-blur-sm space-y-8">
                     {/* Category Toggle */}
                     <div className="flex items-center justify-between">
-                        <label className="text-sm font-medium text-slate-300">Category</label>
-                        <div className="flex bg-slate-900/50 rounded-xl p-1 border border-slate-800">
+                        <label className="text-sm font-medium text-[var(--text-secondary)]">Category</label>
+                        <div className="flex bg-[var(--bg-primary)]/50 rounded-xl p-1 border border-[var(--border)]">
                             <button
                                 onClick={() => setCategory('DX')}
                                 className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${category === 'DX' 
-                                    ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg' 
-                                    : 'text-slate-400 hover:text-white'}`}
+                                    ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-[var(--text-primary)] shadow-lg' 
+                                    : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'}`}
                             >
                                 Domestic (DX)
                             </button>
                             <button
                                 onClick={() => setCategory('NX')}
                                 className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${category === 'NX' 
-                                    ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg' 
-                                    : 'text-slate-400 hover:text-white'}`}
+                                    ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-[var(--text-primary)] shadow-lg' 
+                                    : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'}`}
                             >
                                 International (NX)
                             </button>
@@ -105,7 +105,7 @@ const ExtempGenerator = ({ apiKey }) => {
 
                     {/* Difficulty Selection */}
                     <div className="space-y-3">
-                        <label className="block text-sm font-medium text-slate-300">Difficulty Level</label>
+                        <label className="block text-sm font-medium text-[var(--text-secondary)]">Difficulty Level</label>
                         <div className="grid grid-cols-3 gap-4">
                             {['Easy', 'Medium', 'Hard'].map((level) => (
                                 <button
@@ -113,7 +113,7 @@ const ExtempGenerator = ({ apiKey }) => {
                                     onClick={() => setDifficulty(level)}
                                     className={`py-4 rounded-xl border transition-all font-medium ${difficulty === level
                                         ? 'bg-cyan-500/10 border-cyan-500/30 text-cyan-400 shadow-lg shadow-cyan-500/10'
-                                        : 'bg-slate-900/30 border-slate-800 text-slate-400 hover:border-slate-700 hover:bg-slate-800/50'
+                                        : 'bg-[var(--bg-primary)]/30 border-[var(--border)] text-[var(--text-muted)] hover:border-[var(--border)] hover:bg-[var(--card-bg)]/50'
                                     }`}
                                 >
                                     {level}
@@ -126,7 +126,7 @@ const ExtempGenerator = ({ apiKey }) => {
                     <button
                         onClick={generateQuestion}
                         disabled={loading}
-                        className="w-full py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-lg font-semibold shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.01] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-3"
+                        className="w-full py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-[var(--text-primary)] text-lg font-semibold shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.01] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-3"
                     >
                         {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : <RefreshCw className="w-6 h-6" />}
                         {loading ? 'Generating Question...' : 'Generate New Question'}
@@ -141,13 +141,13 @@ const ExtempGenerator = ({ apiKey }) => {
 
                     {question && (
                         <div className="animate-in fade-in slide-in-from-bottom-4">
-                            <div className="bg-slate-900/80 border border-slate-700 rounded-2xl p-8 relative group">
-                                <p className="text-xl md:text-2xl font-serif text-center text-white leading-relaxed">
+                            <div className="bg-[var(--bg-primary)]/80 border border-[var(--border)] rounded-2xl p-8 relative group">
+                                <p className="text-xl md:text-2xl font-serif text-center text-[var(--text-primary)] leading-relaxed">
                                     "{question}"
                                 </p>
                                 <button
                                     onClick={copyToClipboard}
-                                    className="absolute top-4 right-4 p-2.5 text-slate-400 hover:text-white bg-slate-800/50 hover:bg-slate-700 rounded-xl transition-all opacity-0 group-hover:opacity-100"
+                                    className="absolute top-4 right-4 p-2.5 text-[var(--text-muted)] hover:text-[var(--text-primary)] bg-[var(--card-bg)]/50 hover:bg-[var(--input-bg)] rounded-xl transition-all opacity-0 group-hover:opacity-100"
                                     title="Copy to clipboard"
                                 >
                                     {copied ? <CheckCircle2 className="w-5 h-5 text-emerald-500" /> : <Copy className="w-5 h-5" />}

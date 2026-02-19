@@ -51,14 +51,14 @@ const AudioVisualizer = ({ analyser, isRecording }) => {
         return () => cancelAnimationFrame(animationId);
     }, [analyser, isRecording]);
 
-    if (!isRecording) return <div className="w-full h-24 bg-slate-900/50 rounded-lg flex items-center justify-center text-slate-700 text-xs">Visualizer Ready</div>;
+    if (!isRecording) return <div className="w-full h-24 bg-[var(--bg-primary)]/50 rounded-lg flex items-center justify-center text-slate-700 text-xs">Visualizer Ready</div>;
 
-    return <canvas ref={canvasRef} width={300} height={100} className="w-full h-24 rounded-lg bg-slate-900/50" />;
+    return <canvas ref={canvasRef} width={300} height={100} className="w-full h-24 rounded-lg bg-[var(--bg-primary)]/50" />;
 };
 
 const ToneIndicator = ({ analyser, isRecording }) => {
     const [metrics, setMetrics] = useState({ volume: 0, brightness: 0 });
-    const [feedback, setFeedback] = useState({ label: 'Ready', color: 'text-slate-500' });
+    const [feedback, setFeedback] = useState({ label: 'Ready', color: 'text-[var(--text-muted)]' });
     const smoothedMetrics = useRef({ volume: 0, brightness: 0 });
 
     useEffect(() => {
@@ -101,7 +101,7 @@ const ToneIndicator = ({ analyser, isRecording }) => {
 
             // Determine Tone Label
             if (volume < 0.01) {
-                setFeedback({ label: 'Listening...', color: 'text-slate-500' });
+                setFeedback({ label: 'Listening...', color: 'text-[var(--text-muted)]' });
             } else if (volume < 0.05) {
                 setFeedback({ label: 'Too Quiet', color: 'text-amber-500' });
             } else if (volume > 0.6) {
@@ -130,9 +130,9 @@ const ToneIndicator = ({ analyser, isRecording }) => {
             <div className={`text-lg font-bold ${feedback.color} transition-colors duration-300`}>
                 {feedback.label}
             </div>
-            <div className="flex space-x-4 text-xs text-slate-400">
+            <div className="flex space-x-4 text-xs text-[var(--text-muted)]">
                 <div className="flex flex-col items-center">
-                    <div className="h-16 w-4 bg-slate-800 rounded-full overflow-hidden relative">
+                    <div className="h-16 w-4 bg-[var(--card-bg)] rounded-full overflow-hidden relative">
                         <div
                             className="absolute bottom-0 left-0 w-full bg-cyan-500 transition-all duration-100"
                             style={{ height: `${Math.min(metrics.volume * 200, 100)}%` }}
@@ -141,7 +141,7 @@ const ToneIndicator = ({ analyser, isRecording }) => {
                     <span className="mt-1">Vol</span>
                 </div>
                 <div className="flex flex-col items-center">
-                    <div className="h-16 w-4 bg-slate-800 rounded-full overflow-hidden relative">
+                    <div className="h-16 w-4 bg-[var(--card-bg)] rounded-full overflow-hidden relative">
                         <div
                             className="absolute bottom-0 left-0 w-full bg-purple-500 transition-all duration-100"
                             style={{ height: `${Math.min(metrics.brightness * 300, 100)}%` }}
@@ -356,21 +356,21 @@ const LiveCoach = ({ apiKey }) => {
         <div className="space-y-6">
             {/* Page Header */}
             <div>
-                <h1 className="text-2xl font-bold text-white tracking-tight">Live Coaching</h1>
-                <p className="text-slate-400 mt-1">Record and analyze your speech in real-time</p>
+                <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight">Live Coaching</h1>
+                <p className="text-[var(--text-muted)] mt-1">Record and analyze your speech in real-time</p>
             </div>
 
             <div className="flex flex-col lg:flex-row gap-6">
                 {/* Input Panel */}
                 <div className="w-full lg:w-1/2 flex flex-col gap-4">
-                    <div className="p-6 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm space-y-4">
+                    <div className="p-6 rounded-2xl border border-[var(--border)]/60 bg-[var(--bg-primary)]/30 backdrop-blur-sm space-y-4">
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-slate-400 mb-2">Format</label>
+                                <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Format</label>
                                 <select
                                     value={speechType}
                                     onChange={(e) => handleSpeechTypeChange(e.target.value)}
-                                    className="w-full px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-800 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+                                    className="w-full px-4 py-3 rounded-xl bg-[var(--bg-primary)]/50 border border-[var(--border)] text-[var(--text-primary)] focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
                                 >
                                     {Object.entries(EVENT_SUBCATEGORIES).map(([subcategory, types]) => (
                                         <optgroup key={subcategory} label={subcategory}>
@@ -380,36 +380,36 @@ const LiveCoach = ({ apiKey }) => {
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-slate-400 mb-2">Side</label>
+                                <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Side</label>
                                 <select
                                     value={side}
                                     onChange={(e) => setSide(e.target.value)}
-                                    className="w-full px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-800 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+                                    className="w-full px-4 py-3 rounded-xl bg-[var(--bg-primary)]/50 border border-[var(--border)] text-[var(--text-primary)] focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
                                 >
                                     {applicableSides.map(s => <option key={s} value={s}>{s}</option>)}
                                 </select>
                             </div>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-slate-400 mb-2">Topic</label>
+                            <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Topic</label>
                             <input
                                 type="text"
                                 value={topic}
                                 onChange={(e) => setTopic(e.target.value)}
                                 placeholder="Topic or Resolution..."
-                                className="w-full px-4 py-3 rounded-xl bg-slate-900/50 border border-slate-800 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+                                className="w-full px-4 py-3 rounded-xl bg-[var(--bg-primary)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
                             />
                         </div>
                     </div>
 
-                    <div className="flex-1 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm overflow-hidden flex flex-col">
-                        <div className="p-4 border-b border-slate-800/60 bg-slate-900/50">
-                            <label className="text-sm font-medium text-slate-300">Live Recording</label>
+                    <div className="flex-1 rounded-2xl border border-[var(--border)]/60 bg-[var(--bg-primary)]/30 backdrop-blur-sm overflow-hidden flex flex-col">
+                        <div className="p-4 border-b border-[var(--border)]/60 bg-[var(--bg-primary)]/50">
+                            <label className="text-sm font-medium text-[var(--text-secondary)]">Live Recording</label>
                         </div>
 
                         <div className="flex-1 p-8 flex flex-col items-center justify-center space-y-8">
                             {/* Timer */}
-                            <div className={`text-6xl font-mono font-bold tracking-tighter ${isRecording ? 'text-red-500 animate-pulse' : 'text-white'}`}>
+                            <div className={`text-6xl font-mono font-bold tracking-tighter ${isRecording ? 'text-red-500 animate-pulse' : 'text-[var(--text-primary)]'}`}>
                                 {formatTime(recordingTime)}
                             </div>
 
@@ -426,14 +426,14 @@ const LiveCoach = ({ apiKey }) => {
                                         onClick={startRecording}
                                         className="w-20 h-20 rounded-full bg-gradient-to-br from-red-500 to-red-600 hover:from-red-400 hover:to-red-500 flex items-center justify-center shadow-lg shadow-red-500/30 transition-all hover:scale-110 active:scale-95"
                                     >
-                                        <Mic className="w-8 h-8 text-white" />
+                                        <Mic className="w-8 h-8 text-[var(--text-primary)]" />
                                     </button>
                                 ) : (
                                     <button
                                         onClick={stopRecording}
-                                        className="w-20 h-20 rounded-full bg-slate-700 hover:bg-slate-600 flex items-center justify-center shadow-lg transition-all hover:scale-110 active:scale-95"
+                                        className="w-20 h-20 rounded-full bg-[var(--input-bg)] hover:bg-slate-600 flex items-center justify-center shadow-lg transition-all hover:scale-110 active:scale-95"
                                     >
-                                        <Square className="w-6 h-6 text-white fill-current" />
+                                        <Square className="w-6 h-6 text-[var(--text-primary)] fill-current" />
                                     </button>
                                 )}
                             </div>
@@ -441,19 +441,19 @@ const LiveCoach = ({ apiKey }) => {
                             {audioBlob && !isRecording && (
                                 <div className="flex items-center gap-4 animate-in fade-in">
                                     <audio controls src={URL.createObjectURL(audioBlob)} className="h-12 rounded-xl" />
-                                    <button onClick={resetRecording} className="p-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-all">
+                                    <button onClick={resetRecording} className="p-3 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all">
                                         <RotateCcw className="w-5 h-5" />
                                     </button>
                                 </div>
                             )}
                         </div>
 
-                        <div className="p-4 border-t border-slate-800/60 bg-slate-900/50 flex justify-between items-center">
-                            <span className="text-xs text-slate-500 font-medium">{audioBlob ? 'Audio recorded' : 'Ready to record'}</span>
+                        <div className="p-4 border-t border-[var(--border)]/60 bg-[var(--bg-primary)]/50 flex justify-between items-center">
+                            <span className="text-xs text-[var(--text-muted)] font-medium">{audioBlob ? 'Audio recorded' : 'Ready to record'}</span>
                             <button
                                 onClick={handleAnalyze}
                                 disabled={loading || !audioData}
-                                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-2"
+                                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-[var(--text-primary)] font-semibold shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-2"
                             >
                                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Activity className="w-4 h-4" />}
                                 {loading ? 'Analyzing...' : 'Analyze Audio'}
@@ -470,9 +470,9 @@ const LiveCoach = ({ apiKey }) => {
                 </div>
 
                 {/* Output Panel */}
-                <div className="w-full lg:w-1/2 rounded-2xl border border-slate-800/60 bg-slate-900/30 backdrop-blur-sm overflow-hidden flex flex-col">
-                    <div className="p-4 border-b border-slate-800/60 bg-slate-900/50 flex justify-between items-center">
-                        <h3 className="font-semibold text-white flex items-center gap-2">
+                <div className="w-full lg:w-1/2 rounded-2xl border border-[var(--border)]/60 bg-[var(--bg-primary)]/30 backdrop-blur-sm overflow-hidden flex flex-col">
+                    <div className="p-4 border-b border-[var(--border)]/60 bg-[var(--bg-primary)]/50 flex justify-between items-center">
+                        <h3 className="font-semibold text-[var(--text-primary)] flex items-center gap-2">
                             <Activity className="w-5 h-5 text-purple-400" />
                             Coaching Feedback
                         </h3>
@@ -485,7 +485,7 @@ const LiveCoach = ({ apiKey }) => {
                                 )}
                                 <button
                                     onClick={copyToClipboard}
-                                    className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+                                    className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
                                     title="Copy to clipboard"
                                 >
                                     {copied ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
@@ -496,12 +496,12 @@ const LiveCoach = ({ apiKey }) => {
 
                     <div className="flex-1 overflow-y-auto p-6">
                         {result ? (
-                            <div className="prose prose-invert prose-sm max-w-none prose-headings:text-purple-400 prose-headings:font-semibold prose-a:text-purple-400 prose-strong:text-white prose-table:border-collapse prose-th:border prose-th:border-slate-700 prose-td:border prose-td:border-slate-700 prose-th:p-3 prose-td:p-3 prose-th:bg-slate-800/50 prose-th:text-left">
+                            <div className="prose prose-invert prose-sm max-w-none prose-headings:text-purple-400 prose-headings:font-semibold prose-a:text-purple-400 prose-strong:text-[var(--text-primary)] prose-table:border-collapse prose-th:border prose-th:border-[var(--border)] prose-td:border prose-td:border-[var(--border)] prose-th:p-3 prose-td:p-3 prose-th:bg-[var(--card-bg)]/50 prose-th:text-left">
                                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{result}</ReactMarkdown>
                             </div>
                         ) : (
-                            <div className="h-full flex flex-col items-center justify-center text-slate-500 py-16">
-                                <div className="w-16 h-16 rounded-2xl bg-slate-800/50 flex items-center justify-center mb-4">
+                            <div className="h-full flex flex-col items-center justify-center text-[var(--text-muted)] py-16">
+                                <div className="w-16 h-16 rounded-2xl bg-[var(--card-bg)]/50 flex items-center justify-center mb-4">
                                     <Mic className="w-8 h-8" />
                                 </div>
                                 <p className="text-center max-w-xs">

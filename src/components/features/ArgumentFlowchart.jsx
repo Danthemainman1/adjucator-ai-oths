@@ -101,7 +101,7 @@ const NODE_TYPES = {
     color: 'from-slate-400 to-slate-600',
     bgColor: 'bg-slate-500/10',
     borderColor: 'border-slate-500/50',
-    textColor: 'text-slate-400',
+    textColor: 'text-[var(--text-muted)]',
     icon: HelpCircle,
     description: 'Cross-examination point'
   }
@@ -234,7 +234,7 @@ const FlowNode = ({
       <div
         className={`
           absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full 
-          bg-slate-700 border-2 border-slate-500 cursor-crosshair
+          bg-[var(--input-bg)] border-2 border-slate-500 cursor-crosshair
           hover:bg-cyan-500 hover:border-cyan-400 hover:scale-125
           transition-all duration-200
           ${isConnecting ? 'animate-pulse bg-cyan-500 border-cyan-400' : ''}
@@ -244,7 +244,7 @@ const FlowNode = ({
       <div
         className={`
           absolute -right-2 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full 
-          bg-slate-700 border-2 border-slate-500 cursor-crosshair
+          bg-[var(--input-bg)] border-2 border-slate-500 cursor-crosshair
           hover:bg-emerald-500 hover:border-emerald-400 hover:scale-125
           transition-all duration-200
         `}
@@ -254,7 +254,7 @@ const FlowNode = ({
       {/* Header */}
       <div className={`flex items-center gap-2 p-3 border-b ${config.borderColor}`}>
         <div className={`p-1.5 rounded-lg bg-gradient-to-br ${config.color}`}>
-          <Icon className="w-4 h-4 text-white" />
+          <Icon className="w-4 h-4 text-[var(--text-primary)]" />
         </div>
         <span className={`text-xs font-semibold ${config.textColor} uppercase tracking-wider`}>
           {config.label}
@@ -267,7 +267,7 @@ const FlowNode = ({
               e.stopPropagation();
               onEdit?.(node);
             }}
-            className="p-1 rounded hover:bg-slate-700/50 text-slate-400 hover:text-white transition-colors"
+            className="p-1 rounded hover:bg-[var(--input-bg)]/50 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
           >
             <Edit3 className="w-3.5 h-3.5" />
           </button>
@@ -276,7 +276,7 @@ const FlowNode = ({
               e.stopPropagation();
               onDelete?.(node.id);
             }}
-            className="p-1 rounded hover:bg-red-500/20 text-slate-400 hover:text-red-400 transition-colors"
+            className="p-1 rounded hover:bg-red-500/20 text-[var(--text-muted)] hover:text-red-400 transition-colors"
           >
             <Trash2 className="w-3.5 h-3.5" />
           </button>
@@ -285,11 +285,11 @@ const FlowNode = ({
 
       {/* Content */}
       <div className="p-3">
-        <h4 className="text-white font-medium text-sm mb-1 line-clamp-2">
+        <h4 className="text-[var(--text-primary)] font-medium text-sm mb-1 line-clamp-2">
           {node.title || 'Untitled'}
         </h4>
         {node.content && (
-          <p className="text-slate-400 text-xs line-clamp-3">
+          <p className="text-[var(--text-muted)] text-xs line-clamp-3">
             {node.content}
           </p>
         )}
@@ -298,7 +298,7 @@ const FlowNode = ({
       {/* Footer */}
       {node.source && (
         <div className="px-3 pb-3">
-          <p className="text-slate-500 text-[10px] truncate">
+          <p className="text-[var(--text-muted)] text-[10px] truncate">
             Source: {node.source}
           </p>
         </div>
@@ -453,12 +453,12 @@ const AddNodeModal = ({ isOpen, onClose, onAdd, editNode }) => {
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="w-full max-w-lg bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 rounded-3xl shadow-2xl overflow-hidden"
+        className="w-full max-w-lg bg-gradient-to-b from-slate-900 to-slate-950 border border-[var(--border)] rounded-3xl shadow-2xl overflow-hidden"
       >
-        <div className="relative p-6 border-b border-slate-800">
+        <div className="relative p-6 border-b border-[var(--border)]">
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-purple-500/10" />
           <div className="relative flex items-center justify-between">
-            <h2 className="text-xl font-bold text-white flex items-center gap-3">
+            <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-3">
               <div className="p-2 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/30">
                 <GitBranch className="w-5 h-5 text-cyan-400" />
               </div>
@@ -467,7 +467,7 @@ const AddNodeModal = ({ isOpen, onClose, onAdd, editNode }) => {
             <motion.button
               whileHover={{ scale: 1.1, rotate: 90 }}
               onClick={onClose}
-              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+              className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
             >
               <X className="w-5 h-5" />
             </motion.button>
@@ -477,7 +477,7 @@ const AddNodeModal = ({ isOpen, onClose, onAdd, editNode }) => {
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           {/* Node Type */}
           <div className="space-y-3">
-            <label className="block text-sm font-medium text-slate-400">Node Type</label>
+            <label className="block text-sm font-medium text-[var(--text-muted)]">Node Type</label>
             <div className="grid grid-cols-3 gap-2">
               {Object.entries(NODE_TYPES).map(([key, config]) => {
                 const Icon = config.icon;
@@ -490,7 +490,7 @@ const AddNodeModal = ({ isOpen, onClose, onAdd, editNode }) => {
                       p-3 rounded-xl border transition-all text-left
                       ${formData.type === key 
                         ? `${config.bgColor} ${config.borderColor} ${config.textColor}` 
-                        : 'bg-slate-800/30 border-slate-700 text-slate-400 hover:bg-slate-800/50'
+                        : 'bg-[var(--card-bg)]/30 border-[var(--border)] text-[var(--text-muted)] hover:bg-[var(--card-bg)]/50'
                       }
                     `}
                   >
@@ -504,49 +504,49 @@ const AddNodeModal = ({ isOpen, onClose, onAdd, editNode }) => {
 
           {/* Title */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-slate-400">Title *</label>
+            <label className="block text-sm font-medium text-[var(--text-muted)]">Title *</label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               placeholder="Enter node title..."
-              className="w-full px-4 py-3 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
               required
             />
           </div>
 
           {/* Content */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-slate-400">Content</label>
+            <label className="block text-sm font-medium text-[var(--text-muted)]">Content</label>
             <textarea
               value={formData.content}
               onChange={(e) => setFormData({ ...formData, content: e.target.value })}
               placeholder="Add details or explanation..."
               rows={3}
-              className="w-full px-4 py-3 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all resize-none"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all resize-none"
             />
           </div>
 
           {/* Source */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-slate-400">Source (optional)</label>
+            <label className="block text-sm font-medium text-[var(--text-muted)]">Source (optional)</label>
             <input
               type="text"
               value={formData.source}
               onChange={(e) => setFormData({ ...formData, source: e.target.value })}
               placeholder="Citation or reference..."
-              className="w-full px-4 py-3 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
             />
           </div>
 
           {/* Actions */}
-          <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+          <div className="flex justify-end gap-3 pt-4 border-t border-[var(--border)]">
             <motion.button
               type="button"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={onClose}
-              className="px-6 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+              className="px-6 py-3 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
             >
               Cancel
             </motion.button>
@@ -554,7 +554,7 @@ const AddNodeModal = ({ isOpen, onClose, onAdd, editNode }) => {
               type="submit"
               whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(6, 182, 212, 0.3)' }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold shadow-lg shadow-cyan-500/25"
+              className="px-8 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-[var(--text-primary)] font-semibold shadow-lg shadow-cyan-500/25"
             >
               {editNode ? 'Save Changes' : 'Add Node'}
             </motion.button>
@@ -585,24 +585,24 @@ const ConnectionModal = ({ isOpen, onClose, onAdd, fromNode, toNode }) => {
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="w-full max-w-md bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 rounded-3xl shadow-2xl p-6"
+        className="w-full max-w-md bg-gradient-to-b from-slate-900 to-slate-950 border border-[var(--border)] rounded-3xl shadow-2xl p-6"
       >
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
+          <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
             <Link2 className="w-5 h-5 text-cyan-400" />
             Create Connection
           </h2>
           <motion.button
             whileHover={{ scale: 1.1, rotate: 90 }}
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+            className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
           >
             <X className="w-5 h-5" />
           </motion.button>
         </div>
 
         <div className="mb-6">
-          <p className="text-slate-400 text-sm mb-4">
+          <p className="text-[var(--text-muted)] text-sm mb-4">
             Connecting <span className="text-cyan-400 font-medium">{fromNode?.title}</span> to{' '}
             <span className="text-emerald-400 font-medium">{toNode?.title}</span>
           </p>
@@ -615,8 +615,8 @@ const ConnectionModal = ({ isOpen, onClose, onAdd, fromNode, toNode }) => {
                 className={`
                   w-full p-3 rounded-xl border transition-all flex items-center gap-3
                   ${connectionType === key 
-                    ? 'bg-slate-800 border-slate-600' 
-                    : 'bg-slate-900/50 border-slate-800 hover:bg-slate-800/50'
+                    ? 'bg-[var(--card-bg)] border-[var(--border)]' 
+                    : 'bg-[var(--bg-primary)]/50 border-[var(--border)] hover:bg-[var(--card-bg)]/50'
                   }
                 `}
               >
@@ -627,7 +627,7 @@ const ConnectionModal = ({ isOpen, onClose, onAdd, fromNode, toNode }) => {
                     backgroundImage: config.dash ? `repeating-linear-gradient(90deg, ${config.color}, ${config.color} 4px, transparent 4px, transparent 8px)` : 'none'
                   }}
                 />
-                <span className="text-white font-medium">{config.label}</span>
+                <span className="text-[var(--text-primary)] font-medium">{config.label}</span>
                 {connectionType === key && (
                   <Check className="w-4 h-4 text-cyan-400 ml-auto" />
                 )}
@@ -641,7 +641,7 @@ const ConnectionModal = ({ isOpen, onClose, onAdd, fromNode, toNode }) => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={onClose}
-            className="px-6 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+            className="px-6 py-3 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
           >
             Cancel
           </motion.button>
@@ -652,7 +652,7 @@ const ConnectionModal = ({ isOpen, onClose, onAdd, fromNode, toNode }) => {
               onAdd(connectionType);
               onClose();
             }}
-            className="px-8 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold shadow-lg shadow-cyan-500/25"
+            className="px-8 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-[var(--text-primary)] font-semibold shadow-lg shadow-cyan-500/25"
           >
             Connect
           </motion.button>
@@ -684,13 +684,13 @@ const Toolbar = ({
   return (
     <div className="absolute top-4 left-4 z-30 flex flex-col gap-2">
       {/* Tool Selection */}
-      <div className="p-2 rounded-xl bg-slate-900/90 border border-slate-800 backdrop-blur-sm flex flex-col gap-1">
+      <div className="p-2 rounded-xl bg-[var(--bg-primary)]/90 border border-[var(--border)] backdrop-blur-sm flex flex-col gap-1">
         <button
           onClick={() => setTool('select')}
           className={`p-2.5 rounded-lg transition-all ${
             tool === 'select' 
               ? 'bg-cyan-500/20 text-cyan-400' 
-              : 'text-slate-400 hover:text-white hover:bg-slate-800'
+              : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)]'
           }`}
           title="Select Tool (V)"
         >
@@ -701,7 +701,7 @@ const Toolbar = ({
           className={`p-2.5 rounded-lg transition-all ${
             tool === 'pan' 
               ? 'bg-cyan-500/20 text-cyan-400' 
-              : 'text-slate-400 hover:text-white hover:bg-slate-800'
+              : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)]'
           }`}
           title="Pan Tool (H)"
         >
@@ -710,27 +710,27 @@ const Toolbar = ({
       </div>
 
       {/* Zoom Controls */}
-      <div className="p-2 rounded-xl bg-slate-900/90 border border-slate-800 backdrop-blur-sm flex flex-col gap-1">
+      <div className="p-2 rounded-xl bg-[var(--bg-primary)]/90 border border-[var(--border)] backdrop-blur-sm flex flex-col gap-1">
         <button
           onClick={onZoomIn}
-          className="p-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
           title="Zoom In (+)"
         >
           <ZoomIn className="w-5 h-5" />
         </button>
-        <div className="text-center text-xs text-slate-500 py-1">
+        <div className="text-center text-xs text-[var(--text-muted)] py-1">
           {Math.round(scale * 100)}%
         </div>
         <button
           onClick={onZoomOut}
-          className="p-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
           title="Zoom Out (-)"
         >
           <ZoomOut className="w-5 h-5" />
         </button>
         <button
           onClick={onResetView}
-          className="p-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
           title="Reset View (R)"
         >
           <Maximize2 className="w-5 h-5" />
@@ -738,13 +738,13 @@ const Toolbar = ({
       </div>
 
       {/* View Options */}
-      <div className="p-2 rounded-xl bg-slate-900/90 border border-slate-800 backdrop-blur-sm">
+      <div className="p-2 rounded-xl bg-[var(--bg-primary)]/90 border border-[var(--border)] backdrop-blur-sm">
         <button
           onClick={() => setShowGrid(!showGrid)}
           className={`p-2.5 rounded-lg transition-all ${
             showGrid 
               ? 'bg-cyan-500/20 text-cyan-400' 
-              : 'text-slate-400 hover:text-white hover:bg-slate-800'
+              : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)]'
           }`}
           title="Toggle Grid (G)"
         >
@@ -767,24 +767,24 @@ const RightPanel = ({ onAddNode, onExportPNG, onExportPDF, onSave, onLoad, onCle
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={onAddNode}
-        className="p-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25"
+        className="p-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-[var(--text-primary)] shadow-lg shadow-cyan-500/25"
         title="Add Node (N)"
       >
         <Plus className="w-5 h-5" />
       </motion.button>
 
       {/* File Operations */}
-      <div className="p-2 rounded-xl bg-slate-900/90 border border-slate-800 backdrop-blur-sm flex flex-col gap-1">
+      <div className="p-2 rounded-xl bg-[var(--bg-primary)]/90 border border-[var(--border)] backdrop-blur-sm flex flex-col gap-1">
         <button
           onClick={onSave}
-          className="p-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
           title="Save Flowchart"
         >
           <Save className="w-5 h-5" />
         </button>
         <button
           onClick={onLoad}
-          className="p-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
           title="Load Flowchart"
         >
           <FolderOpen className="w-5 h-5" />
@@ -792,17 +792,17 @@ const RightPanel = ({ onAddNode, onExportPNG, onExportPDF, onSave, onLoad, onCle
       </div>
 
       {/* Export */}
-      <div className="p-2 rounded-xl bg-slate-900/90 border border-slate-800 backdrop-blur-sm flex flex-col gap-1">
+      <div className="p-2 rounded-xl bg-[var(--bg-primary)]/90 border border-[var(--border)] backdrop-blur-sm flex flex-col gap-1">
         <button
           onClick={onExportPNG}
-          className="p-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
           title="Export as PNG"
         >
           <Image className="w-5 h-5" />
         </button>
         <button
           onClick={onExportPDF}
-          className="p-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
           title="Export as PDF"
         >
           <FileText className="w-5 h-5" />
@@ -812,7 +812,7 @@ const RightPanel = ({ onAddNode, onExportPNG, onExportPDF, onSave, onLoad, onCle
       {/* Clear */}
       <button
         onClick={onClear}
-        className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 backdrop-blur-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all"
+        className="p-2.5 rounded-xl bg-[var(--bg-primary)]/90 border border-[var(--border)] backdrop-blur-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all"
         title="Clear Canvas"
       >
         <Trash2 className="w-5 h-5" />
@@ -827,8 +827,8 @@ const RightPanel = ({ onAddNode, onExportPNG, onExportPDF, onSave, onLoad, onCle
 
 const Legend = () => {
   return (
-    <div className="absolute bottom-4 left-4 z-30 p-4 rounded-xl bg-slate-900/90 border border-slate-800 backdrop-blur-sm">
-      <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Node Types</h4>
+    <div className="absolute bottom-4 left-4 z-30 p-4 rounded-xl bg-[var(--bg-primary)]/90 border border-[var(--border)] backdrop-blur-sm">
+      <h4 className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">Node Types</h4>
       <div className="grid grid-cols-2 gap-2">
         {Object.entries(NODE_TYPES).map(([key, config]) => {
           const Icon = config.icon;
@@ -837,7 +837,7 @@ const Legend = () => {
               <div className={`p-1 rounded ${config.bgColor}`}>
                 <Icon className={`w-3 h-3 ${config.textColor}`} />
               </div>
-              <span className="text-xs text-slate-400">{config.label}</span>
+              <span className="text-xs text-[var(--text-muted)]">{config.label}</span>
             </div>
           );
         })}
@@ -866,14 +866,14 @@ const EmptyState = ({ onAddNode }) => (
         <motion.div
           animate={{ y: [0, -5, 0] }}
           transition={{ duration: 3, repeat: Infinity }}
-          className="relative p-6 rounded-3xl bg-gradient-to-br from-slate-800/80 to-slate-900/80 border border-slate-700/50 backdrop-blur-xl shadow-2xl"
+          className="relative p-6 rounded-3xl bg-gradient-to-br from-slate-800/80 to-slate-900/80 border border-[var(--border)]/50 backdrop-blur-xl shadow-2xl"
         >
           <GitBranch className="w-16 h-16 text-cyan-400" />
         </motion.div>
       </div>
       
-      <h3 className="text-2xl font-bold text-white mb-3">Start Building Your Flow</h3>
-      <p className="text-slate-400 max-w-md mx-auto mb-8 leading-relaxed">
+      <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-3">Start Building Your Flow</h3>
+      <p className="text-[var(--text-muted)] max-w-md mx-auto mb-8 leading-relaxed">
         Create argument structures visually. Add claims, evidence, warrants, and connect them to see your case flow.
       </p>
       
@@ -881,7 +881,7 @@ const EmptyState = ({ onAddNode }) => (
         whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(6, 182, 212, 0.3)' }}
         whileTap={{ scale: 0.98 }}
         onClick={onAddNode}
-        className="px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold text-lg shadow-lg shadow-cyan-500/25 inline-flex items-center gap-3"
+        className="px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-[var(--text-primary)] font-semibold text-lg shadow-lg shadow-cyan-500/25 inline-flex items-center gap-3"
       >
         <Plus className="w-5 h-5" />
         Add First Node
@@ -1213,13 +1213,13 @@ const ArgumentFlowchart = () => {
         {/* Header */}
         <div className="flex items-start justify-between flex-shrink-0">
           <div>
-            <h1 className="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-3">
               <div className="p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/30">
                 <GitBranch className="w-7 h-7 text-cyan-400" />
               </div>
               Argument Flowchart
             </h1>
-            <p className="text-slate-400 mt-2">
+            <p className="text-[var(--text-muted)] mt-2">
               {nodes.length} nodes • {connections.length} connections
             </p>
           </div>
@@ -1228,7 +1228,7 @@ const ArgumentFlowchart = () => {
         {/* Canvas Container */}
         <div 
           ref={containerRef}
-          className="flex-1 relative rounded-2xl border border-slate-800/60 bg-slate-950 overflow-hidden"
+          className="flex-1 relative rounded-2xl border border-[var(--border)]/60 bg-slate-950 overflow-hidden"
           style={{ cursor: tool === 'pan' ? 'grab' : isPanning ? 'grabbing' : 'default' }}
           onMouseDown={handleCanvasMouseDown}
           onMouseMove={handleCanvasMouseMove}

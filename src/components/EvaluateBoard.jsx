@@ -195,7 +195,7 @@ const EvaluateBoard = ({ apiKey }) => {
                 </div>
 
                 <div className="flex-1 glass-card flex flex-col p-0 overflow-hidden">
-                    <div className="p-4 border-b border-slate-700/50 bg-slate-900/50">
+                    <div className="p-4 border-b border-[var(--border)]/50 bg-[var(--bg-primary)]/50">
                         <label className="text-sm font-medium text-text-secondary">Board Images & Notes</label>
                     </div>
 
@@ -204,11 +204,11 @@ const EvaluateBoard = ({ apiKey }) => {
                         {images.length > 0 && (
                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                                 {images.map(img => (
-                                    <div key={img.id} className="relative group aspect-video bg-slate-800 rounded-lg overflow-hidden border border-slate-700">
+                                    <div key={img.id} className="relative group aspect-video bg-[var(--card-bg)] rounded-lg overflow-hidden border border-[var(--border)]">
                                         <img src={img.url} alt="Board" className="w-full h-full object-cover" />
                                         <button
                                             onClick={() => removeImage(img.id)}
-                                            className="absolute top-1 right-1 p-1 bg-red-500/80 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                            className="absolute top-1 right-1 p-1 bg-red-500/80 text-[var(--text-primary)] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                                         >
                                             <X className="w-3 h-3" />
                                         </button>
@@ -220,7 +220,7 @@ const EvaluateBoard = ({ apiKey }) => {
                         {/* Upload Area */}
                         <div
                             onClick={() => fileInputRef.current?.click()}
-                            className="border-2 border-dashed border-slate-700 rounded-xl p-8 flex flex-col items-center justify-center text-slate-500 hover:border-primary hover:text-primary hover:bg-primary/5 transition-all cursor-pointer"
+                            className="border-2 border-dashed border-[var(--border)] rounded-xl p-8 flex flex-col items-center justify-center text-[var(--text-muted)] hover:border-primary hover:text-primary hover:bg-primary/5 transition-all cursor-pointer"
                         >
                             <Upload className="w-8 h-8 mb-2" />
                             <span className="text-sm font-medium">Click to upload images</span>
@@ -239,11 +239,11 @@ const EvaluateBoard = ({ apiKey }) => {
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             placeholder="Add any specific notes or questions about the flow..."
-                            className="w-full bg-slate-900/50 border border-slate-700 rounded-lg p-3 text-sm text-text-primary focus:outline-none focus:border-primary resize-none h-24"
+                            className="w-full bg-[var(--bg-primary)]/50 border border-[var(--border)] rounded-lg p-3 text-sm text-text-primary focus:outline-none focus:border-primary resize-none h-24"
                         />
                     </div>
 
-                    <div className="p-4 border-t border-slate-700/50 bg-slate-900/50 flex justify-between items-center">
+                    <div className="p-4 border-t border-[var(--border)]/50 bg-[var(--bg-primary)]/50 flex justify-between items-center">
                         <span className="text-xs text-text-muted">{images.length} images</span>
                         <button
                             onClick={handleAnalyze}
@@ -266,8 +266,8 @@ const EvaluateBoard = ({ apiKey }) => {
 
             {/* Output Panel */}
             <div className="w-full lg:w-1/2 glass-card overflow-hidden flex flex-col p-0">
-                <div className="p-4 border-b border-slate-700/50 bg-slate-900/50 flex justify-between items-center">
-                    <h3 className="font-bold text-white flex items-center gap-2">
+                <div className="p-4 border-b border-[var(--border)]/50 bg-[var(--bg-primary)]/50 flex justify-between items-center">
+                    <h3 className="font-bold text-[var(--text-primary)] flex items-center gap-2">
                         <ImageIcon className="w-4 h-4 text-primary" />
                         Evaluation
                     </h3>
@@ -280,7 +280,7 @@ const EvaluateBoard = ({ apiKey }) => {
                             )}
                             <button
                                 onClick={copyToClipboard}
-                                className="text-text-secondary hover:text-white transition-colors"
+                                className="text-text-secondary hover:text-[var(--text-primary)] transition-colors"
                                 title="Copy to clipboard"
                             >
                                 {copied ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
@@ -291,7 +291,7 @@ const EvaluateBoard = ({ apiKey }) => {
 
                 <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
                     {result ? (
-                        <div className="prose prose-invert prose-sm max-w-none prose-headings:text-cyan-400 prose-a:text-accent prose-strong:text-white prose-table:border-collapse prose-th:border prose-th:border-slate-700 prose-td:border prose-td:border-slate-700 prose-th:p-2 prose-td:p-2 prose-th:bg-slate-800/50">
+                        <div className="prose prose-invert prose-sm max-w-none prose-headings:text-cyan-400 prose-a:text-accent prose-strong:text-[var(--text-primary)] prose-table:border-collapse prose-th:border prose-th:border-[var(--border)] prose-td:border prose-td:border-[var(--border)] prose-th:p-2 prose-td:p-2 prose-th:bg-[var(--card-bg)]/50">
                             <ReactMarkdown remarkPlugins={[remarkGfm]}>{result}</ReactMarkdown>
                         </div>
                     ) : (
