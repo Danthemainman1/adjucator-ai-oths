@@ -995,7 +995,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="p-8 rounded-3xl border border-hairline/60 /50 to-slate-950/50"
+            className="p-8 rounded-3xl border border-hairline/60 bg-gradient-to-br from-surface-card to-surface-offset shadow-sm"
           >
             <EmptyAnalytics onAddDebate={() => setShowAddModal(true)} />
           </motion.div>

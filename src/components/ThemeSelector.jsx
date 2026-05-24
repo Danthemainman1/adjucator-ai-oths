@@ -1,14 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sun, Moon } from 'lucide-react';
+import { Palette } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
 const ThemeSelector = ({ compact = false }) => {
-  const { themeId, setTheme } = useTheme();
-  const isDark = themeId === 'dark';
+  const { themeId, cycleTheme, themes } = useTheme();
+  const currentTheme = themes[themeId] || themes.teal;
 
   const toggleTheme = () => {
-    setTheme(isDark ? 'light' : 'dark');
+    cycleTheme();
   };
 
   if (compact) {
@@ -17,14 +17,14 @@ const ThemeSelector = ({ compact = false }) => {
         onClick={toggleTheme}
         className="p-2 rounded-sm transition-colors hover:bg-surface-dark"
         style={{ color: 'var(--text-secondary)' }}
-        title={isDark ? 'Switch to Paper mode' : 'Switch to Scholar mode'}
+        title={`Switch theme from ${currentTheme.name}`}
       >
         <motion.div
           initial={false}
-          animate={{ rotate: isDark ? 0 : 180 }}
+          animate={{ rotate: 180 }}
           transition={{ duration: 0.3 }}
         >
-          {isDark ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+          <Palette className="w-5 h-5" />
         </motion.div>
       </button>
     );
@@ -38,12 +38,12 @@ const ThemeSelector = ({ compact = false }) => {
     >
       <motion.div
         initial={false}
-        animate={{ rotate: isDark ? 0 : 180 }}
+        animate={{ rotate: 180 }}
         transition={{ duration: 0.3 }}
       >
-        {isDark ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+        <Palette className="w-4 h-4" />
       </motion.div>
-      <span className="font-sans text-sm tracking-wide uppercase font-medium flex-1 text-left">{isDark ? 'Dark Academia' : 'Paper Mode'}</span>
+      <span className="font-sans text-sm tracking-wide uppercase font-medium flex-1 text-left">{currentTheme.name}</span>
     </button>
   );
 };

@@ -99,23 +99,30 @@ const SettingsModal = ({ isOpen, onClose, apiKey, setApiKey, openaiKey, setOpena
 };
 
 function AppContent() {
-  const [activeTab, setActiveTab] = useState(() => {
+  const getTabFromHash = () => {
     const hash = window.location.hash.replace('#', '');
     return hash || 'dashboard';
+  };
+
+  const [activeTab, setActiveTab] = useState(() => {
+    return getTabFromHash();
   });
 
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '');
-      if (hash) setActiveTab(hash);
+      setActiveTab(getTabFromHash());
     };
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
   const handleTabChange = (tab) => {
-    window.location.hash = tab;
-    setActiveTab(tab);
+    const nextTab = tab || 'dashboard';
+    setActiveTab(nextTab);
+
+    if (window.location.hash.replace('#', '') !== nextTab) {
+      window.location.hash = nextTab;
+    }
   };
   const [showSettings, setShowSettings] = useState(false);
   const [showLanding, setShowLanding] = useState(true);

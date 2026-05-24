@@ -54,16 +54,16 @@ const Dashboard = ({ setActiveTab }) => {
       {/* Asymmetric Reading-Style Layout for Core Tools */}
       <div>
         <h2 className="text-sm font-medium text-ink-muted label-caps mb-6">Core Instruments</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-hairline rounded-md border border-hairline overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-hairline rounded-2xl border border-hairline overflow-hidden shadow-sm">
           {getStartedCards.map((card, index) => (
             <motion.div
               key={card.label}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: index * 0.1 }}
-              className="bg-surface-parchment p-8 flex flex-col group hover:bg-surface-card transition-colors"
+              className="bg-surface-card p-8 min-h-[240px] flex flex-col group hover:bg-surface-offset transition-colors"
             >
-              <p className="label-caps text-ink-faint mb-2">{card.label}</p>
+              <p className="label-caps text-ink-muted mb-2">{card.label}</p>
               <h3 className="text-xl font-serif text-ink mb-3 group-hover:text-accent-crimson transition-colors">{card.title}</h3>
               <p className="text-ink-muted text-sm flex-1 max-w-sm mb-6 leading-relaxed">
                 {card.description}
@@ -86,7 +86,7 @@ const Dashboard = ({ setActiveTab }) => {
         {/* Empty Performance Chart */}
         <div className="lg:col-span-2 space-y-6">
           <h2 className="text-sm font-medium text-ink-muted label-caps border-b border-hairline pb-4">Statistical Overview</h2>
-          <div className="card p-8 h-[300px] flex flex-col items-center justify-center text-center">
+           <div className="card p-8 min-h-[300px] flex flex-col items-center justify-center text-center">
              <Activity className="w-8 h-8 text-ink-faint mb-4 stroke-[1.25]" />
              <p className="text-ink font-medium">Insufficient performance data</p>
              <p className="text-ink-muted text-sm mt-1 max-w-sm">Complete your initial analysis to begin tracking debate progress metrics over time.</p>

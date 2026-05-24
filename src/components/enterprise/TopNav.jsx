@@ -1,15 +1,37 @@
 import React, { useState } from 'react';
-import { 
-  Bell, Settings, ChevronDown, LogOut, User,
-  HelpCircle, Search, BarChart3, Target, BookOpen,
-  Dumbbell, Users, Trophy, Mic, Brain, Lightbulb,
-  FileText, History, MoreHorizontal, GitBranch, Timer,
-  List, Calendar, Activity, ScrollText, Clipboard,
-  Sliders, FileEdit, LayoutGrid, Award, Flag, Shield,
-  PenTool
+import {
+  Bell,
+  Settings,
+  ChevronDown,
+  LogOut,
+  User,
+  X,
+  BarChart3,
+  Target,
+  BookOpen,
+  Dumbbell,
+  Users,
+  Trophy,
+  Mic,
+  Brain,
+  Lightbulb,
+  FileText,
+  History,
+  GitBranch,
+  Timer,
+  List,
+  Calendar,
+  Activity,
+  ScrollText,
+  Clipboard,
+  Sliders,
+  FileEdit,
+  LayoutGrid,
+  Award,
+  Shield,
+  PenTool,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
-import { useTheme } from '../../contexts/ThemeContext';
 import { cn } from '../../utils/helpers';
 
 const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
@@ -17,7 +39,6 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const { user, logout } = useAuth();
-  const { theme } = useTheme();
 
   const primaryNavItems = [
     { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
@@ -59,16 +80,12 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
   const unreadCount = 0;
 
   return (
-    <nav className="sticky top-0 left-0 right-0 z-50 h-16 bg-surface-parchment border-b border-hairline">
+    <nav className="sticky top-0 left-0 right-0 z-50 h-16 relative bg-surface-parchment border-b border-hairline">
       <div className="h-full px-6 flex items-center justify-between mx-auto max-w-[1400px]">
-        {/* Left: Logo & Nav */}
         <div className="flex items-center gap-8">
-          <button 
-            onClick={() => setActiveTab('dashboard')}
-            className="flex items-center gap-3 group"
-          >
+          <button type="button" onClick={() => setActiveTab('dashboard')} className="flex items-center gap-3 group">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2L2 22H6L12 10L18 22H22L12 2Z" fill="currentColor" className="text-accent-crimson"/>
+              <path d="M12 2L2 22H6L12 10L18 22H22L12 2Z" fill="currentColor" className="text-accent-crimson" />
             </svg>
             <div className="flex flex-col items-start leading-none mt-1 hidden sm:flex">
               <span className="text-lg font-serif font-medium text-ink tracking-tight">Adjudicator AI</span>
@@ -77,32 +94,28 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
 
           <div className="hidden lg:block h-6 w-px bg-hairline" />
 
-          {/* Center: Navigation */}
           <div className="hidden xl:flex items-center gap-1">
             {primaryNavItems.map((item) => (
               <button
                 key={item.id}
+                type="button"
                 onClick={() => setActiveTab(item.id)}
                 className={cn(
-                  "flex items-center gap-2 px-3 py-1.5 rounded text-sm transition-colors",
-                  activeTab === item.id
-                    ? "font-medium text-ink bg-surface-card"
-                    : "text-ink-muted hover:text-ink hover:bg-surface-offset"
+                  'flex items-center gap-2 px-3 py-1.5 rounded text-sm transition-colors',
+                  activeTab === item.id ? 'font-medium text-ink bg-surface-card' : 'text-ink-muted hover:text-ink hover:bg-surface-offset'
                 )}
               >
                 {item.label}
               </button>
             ))}
-            
-            {/* More dropdown */}
+
             <div className="relative ml-1">
               <button
-                onClick={() => setShowMoreMenu(!showMoreMenu)}
+                type="button"
+                onClick={() => setShowMoreMenu((value) => !value)}
                 className={cn(
-                  "flex items-center gap-2 px-3 py-1.5 rounded text-sm transition-colors",
-                  secondaryNavItems.some(item => item.id === activeTab)
-                   ? "font-medium text-ink bg-surface-card"
-                   : "text-ink-muted hover:text-ink hover:bg-surface-offset"
+                  'flex items-center gap-2 px-3 py-1.5 rounded text-sm transition-colors',
+                  secondaryNavItems.some((item) => item.id === activeTab) ? 'font-medium text-ink bg-surface-card' : 'text-ink-muted hover:text-ink hover:bg-surface-offset'
                 )}
               >
                 More
@@ -117,15 +130,14 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
                       {secondaryNavItems.map((item) => (
                         <button
                           key={item.id}
+                          type="button"
                           onClick={() => {
                             setActiveTab(item.id);
                             setShowMoreMenu(false);
                           }}
                           className={cn(
-                            "w-full flex items-center gap-3 px-3 py-2 rounded transition-colors text-left mb-1",
-                            activeTab === item.id
-                              ? "bg-surface-card text-ink font-medium"
-                              : "text-ink-muted hover:text-ink hover:bg-surface-card"
+                            'w-full flex items-center gap-3 px-3 py-2 rounded transition-colors text-left mb-1',
+                            activeTab === item.id ? 'bg-surface-card text-ink font-medium' : 'text-ink-muted hover:text-ink hover:bg-surface-card'
                           )}
                         >
                           <span className="text-sm">{item.label}</span>
@@ -139,47 +151,42 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
           </div>
         </div>
 
-        {/* Right: Actions */}
         <div className="flex items-center gap-2 sm:gap-4">
-          <button 
-            onClick={() => setShowNotifications(!showNotifications)}
+          <button
+            type="button"
+            onClick={() => setShowNotifications((value) => !value)}
             className="p-2 text-ink-muted hover:text-ink transition-colors relative"
           >
             <Bell size={18} strokeWidth={1.5} />
-            {unreadCount > 0 && (
-              <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-accent-crimson rounded-full" />
-            )}
+            {unreadCount > 0 && <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-accent-crimson rounded-full" />}
           </button>
 
-          <button 
-            onClick={onSettingsClick}
-            className="p-2 text-ink-muted hover:text-ink transition-colors"
-          >
+          <button type="button" onClick={onSettingsClick} className="p-2 text-ink-muted hover:text-ink transition-colors">
             <Settings size={18} strokeWidth={1.5} />
           </button>
 
-          {/* User Menu */}
           <div className="relative pl-4 border-l border-hairline ml-2">
-            <button 
-              onClick={() => setShowUserMenu(!showUserMenu)}
+            <button
+              type="button"
+              onClick={() => setShowUserMenu((value) => !value)}
               className="flex items-center gap-3 rounded p-0.5 hover:bg-surface-card transition-colors group"
             >
               <div className="text-right hidden md:block mr-1">
-                 <p className="text-sm font-sans font-medium text-ink leading-tight">{user?.displayName || 'User'}</p>
-                 <p className="label-caps text-ink-faint">Adjudicator</p>
+                <p className="text-sm font-sans font-medium text-ink leading-tight">{user?.displayName || 'User'}</p>
+                <p className="label-caps text-ink-faint">Adjudicator</p>
               </div>
               <div className="w-8 h-8 rounded border border-hairline flex items-center justify-center bg-surface-card text-ink font-sans text-sm font-medium group-hover:border-accent-crimson transition-colors">
                 {user?.displayName?.[0] || 'U'}
               </div>
             </button>
 
-            {/* User Dropdown */}
             {showUserMenu && (
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setShowUserMenu(false)} />
                 <div className="absolute right-0 top-full mt-2 w-48 bg-surface-parchment border border-hairline rounded shadow-subtle z-50 overflow-hidden">
                   <div className="p-1.5">
                     <button
+                      type="button"
                       onClick={() => {
                         setShowUserMenu(false);
                         onSettingsClick?.();
@@ -190,7 +197,11 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
                       Profile
                     </button>
                     <div className="h-px bg-hairline my-1" />
-                    <button onClick={logout} className="w-full flex items-center gap-3 px-3 py-2 rounded text-accent-crimson hover:bg-surface-card transition-colors text-left text-sm font-medium">
+                    <button
+                      type="button"
+                      onClick={logout}
+                      className="w-full flex items-center gap-3 px-3 py-2 rounded text-accent-crimson hover:bg-surface-card transition-colors text-left text-sm font-medium"
+                    >
                       <LogOut className="w-4 h-4" />
                       Sign Out
                     </button>
@@ -201,7 +212,36 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
           </div>
         </div>
       </div>
+
+      {showNotifications && (
+        <div className="absolute right-6 top-16 z-50 w-80 rounded-2xl border border-hairline bg-surface-parchment shadow-2xl p-4">
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <p className="text-sm font-medium text-ink">Notifications</p>
+              <p className="text-xs text-ink-muted">Updates from your workspace</p>
+            </div>
+            <button type="button" onClick={() => setShowNotifications(false)} className="p-1.5 rounded-lg hover:bg-surface-offset text-ink-muted hover:text-ink">
+              <X size={16} />
+            </button>
+          </div>
+          {notifications.length > 0 ? (
+            <div className="space-y-2 max-h-72 overflow-y-auto">
+              {notifications.map((notification) => (
+                <div key={notification.id} className="rounded-xl border border-hairline bg-surface-card p-3">
+                  <p className="text-sm font-medium text-ink">{notification.title}</p>
+                  <p className="text-xs text-ink-muted mt-1">{notification.message}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-xl border border-dashed border-hairline p-4 text-sm text-ink-muted">
+              No notifications right now.
+            </div>
+          )}
+        </div>
+      )}
     </nav>
   );
 };
+
 export default TopNav;
