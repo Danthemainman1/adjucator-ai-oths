@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { 
-  Gavel, Bell, Settings, ChevronDown, LogOut, User,
+  Bell, Settings, ChevronDown, LogOut, User,
   HelpCircle, Search, BarChart3, Target, BookOpen,
   Dumbbell, Users, Trophy, Mic, Brain, Lightbulb,
   FileText, History, MoreHorizontal, GitBranch, Timer,
@@ -19,7 +19,6 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
   const { user, logout } = useAuth();
   const { theme } = useTheme();
 
-  // Primary nav - most used features
   const primaryNavItems = [
     { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
     { id: 'analytics', label: 'Analytics', icon: BarChart3 },
@@ -29,7 +28,6 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
     { id: 'tournaments', label: 'Tournaments', icon: Trophy },
   ];
 
-  // Secondary nav - in "More" dropdown
   const secondaryNavItems = [
     { id: 'quickstats', label: 'Quick Stats', icon: Activity },
     { id: 'motions', label: 'Motion Library', icon: ScrollText },
@@ -37,15 +35,15 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
     { id: 'flowchart', label: 'Flowchart', icon: GitBranch },
     { id: 'voice', label: 'Voice Analysis', icon: Mic },
     { id: 'timer', label: 'Debate Timer', icon: Timer },
-    { id: 'presets', label: 'Timer Presets', icon: Sliders }, // Replaced Settings2
+    { id: 'presets', label: 'Timer Presets', icon: Sliders },
     { id: 'notes', label: 'Notes', icon: FileEdit },
     { id: 'cards', label: 'Card Organizer', icon: LayoutGrid },
     { id: 'formatguide', label: 'Format Guide', icon: BookOpen },
-    { id: 'speakerpoints', label: 'Speaker Points', icon: Award }, // Replaced Medal
-    { id: 'clock', label: 'Debate Clock', icon: Timer }, // Replaced Hourglass
-    { id: 'validator', label: 'Arg Validator', icon: Shield }, // Replaced ShieldCheck
-    { id: 'judgenotes', label: 'Judge Notes', icon: PenTool }, // Replaced NotebookPen
-    { id: 'roster', label: 'Team Roster', icon: Users }, // Replaced UsersRound
+    { id: 'speakerpoints', label: 'Speaker Points', icon: Award },
+    { id: 'clock', label: 'Debate Clock', icon: Timer },
+    { id: 'validator', label: 'Arg Validator', icon: Shield },
+    { id: 'judgenotes', label: 'Judge Notes', icon: PenTool },
+    { id: 'roster', label: 'Team Roster', icon: Users },
     { id: 'outline', label: 'Outline Builder', icon: List },
     { id: 'scheduler', label: 'Round Scheduler', icon: Calendar },
     { id: 'opponents', label: 'Opponents', icon: Target },
@@ -61,31 +59,23 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
   const unreadCount = 0;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 h-[84px] bg-base-white border-b border-gold/10 shadow-sm transition-all">
-      <div className="h-full px-4 lg:px-8 flex items-center justify-between">
-        {/* Left: Logo */}
-        <div className="flex items-center gap-6">
+    <nav className="sticky top-0 left-0 right-0 z-50 h-16 bg-surface-parchment border-b border-hairline">
+      <div className="h-full px-6 flex items-center justify-between mx-auto max-w-[1400px]">
+        {/* Left: Logo & Nav */}
+        <div className="flex items-center gap-8">
           <button 
             onClick={() => setActiveTab('dashboard')}
             className="flex items-center gap-3 group"
           >
-           <div className="relative w-10 h-10 flex items-center justify-center">
-              <div className="absolute inset-0 bg-teal opacity-10 rounded-full group-hover:scale-110 transition-transform duration-500" />
-              <div className="relative text-teal-dark group-hover:text-gold transition-colors">
-                 <Gavel size={22} strokeWidth={1.5} />
-              </div>
-            </div>
-            
-            <div className="hidden sm:block text-left">
-              <span className="block text-xl font-serif font-bold text-teal-dark tracking-tighter leading-none">
-                Adjudicator<span className="text-gold">.ai</span>
-              </span>
-              <span className="text-[10px] uppercase tracking-[0.2em] text-gold-dim font-medium">Enterprise</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L2 22H6L12 10L18 22H22L12 2Z" fill="currentColor" className="text-accent-crimson"/>
+            </svg>
+            <div className="flex flex-col items-start leading-none mt-1 hidden sm:flex">
+              <span className="text-lg font-serif font-medium text-ink tracking-tight">Adjudicator AI</span>
             </div>
           </button>
 
-          {/* Vertical Divider */}
-          <div className="hidden lg:block h-6 w-px bg-gold/20" />
+          <div className="hidden lg:block h-6 w-px bg-hairline" />
 
           {/* Center: Navigation */}
           <div className="hidden xl:flex items-center gap-1">
@@ -94,26 +84,25 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
                 className={cn(
-                  "flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300",
+                  "flex items-center gap-2 px-3 py-1.5 rounded text-sm transition-colors",
                   activeTab === item.id
-                    ? "bg-teal text-white shadow-md shadow-teal/10"
-                    : "text-teal-dark/70 hover:text-teal-dark hover:bg-teal/5"
+                    ? "font-medium text-ink bg-surface-card"
+                    : "text-ink-muted hover:text-ink hover:bg-surface-offset"
                 )}
               >
-                <item.icon className="w-4 h-4" strokeWidth={1.5} />
                 {item.label}
               </button>
             ))}
             
             {/* More dropdown */}
-            <div className="relative ml-2">
+            <div className="relative ml-1">
               <button
                 onClick={() => setShowMoreMenu(!showMoreMenu)}
                 className={cn(
-                  "flex items-center gap-2 px-3 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all",
+                  "flex items-center gap-2 px-3 py-1.5 rounded text-sm transition-colors",
                   secondaryNavItems.some(item => item.id === activeTab)
-                   ? "bg-teal-light/10 text-teal-dark border border-teal/20"
-                   : "text-teal-dark/60 hover:text-teal-dark hover:bg-gold/5"
+                   ? "font-medium text-ink bg-surface-card"
+                   : "text-ink-muted hover:text-ink hover:bg-surface-offset"
                 )}
               >
                 More
@@ -123,7 +112,7 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
               {showMoreMenu && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setShowMoreMenu(false)} />
-                  <div className="absolute left-0 top-full mt-4 w-64 bg-base-white border border-gold/20 rounded-lg shadow-xl shadow-teal/5 p-2 z-50 animate-in fade-in zoom-in-95">
+                  <div className="absolute left-0 top-full mt-2 w-64 bg-surface-parchment border border-hairline rounded shadow-subtle p-2 z-50 animate-in fade-in zoom-in-95">
                     <div className="max-h-[60vh] overflow-y-auto custom-scrollbar p-1">
                       {secondaryNavItems.map((item) => (
                         <button
@@ -133,13 +122,12 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
                             setShowMoreMenu(false);
                           }}
                           className={cn(
-                            "w-full flex items-center gap-3 px-3 py-2.5 rounded-md transition-all text-left mb-1",
+                            "w-full flex items-center gap-3 px-3 py-2 rounded transition-colors text-left mb-1",
                             activeTab === item.id
-                              ? "bg-teal/5 text-teal-dark font-medium"
-                              : "text-text-muted hover:text-teal-dark hover:bg-gold/5"
+                              ? "bg-surface-card text-ink font-medium"
+                              : "text-ink-muted hover:text-ink hover:bg-surface-card"
                           )}
                         >
-                          <item.icon className="w-4 h-4" strokeWidth={1.5} />
                           <span className="text-sm">{item.label}</span>
                         </button>
                       ))}
@@ -152,38 +140,36 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
         </div>
 
         {/* Right: Actions */}
-        <div className="flex items-center gap-3">
-          {/* Notifications */}
+        <div className="flex items-center gap-2 sm:gap-4">
           <button 
-              onClick={() => setShowNotifications(!showNotifications)}
-              className="p-2 text-gold-dim hover:text-teal hover:bg-teal/5 rounded-full transition-colors relative"
-            >
-              <Bell size={20} strokeWidth={1.5} />
-              {unreadCount > 0 && (
-                <span className="absolute top-2 right-2 w-2 h-2 bg-red rounded-full ring-2 ring-white" />
-              )}
+            onClick={() => setShowNotifications(!showNotifications)}
+            className="p-2 text-ink-muted hover:text-ink transition-colors relative"
+          >
+            <Bell size={18} strokeWidth={1.5} />
+            {unreadCount > 0 && (
+              <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-accent-crimson rounded-full" />
+            )}
           </button>
 
-          {/* Settings */}
           <button 
             onClick={onSettingsClick}
-            className="p-2 text-gold-dim hover:text-teal hover:bg-teal/5 rounded-full transition-colors"
+            className="p-2 text-ink-muted hover:text-ink transition-colors"
           >
-            <Settings size={20} strokeWidth={1.5} />
+            <Settings size={18} strokeWidth={1.5} />
           </button>
 
           {/* User Menu */}
-          <div className="relative pl-4 border-l border-gold/20 ml-2">
+          <div className="relative pl-4 border-l border-hairline ml-2">
             <button 
               onClick={() => setShowUserMenu(!showUserMenu)}
-              className="flex items-center gap-3 p-1 rounded-full hover:bg-gold/5 transition-all group"
+              className="flex items-center gap-3 rounded p-0.5 hover:bg-surface-card transition-colors group"
             >
-              <div className="text-right hidden md:block">
-                 <p className="text-sm font-serif font-bold text-teal-dark leading-tight">{user?.displayName || 'Adjudicator'}</p>
-                 <p className="text-[10px] text-gold-dim uppercase tracking-widest font-medium">Online</p>
+              <div className="text-right hidden md:block mr-1">
+                 <p className="text-sm font-sans font-medium text-ink leading-tight">{user?.displayName || 'User'}</p>
+                 <p className="label-caps text-ink-faint">Adjudicator</p>
               </div>
-              <div className="w-10 h-10 rounded-full bg-teal-dark flex items-center justify-center text-gold font-serif text-lg border-2 border-white shadow-sm group-hover:border-gold transition-colors">
-                {user?.displayName?.[0] || 'A'}
+              <div className="w-8 h-8 rounded border border-hairline flex items-center justify-center bg-surface-card text-ink font-sans text-sm font-medium group-hover:border-accent-crimson transition-colors">
+                {user?.displayName?.[0] || 'U'}
               </div>
             </button>
 
@@ -191,14 +177,14 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
             {showUserMenu && (
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setShowUserMenu(false)} />
-                <div className="absolute right-0 top-full mt-4 w-56 bg-base-white border border-gold/20 rounded-lg shadow-xl z-50 overflow-hidden">
-                  <div className="p-2">
-                    <button className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-text-muted hover:text-teal-dark hover:bg-gold/5 transition-all text-left text-sm">
+                <div className="absolute right-0 top-full mt-2 w-48 bg-surface-parchment border border-hairline rounded shadow-subtle z-50 overflow-hidden">
+                  <div className="p-1.5">
+                    <button className="w-full flex items-center gap-3 px-3 py-2 rounded text-ink-muted hover:text-ink hover:bg-surface-card transition-colors text-left text-sm">
                       <User className="w-4 h-4" />
                       Profile
                     </button>
-                    <div className="h-px bg-gold/10 my-1" />
-                    <button onClick={logout} className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-red hover:bg-red/5 transition-all text-left text-sm font-medium">
+                    <div className="h-px bg-hairline my-1" />
+                    <button onClick={logout} className="w-full flex items-center gap-3 px-3 py-2 rounded text-accent-crimson hover:bg-surface-card transition-colors text-left text-sm font-medium">
                       <LogOut className="w-4 h-4" />
                       Sign Out
                     </button>
@@ -212,5 +198,4 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
     </nav>
   );
 };
-
 export default TopNav;

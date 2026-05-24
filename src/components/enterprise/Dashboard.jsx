@@ -1,274 +1,133 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import {
-  Mic,
-  Target,
-  Activity,
-  History,
-  TrendingUp,
-  Clock,
-  Award,
-  ChevronRight,
-  Zap,
-  BarChart3,
-  FileText,
-  Play,
-  Sparkles,
-  MessageSquare,
-  Lightbulb
+  Mic, Target, Activity, History, Clock, FileText, Play, MessageSquare, Lightbulb, ChevronRight
 } from 'lucide-react';
 
 const Dashboard = ({ setActiveTab }) => {
-  // Empty state cards for new users
   const getStartedCards = [
     { 
-      label: 'Speech Analysis', 
-      icon: Mic, 
-      colorClasses: {
-        bg: 'bg-cyan-500/10',
-        border: 'border-cyan-500/20',
-        text: 'text-cyan-400',
-        buttonBg: 'bg-cyan-500/10',
-        buttonBorder: 'border-cyan-500/30',
-        buttonHover: 'hover:bg-cyan-500/20'
-      },
-      title: 'No speeches analyzed yet',
+      label: 'SPEECH ANALYSIS',
+      title: 'Analyze First Speech',
       description: 'Upload or record a speech to get AI-powered feedback on delivery, structure, and argumentation.',
-      action: 'Analyze First Speech',
+      action: 'Start Analysis',
       tab: 'judge'
     },
     { 
-      label: 'Live Coaching', 
-      icon: Activity, 
-      colorClasses: {
-        bg: 'bg-purple-500/10',
-        border: 'border-purple-500/20',
-        text: 'text-purple-400',
-        buttonBg: 'bg-purple-500/10',
-        buttonBorder: 'border-purple-500/30',
-        buttonHover: 'hover:bg-purple-500/20'
-      },
-      title: 'No coaching sessions yet',
-      description: 'Start a live session to get real-time feedback as you practice your speech or debate.',
-      action: 'Start Coaching',
+      label: 'LIVE COACHING',
+      title: 'Start Coaching Session',
+      description: 'Begin a live session to get real-time feedback as you practice your speech or debate.',
+      action: 'Start Live Coach',
       tab: 'coach'
     },
     { 
-      label: 'Strategy Builder', 
-      icon: Target, 
-      colorClasses: {
-        bg: 'bg-orange-500/10',
-        border: 'border-orange-500/20',
-        text: 'text-orange-400',
-        buttonBg: 'bg-orange-500/10',
-        buttonBorder: 'border-orange-500/30',
-        buttonHover: 'hover:bg-orange-500/20'
-      },
-      title: 'No strategies created yet',
-      description: 'Build winning debate strategies with AI-powered case analysis and argument mapping.',
-      action: 'Build Strategy',
+      label: 'STRATEGY BUILDER',
+      title: 'Build Match Strategy',
+      description: 'Construct winning debate strategies with AI-powered case analysis and argument mapping.',
+      action: 'Open Builder',
       tab: 'strategy'
     },
     { 
-      label: 'Tone Analysis', 
-      icon: MessageSquare, 
-      colorClasses: {
-        bg: 'bg-emerald-500/10',
-        border: 'border-emerald-500/20',
-        text: 'text-emerald-400',
-        buttonBg: 'bg-emerald-500/10',
-        buttonBorder: 'border-emerald-500/30',
-        buttonHover: 'hover:bg-emerald-500/20'
-      },
-      title: 'No tone analyses yet',
-      description: 'Analyze the rhetorical tone and persuasive elements of your speeches.',
-      action: 'Analyze Tone',
+      label: 'TONE ANALYSIS',
+      title: 'Analyze Tone & Persuasion',
+      description: 'Break down the rhetorical tone and persuasive elements embedded in your speeches.',
+      action: 'Open Tone Analyzer',
       tab: 'tone'
     },
   ];
 
   const quickActions = [
-    { label: 'New Analysis', icon: FileText, tab: 'judge', color: 'from-cyan-500 to-blue-500' },
-    { label: 'Start Coaching', icon: Play, tab: 'coach', color: 'from-purple-500 to-pink-500' },
-    { label: 'Build Strategy', icon: Target, tab: 'strategy', color: 'from-orange-500 to-red-500' },
-    { label: 'View History', icon: History, tab: 'history', color: 'from-emerald-500 to-teal-500' },
+    { label: 'New Analysis', tab: 'judge' },
+    { label: 'Start Coaching', tab: 'coach' },
+    { label: 'Build Strategy', tab: 'strategy' },
+    { label: 'View History', tab: 'history' },
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-12">
       {/* Page Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight">Dashboard</h1>
-        <p className="text-[var(--text-muted)] mt-1">Welcome! Let's get started on improving your debate skills.</p>
+      <div className="border-b border-hairline pb-4">
+        <h1 className="text-3xl font-serif text-ink tracking-tight">Dashboard</h1>
+        <p className="text-ink-muted mt-2">Welcome. Select a tool below to begin your session.</p>
       </div>
 
-      {/* Get Started Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {getStartedCards.map((card, index) => {
-          const Icon = card.icon;
-          const colors = card.colorClasses;
-          return (
+      {/* Asymmetric Reading-Style Layout for Core Tools */}
+      <div>
+        <h2 className="text-sm font-medium text-ink-muted label-caps mb-6">Core Instruments</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-hairline rounded-md border border-hairline overflow-hidden">
+          {getStartedCards.map((card, index) => (
             <motion.div
               key={card.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ delay: index * 0.1 }}
-              className="relative group"
+              className="bg-surface-parchment p-8 flex flex-col group hover:bg-surface-card transition-colors"
             >
-              <div className="glass-panel h-full flex flex-col p-6 hover:scale-[1.02] transition-all duration-300">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className={`p-3 rounded-xl ${colors.bg} border ${colors.border}`}>
-                    <Icon className={`w-6 h-6 ${colors.text}`} />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm text-[var(--text-muted)] font-medium">{card.label}</p>
-                    <p className="text-lg font-semibold text-[var(--text-primary)] mt-0.5">{card.title}</p>
-                  </div>
-                </div>
-                <p className="text-[var(--text-muted)] text-sm flex-1 mb-4">{card.description}</p>
+              <p className="label-caps text-ink-faint mb-2">{card.label}</p>
+              <h3 className="text-xl font-serif text-ink mb-3 group-hover:text-accent-crimson transition-colors">{card.title}</h3>
+              <p className="text-ink-muted text-sm flex-1 max-w-sm mb-6 leading-relaxed">
+                {card.description}
+              </p>
+              <div className="mt-auto">
                 <button
                   onClick={() => setActiveTab(card.tab)}
-                  className={`w-full py-2.5 px-4 rounded-lg ${colors.buttonBg} border ${colors.buttonBorder} ${colors.text} font-medium ${colors.buttonHover} transition-all flex items-center justify-center gap-2`}
+                  className="text-sm font-medium text-ink hover:text-accent-crimson transition-colors flex items-center gap-1 group-hover:underline underline-offset-4 decoration-accent-crimson/30"
                 >
-                  <Sparkles className="w-4 h-4" />
                   {card.action}
+                  <ChevronRight size={14} className="opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
                 </button>
               </div>
             </motion.div>
-          );
-        })}
-      </div>
-
-      {/* Main Content Grid */}
-      <div className="grid lg:grid-cols-3 gap-6">
-        {/* Empty Performance Chart / Getting Started */}
-        <div className="lg:col-span-2">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="glass-panel p-6 h-full"
-          >
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h2 className="text-lg font-semibold text-[var(--text-primary)]">Performance Trend</h2>
-                <p className="text-sm text-[var(--text-muted)]">Track your improvement over time</p>
-              </div>
-            </div>
-
-            {/* Empty State for Chart */}
-            <div className="relative h-48 mt-4 flex flex-col items-center justify-center">
-              <div className="absolute inset-0 flex items-end justify-between gap-2 px-2 opacity-20">
-                {[40, 55, 45, 60, 50, 65, 58, 70, 63, 75, 68, 80].map((height, index) => (
-                  <div key={index} className="flex-1 flex flex-col items-center gap-2">
-                    <div
-                      style={{ height: `${height}%` }}
-                      className="w-full bg-gradient-to-t from-slate-700/50 to-slate-600/30 rounded-t-lg"
-                    />
-                  </div>
-                ))}
-              </div>
-              
-              <div className="relative z-10 text-center">
-                <div className="p-4 rounded-full bg-[var(--card-bg)]/50 border border-[var(--border)]/50 mb-4 mx-auto w-fit">
-                  <BarChart3 className="w-8 h-8 text-[var(--text-muted)]" />
-                </div>
-                <p className="text-[var(--text-muted)] font-medium">No performance data yet</p>
-                <p className="text-[var(--text-muted)] text-sm mt-1">Complete your first analysis to start tracking progress</p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Quick Actions */}
-        <div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="glass-panel p-6 h-full"
-          >
-            <h2 className="text-lg font-semibold text-[var(--text-primary)] mb-4">Quick Actions</h2>
-            <div className="space-y-3">
-              {quickActions.map((action, index) => {
-                const Icon = action.icon;
-                return (
-                  <button
-                    key={action.label}
-                    onClick={() => setActiveTab(action.tab)}
-                    className="w-full flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-[var(--bg-primary)]/30 hover:bg-[var(--card-bg)]/50 hover:border-white/10 transition-all group"
-                  >
-                    <div className={`p-2.5 rounded-lg bg-gradient-to-br ${action.color} shadow-lg`}>
-                      <Icon className="w-5 h-5 text-[var(--text-primary)]" />
-                    </div>
-                    <span className="flex-1 text-left text-[var(--text-primary)] font-medium">{action.label}</span>
-                    <ChevronRight className="w-5 h-5 text-[var(--text-muted)] group-hover:text-[var(--text-secondary)] group-hover:translate-x-1 transition-all" />
-                  </button>
-                );
-              })}
-            </div>
-          </motion.div>
+          ))}
         </div>
       </div>
 
-      {/* Recent Activity - Empty State */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="glass-panel p-6"
-      >
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold text-[var(--text-primary)]">Recent Activity</h2>
-        </div>
-
-        {/* Empty State */}
-        <div className="py-12 flex flex-col items-center justify-center">
-          <div className="p-4 rounded-full bg-[var(--card-bg)]/50 border border-[var(--border)]/50 mb-4">
-            <History className="w-8 h-8 text-[var(--text-muted)]" />
+      <div className="grid lg:grid-cols-3 gap-8 items-start">
+        {/* Empty Performance Chart */}
+        <div className="lg:col-span-2 space-y-6">
+          <h2 className="text-sm font-medium text-ink-muted label-caps border-b border-hairline pb-4">Statistical Overview</h2>
+          <div className="card p-8 h-[300px] flex flex-col items-center justify-center text-center">
+             <Activity className="w-8 h-8 text-ink-faint mb-4 stroke-[1.25]" />
+             <p className="text-ink font-medium">Insufficient performance data</p>
+             <p className="text-ink-muted text-sm mt-1 max-w-sm">Complete your initial analysis to begin tracking debate progress metrics over time.</p>
           </div>
-          <p className="text-[var(--text-muted)] font-medium">No recent activity</p>
-          <p className="text-[var(--text-muted)] text-sm mt-1 text-center max-w-md">
-            Your recent analyses, coaching sessions, and strategies will appear here as you use the platform.
+        </div>
+
+        {/* Quick Actions List (Plain text, no icons) */}
+        <div className="space-y-6">
+          <h2 className="text-sm font-medium text-ink-muted label-caps border-b border-hairline pb-4">Quick Index</h2>
+          <div className="flex flex-col">
+            {quickActions.map((action, index) => (
+              <button
+                key={action.label}
+                onClick={() => setActiveTab(action.tab)}
+                className="w-full text-left py-3 border-b border-hairline/50 text-ink-muted hover:text-accent-crimson transition-colors flex justify-between items-center group"
+              >
+                <span className="font-medium text-sm">{action.label}</span>
+                <span className="text-ink-faint opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Getting Started Brief */}
+      <div className="card bg-surface-dark border-none p-8 md:p-12 text-ink-light flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mt-12 rounded-lg">
+        <div className="max-w-xl">
+          <h3 className="text-xl font-serif text-surface-parchment mb-2">Initialize Your Session</h3>
+          <p className="text-ink-faint text-sm leading-relaxed">
+            Begin by conducting an analysis on an existing speech transcript or recording. The system will benchmark your structural execution and provide empirical insights.
           </p>
-          <button
-            onClick={() => setActiveTab('judge')}
-            className="mt-6 px-5 py-2.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-medium hover:bg-cyan-500/20 transition-all flex items-center gap-2"
-          >
-            <FileText className="w-4 h-4" />
-            Start Your First Analysis
-          </button>
         </div>
-      </motion.div>
+        <button 
+          onClick={() => setActiveTab('judge')}
+          className="btn bg-accent-crimson text-surface-parchment hover:bg-accent-hover shrink-0"
+        >
+          Begin Analysis
+        </button>
+      </div>
 
-      {/* Getting Started Tips */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        className="glass-panel relative overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10" />
-        <div className="relative p-6 flex items-center gap-6">
-          <div className="p-3 rounded-xl bg-gradient-to-br from-cyan-500 to-purple-600 shadow-lg">
-            <Lightbulb className="w-6 h-6 text-[var(--text-primary)]" />
-          </div>
-          <div className="flex-1">
-            <h3 className="text-[var(--text-primary)] font-semibold">Getting Started</h3>
-            <p className="text-[var(--text-muted)] text-sm mt-1">
-              Start by analyzing your first speech. Upload a recording or paste your speech text to get detailed AI-powered feedback.
-            </p>
-          </div>
-          <button 
-            onClick={() => setActiveTab('judge')}
-            className="px-5 py-2.5 rounded-lg bg-white text-slate-900 font-semibold hover:bg-slate-100 transition-colors"
-          >
-            Get Started
-          </button>
-        </div>
-      </motion.div>
     </div>
   );
 };
-
 export default Dashboard;
