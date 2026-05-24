@@ -8,7 +8,7 @@ const Layout = ({ children, currentPage, onNavigate }) => {
   const { sidebarOpen } = useAppStore()
 
   return (
-    <div className="min-h-screen bg-paper text-ink-black font-sans selection:bg-primary-100 selection:text-primary-900">
+    <div className="min-h-screen bg-surface-parchment text-ink font-sans">
       {/* Sidebar - Assuming it exists or will be added */}
       <Sidebar currentPage={currentPage} onNavigate={onNavigate} />
 

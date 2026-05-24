@@ -1,248 +1,168 @@
 import React, { useState } from 'react';
-import { 
-  Mail, 
-  Lock, 
-  User, 
-  Eye, 
-  EyeOff, 
-  Loader2, 
-  AlertCircle,
-  Gavel,
-  ArrowRight
-} from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { Mail, Lock, User, AlertCircle, Loader2 } from 'lucide-react';
+import { cn } from '../utils/helpers';
 
 const AuthPage = ({ onSkip }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [displayName, setDisplayName] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [localError, setLocalError] = useState('');
-  
-  const { login, register, loginWithGoogle, error, clearError } = useAuth();
+  const [name, setName] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const { signIn, signUp, signInWithGoogle } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLocalError('');
-    clearError();
-    
-    if (!email || !password) {
-      setLocalError('Please fill in all required fields.');
-      return;
-    }
-    
-    if (!isLogin && !displayName) {
-      setLocalError('Please enter your name.');
-      return;
-    }
-    
-    if (password.length < 6) {
-      setLocalError('Password must be at least 6 characters.');
-      return;
-    }
+    setError('');
+    setLoading(true);
 
-    setIsLoading(true);
-    
     try {
       if (isLogin) {
-        await login(email, password);
+        await signIn(email, password);
       } else {
-        await register(email, password, displayName);
+        await signUp(email, password, name);
       }
     } catch (err) {
-      // Error is handled by context
+      setError(err.message || 'Failed to authenticate');
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   const handleGoogleSignIn = async () => {
-    setLocalError('');
-    clearError();
-    setIsLoading(true);
-    
+    setError('');
+    setLoading(true);
     try {
-      await loginWithGoogle();
+      await signInWithGoogle();
     } catch (err) {
-      // Error is handled by context
+      setError(err.message || 'Failed to sign in with Google');
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
-  const toggleMode = () => {
-    setIsLogin(!isLogin);
-    setLocalError('');
-    clearError();
-  };
-
-  const displayError = localError || error;
-
   return (
-    <div className="min-h-screen bg-bg-primary flex items-center justify-center p-4">
-      {/* Background effects */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-3xl" />
-        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-accent/10 to-transparent rounded-full blur-3xl" />
-      </div>
-
-      <div className="w-full max-w-md relative z-10">
-        {/* Logo */}
+    <div className="min-h-screen bg-surface-dark flex items-center justify-center p-4">
+      <div className="w-full max-w-md animate-in fade-in zoom-in-95 duration-500">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent shadow-lg shadow-primary/25 mb-4">
-            <Gavel className="w-8 h-8 text-[var(--text-primary)]" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-surface-card border border-hairline mb-4">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L2 22H6L12 10L18 22H22L12 2Z" fill="currentColor" className="text-accent-crimson"/>
+            </svg>
           </div>
-          <h1 className="text-3xl font-bold text-[var(--text-primary)] mb-2">Adjudicator AI</h1>
-          <p className="text-text-secondary">
-            Your AI-powered debate coaching platform
+          <h1 className="text-3xl font-serif font-medium text-ink-light tracking-tight mb-2">
+            Adjudicator AI
+          </h1>
+          <p className="text-ink-muted">
+            {isLogin ? 'Sign in to access your dashboard' : 'Create an account to begin'}
           </p>
         </div>
 
-        {/* Auth Card */}
-        <div className="glass-card space-y-6">
-          <div className="text-center">
-            <h2 className="text-xl font-bold text-[var(--text-primary)]">
-              {isLogin ? 'Welcome back' : 'Create your account'}
-            </h2>
-            <p className="text-text-muted text-sm mt-1">
-              {isLogin 
-                ? 'Sign in to continue to your dashboard' 
-                : 'Start your debate coaching journey'}
-            </p>
-          </div>
-
-          {/* Google Sign In */}
-          <button
-            onClick={handleGoogleSignIn}
-            disabled={isLoading}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white hover:bg-gray-100 text-gray-800 font-medium rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <svg className="w-5 h-5" viewBox="0 0 24 24">
-              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-            </svg>
-            Continue with Google
-          </button>
-
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-[var(--border)]"></div>
+        <div className="card bg-surface-parchment p-8 pb-10 border-hairline/50 rounded-lg">
+          {error && (
+            <div className="p-4 mb-6 rounded-md bg-accent-crimson/10 border border-accent-crimson/20 flex items-start text-accent-crimson">
+              <AlertCircle size={18} className="mt-0.5 mr-3 shrink-0" />
+              <p className="text-sm font-medium">{error}</p>
             </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-bg-secondary text-text-muted">or continue with email</span>
-            </div>
-          </div>
+          )}
 
-          {/* Email Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             {!isLogin && (
               <div>
-                <label className="block text-sm font-medium text-text-secondary mb-1">
-                  Full Name
-                </label>
+                <label className="block text-sm font-medium text-ink mb-1.5 label-caps">Full Name</label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" size={18} />
                   <input
                     type="text"
-                    value={displayName}
-                    onChange={(e) => setDisplayName(e.target.value)}
-                    placeholder="John Doe"
-                    className="input-field pl-10"
-                    disabled={isLoading}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2.5 bg-surface-card border border-hairline rounded text-ink placeholder:text-ink-faint focus:border-accent-crimson focus:ring-1 focus:ring-accent-crimson focus:outline-none transition-all"
+                    placeholder="Jane Doe"
+                    required={!isLogin}
                   />
                 </div>
               </div>
             )}
 
             <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1">
-                Email Address
-              </label>
+              <label className="block text-sm font-medium text-ink mb-1.5 label-caps">Email Address</label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" size={18} />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  className="input-field pl-10"
-                  disabled={isLoading}
+                  className="w-full pl-10 pr-4 py-2.5 bg-surface-card border border-hairline rounded text-ink placeholder:text-ink-faint focus:border-accent-crimson focus:ring-1 focus:ring-accent-crimson focus:outline-none transition-all"
+                  placeholder="name@institution.edu"
+                  required
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1">
-                Password
-              </label>
+              <label className="block text-sm font-medium text-ink mb-1.5 label-caps">Password</label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" size={18} />
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2.5 bg-surface-card border border-hairline rounded text-ink placeholder:text-ink-faint focus:border-accent-crimson focus:ring-1 focus:ring-accent-crimson focus:outline-none transition-all"
                   placeholder="••••••••"
-                  className="input-field pl-10 pr-10"
-                  disabled={isLoading}
+                  required
                 />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-secondary"
-                >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                </button>
               </div>
             </div>
 
-            {displayError && (
-              <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg flex items-start gap-2 text-red-400 text-sm">
-                <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                <span>{displayError}</span>
-              </div>
-            )}
-
             <button
               type="submit"
-              disabled={isLoading}
-              className="btn-primary w-full flex items-center justify-center gap-2 py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={loading}
+              className="w-full btn btn-primary py-2.5 text-base mt-2"
             >
-              {isLoading ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                <>
-                  {isLogin ? 'Sign In' : 'Create Account'}
-                  <ArrowRight className="w-4 h-4" />
-                </>
-              )}
+              {loading ? <Loader2 size={18} className="animate-spin" /> : (isLogin ? 'Sign In' : 'Create Account')}
             </button>
           </form>
 
-          {/* Toggle Login/Register */}
-          <p className="text-center text-text-secondary text-sm">
-            {isLogin ? "Don't have an account? " : "Already have an account? "}
+          <div className="mt-6 flex items-center justify-between">
+            <span className="w-1/5 border-b border-hairline"></span>
+            <span className="text-xs text-ink-faint uppercase tracking-widest font-medium">Or continue with</span>
+            <span className="w-1/5 border-b border-hairline"></span>
+          </div>
+
+          <div className="mt-6 space-y-3">
             <button
-              onClick={toggleMode}
-              className="text-primary hover:text-primary/80 font-medium transition-colors"
-              disabled={isLoading}
+              onClick={handleGoogleSignIn}
+              disabled={loading}
+              className="w-full flex items-center justify-center gap-3 py-2.5 px-4 bg-surface-card border border-hairline hover:border-ink-muted text-ink font-medium rounded transition-colors"
             >
-              {isLogin ? 'Sign up' : 'Sign in'}
+              <svg className="w-5 h-5" viewBox="0 0 24 24">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+              </svg>
+              Google
             </button>
-          </p>
+          </div>
         </div>
 
-        {/* Skip for now - Guest mode */}
-        <div className="text-center mt-6">
+        <div className="mt-8 text-center space-y-4">
           <button
-            onClick={onSkip}
-            className="text-text-muted hover:text-text-secondary text-sm transition-colors underline underline-offset-2"
+            onClick={() => setIsLogin(!isLogin)}
+            className="text-sm font-medium text-ink-light/80 hover:text-ink-light transition-colors"
           >
-            Continue as guest (limited features)
+            {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
           </button>
+          <div className="border-t border-ink-light/10 pt-4">
+            <button
+              onClick={onSkip}
+              className="text-sm font-medium text-ink-light/60 hover:text-ink-light transition-colors"
+            >
+              Continue as Guest
+            </button>
+          </div>
         </div>
       </div>
     </div>

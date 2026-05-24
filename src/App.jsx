@@ -11,6 +11,7 @@ import ToneAnalyzer from './components/ToneAnalyzer';
 import AuthPage from './components/AuthPage';
 import LandingPage from './components/LandingPage';
 import AvatarSelectionPrompt from './components/AvatarSelectionPrompt';
+
 // New Feature Components
 import AnalyticsDashboard from './components/features/AnalyticsDashboard';
 import OpponentIntelligence from './components/features/OpponentIntelligence';
@@ -40,12 +41,11 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { Settings, Loader2 } from 'lucide-react';
 
-// Loading spinner component
 const LoadingScreen = () => (
-  <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--bg-primary)' }}>
+  <div className="min-h-screen flex items-center justify-center bg-surface-parchment">
     <div className="text-center space-y-4">
-      <Loader2 className="w-12 h-12 animate-spin mx-auto" style={{ color: 'var(--primary)' }} />
-      <p style={{ color: 'var(--text-secondary)' }}>Loading Adjudicator AI...</p>
+      <Loader2 className="w-12 h-12 animate-spin mx-auto text-accent-crimson" />
+      <p className="text-ink-muted">Loading Adjudicator AI...</p>
     </div>
   </div>
 );
@@ -53,43 +53,43 @@ const LoadingScreen = () => (
 const SettingsModal = ({ isOpen, onClose, apiKey, setApiKey, openaiKey, setOpenaiKey }) => {
   if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
-      <div className="glass-card w-full max-w-md space-y-6 animate-in zoom-in-95">
-        <h2 className="text-xl font-bold flex items-center" style={{ color: 'var(--text-primary)' }}>
-          <Settings className="w-5 h-5 mr-2" style={{ color: 'var(--primary)' }} />
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/60 backdrop-blur-sm p-4 animate-in fade-in">
+      <div className="card w-full max-w-md p-6 space-y-6 animate-in zoom-in-95">
+        <h2 className="text-xl font-medium tracking-tight text-ink flex items-center border-b border-hairline pb-4">
+          <Settings className="w-5 h-5 mr-3 text-ink-muted" />
           Configuration
         </h2>
 
-        <div className="space-y-4">
+        <div className="space-y-4 pt-2">
           <div>
-            <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>Google Gemini API Key</label>
+            <label className="block text-sm font-medium mb-1.5 text-ink">Google Gemini API Key</label>
             <input
               type="password"
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
               placeholder="AIzaSy..."
-              className="input-field"
+              className="w-full px-3 py-2 bg-surface-parchment border border-hairline text-ink rounded focus:border-accent-crimson focus:ring-1 focus:ring-accent-crimson focus:outline-none transition-all"
             />
-            <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Required for most features.</p>
+            <p className="text-xs mt-1.5 text-ink-faint">Required for most features.</p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>OpenAI API Key (Optional)</label>
+            <label className="block text-sm font-medium mb-1.5 text-ink">OpenAI API Key (Optional)</label>
             <input
               type="password"
               value={openaiKey}
               onChange={(e) => setOpenaiKey(e.target.value)}
               placeholder="sk-..."
-              className="input-field"
+              className="w-full px-3 py-2 bg-surface-parchment border border-hairline text-ink rounded focus:border-accent-crimson focus:ring-1 focus:ring-accent-crimson focus:outline-none transition-all"
             />
           </div>
         </div>
 
-        <div className="flex justify-end space-x-3 pt-4">
-          <button onClick={onClose} className="px-4 py-2 rounded-lg transition-colors" style={{ color: 'var(--text-secondary)' }}>
+        <div className="flex justify-end gap-3 pt-6 border-t border-hairline">
+          <button onClick={onClose} className="btn btn-secondary">
             Close
           </button>
-          <button onClick={onClose} className="btn-primary">
+          <button onClick={onClose} className="btn btn-primary">
             Save Changes
           </button>
         </div>
@@ -98,7 +98,6 @@ const SettingsModal = ({ isOpen, onClose, apiKey, setApiKey, openaiKey, setOpena
   );
 };
 
-// Main authenticated app content
 function AppContent() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [showSettings, setShowSettings] = useState(false);
@@ -116,19 +115,16 @@ function AppContent() {
     localStorage.setItem('openai_key', openaiKey);
   }, [openaiKey]);
 
-  // Check if user has seen landing before or is already authenticated
   useEffect(() => {
     if (isAuthenticated || isGuest) {
       setShowLanding(false);
     }
   }, [isAuthenticated, isGuest]);
 
-  // Show loading screen while checking auth state
   if (loading) {
     return <LoadingScreen />;
   }
 
-  // Show landing page for first-time visitors
   if (showLanding && !isAuthenticated && !isGuest) {
     return (
       <LandingPage
@@ -142,7 +138,6 @@ function AppContent() {
     );
   }
 
-  // Show auth page if not authenticated and not in guest mode
   if (!isAuthenticated && !isGuest) {
     return (
       <AuthPage 
@@ -156,56 +151,55 @@ function AppContent() {
 
   return (
     <>
-      {/* Avatar Selection Prompt - shows for new users or users without avatar */}
       {isAuthenticated && <AvatarSelectionPrompt />}
       
       <EnterpriseLayout
-      activeTab={activeTab}
-      setActiveTab={setActiveTab}
-      onSettingsClick={() => setShowSettings(true)}
-    >
-      {activeTab === 'dashboard' && <Dashboard setActiveTab={setActiveTab} />}
-      {activeTab === 'analytics' && <AnalyticsDashboard />}
-      {activeTab === 'judge' && <JudgeSpeech apiKey={apiKey} />}
-      {activeTab === 'board' && <EvaluateBoard apiKey={apiKey} />}
-      {activeTab === 'coach' && <LiveCoach apiKey={apiKey} />}
-      {activeTab === 'practice' && <PracticeMode apiKey={apiKey} />}
-      {activeTab === 'tournaments' && <TournamentManagement />}
-      {activeTab === 'opponents' && <OpponentIntelligence apiKey={apiKey} />}
-      {activeTab === 'evidence' && <EvidenceLibrary />}
-      {activeTab === 'team' && <TeamCollaboration />}
-      {activeTab === 'strategy' && <StrategyGenerator apiKey={apiKey} />}
-      {activeTab === 'extemp' && <ExtempGenerator apiKey={apiKey} />}
-      {activeTab === 'tone' && <ToneAnalyzer apiKey={apiKey} />}
-      {activeTab === 'history' && <HistoryPanel />}
-      {activeTab === 'flowchart' && <ArgumentFlowchart />}
-      {activeTab === 'voice' && <VoiceAnalysis />}
-      {activeTab === 'timer' && <DebateTimer />}
-      {activeTab === 'outline' && <SpeechOutlineBuilder />}
-      {activeTab === 'scheduler' && <RoundRobinScheduler />}
-      {activeTab === 'quickstats' && <QuickStatsWidget />}
-      {activeTab === 'motions' && <MotionLibrary />}
-      {activeTab === 'ballot' && <JudgeBallotGenerator />}
-      {activeTab === 'presets' && <TimerPresets />}
-      {activeTab === 'notes' && <NotesPanel />}
-      {activeTab === 'cards' && <CardOrganizer />}
-      {activeTab === 'formatguide' && <FormatGuide />}
-      {activeTab === 'speakerpoints' && <SpeakerPointsTracker />}
-      {activeTab === 'clock' && <DebateClock />}
-      {activeTab === 'validator' && <ArgumentValidator />}
-      {activeTab === 'judgenotes' && <JudgeNotes />}
-      {activeTab === 'roster' && <TeamRoster />}
-      {activeTab === 'teams' && <TeamBrowser setActiveTab={setActiveTab} />}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        onSettingsClick={() => setShowSettings(true)}
+      >
+        {activeTab === 'dashboard' && <Dashboard setActiveTab={setActiveTab} />}
+        {activeTab === 'analytics' && <AnalyticsDashboard />}
+        {activeTab === 'judge' && <JudgeSpeech apiKey={apiKey} />}
+        {activeTab === 'board' && <EvaluateBoard apiKey={apiKey} />}
+        {activeTab === 'coach' && <LiveCoach apiKey={apiKey} />}
+        {activeTab === 'practice' && <PracticeMode apiKey={apiKey} />}
+        {activeTab === 'tournaments' && <TournamentManagement />}
+        {activeTab === 'opponents' && <OpponentIntelligence apiKey={apiKey} />}
+        {activeTab === 'evidence' && <EvidenceLibrary />}
+        {activeTab === 'team' && <TeamCollaboration />}
+        {activeTab === 'strategy' && <StrategyGenerator apiKey={apiKey} />}
+        {activeTab === 'extemp' && <ExtempGenerator apiKey={apiKey} />}
+        {activeTab === 'tone' && <ToneAnalyzer apiKey={apiKey} />}
+        {activeTab === 'history' && <HistoryPanel />}
+        {activeTab === 'flowchart' && <ArgumentFlowchart />}
+        {activeTab === 'voice' && <VoiceAnalysis />}
+        {activeTab === 'timer' && <DebateTimer />}
+        {activeTab === 'outline' && <SpeechOutlineBuilder />}
+        {activeTab === 'scheduler' && <RoundRobinScheduler />}
+        {activeTab === 'quickstats' && <QuickStatsWidget />}
+        {activeTab === 'motions' && <MotionLibrary />}
+        {activeTab === 'ballot' && <JudgeBallotGenerator />}
+        {activeTab === 'presets' && <TimerPresets />}
+        {activeTab === 'notes' && <NotesPanel />}
+        {activeTab === 'cards' && <CardOrganizer />}
+        {activeTab === 'formatguide' && <FormatGuide />}
+        {activeTab === 'speakerpoints' && <SpeakerPointsTracker />}
+        {activeTab === 'clock' && <DebateClock />}
+        {activeTab === 'validator' && <ArgumentValidator />}
+        {activeTab === 'judgenotes' && <JudgeNotes />}
+        {activeTab === 'roster' && <TeamRoster />}
+        {activeTab === 'teams' && <TeamBrowser setActiveTab={setActiveTab} />}
 
-      <SettingsModal
-        isOpen={showSettings}
-        onClose={() => setShowSettings(false)}
-        apiKey={apiKey}
-        setApiKey={setApiKey}
-        openaiKey={openaiKey}
-        setOpenaiKey={setOpenaiKey}
-      />
-    </EnterpriseLayout>
+        <SettingsModal
+          isOpen={showSettings}
+          onClose={() => setShowSettings(false)}
+          apiKey={apiKey}
+          setApiKey={setApiKey}
+          openaiKey={openaiKey}
+          setOpenaiKey={setOpenaiKey}
+        />
+      </EnterpriseLayout>
     </>
   );
 }
