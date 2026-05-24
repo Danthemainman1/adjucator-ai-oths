@@ -1217,7 +1217,7 @@ const SpeechOutlineBuilder = () => {
       <AnimatePresence>
         {showTemplates && (
           <div
-            className="fixed inset-0 bg-black/50  z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-surface-dark  z-50 flex items-center justify-center p-4"
             onClick={() => setShowTemplates(false)}
           >
             <div
@@ -1249,7 +1249,7 @@ const SpeechOutlineBuilder = () => {
       <AnimatePresence>
         {showSavedOutlines && (
           <div
-            className="fixed inset-0 bg-black/50  z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-surface-dark  z-50 flex items-center justify-center p-4"
             onClick={() => setShowSavedOutlines(false)}
           >
             <div

@@ -15,7 +15,7 @@ const ThemeSelector = ({ compact = false }) => {
     return (
       <button
         onClick={toggleTheme}
-        className="p-2 rounded-sm transition-colors hover:bg-black/5"
+        className="p-2 rounded-sm transition-colors hover:bg-surface-dark"
         style={{ color: 'var(--text-secondary)' }}
         title={isDark ? 'Switch to Paper mode' : 'Switch to Scholar mode'}
       >
@@ -33,7 +33,7 @@ const ThemeSelector = ({ compact = false }) => {
   return (
     <button
       onClick={toggleTheme}
-      className="w-full flex items-center space-x-3 px-4 py-3 rounded-md transition-all hover:bg-black/5"
+      className="w-full flex items-center space-x-3 px-4 py-3 rounded-md transition-all hover:bg-surface-dark"
       style={{ color: 'var(--text-secondary)' }}
     >
       <motion.div

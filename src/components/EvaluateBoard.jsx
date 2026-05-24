@@ -155,7 +155,7 @@ const EvaluateBoard = ({ apiKey }) => {
         <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-8rem)]">
             {/* Input Panel */}
             <div className="w-full lg:w-1/2 flex flex-col gap-4">
-                <div className="glass-card space-y-4">
+                <div className="card space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium text-text-secondary mb-1">Format</label>
@@ -194,7 +194,7 @@ const EvaluateBoard = ({ apiKey }) => {
                     </div>
                 </div>
 
-                <div className="flex-1 glass-card flex flex-col p-0 overflow-hidden">
+                <div className="flex-1 card flex flex-col p-0 overflow-hidden">
                     <div className="p-4 border-b border-hairline/50 bg-[var(--bg-accent-crimson)]/50">
                         <label className="text-sm font-medium text-text-secondary">Board Images & Notes</label>
                     </div>
@@ -265,7 +265,7 @@ const EvaluateBoard = ({ apiKey }) => {
             </div>
 
             {/* Output Panel */}
-            <div className="w-full lg:w-1/2 glass-card overflow-hidden flex flex-col p-0">
+            <div className="w-full lg:w-1/2 card overflow-hidden flex flex-col p-0">
                 <div className="p-4 border-b border-hairline/50 bg-[var(--bg-accent-crimson)]/50 flex justify-between items-center">
                     <h3 className="font-bold text-accent-crimson flex items-center gap-2">
                         <ImageIcon className="w-4 h-4 text-accent-crimson" />

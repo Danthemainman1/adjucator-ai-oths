@@ -210,7 +210,7 @@ const MemberCard = ({ member, isCurrentUser, onMessage, onRemove }) => {
     >
       <div className="absolute -inset-1 /5 to-purple-500/5 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-all" />
       
-      <div className="glass-panel p-4 hover:border-white/20 transition-all">
+      <div className="card p-4 hover:border-hairline transition-all">
         <div className="flex items-center gap-4">
           <Avatar 
             name={member.name} 
@@ -363,9 +363,9 @@ const ChatPanel = ({ teamId, members }) => {
   };
 
   return (
-    <div className="glass-panel flex flex-col h-[500px] overflow-hidden p-0">
+    <div className="card flex flex-col h-[500px] overflow-hidden p-0">
       {/* Chat Header */}
-      <div className="p-4 border-b border-white/10">
+      <div className="p-4 border-b border-hairline">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <MessageSquare className="w-5 h-5 text-ink" />
@@ -416,7 +416,7 @@ const ChatPanel = ({ teamId, members }) => {
       </div>
 
       {/* Input */}
-      <div className="p-4 border-t border-white/10">
+      <div className="p-4 border-t border-hairline">
         <div className="flex items-center gap-3">
           <motion.button
             whileHover={{ scale: 1.1 }}
@@ -463,7 +463,7 @@ const DocumentCard = ({ doc, onClick }) => {
     <motion.div
       whileHover={{ scale: 1.02, y: -2 }}
       onClick={onClick}
-      className="glass-panel p-4 hover:border-white/20 transition-all cursor-pointer group"
+      className="card p-4 hover:border-hairline transition-all cursor-pointer group"
     >
       <div className="flex items-start gap-3">
         <div className={`p-2 rounded-lg ${config.bg}`}>
@@ -511,7 +511,7 @@ const PrepChecklist = ({ tournament }) => {
   const progress = (completedCount / items.length) * 100;
 
   return (
-    <div className="glass-panel p-5">
+    <div className="card p-5">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-lg bg-surface-offset">
@@ -634,7 +634,7 @@ const TeamCollaboration = () => {
             </p>
           </div>
 
-          <div className="glass-panel p-8">
+          <div className="card p-8">
             <EmptyTeam onCreateTeam={() => createTeam?.({ name: 'My Team' })} />
           </div>
         </div>
@@ -727,7 +727,7 @@ const TeamCollaboration = () => {
               {/* Sidebar */}
               <div className="space-y-6">
                 {/* Quick Stats */}
-                <div className="glass-panel p-5">
+                <div className="card p-5">
                   <h3 className="text-accent-crimson font-semibold mb-4">Team Stats</h3>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
@@ -817,14 +817,14 @@ const TeamCollaboration = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70  p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-surface-dark  p-4"
             onClick={(e) => e.target === e.currentTarget && setShowInviteModal(false)}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="glass-panel w-full max-w-md p-6"
+              className="card w-full max-w-md p-6"
             >
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold text-accent-crimson flex items-center gap-2">

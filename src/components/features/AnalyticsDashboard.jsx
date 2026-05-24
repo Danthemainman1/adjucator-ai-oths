@@ -371,7 +371,7 @@ const AddDebateModal = ({ isOpen, onClose, onSave }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70  p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-surface-dark  p-4"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <motion.div
@@ -1043,7 +1043,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
                 <div className="grid lg:grid-cols-2 gap-6">
                   <motion.div
                     variants={itemVariants}
-                    className="glass-panel p-6"
+                    className="card p-6"
                   >
                     <h3 className="text-lg font-semibold text-accent-crimson mb-6 flex items-center gap-2">
                       <PieChart className="w-5 h-5 text-ink" />
@@ -1054,7 +1054,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
 
                   <motion.div
                     variants={itemVariants}
-                    className="glass-panel p-6"
+                    className="card p-6"
                   >
                     <h3 className="text-lg font-semibold text-accent-crimson mb-6 flex items-center gap-2">
                       <BarChart3 className="w-5 h-5 text-ink" />
@@ -1066,7 +1066,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
 
                 <motion.div
                   variants={itemVariants}
-                  className="glass-panel p-6"
+                  className="card p-6"
                 >
                   <h3 className="text-lg font-semibold text-accent-crimson mb-6 flex items-center gap-2">
                     <Clock className="w-5 h-5 text-ink" />
@@ -1080,7 +1080,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
             {activeView === 'trends' && (
               <motion.div
                 variants={itemVariants}
-                className="glass-panel p-6"
+                className="card p-6"
               >
                 <h3 className="text-lg font-semibold text-accent-crimson mb-6 flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-ink" />
@@ -1093,7 +1093,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
             {activeView === 'opponents' && (
               <motion.div
                 variants={itemVariants}
-                className="glass-panel p-6"
+                className="card p-6"
               >
                 <h3 className="text-lg font-semibold text-accent-crimson mb-6 flex items-center gap-2">
                   <Users className="w-5 h-5 text-ink" />
@@ -1117,7 +1117,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
                       whileHover={{ scale: 1.02, y: -4 }}
-                      className="glass-panel p-6 hover:border-white/20 transition-all"
+                      className="card p-6 hover:border-hairline transition-all"
                     >
                       <div className="flex items-center justify-between mb-6">
                         <h4 className="text-accent-crimson font-semibold text-lg">{format}</h4>

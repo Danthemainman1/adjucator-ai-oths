@@ -456,7 +456,7 @@ const TeamBrowser = ({ setActiveTab }) => {
     <div className="space-y-6 pb-8">
       {/* Notification */}
       {notification && (
-        <div className={`fixed top-20 right-6 z-50 glass-card px-6 py-4 flex items-center gap-3 animate-in slide-in-from-top ${
+        <div className={`fixed top-20 right-6 z-50 card px-6 py-4 flex items-center gap-3 animate-in slide-in-from-top ${
           notification.type === 'error' ? 'border-accent-crimson/50' : 
           notification.type === 'info' ? 'border-accent-crimson/50' : 'border-hairline'
         }`}>
@@ -468,7 +468,7 @@ const TeamBrowser = ({ setActiveTab }) => {
       )}
 
       {/* Header */}
-      <div className="glass-card space-y-4">
+      <div className="card space-y-4">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-accent-crimson flex items-center gap-3">
@@ -567,7 +567,7 @@ const TeamBrowser = ({ setActiveTab }) => {
         </h2>
         
         {filteredTeams.length === 0 ? (
-          <div className="glass-card text-center py-12">
+          <div className="card text-center py-12">
             <Users className="w-16 h-16 text-ink-muted mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-accent-crimson mb-2">No teams found</h3>
             <p className="text-ink-muted mb-6">
@@ -607,8 +607,8 @@ const TeamBrowser = ({ setActiveTab }) => {
 
       {/* Create Team Modal */}
       {showCreateModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60  p-4 animate-in fade-in">
-          <div className="glass-card w-full max-w-2xl max-h-[90vh] overflow-y-auto animate-in zoom-in-95">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-surface-dark  p-4 animate-in fade-in">
+          <div className="card w-full max-w-2xl max-h-[90vh] overflow-y-auto animate-in zoom-in-95">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-accent-crimson flex items-center gap-3">
                 <Plus className="w-6 h-6 text-ink" />
@@ -754,8 +754,8 @@ const TeamBrowser = ({ setActiveTab }) => {
 
       {/* Team Chat Modal */}
       {showChatModal && selectedTeam && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60  p-4 animate-in fade-in">
-          <div className="glass-card w-full max-w-2xl h-[600px] flex flex-col animate-in zoom-in-95">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-surface-dark  p-4 animate-in fade-in">
+          <div className="card w-full max-w-2xl h-[600px] flex flex-col animate-in zoom-in-95">
             <div className="flex items-center justify-between mb-4 pb-4 border-b border-hairline">
               <div>
                 <h2 className="text-xl font-bold text-accent-crimson flex items-center gap-2">
@@ -834,8 +834,8 @@ const TeamBrowser = ({ setActiveTab }) => {
 
       {/* Team Settings Modal */}
       {showTeamSettings && selectedTeam && selectedTeam.owner === user.uid && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60  p-4 animate-in fade-in">
-          <div className="glass-card w-full max-w-lg animate-in zoom-in-95">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-surface-dark  p-4 animate-in fade-in">
+          <div className="card w-full max-w-lg animate-in zoom-in-95">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-bold text-accent-crimson flex items-center gap-2">
                 <Settings className="w-5 h-5 text-ink" />
@@ -934,8 +934,8 @@ const TeamBrowser = ({ setActiveTab }) => {
 
       {/* Join Requests Modal */}
       {showJoinRequests && selectedTeam && selectedTeam.owner === user.uid && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60  p-4 animate-in fade-in">
-          <div className="glass-card w-full max-w-lg max-h-[600px] flex flex-col animate-in zoom-in-95">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-surface-dark  p-4 animate-in fade-in">
+          <div className="card w-full max-w-lg max-h-[600px] flex flex-col animate-in zoom-in-95">
             <div className="flex items-center justify-between mb-4 pb-4 border-b border-hairline">
               <h2 className="text-xl font-bold text-accent-crimson flex items-center gap-2">
                 <Bell className="w-5 h-5 text-ink" />
@@ -963,7 +963,7 @@ const TeamBrowser = ({ setActiveTab }) => {
                 joinRequests.map((request) => (
                   <div
                     key={request.id}
-                    className="glass-card p-4 flex items-center justify-between"
+                    className="card p-4 flex items-center justify-between"
                   >
                     <div className="flex-1">
                       <p className="font-semibold text-accent-crimson">
@@ -1007,7 +1007,7 @@ const TeamCard = ({ team, user, onJoin, onLeave, onOpenChat, onOpenSettings, onO
   const isFull = team.members?.length >= team.maxMembers;
 
   return (
-    <div className="glass-card hover:border-hairline transition-all space-y-4">
+    <div className="card hover:border-hairline transition-all space-y-4">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div className="flex-1">

@@ -39,7 +39,7 @@ const AvatarSelectionPrompt = () => {
       <div className="fixed inset-0 z-50 bg-bg-accent-crimson/95  flex items-center justify-center p-4">
         <div className="w-full max-w-md">
           {/* Card */}
-          <div className="glass-card space-y-6 text-center">
+          <div className="card space-y-6 text-center">
             {/* Header */}
             <div className="flex items-center justify-center gap-2 text-accent-crimson">
               <Sparkles className="w-5 h-5" />
@@ -64,7 +64,7 @@ const AvatarSelectionPrompt = () => {
                 <div className={`w-24 h-24 rounded-2xl  ${currentAvatar.gradient || currentAvatar.color} flex items-center justify-center text-4xl shadow-lg transition-transform group-hover:scale-105`}>
                   {currentAvatar.emoji}
                 </div>
-                <div className="absolute inset-0 rounded-2xl bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <div className="absolute inset-0 rounded-2xl bg-surface-dark opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <span className="text-accent-crimson text-sm font-medium">Change</span>
                 </div>
               </button>

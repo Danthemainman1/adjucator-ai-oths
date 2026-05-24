@@ -89,7 +89,7 @@ const UserProfileMenu = ({ onSettingsClick }) => {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-64 glass-card p-0 overflow-hidden animate-in fade-in slide-in-from-top-2 z-50">
+        <div className="absolute right-0 mt-2 w-64 card p-0 overflow-hidden animate-in fade-in slide-in-from-top-2 z-50">
           {/* User Info Header */}
           <div className="p-4 bg-[var(--bg-accent-crimson)]/50 border-b border-hairline/50">
             <div className="flex items-center gap-3">

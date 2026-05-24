@@ -205,7 +205,7 @@ const EvidenceCard = ({ evidence, onClick, onCopy, isExpanded }) => {
       {/* Glow effect */}
       <div className="absolute -inset-1 /10 via-blue-500/10 to-purple-500/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
       
-      <div className="glass-panel relative p-5 overflow-hidden group-hover:border-white/20 transition-all">
+      <div className="card relative p-5 overflow-hidden group-hover:border-hairline transition-all">
         {/* Background decoration */}
         <div className="absolute top-0 right-0 w-32 h-32 /5 to-transparent rounded-full -translate-y-1/2 translate-x-1/2" />
         
@@ -326,7 +326,7 @@ const CitationFormatter = ({ evidence, format = 'mla' }) => {
   };
 
   return (
-    <div className="p-4 rounded-xl bg-surface-offset border border-white/10">
+    <div className="p-4 rounded-xl bg-surface-offset border border-hairline">
       <p className="text-ink-muted text-sm font-mono">{formatCitation()}</p>
       <motion.button
         whileHover={{ scale: 1.02 }}
@@ -359,16 +359,16 @@ const EvidenceDetailModal = ({ evidence, isOpen, onClose, onEdit, onDelete }) =>
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70  p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-surface-dark  p-4"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="glass-panel w-full max-w-3xl max-h-[90vh] overflow-hidden p-0"
+        className="card w-full max-w-3xl max-h-[90vh] overflow-hidden p-0"
       >
         {/* Header */}
-        <div className="relative p-6 border-b border-white/10 overflow-hidden">
+        <div className="relative p-6 border-b border-hairline overflow-hidden">
           <div className="absolute inset-0 /10 via-transparent to-blue-500/10" />
           <div className="relative flex items-start justify-between">
             <div className="flex-1">
@@ -423,7 +423,7 @@ const EvidenceDetailModal = ({ evidence, isOpen, onClose, onEdit, onDelete }) =>
                 {copied ? 'Copied!' : 'Copy'}
               </motion.button>
             </div>
-            <div className="relative p-5 rounded-xl bg-surface-offset border border-white/5">
+            <div className="relative p-5 rounded-xl bg-surface-offset border border-hairline">
               <div className="absolute left-0 top-0 bottom-0 w-1 rounded-full " />
               <p className="pl-4 text-ink-muted leading-relaxed whitespace-pre-wrap">
                 {evidence.content}
@@ -433,7 +433,7 @@ const EvidenceDetailModal = ({ evidence, isOpen, onClose, onEdit, onDelete }) =>
 
           {/* Source */}
           {evidence.source && (
-            <div className="flex items-center gap-3 p-4 rounded-xl bg-surface-offset border border-white/5">
+            <div className="flex items-center gap-3 p-4 rounded-xl bg-surface-offset border border-hairline">
               <Link2 className="w-5 h-5 text-ink-muted" />
               <a 
                 href={evidence.url} 
@@ -490,15 +490,15 @@ const EvidenceDetailModal = ({ evidence, isOpen, onClose, onEdit, onDelete }) =>
 
           {/* Usage Stats */}
           <div className="grid grid-cols-3 gap-4">
-            <div className="p-4 rounded-xl bg-surface-offset text-center border border-white/5">
+            <div className="p-4 rounded-xl bg-surface-offset text-center border border-hairline">
               <p className="text-2xl font-bold text-accent-crimson">{evidence.usageCount || 0}</p>
               <p className="text-ink-muted text-sm">Times Used</p>
             </div>
-            <div className="p-4 rounded-xl bg-surface-offset text-center border border-white/5">
+            <div className="p-4 rounded-xl bg-surface-offset text-center border border-hairline">
               <p className="text-2xl font-bold text-accent-crimson">{evidence.quality || 0}</p>
               <p className="text-ink-muted text-sm">Quality Rating</p>
             </div>
-            <div className="p-4 rounded-xl bg-surface-offset text-center border border-white/5">
+            <div className="p-4 rounded-xl bg-surface-offset text-center border border-hairline">
               <p className="text-2xl font-bold text-accent-crimson">
                 {evidence.lastUsed ? new Date(evidence.lastUsed).toLocaleDateString() : 'Never'}
               </p>
@@ -552,15 +552,15 @@ const AddEvidenceModal = ({ isOpen, onClose, onSave }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70  p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-surface-dark  p-4"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="glass-panel w-full max-w-2xl max-h-[90vh] overflow-hidden p-0"
+        className="card w-full max-w-2xl max-h-[90vh] overflow-hidden p-0"
       >
-        <div className="relative p-6 border-b border-white/10 overflow-hidden">
+        <div className="relative p-6 border-b border-hairline overflow-hidden">
           <div className="absolute inset-0 /10 via-transparent to-blue-500/10" />
           <div className="relative flex items-center justify-between">
             <div>

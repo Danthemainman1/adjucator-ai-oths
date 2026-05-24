@@ -843,7 +843,7 @@ const VoiceAnalysis = () => {
           {/* Main Recording Area */}
           <div className="lg:col-span-2 space-y-6">
             {/* Waveform */}
-            <div className="glass-panel p-6 /80 to-slate-950/80">
+            <div className="card p-6 /80 to-slate-950/80">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-accent-crimson font-semibold flex items-center gap-2">
                   <Activity className="w-5 h-5 text-ink" />
@@ -915,7 +915,7 @@ const VoiceAnalysis = () => {
 
               {/* Post-recording actions */}
               {audioBlob && !isRecording && (
-                <div className="flex items-center justify-center gap-3 mt-4 pt-4 border-t border-white/10">
+                <div className="flex items-center justify-center gap-3 mt-4 pt-4 border-t border-hairline">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -941,7 +941,7 @@ const VoiceAnalysis = () => {
             {/* Visualizations */}
             <div className="grid md:grid-cols-2 gap-4">
               {/* Spectrum Analyzer */}
-              <div className="glass-panel p-4">
+              <div className="card p-4">
                 <h4 className="text-accent-crimson font-medium mb-3 flex items-center gap-2">
                   <BarChart3 className="w-4 h-4 text-ink" />
                   Frequency Spectrum
@@ -953,7 +953,7 @@ const VoiceAnalysis = () => {
               </div>
 
               {/* Pitch Tracker */}
-              <div className="glass-panel p-4">
+              <div className="card p-4">
                 <h4 className="text-accent-crimson font-medium mb-3 flex items-center gap-2">
                   <TrendingUp className="w-4 h-4 text-ink" />
                   Pitch Variation
@@ -966,7 +966,7 @@ const VoiceAnalysis = () => {
             </div>
 
             {/* Filler Words */}
-            <div className="glass-panel p-5">
+            <div className="card p-5">
               <div className="flex items-center justify-between mb-4">
                 <h4 className="text-accent-crimson font-medium flex items-center gap-2">
                   <AlertTriangle className="w-4 h-4 text-ink" />
@@ -1036,7 +1036,7 @@ const VoiceAnalysis = () => {
             </div>
 
             {/* Confidence Score */}
-            <div className="glass-panel p-5">
+            <div className="card p-5">
               <h3 className="text-accent-crimson font-semibold mb-4 flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-ink" />
                 Confidence Analysis
@@ -1045,7 +1045,7 @@ const VoiceAnalysis = () => {
             </div>
 
             {/* Saved Recordings */}
-            <div className="glass-panel p-5">
+            <div className="card p-5">
               <h3 className="text-accent-crimson font-semibold mb-4 flex items-center gap-2">
                 <Radio className="w-5 h-5 text-ink" />
                 Saved Recordings

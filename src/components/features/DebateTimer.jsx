@@ -461,7 +461,7 @@ const KeyboardShortcutsModal = ({ isOpen, onClose }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70  p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-surface-dark  p-4"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <motion.div
@@ -510,7 +510,7 @@ const SettingsModal = ({ isOpen, onClose, settings, onSettingsChange }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70  p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-surface-dark  p-4"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <motion.div
@@ -1029,7 +1029,7 @@ const DebateTimer = () => {
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Main Timer Display */}
           <div className="lg:col-span-2">
-            <div className="glass-panel p-8">
+            <div className="card p-8">
               {/* Current Segment Info */}
               <div className="text-center mb-6">
                 <h2 className="text-2xl font-bold text-accent-crimson">
@@ -1120,7 +1120,7 @@ const DebateTimer = () => {
 
             {/* Prep Time */}
             {Object.keys(prepTime).length > 0 && prepTime[Object.keys(prepTime)[0]] > 0 && (
-              <div className="mt-6 glass-panel p-4">
+              <div className="mt-6 card p-4">
                 <PrepTimePanel
                   prepTime={prepTime}
                   usedPrepTime={usedPrepTime}
@@ -1153,7 +1153,7 @@ const DebateTimer = () => {
             </div>
 
             {/* Progress summary */}
-            <div className="glass-panel p-4">
+            <div className="card p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-ink-muted text-sm">Progress</span>
                 <span className="text-accent-crimson font-medium">

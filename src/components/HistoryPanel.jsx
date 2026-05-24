@@ -380,7 +380,7 @@ const HistoryPanel = () => {
 
       {/* Clear Confirmation Modal */}
       {showClearConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60  p-4 animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-surface-dark  p-4 animate-in fade-in">
           <div className="w-full max-w-md p-6 rounded-2xl border border-hairline bg-[var(--bg-accent-crimson)] shadow-2xl animate-in zoom-in-95">
             <div className="flex items-center gap-3 text-accent-crimson mb-4">
               <AlertCircle className="w-6 h-6" />
