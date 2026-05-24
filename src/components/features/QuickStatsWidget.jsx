@@ -37,6 +37,7 @@ import {
   XCircle,
   AlertCircle
 } from 'lucide-react';
+import { useAnalytics } from '../../hooks/useDebateData';
 
 // Mock data - in production would come from Firebase/API
 // Returns empty state for new users with no data
@@ -69,6 +70,87 @@ const getEmptyStats = () => ({
   achievements: [],
   headToHead: []
 });
+
+const mapAnalyticsToWidgetStats = (analytics) => {
+  if (!analytics) return getEmptyStats();
+
+  const recentDebates = analytics.recentDebates || [];
+  const tournamentEntries = Object.entries(analytics.tournamentStats || {});
+  const formatEntries = Object.entries(analytics.formatStats || {});
+  const opponentEntries = Object.entries(analytics.opponentStats || {});
+
+  const speakerValues = recentDebates
+    .map((debate) => Number(debate.speakerPoints))
+    .filter((value) => Number.isFinite(value));
+
+  const averageSpeaker = speakerValues.length
+    ? Number((speakerValues.reduce((sum, value) => sum + value, 0) / speakerValues.length).toFixed(2))
+    : 0;
+
+  const byFormat = formatEntries.reduce((acc, [format, stats]) => {
+    const total = stats.total || 0;
+    const wins = stats.wins || 0;
+    const losses = stats.losses || 0;
+    acc[format] = {
+      wins,
+      losses,
+      winRate: total > 0 ? Math.round((wins / total) * 100) : 0,
+    };
+    return acc;
+  }, {});
+
+  const recentTournaments = tournamentEntries.map(([name, stats]) => {
+    const points = stats.speakerPoints || [];
+    const avgPoints = points.length
+      ? Number((points.reduce((sum, value) => sum + value, 0) / points.length).toFixed(2))
+      : 0;
+
+    return {
+      id: name,
+      name,
+      record: `${stats.wins || 0}-${stats.losses || 0}`,
+      speakerPoints: avgPoints,
+      result: (stats.wins || 0) >= (stats.losses || 0) ? 'positive' : 'negative',
+      date: 'Recorded'
+    };
+  });
+
+  return {
+    overall: {
+      wins: analytics.totalWins || 0,
+      losses: analytics.totalLosses || 0,
+      ties: 0,
+      totalRounds: analytics.totalDebates || 0,
+      winRate: Number(analytics.winRate || 0),
+      winStreak: 0,
+      bestStreak: 0,
+      improvement: 0
+    },
+    bySide: {
+      aff: { wins: 0, losses: 0, winRate: 0 },
+      neg: { wins: 0, losses: 0, winRate: 0 }
+    },
+    byFormat,
+    speakerPoints: {
+      average: averageSpeaker,
+      highest: speakerValues.length ? Math.max(...speakerValues) : 0,
+      lowest: speakerValues.length ? Math.min(...speakerValues) : 0,
+      recent: speakerValues.slice(0, 10),
+      percentile: 0,
+      trend: 'stable'
+    },
+    recentTournaments,
+    upcomingMatches: [],
+    achievements: [],
+    headToHead: opponentEntries.map(([opponent, stats]) => ({
+      opponent,
+      wins: stats.wins || 0,
+      losses: stats.losses || 0,
+      total: stats.total || 0,
+      winRate: (stats.total || 0) > 0 ? Math.round(((stats.wins || 0) / stats.total) * 100) : 0
+    }))
+  };
+};
 
 // Animated counter component
 const AnimatedNumber = ({ value, duration = 1000, decimals = 0, suffix = '' }) => {
@@ -434,7 +516,10 @@ const TournamentResultsCard = ({ tournaments }) => {
           </div>
           Recent Tournaments
         </h3>
-        <button className="text-xs text-ink hover:text-ink transition-colors">
+        <button
+          onClick={() => { window.location.hash = 'tournaments'; }}
+          className="text-xs text-ink hover:text-ink transition-colors"
+        >
           View All
         </button>
       </div>
@@ -762,29 +847,28 @@ const EmptyStatsCard = ({ title, icon: Icon, message, actionText, onAction }) =>
 
 // Main Component
 const QuickStatsWidget = ({ compact = false }) => {
+  const { analytics, loading: analyticsLoading, refetch } = useAnalytics();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedPeriod, setSelectedPeriod] = useState('season');
 
   useEffect(() => {
-    // Load empty state for new users - in production, fetch from Firebase
-    const timer = setTimeout(() => {
-      // TODO: Replace with actual data fetch from useAnalytics hook
-      // For now, show empty state for new users
-      setStats(getEmptyStats());
-      setLoading(false);
-    }, 500);
-    
-    return () => clearTimeout(timer);
-  }, []);
+    if (analyticsLoading) {
+      setLoading(true);
+      return;
+    }
 
-  const refreshStats = () => {
+    setStats(analytics ? mapAnalyticsToWidgetStats(analytics) : getEmptyStats());
+    setLoading(false);
+  }, [analytics, analyticsLoading, selectedPeriod]);
+
+  const refreshStats = async () => {
     setLoading(true);
-    setTimeout(() => {
-      // TODO: Replace with actual data refresh
-      setStats(getEmptyStats());
+    try {
+      await refetch?.();
+    } finally {
       setLoading(false);
-    }, 500);
+    }
   };
 
   // Check if user has any data

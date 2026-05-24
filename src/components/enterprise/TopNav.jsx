@@ -179,7 +179,13 @@ const TopNav = ({ activeTab, setActiveTab, onSettingsClick }) => {
                 <div className="fixed inset-0 z-40" onClick={() => setShowUserMenu(false)} />
                 <div className="absolute right-0 top-full mt-2 w-48 bg-surface-parchment border border-hairline rounded shadow-subtle z-50 overflow-hidden">
                   <div className="p-1.5">
-                    <button className="w-full flex items-center gap-3 px-3 py-2 rounded text-ink-muted hover:text-ink hover:bg-surface-card transition-colors text-left text-sm">
+                    <button
+                      onClick={() => {
+                        setShowUserMenu(false);
+                        onSettingsClick?.();
+                      }}
+                      className="w-full flex items-center gap-3 px-3 py-2 rounded text-ink-muted hover:text-ink hover:bg-surface-card transition-colors text-left text-sm"
+                    >
                       <User className="w-4 h-4" />
                       Profile
                     </button>

@@ -48,7 +48,11 @@ import {
   Video,
   Phone
 } from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
 import { useTeams } from '../../hooks/useDebateData';
+import { getTeamDocuments, saveTeamDocument } from '../../services/debateService';
+import { db } from '../../utils/firebase';
+import { arrayRemove, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 // Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -199,7 +203,7 @@ const EmptyTeam = ({ onCreateTeam }) => (
 );
 
 // Team Member Card
-const MemberCard = ({ member, isCurrentUser, onMessage, onRemove }) => {
+const MemberCard = ({ member, isCurrentUser, onMessage, onRemove, onViewProfile, onEditRole }) => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
@@ -265,10 +269,24 @@ const MemberCard = ({ member, isCurrentUser, onMessage, onRemove }) => {
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setShowMenu(false)} />
                   <div className="absolute right-0 top-full mt-1 w-40 bg-[var(--bg-accent-crimson)] border border-hairline rounded-xl shadow-xl z-50 py-1">
-                    <button className="w-full px-4 py-2 text-left text-sm text-ink-muted hover:bg-[var(--card-bg)] flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowMenu(false);
+                        onViewProfile?.(member);
+                      }}
+                      className="w-full px-4 py-2 text-left text-sm text-ink-muted hover:bg-[var(--card-bg)] flex items-center gap-2"
+                    >
                       <Eye className="w-4 h-4" /> View Profile
                     </button>
-                    <button className="w-full px-4 py-2 text-left text-sm text-ink-muted hover:bg-[var(--card-bg)] flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowMenu(false);
+                        onEditRole?.(member);
+                      }}
+                      className="w-full px-4 py-2 text-left text-sm text-ink-muted hover:bg-[var(--card-bg)] flex items-center gap-2"
+                    >
                       <Edit3 className="w-4 h-4" /> Edit Role
                     </button>
                     {!isCurrentUser && (
@@ -327,7 +345,9 @@ const ChatPanel = ({ teamId, members }) => {
     }
   });
   const [newMessage, setNewMessage] = useState('');
+  const [attachmentName, setAttachmentName] = useState('');
   const messagesEndRef = useRef(null);
+  const attachmentInputRef = useRef(null);
 
   // Save messages to localStorage whenever they change
   useEffect(() => {
@@ -362,6 +382,44 @@ const ChatPanel = ({ teamId, members }) => {
     setNewMessage('');
   };
 
+  const handleCallInvite = async (mode) => {
+    const inviteUrl = `${window.location.origin}${window.location.pathname}#teams?team=${encodeURIComponent(teamId || 'default')}`;
+    const text = `Join the ${mode} room for team ${teamId || 'team'}: ${inviteUrl}`;
+
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        window.open(`mailto:?subject=${encodeURIComponent(`Team ${teamId || 'team'} ${mode} call`)}&body=${encodeURIComponent(text)}`);
+      }
+    } catch (error) {
+      console.error('Failed to share call invite:', error);
+    }
+  };
+
+  const handleAttachmentPick = () => {
+    attachmentInputRef.current?.click();
+  };
+
+  const handleAttachmentChange = async (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setAttachmentName(file.name);
+
+    const newMsg = {
+      id: Date.now(),
+      sender: 'You',
+      message: `Attached file: ${file.name}`,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      date: new Date().toISOString(),
+      isOwn: true
+    };
+
+    setMessages(prev => [...prev, newMsg]);
+    event.target.value = '';
+  };
+
   return (
     <div className="card flex flex-col h-[500px] overflow-hidden p-0">
       {/* Chat Header */}
@@ -377,13 +435,19 @@ const ChatPanel = ({ teamId, members }) => {
           <div className="flex items-center gap-2">
             <motion.button
               whileHover={{ scale: 1.1 }}
+              type="button"
+              onClick={() => handleCallInvite('phone')}
               className="p-2 rounded-lg text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
+              title="Copy phone invite"
             >
               <Phone className="w-4 h-4" />
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.1 }}
+              type="button"
+              onClick={() => handleCallInvite('video')}
               className="p-2 rounded-lg text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
+              title="Copy video invite"
             >
               <Video className="w-4 h-4" />
             </motion.button>
@@ -420,10 +484,14 @@ const ChatPanel = ({ teamId, members }) => {
         <div className="flex items-center gap-3">
           <motion.button
             whileHover={{ scale: 1.1 }}
+            type="button"
+            onClick={handleAttachmentPick}
             className="p-2 rounded-lg text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
+            title="Attach file"
           >
             <Paperclip className="w-5 h-5" />
           </motion.button>
+          <input ref={attachmentInputRef} type="file" className="hidden" onChange={handleAttachmentChange} />
           <input
             type="text"
             value={newMessage}
@@ -593,9 +661,18 @@ const PrepChecklist = ({ tournament }) => {
 
 // Main Component
 const TeamCollaboration = () => {
-  const { teams, createTeam } = useTeams();
+  const { user, userProfile } = useAuth();
+  const { teams, createTeam, refetch } = useTeams();
+  const fileInputRef = useRef(null);
   const [activeView, setActiveView] = useState('overview');
   const [showInviteModal, setShowInviteModal] = useState(false);
+  const [teamDocuments, setTeamDocuments] = useState([]);
+  const [selectedDocument, setSelectedDocument] = useState(null);
+  const [selectedMember, setSelectedMember] = useState(null);
+  const [editingMember, setEditingMember] = useState(null);
+  const [editedRole, setEditedRole] = useState('novice');
+  const [inviteEmail, setInviteEmail] = useState('');
+  const [inviteRole, setInviteRole] = useState('member');
 
   // Get the first team the user is a member of
   const team = teams?.[0];
@@ -604,6 +681,122 @@ const TeamCollaboration = () => {
   // Use actual team data - no mock data for new users
   const currentTeam = team;
   const teamMembers = members;
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadDocuments = async () => {
+      if (!currentTeam?.id) {
+        setTeamDocuments([]);
+        return;
+      }
+
+      try {
+        const docs = await getTeamDocuments(currentTeam.id);
+        if (isMounted) {
+          setTeamDocuments(docs);
+        }
+      } catch (error) {
+        console.error('Error fetching team documents:', error);
+        if (isMounted) {
+          setTeamDocuments([]);
+        }
+      }
+    };
+
+    loadDocuments();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [currentTeam?.id]);
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleUploadFile = async (event) => {
+    const file = event.target.files?.[0];
+    if (!file || !currentTeam?.id) return;
+
+    try {
+      const content = await file.text();
+      const document = {
+        title: file.name,
+        type: 'notes',
+        content,
+        updatedAt: new Date().toLocaleDateString(),
+        updatedBy: user?.displayName || user?.email || 'Team',
+        fileName: file.name,
+        fileType: file.type,
+        size: file.size
+      };
+
+      const id = await saveTeamDocument(currentTeam.id, document);
+      setTeamDocuments(prev => [{ id, ...document }, ...prev]);
+      setSelectedDocument({ id, ...document });
+    } catch (error) {
+      console.error('Error uploading document:', error);
+    } finally {
+      event.target.value = '';
+    }
+  };
+
+  const handleSaveRole = async () => {
+    if (!editingMember || !currentTeam?.id) return;
+
+    const updatedMembers = (currentTeam.members || []).map((member) => {
+      if (member.id === editingMember.id) {
+        return { ...member, role: editedRole };
+      }
+      return member;
+    });
+
+    try {
+      await updateDoc(doc(db, 'teams', currentTeam.id), {
+        members: updatedMembers,
+        updatedAt: serverTimestamp()
+      });
+      await refetch?.();
+      setEditingMember(null);
+    } catch (error) {
+      console.error('Error updating role:', error);
+    }
+  };
+
+  const handleRemoveMember = async (member) => {
+    if (!currentTeam?.id || !member?.id) return;
+
+    try {
+      const updatedMembers = (currentTeam.members || []).filter((teamMember) => teamMember.id !== member.id);
+      await updateDoc(doc(db, 'teams', currentTeam.id), {
+        members: updatedMembers,
+        updatedAt: serverTimestamp()
+      });
+      await updateDoc(doc(db, 'users', member.id), {
+        teams: arrayRemove(currentTeam.id)
+      });
+      await refetch?.();
+    } catch (error) {
+      console.error('Error removing member:', error);
+    }
+  };
+
+  const handleSendInvite = async () => {
+    const inviteCode = currentTeam?.inviteCode || currentTeam?.id;
+    const subject = encodeURIComponent(`Join ${currentTeam?.name || 'my team'}`);
+    const body = encodeURIComponent(
+      `You're invited to join ${currentTeam?.name || 'my team'} as ${inviteRole}.\n\nInvite code: ${inviteCode}\nTeam ID: ${currentTeam?.id || 'n/a'}\n\nIf your email app does not open, copy the invite code above.`
+    );
+
+    if (inviteEmail.trim()) {
+      window.location.href = `mailto:${inviteEmail.trim()}?subject=${subject}&body=${body}`;
+    } else if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(`Team: ${currentTeam?.name || 'my team'}\nRole: ${inviteRole}\nInvite code: ${inviteCode}`);
+    }
+
+    setShowInviteModal(false);
+  };
 
   const views = [
     { id: 'overview', label: 'Overview', icon: Users },
@@ -718,7 +911,12 @@ const TeamCollaboration = () => {
                       member={member}
                       isCurrentUser={member.name === 'You'}
                       onMessage={() => setActiveView('chat')}
-                      onRemove={() => console.log('Remove member:', member.id)}
+                      onViewProfile={(selected) => setSelectedMember(selected)}
+                      onEditRole={(selected) => {
+                        setEditingMember(selected);
+                        setEditedRole(selected.role || 'novice');
+                      }}
+                      onRemove={handleRemoveMember}
                     />
                   ))}
                 </motion.div>
@@ -780,16 +978,19 @@ const TeamCollaboration = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  type="button"
+                  onClick={handleUploadClick}
                   className="px-4 py-2 rounded-lg bg-[var(--card-bg)] text-accent-crimson text-sm font-medium hover:bg-surface-parchment transition-colors flex items-center gap-2"
                 >
                   <Upload className="w-4 h-4" />
                   Upload
                 </motion.button>
+                <input ref={fileInputRef} type="file" className="hidden" onChange={handleUploadFile} />
               </div>
               
               <div className="grid md:grid-cols-2 gap-4">
-                {currentTeam.documents.map(doc => (
-                  <DocumentCard key={doc.id} doc={doc} onClick={() => {}} />
+                {(teamDocuments.length > 0 ? teamDocuments : currentTeam.documents || []).map(doc => (
+                  <DocumentCard key={doc.id} doc={doc} onClick={() => setSelectedDocument(doc)} />
                 ))}
               </div>
             </motion.div>
@@ -845,6 +1046,8 @@ const TeamCollaboration = () => {
                   <label className="block text-sm font-medium text-ink-muted mb-2">Email Address</label>
                   <input
                     type="email"
+                    value={inviteEmail}
+                    onChange={(e) => setInviteEmail(e.target.value)}
                     placeholder="teammate@school.edu"
                     className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson placeholder-slate-500 focus:border-hairline focus:ring-2 focus:ring-hairline outline-none transition-all"
                   />
@@ -852,21 +1055,142 @@ const TeamCollaboration = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-ink-muted mb-2">Role</label>
-                  <select className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson focus:border-hairline outline-none transition-all">
+                  <select
+                    value={inviteRole}
+                    onChange={(e) => setInviteRole(e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson focus:border-hairline outline-none transition-all"
+                  >
                     <option value="novice">Novice</option>
                     <option value="jv">JV</option>
                     <option value="varsity">Varsity</option>
+                    <option value="member">Member</option>
                   </select>
                 </div>
 
                 <motion.button
                   whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(6, 182, 212, 0.3)' }}
                   whileTap={{ scale: 0.98 }}
+                  type="button"
+                  onClick={handleSendInvite}
                   className="w-full py-3 rounded-xl  text-accent-crimson font-semibold shadow-lg shadow-cyan-500/25"
                 >
                   Send Invitation
                 </motion.button>
               </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {selectedMember && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-surface-dark/80 p-4"
+            onClick={(e) => e.target === e.currentTarget && setSelectedMember(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 16 }}
+              className="card w-full max-w-md p-6 space-y-4"
+            >
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-bold text-accent-crimson">Member Profile</h2>
+                <button type="button" onClick={() => setSelectedMember(null)} className="p-2 rounded-lg hover:bg-[var(--card-bg)] transition-colors">
+                  <X className="w-5 h-5 text-ink-muted" />
+                </button>
+              </div>
+              <div className="space-y-2 text-sm">
+                <p className="text-ink"><span className="text-ink-muted">Name:</span> {selectedMember.name}</p>
+                <p className="text-ink"><span className="text-ink-muted">Email:</span> {selectedMember.email || 'Not provided'}</p>
+                <p className="text-ink"><span className="text-ink-muted">Role:</span> {selectedMember.role || 'novice'}</p>
+                <p className="text-ink"><span className="text-ink-muted">Status:</span> {selectedMember.isOnline ? 'Online' : 'Offline'}</p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {editingMember && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-surface-dark/80 p-4"
+            onClick={(e) => e.target === e.currentTarget && setEditingMember(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 16 }}
+              className="card w-full max-w-md p-6 space-y-4"
+            >
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-bold text-accent-crimson">Edit Member Role</h2>
+                <button type="button" onClick={() => setEditingMember(null)} className="p-2 rounded-lg hover:bg-[var(--card-bg)] transition-colors">
+                  <X className="w-5 h-5 text-ink-muted" />
+                </button>
+              </div>
+              <div className="space-y-4">
+                <p className="text-sm text-ink-muted">Update the role for {editingMember.name}.</p>
+                <select
+                  value={editedRole}
+                  onChange={(e) => setEditedRole(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson focus:border-hairline outline-none transition-all"
+                >
+                  <option value="captain">Captain</option>
+                  <option value="coach">Coach</option>
+                  <option value="varsity">Varsity</option>
+                  <option value="jv">JV</option>
+                  <option value="novice">Novice</option>
+                </select>
+                <div className="flex justify-end gap-3">
+                  <button type="button" onClick={() => setEditingMember(null)} className="px-4 py-2 rounded-lg text-ink-muted hover:text-accent-crimson transition-colors">
+                    Cancel
+                  </button>
+                  <button type="button" onClick={handleSaveRole} className="btn-primary">
+                    Save Role
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {selectedDocument && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-surface-dark/80 p-4"
+            onClick={(e) => e.target === e.currentTarget && setSelectedDocument(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 16 }}
+              className="card w-full max-w-2xl p-6 space-y-4 max-h-[80vh] overflow-y-auto"
+            >
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-bold text-accent-crimson">Document Preview</h2>
+                <button type="button" onClick={() => setSelectedDocument(null)} className="p-2 rounded-lg hover:bg-[var(--card-bg)] transition-colors">
+                  <X className="w-5 h-5 text-ink-muted" />
+                </button>
+              </div>
+              <div className="space-y-2 text-sm text-ink-muted">
+                <p><span className="text-ink">Title:</span> {selectedDocument.title}</p>
+                <p><span className="text-ink">Updated by:</span> {selectedDocument.updatedBy}</p>
+                <p><span className="text-ink">Type:</span> {selectedDocument.fileType || selectedDocument.type || 'document'}</p>
+              </div>
+              <pre className="whitespace-pre-wrap text-sm text-ink-muted bg-[var(--bg-accent-crimson)]/50 border border-hairline rounded-xl p-4 max-h-96 overflow-y-auto">
+                {selectedDocument.content || selectedDocument.preview || 'No preview available.'}
+              </pre>
             </motion.div>
           </motion.div>
         )}

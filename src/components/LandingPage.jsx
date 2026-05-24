@@ -19,6 +19,31 @@ import {
 
 const LandingPage = ({ onGetStarted, onContinueAsGuest }) => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const githubRepoUrl = 'https://github.com/Danthemainman1/adjucator-ai-oths';
+  const githubReadmeUrl = 'https://github.com/Danthemainman1/adjucator-ai-oths/blob/main/README.md';
+  const githubIssuesUrl = 'https://github.com/Danthemainman1/adjucator-ai-oths/issues';
+
+  const handleFooterLink = (link) => {
+    const actions = {
+      'Speech Analysis': onGetStarted,
+      'Strategy Generator': onGetStarted,
+      'Live Coaching': onGetStarted,
+      'Team Analytics': onGetStarted,
+      'Documentation': () => window.open(githubReadmeUrl, '_blank', 'noopener,noreferrer'),
+      'Debate Guides': () => window.open(githubReadmeUrl, '_blank', 'noopener,noreferrer'),
+      'Event Rubrics': () => window.open(githubRepoUrl, '_blank', 'noopener,noreferrer'),
+      'API Access': () => window.open(githubIssuesUrl, '_blank', 'noopener,noreferrer'),
+      'About Us': () => window.open(githubRepoUrl, '_blank', 'noopener,noreferrer'),
+      'Contact': () => window.open(githubIssuesUrl, '_blank', 'noopener,noreferrer'),
+      'Privacy Policy': () => window.open(githubReadmeUrl, '_blank', 'noopener,noreferrer'),
+      'Terms of Service': () => window.open(githubReadmeUrl, '_blank', 'noopener,noreferrer'),
+    };
+
+    const action = actions[link];
+    if (action) {
+      action();
+    }
+  };
 
   const features = [
     {
@@ -296,10 +321,13 @@ const LandingPage = ({ onGetStarted, onContinueAsGuest }) => {
                 <h4 style={{ fontWeight: 700, fontSize: 14, color: '#fff', marginBottom: 16, letterSpacing: '0.5px', textTransform: 'uppercase' }}>{col.title}</h4>
                 {col.links.map(link => (
                   <div key={link} style={{ marginBottom: 10 }}>
-                    <a href="#" style={{ color: '#475569', fontSize: 14, textDecoration: 'none', transition: 'color 0.15s' }}
+                    <button
+                      type="button"
+                      onClick={() => handleFooterLink(link)}
+                      style={{ color: '#475569', fontSize: 14, textDecoration: 'none', transition: 'color 0.15s', background: 'transparent', border: 'none', padding: 0, cursor: 'pointer' }}
                       onMouseOver={e => e.currentTarget.style.color = '#22d3ee'}
                       onMouseOut={e => e.currentTarget.style.color = '#475569'}
-                    >{link}</a>
+                    >{link}</button>
                   </div>
                 ))}
               </div>
