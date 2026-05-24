@@ -187,7 +187,7 @@ const TeamInput = ({ team, onChange, onDelete }) => {
         value={team.name}
         onChange={(e) => onChange({ ...team, name: e.target.value })}
         placeholder="Team name..."
-        className="flex-1 bg-transparent text-[var(--text-primary)] text-sm focus:outline-none"
+        className="flex-1 bg-transparent text-[var(--text-accent-crimson)] text-sm focus:outline-none"
       />
       <input
         type="text"
@@ -222,7 +222,7 @@ const VenueInput = ({ venue, onChange, onDelete }) => {
         value={venue.name}
         onChange={(e) => onChange({ ...venue, name: e.target.value })}
         placeholder="Room/Venue name..."
-        className="flex-1 bg-transparent text-[var(--text-primary)] text-sm focus:outline-none"
+        className="flex-1 bg-transparent text-[var(--text-accent-crimson)] text-sm focus:outline-none"
       />
       <label className="flex items-center gap-1 text-xs text-[var(--text-muted)]">
         <input
@@ -287,7 +287,7 @@ const MatchCard = ({ match, teams, venues, onUpdate, onDelete, compact = false }
             </span>
             <button
               onClick={() => setIsEditing(!isEditing)}
-              className="p-1 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+              className="p-1 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
             >
               <Edit2 className="w-3 h-3" />
             </button>
@@ -298,7 +298,7 @@ const MatchCard = ({ match, teams, venues, onUpdate, onDelete, compact = false }
           {/* Aff Team */}
           <div className="flex-1 text-center">
             <div className="text-xs text-cyan-400 uppercase tracking-wide mb-1">Aff</div>
-            <div className="font-semibold text-[var(--text-primary)]">{affTeam?.name || 'TBD'}</div>
+            <div className="font-semibold text-[var(--text-accent-crimson)]">{affTeam?.name || 'TBD'}</div>
             {affTeam?.school && (
               <div className="text-xs text-[var(--text-muted)]">{affTeam.school}</div>
             )}
@@ -309,7 +309,7 @@ const MatchCard = ({ match, teams, venues, onUpdate, onDelete, compact = false }
           {/* Neg Team */}
           <div className="flex-1 text-center">
             <div className="text-xs text-orange-400 uppercase tracking-wide mb-1">Neg</div>
-            <div className="font-semibold text-[var(--text-primary)]">{negTeam?.name || 'TBD'}</div>
+            <div className="font-semibold text-[var(--text-accent-crimson)]">{negTeam?.name || 'TBD'}</div>
             {negTeam?.school && (
               <div className="text-xs text-[var(--text-muted)]">{negTeam.school}</div>
             )}
@@ -359,7 +359,7 @@ const MatchCard = ({ match, teams, venues, onUpdate, onDelete, compact = false }
                   <select
                     value={match.venue || ''}
                     onChange={(e) => onUpdate({ ...match, venue: e.target.value || null })}
-                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] text-sm px-2 py-1 rounded focus:outline-none"
+                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] text-sm px-2 py-1 rounded focus:outline-none"
                   >
                     <option value="">Select venue...</option>
                     {venues.filter(v => v.available).map((v) => (
@@ -372,7 +372,7 @@ const MatchCard = ({ match, teams, venues, onUpdate, onDelete, compact = false }
                   <select
                     value={match.status}
                     onChange={(e) => onUpdate({ ...match, status: e.target.value })}
-                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] text-sm px-2 py-1 rounded focus:outline-none"
+                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] text-sm px-2 py-1 rounded focus:outline-none"
                   >
                     <option value="scheduled">Scheduled</option>
                     <option value="in_progress">In Progress</option>
@@ -388,7 +388,7 @@ const MatchCard = ({ match, teams, venues, onUpdate, onDelete, compact = false }
                   <select
                     value={match.winner || ''}
                     onChange={(e) => onUpdate({ ...match, winner: e.target.value || null })}
-                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] text-sm px-2 py-1 rounded focus:outline-none"
+                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] text-sm px-2 py-1 rounded focus:outline-none"
                   >
                     <option value="">Select winner...</option>
                     <option value={match.affTeam}>{affTeam?.name} (Aff)</option>
@@ -404,7 +404,7 @@ const MatchCard = ({ match, teams, venues, onUpdate, onDelete, compact = false }
                   value={match.notes}
                   onChange={(e) => onUpdate({ ...match, notes: e.target.value })}
                   placeholder="Match notes..."
-                  className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] text-sm px-2 py-1 rounded focus:outline-none"
+                  className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] text-sm px-2 py-1 rounded focus:outline-none"
                 />
               </div>
             </div>
@@ -438,7 +438,7 @@ const RoundCard = ({ round, teams, venues, onUpdateMatch, onUpdateRound, expande
               {isExpanded ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
             </button>
             <div>
-              <h3 className="font-semibold text-[var(--text-primary)]">Round {round.roundNumber}</h3>
+              <h3 className="font-semibold text-[var(--text-accent-crimson)]">Round {round.roundNumber}</h3>
               <p className="text-xs text-[var(--text-muted)]">
                 {round.matches.length} matches • {completedMatches} completed
               </p>
@@ -485,7 +485,7 @@ const RoundCard = ({ round, teams, venues, onUpdateMatch, onUpdateRound, expande
                   type="time"
                   value={round.startTime || ''}
                   onChange={(e) => onUpdateRound({ ...round, startTime: e.target.value })}
-                  className="bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] text-sm px-2 py-1 rounded focus:outline-none"
+                  className="bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] text-sm px-2 py-1 rounded focus:outline-none"
                 />
               </div>
               <div>
@@ -493,7 +493,7 @@ const RoundCard = ({ round, teams, venues, onUpdateMatch, onUpdateRound, expande
                 <select
                   value={round.status}
                   onChange={(e) => onUpdateRound({ ...round, status: e.target.value })}
-                  className="bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] text-sm px-2 py-1 rounded focus:outline-none"
+                  className="bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] text-sm px-2 py-1 rounded focus:outline-none"
                 >
                   <option value="pending">Pending</option>
                   <option value="in_progress">In Progress</option>
@@ -529,7 +529,7 @@ const BracketView = ({ rounds, teams, venues }) => {
         {rounds.map((round) => (
           <div key={round.id} className="w-64 flex-shrink-0">
             <div className="text-center mb-4">
-              <h3 className="font-semibold text-[var(--text-primary)]">Round {round.roundNumber}</h3>
+              <h3 className="font-semibold text-[var(--text-accent-crimson)]">Round {round.roundNumber}</h3>
               {round.startTime && (
                 <p className="text-xs text-[var(--text-muted)]">{round.startTime}</p>
               )}
@@ -608,7 +608,7 @@ const StandingsView = ({ rounds, teams }) => {
   return (
     <div className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl overflow-hidden">
       <div className="p-4 border-b border-[var(--border)]">
-        <h3 className="font-semibold text-[var(--text-primary)] flex items-center gap-2">
+        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
           <BarChart3 className="w-5 h-5 text-purple-400" />
           Current Standings
         </h3>
@@ -645,7 +645,7 @@ const StandingsView = ({ rounds, teams }) => {
                       {idx + 1}
                     </span>
                   </td>
-                  <td className="px-4 py-3 font-medium text-[var(--text-primary)]">{stat.team.name}</td>
+                  <td className="px-4 py-3 font-medium text-[var(--text-accent-crimson)]">{stat.team.name}</td>
                   <td className="px-4 py-3 text-[var(--text-muted)]">{stat.team.school || '-'}</td>
                   <td className="px-4 py-3 text-center text-green-400 font-medium">{stat.wins}</td>
                   <td className="px-4 py-3 text-center text-red-400 font-medium">{stat.losses}</td>
@@ -869,9 +869,9 @@ const RoundRobinScheduler = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--text-primary)] flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl">
-              <Calendar className="w-6 h-6 text-[var(--text-primary)]" />
+          <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
+            <div className="p-2  rounded-xl">
+              <Calendar className="w-6 h-6 text-[var(--text-accent-crimson)]" />
             </div>
             Round Robin Scheduler
           </h1>
@@ -885,21 +885,21 @@ const RoundRobinScheduler = () => {
             <>
               <button
                 onClick={() => setShowSetup(!showSetup)}
-                className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-primary)] rounded-lg transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
               >
                 <Settings className="w-4 h-4" />
                 Setup
               </button>
               <button
                 onClick={printSchedule}
-                className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-primary)] rounded-lg transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
               >
                 <Printer className="w-4 h-4" />
                 Print
               </button>
               <button
                 onClick={exportSchedule}
-                className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-500 text-[var(--text-primary)] rounded-lg transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-500 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
               >
                 <Download className="w-4 h-4" />
                 Export
@@ -927,7 +927,7 @@ const RoundRobinScheduler = () => {
                     type="text"
                     value={tournamentName}
                     onChange={(e) => setTournamentName(e.target.value)}
-                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500/50"
                   />
                 </div>
                 <div>
@@ -936,7 +936,7 @@ const RoundRobinScheduler = () => {
                     type="date"
                     value={tournamentDate}
                     onChange={(e) => setTournamentDate(e.target.value)}
-                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500/50"
                   />
                 </div>
                 <div>
@@ -944,7 +944,7 @@ const RoundRobinScheduler = () => {
                   <select
                     value={format}
                     onChange={(e) => setFormat(e.target.value)}
-                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500/50"
                   >
                     {Object.entries(FORMAT_PRESETS).map(([key, preset]) => (
                       <option key={key} value={key}>{preset.name}</option>
@@ -956,7 +956,7 @@ const RoundRobinScheduler = () => {
               {/* Teams Section */}
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-semibold text-[var(--text-primary)] flex items-center gap-2">
+                  <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
                     <Users className="w-5 h-5 text-cyan-400" />
                     Teams ({teams.length})
                   </h3>
@@ -990,7 +990,7 @@ const RoundRobinScheduler = () => {
               {/* Venues Section */}
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-semibold text-[var(--text-primary)] flex items-center gap-2">
+                  <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
                     <MapPin className="w-5 h-5 text-orange-400" />
                     Venues ({venues.length})
                   </h3>
@@ -1026,7 +1026,7 @@ const RoundRobinScheduler = () => {
                 <button
                   onClick={generateSchedule}
                   disabled={teams.filter(t => t.name.trim()).length < 2}
-                  className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-500 disabled:bg-[var(--input-bg)] disabled:text-[var(--text-muted)] text-[var(--text-primary)] rounded-lg transition-colors font-medium"
+                  className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-500 disabled:bg-[var(--input-bg)] disabled:text-[var(--text-muted)] text-[var(--text-accent-crimson)] rounded-lg transition-colors font-medium"
                 >
                   <Calendar className="w-5 h-5" />
                   Generate Schedule
@@ -1035,14 +1035,14 @@ const RoundRobinScheduler = () => {
                   <>
                     <button
                       onClick={shuffleMatchups}
-                      className="flex items-center gap-2 px-4 py-3 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-primary)] rounded-lg transition-colors"
+                      className="flex items-center gap-2 px-4 py-3 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
                     >
                       <Shuffle className="w-4 h-4" />
                       Shuffle
                     </button>
                     <button
                       onClick={autoAssignTimes}
-                      className="flex items-center gap-2 px-4 py-3 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-primary)] rounded-lg transition-colors"
+                      className="flex items-center gap-2 px-4 py-3 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
                     >
                       <Clock className="w-4 h-4" />
                       Auto Times
@@ -1065,7 +1065,7 @@ const RoundRobinScheduler = () => {
         <div className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-4">
           <div className="flex items-center gap-3 mb-3">
             <AlertTriangle className="w-5 h-5 text-yellow-400" />
-            <span className="font-medium text-[var(--text-primary)]">
+            <span className="font-medium text-[var(--text-accent-crimson)]">
               {errorCount} errors, {warningCount} warnings detected
             </span>
           </div>
@@ -1099,7 +1099,7 @@ const RoundRobinScheduler = () => {
               onClick={() => setViewMode('rounds')}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                 viewMode === 'rounds'
-                  ? 'bg-green-600 text-[var(--text-primary)]'
+                  ? 'bg-green-600 text-[var(--text-accent-crimson)]'
                   : 'bg-[var(--input-bg)] text-[var(--text-secondary)] hover:bg-slate-600'
               }`}
             >
@@ -1110,7 +1110,7 @@ const RoundRobinScheduler = () => {
               onClick={() => setViewMode('bracket')}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                 viewMode === 'bracket'
-                  ? 'bg-green-600 text-[var(--text-primary)]'
+                  ? 'bg-green-600 text-[var(--text-accent-crimson)]'
                   : 'bg-[var(--input-bg)] text-[var(--text-secondary)] hover:bg-slate-600'
               }`}
             >
@@ -1121,7 +1121,7 @@ const RoundRobinScheduler = () => {
               onClick={() => setViewMode('standings')}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                 viewMode === 'standings'
-                  ? 'bg-green-600 text-[var(--text-primary)]'
+                  ? 'bg-green-600 text-[var(--text-accent-crimson)]'
                   : 'bg-[var(--input-bg)] text-[var(--text-secondary)] hover:bg-slate-600'
               }`}
             >
@@ -1182,12 +1182,12 @@ const RoundRobinScheduler = () => {
       {/* Empty State */}
       {rounds.length === 0 && !showSetup && (
         <div className="text-center py-16">
-          <Calendar className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+          <Calendar className="w-16 h-16 text-ink-muted mx-auto mb-4" />
           <h3 className="text-lg font-medium text-[var(--text-muted)]">No schedule generated</h3>
           <p className="text-[var(--text-muted)] mt-1">Set up your tournament to generate a schedule</p>
           <button
             onClick={() => setShowSetup(true)}
-            className="mt-4 px-4 py-2 bg-green-600 hover:bg-green-500 text-[var(--text-primary)] rounded-lg transition-colors"
+            className="mt-4 px-4 py-2 bg-green-600 hover:bg-green-500 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
           >
             Open Setup
           </button>

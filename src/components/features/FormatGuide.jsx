@@ -346,14 +346,14 @@ const FORMATS = {
 
 const getColorClasses = (color) => {
   const colors = {
-    blue: { bg: 'bg-blue-500/20', border: 'border-blue-500/50', text: 'text-blue-400', badge: 'bg-blue-500' },
+    blue: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-blue-400', badge: 'bg-accent-crimson' },
     green: { bg: 'bg-green-500/20', border: 'border-green-500/50', text: 'text-green-400', badge: 'bg-green-500' },
     purple: { bg: 'bg-purple-500/20', border: 'border-purple-500/50', text: 'text-purple-400', badge: 'bg-purple-500' },
     amber: { bg: 'bg-amber-500/20', border: 'border-amber-500/50', text: 'text-amber-400', badge: 'bg-amber-500' },
     red: { bg: 'bg-red-500/20', border: 'border-red-500/50', text: 'text-red-400', badge: 'bg-red-500' },
-    indigo: { bg: 'bg-indigo-500/20', border: 'border-indigo-500/50', text: 'text-indigo-400', badge: 'bg-indigo-500' },
+    indigo: { bg: 'bg-accent-crimson/20', border: 'border-indigo-500/50', text: 'text-indigo-400', badge: 'bg-accent-crimson' },
     cyan: { bg: 'bg-cyan-500/20', border: 'border-cyan-500/50', text: 'text-cyan-400', badge: 'bg-cyan-500' },
-    teal: { bg: 'bg-teal-500/20', border: 'border-teal-500/50', text: 'text-teal-400', badge: 'bg-teal-500' },
+    teal: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-teal-400', badge: 'bg-accent-crimson' },
     emerald: { bg: 'bg-emerald-500/20', border: 'border-emerald-500/50', text: 'text-emerald-400', badge: 'bg-emerald-500' },
     sky: { bg: 'bg-sky-500/20', border: 'border-sky-500/50', text: 'text-sky-400', badge: 'bg-sky-500' }
   };
@@ -372,11 +372,11 @@ const FormatGuide = () => {
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="flex items-center gap-3 mb-6">
-          <div className="p-2 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-lg">
+          <div className="p-2 /20 to-blue-500/20 rounded-lg">
             <Book className="w-6 h-6 text-cyan-400" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-[var(--text-primary)]">Format Guide</h1>
+            <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)]">Format Guide</h1>
             <p className="text-[var(--text-muted)] text-sm">Quick reference for debate format rules</p>
           </div>
         </div>
@@ -392,7 +392,7 @@ const FormatGuide = () => {
                 className={`px-4 py-2 rounded-lg font-medium transition-all ${
                   activeFormat === f.id
                     ? `${fColors.bg} ${fColors.border} border ${fColors.text}`
-                    : 'bg-[var(--card-bg)]/50 border border-[var(--border)]/50 text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                    : 'bg-[var(--card-bg)]/50 border border-[var(--border)]/50 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)]'
                 }`}
               >
                 {f.shortName}
@@ -405,16 +405,16 @@ const FormatGuide = () => {
         <div className={`bg-[var(--card-bg)]/50 border ${colors.border} rounded-xl overflow-hidden`}>
           {/* Header */}
           <div className={`p-6 ${colors.bg}`}>
-            <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-2">{format.name}</h2>
+            <h2 className="text-2xl font-bold text-[var(--text-accent-crimson)] mb-2">{format.name}</h2>
             <p className="text-[var(--text-secondary)] mb-4">{format.description}</p>
             <div className="flex flex-wrap gap-4 text-sm">
               <div className="flex items-center gap-2">
                 <Users className="w-4 h-4 text-[var(--text-muted)]" />
-                <span className="text-[var(--text-primary)]">{format.participants}</span>
+                <span className="text-[var(--text-accent-crimson)]">{format.participants}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-[var(--text-muted)]" />
-                <span className="text-[var(--text-primary)]">Prep: {format.prepTime}</span>
+                <span className="text-[var(--text-accent-crimson)]">Prep: {format.prepTime}</span>
               </div>
             </div>
           </div>
@@ -434,13 +434,13 @@ const FormatGuide = () => {
           >
             <div className="space-y-2">
               {format.structure.map((item, i) => (
-                <div key={i} className="flex items-start gap-4 p-3 bg-[var(--bg-primary)]/50 rounded-lg">
+                <div key={i} className="flex items-start gap-4 p-3 bg-[var(--bg-accent-crimson)]/50 rounded-lg">
                   <div className="w-8 h-8 rounded-full bg-[var(--card-bg)] flex items-center justify-center text-[var(--text-muted)] text-sm font-medium shrink-0">
                     {i + 1}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-[var(--text-primary)] font-medium">{item.speech}</span>
+                      <span className="text-[var(--text-accent-crimson)] font-medium">{item.speech}</span>
                       <span className={`px-2 py-0.5 ${colors.bg} ${colors.text} rounded text-xs font-mono`}>
                         {item.time}
                       </span>
@@ -461,7 +461,7 @@ const FormatGuide = () => {
           >
             <div className="grid gap-3 sm:grid-cols-2">
               {format.keyTerms.map((item, i) => (
-                <div key={i} className="p-3 bg-[var(--bg-primary)]/50 rounded-lg">
+                <div key={i} className="p-3 bg-[var(--bg-accent-crimson)]/50 rounded-lg">
                   <span className={`font-semibold ${colors.text}`}>{item.term}</span>
                   <p className="text-[var(--text-muted)] text-sm mt-1">{item.definition}</p>
                 </div>
@@ -499,7 +499,7 @@ const Section = ({ title, icon, isExpanded, onToggle, colors, children }) => (
     >
       <div className="flex items-center gap-2">
         <span className={colors.text}>{icon}</span>
-        <span className="text-[var(--text-primary)] font-medium">{title}</span>
+        <span className="text-[var(--text-accent-crimson)] font-medium">{title}</span>
       </div>
       <motion.div
         animate={{ rotate: isExpanded ? 180 : 0 }}

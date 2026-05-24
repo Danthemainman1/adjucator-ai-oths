@@ -127,7 +127,7 @@ const ProgressBar = ({ value, max = 100, color = 'cyan', size = 'md', showLabel 
           initial={animated ? { width: 0 } : { width: `${percentage}%` }}
           animate={{ width: `${percentage}%` }}
           transition={{ duration: 1, ease: 'easeOut' }}
-          className={`h-full bg-gradient-to-r ${colorClasses[color]} rounded-full`}
+          className={`h-full  ${colorClasses[color]} rounded-full`}
         />
       </div>
       {showLabel && (
@@ -149,7 +149,7 @@ const StatBadge = ({ label, value, trend, color = 'slate' }) => {
     purple: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
     orange: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
     gold: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-    slate: 'bg-slate-500/20 text-[var(--text-muted)] border-slate-500/30'
+    slate: 'bg-surface-offset0/20 text-[var(--text-muted)] border-slate-500/30'
   };
 
   return (
@@ -176,9 +176,9 @@ const WinLossCard = ({ stats }) => {
       className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-5"
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-[var(--text-primary)] flex items-center gap-2">
-          <div className="p-2 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg">
-            <BarChart3 className="w-4 h-4 text-[var(--text-primary)]" />
+        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
+          <div className="p-2  rounded-lg">
+            <BarChart3 className="w-4 h-4 text-[var(--text-accent-crimson)]" />
           </div>
           Win/Loss Record
         </h3>
@@ -216,7 +216,7 @@ const WinLossCard = ({ stats }) => {
       <div className="mb-4">
         <div className="flex justify-between text-sm mb-1">
           <span className="text-[var(--text-muted)]">Overall Win Rate</span>
-          <span className="text-[var(--text-primary)] font-medium">{winRate}%</span>
+          <span className="text-[var(--text-accent-crimson)] font-medium">{winRate}%</span>
         </div>
         <ProgressBar value={winRate} max={100} color="cyan" size="md" showLabel={false} />
       </div>
@@ -226,7 +226,7 @@ const WinLossCard = ({ stats }) => {
         <div className="flex items-center gap-2">
           <Flame className="w-4 h-4 text-orange-400" />
           <span className="text-sm text-[var(--text-muted)]">Current Streak:</span>
-          <span className="text-[var(--text-primary)] font-semibold">{winStreak}W</span>
+          <span className="text-[var(--text-accent-crimson)] font-semibold">{winStreak}W</span>
         </div>
         <div className="flex items-center gap-1 text-sm">
           {improvement > 0 ? (
@@ -257,9 +257,9 @@ const SideStatsCard = ({ bySide }) => {
       transition={{ delay: 0.1 }}
       className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-5"
     >
-      <h3 className="font-semibold text-[var(--text-primary)] flex items-center gap-2 mb-4">
-        <div className="p-2 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg">
-          <PieChart className="w-4 h-4 text-[var(--text-primary)]" />
+      <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2 mb-4">
+        <div className="p-2  rounded-lg">
+          <PieChart className="w-4 h-4 text-[var(--text-accent-crimson)]" />
         </div>
         Performance by Side
       </h3>
@@ -269,7 +269,7 @@ const SideStatsCard = ({ bySide }) => {
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-cyan-500" />
-            <span className="text-[var(--text-primary)] font-medium">Affirmative</span>
+            <span className="text-[var(--text-accent-crimson)] font-medium">Affirmative</span>
           </div>
           <span className="text-cyan-400 font-semibold">{bySide.aff.winRate}%</span>
         </div>
@@ -285,7 +285,7 @@ const SideStatsCard = ({ bySide }) => {
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-orange-500" />
-            <span className="text-[var(--text-primary)] font-medium">Negative</span>
+            <span className="text-[var(--text-accent-crimson)] font-medium">Negative</span>
           </div>
           <span className="text-orange-400 font-semibold">{bySide.neg.winRate}%</span>
         </div>
@@ -312,9 +312,9 @@ const SpeakerPointsCard = ({ speakerPoints }) => {
       className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-5"
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-[var(--text-primary)] flex items-center gap-2">
-          <div className="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg">
-            <Star className="w-4 h-4 text-[var(--text-primary)]" />
+        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
+          <div className="p-2  rounded-lg">
+            <Star className="w-4 h-4 text-[var(--text-accent-crimson)]" />
           </div>
           Speaker Points
         </h3>
@@ -327,7 +327,7 @@ const SpeakerPointsCard = ({ speakerPoints }) => {
 
       {/* Average Display */}
       <div className="text-center mb-4">
-        <div className="text-5xl font-bold text-[var(--text-primary)] mb-1">
+        <div className="text-5xl font-bold text-[var(--text-accent-crimson)] mb-1">
           <AnimatedNumber value={average} decimals={1} />
         </div>
         <div className="text-sm text-[var(--text-muted)]">Average Speaker Points</div>
@@ -389,7 +389,7 @@ const SpeakerPointsCard = ({ speakerPoints }) => {
                   sp >= 29 ? 'bg-emerald-500' :
                   sp >= 28 ? 'bg-cyan-500' :
                   sp >= 27 ? 'bg-amber-500' :
-                  'bg-slate-500'
+                  'bg-surface-offset0'
                 }`}
                 title={`${sp} pts`}
               />
@@ -428,9 +428,9 @@ const TournamentResultsCard = ({ tournaments }) => {
       className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-5"
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-[var(--text-primary)] flex items-center gap-2">
-          <div className="p-2 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg">
-            <Trophy className="w-4 h-4 text-[var(--text-primary)]" />
+        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
+          <div className="p-2  rounded-lg">
+            <Trophy className="w-4 h-4 text-[var(--text-accent-crimson)]" />
           </div>
           Recent Tournaments
         </h3>
@@ -453,7 +453,7 @@ const TournamentResultsCard = ({ tournaments }) => {
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <span className="text-[var(--text-primary)] font-medium text-sm truncate">
+                <span className="text-[var(--text-accent-crimson)] font-medium text-sm truncate">
                   {tournament.name}
                 </span>
                 {tournament.speakerAward && (
@@ -497,9 +497,9 @@ const UpcomingMatchesCard = ({ matches }) => {
       className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-5"
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-[var(--text-primary)] flex items-center gap-2">
-          <div className="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg">
-            <Calendar className="w-4 h-4 text-[var(--text-primary)]" />
+        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
+          <div className="p-2  rounded-lg">
+            <Calendar className="w-4 h-4 text-[var(--text-accent-crimson)]" />
           </div>
           Upcoming Matches
         </h3>
@@ -519,7 +519,7 @@ const UpcomingMatchesCard = ({ matches }) => {
             >
               <div className="flex items-start justify-between mb-2">
                 <div>
-                  <div className="text-[var(--text-primary)] font-medium text-sm">{match.tournament}</div>
+                  <div className="text-[var(--text-accent-crimson)] font-medium text-sm">{match.tournament}</div>
                   <div className="flex items-center gap-2 text-xs text-[var(--text-muted)] mt-1">
                     <MapPin className="w-3 h-3" />
                     {match.location}
@@ -591,9 +591,9 @@ const AchievementsCard = ({ achievements }) => {
       className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-5"
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-[var(--text-primary)] flex items-center gap-2">
-          <div className="p-2 bg-gradient-to-br from-pink-500 to-rose-600 rounded-lg">
-            <Sparkles className="w-4 h-4 text-[var(--text-primary)]" />
+        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
+          <div className="p-2  rounded-lg">
+            <Sparkles className="w-4 h-4 text-[var(--text-accent-crimson)]" />
           </div>
           Achievements
         </h3>
@@ -612,11 +612,11 @@ const AchievementsCard = ({ achievements }) => {
               transition={{ delay: 0.1 * idx }}
               className="flex items-center gap-3 p-3 bg-[var(--input-bg)]/30 rounded-lg"
             >
-              <div className={`p-2 rounded-lg bg-gradient-to-br ${colorClass.split(' ')[0]} ${colorClass.split(' ')[1]}`}>
-                <Icon className="w-4 h-4 text-[var(--text-primary)]" />
+              <div className={`p-2 rounded-lg  ${colorClass.split(' ')[0]} ${colorClass.split(' ')[1]}`}>
+                <Icon className="w-4 h-4 text-[var(--text-accent-crimson)]" />
               </div>
               <div>
-                <div className="text-[var(--text-primary)] text-sm font-medium">{achievement.name}</div>
+                <div className="text-[var(--text-accent-crimson)] text-sm font-medium">{achievement.name}</div>
                 <div className={`text-lg font-bold ${colorClass.split(' ')[2]}`}>×{achievement.count}</div>
               </div>
             </motion.div>
@@ -637,9 +637,9 @@ const HeadToHeadCard = ({ records }) => {
       className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-5"
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-[var(--text-primary)] flex items-center gap-2">
-          <div className="p-2 bg-gradient-to-br from-red-500 to-rose-600 rounded-lg">
-            <Users className="w-4 h-4 text-[var(--text-primary)]" />
+        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
+          <div className="p-2  rounded-lg">
+            <Users className="w-4 h-4 text-[var(--text-accent-crimson)]" />
           </div>
           Head-to-Head Records
         </h3>
@@ -659,7 +659,7 @@ const HeadToHeadCard = ({ records }) => {
               className="space-y-2"
             >
               <div className="flex items-center justify-between">
-                <span className="text-[var(--text-primary)] text-sm font-medium">{record.opponent}</span>
+                <span className="text-[var(--text-accent-crimson)] text-sm font-medium">{record.opponent}</span>
                 <div className="flex items-center gap-2">
                   <span className="text-emerald-400 font-semibold">{record.wins}W</span>
                   <span className="text-[var(--text-muted)]">-</span>
@@ -704,9 +704,9 @@ const FormatStatsCard = ({ byFormat }) => {
       className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-5"
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-[var(--text-primary)] flex items-center gap-2">
-          <div className="p-2 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-lg">
-            <Target className="w-4 h-4 text-[var(--text-primary)]" />
+        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
+          <div className="p-2  rounded-lg">
+            <Target className="w-4 h-4 text-[var(--text-accent-crimson)]" />
           </div>
           Performance by Format
         </h3>
@@ -716,7 +716,7 @@ const FormatStatsCard = ({ byFormat }) => {
         {formats.map(([format, stats], idx) => (
           <div key={format}>
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[var(--text-primary)] text-sm">{format}</span>
+              <span className="text-[var(--text-accent-crimson)] text-sm">{format}</span>
               <span className="text-xs text-[var(--text-muted)]">
                 {stats.wins}W - {stats.losses}L
               </span>
@@ -746,7 +746,7 @@ const EmptyStatsCard = ({ title, icon: Icon, message, actionText, onAction }) =>
       <div className="p-3 bg-[var(--input-bg)]/50 rounded-full w-fit mx-auto mb-3">
         <Icon className="w-6 h-6 text-[var(--text-muted)]" />
       </div>
-      <h3 className="text-[var(--text-primary)] font-medium mb-1">{title}</h3>
+      <h3 className="text-[var(--text-accent-crimson)] font-medium mb-1">{title}</h3>
       <p className="text-[var(--text-muted)] text-sm mb-4">{message}</p>
       {actionText && onAction && (
         <button
@@ -804,7 +804,7 @@ const QuickStatsWidget = ({ compact = false }) => {
   if (!stats) {
     return (
       <div className="text-center py-12">
-        <AlertCircle className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+        <AlertCircle className="w-12 h-12 text-ink-muted mx-auto mb-3" />
         <p className="text-[var(--text-muted)]">Unable to load statistics</p>
       </div>
     );
@@ -817,9 +817,9 @@ const QuickStatsWidget = ({ compact = false }) => {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-[var(--text-primary)] flex items-center gap-3">
-              <div className="p-2 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl">
-                <Activity className="w-6 h-6 text-[var(--text-primary)]" />
+            <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
+              <div className="p-2  rounded-xl">
+                <Activity className="w-6 h-6 text-[var(--text-accent-crimson)]" />
               </div>
               Quick Stats
             </h1>
@@ -833,12 +833,12 @@ const QuickStatsWidget = ({ compact = false }) => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border border-[var(--border)] rounded-2xl p-8 text-center"
+          className="/80 to-slate-900/80 border border-[var(--border)] rounded-2xl p-8 text-center"
         >
-          <div className="p-4 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 rounded-full w-fit mx-auto mb-4">
+          <div className="p-4 /20 to-blue-600/20 rounded-full w-fit mx-auto mb-4">
             <BarChart3 className="w-10 h-10 text-cyan-400" />
           </div>
-          <h2 className="text-xl font-bold text-[var(--text-primary)] mb-2">Welcome to Your Stats Dashboard</h2>
+          <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] mb-2">Welcome to Your Stats Dashboard</h2>
           <p className="text-[var(--text-muted)] max-w-md mx-auto mb-6">
             Start logging your debate rounds to see detailed statistics, win rates, 
             speaker points, and track your improvement over time.
@@ -890,9 +890,9 @@ const QuickStatsWidget = ({ compact = false }) => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--text-primary)] flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl">
-              <Activity className="w-6 h-6 text-[var(--text-primary)]" />
+          <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
+            <div className="p-2  rounded-xl">
+              <Activity className="w-6 h-6 text-[var(--text-accent-crimson)]" />
             </div>
             Quick Stats
           </h1>
@@ -905,7 +905,7 @@ const QuickStatsWidget = ({ compact = false }) => {
           <select
             value={selectedPeriod}
             onChange={(e) => setSelectedPeriod(e.target.value)}
-            className="bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] text-sm px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+            className="bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] text-sm px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
           >
             <option value="week">This Week</option>
             <option value="month">This Month</option>
@@ -914,7 +914,7 @@ const QuickStatsWidget = ({ compact = false }) => {
           </select>
           <button
             onClick={refreshStats}
-            className="p-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-primary)] rounded-lg transition-colors"
+            className="p-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
           >
             <RefreshCw className="w-4 h-4" />
           </button>

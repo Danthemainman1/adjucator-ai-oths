@@ -128,7 +128,7 @@ const ProgressRing = ({
           fill="none"
           stroke="currentColor"
           strokeWidth={strokeWidth}
-          className="text-slate-800"
+          className="text-ink"
         />
         <motion.circle
           cx={size / 2}
@@ -147,7 +147,7 @@ const ProgressRing = ({
       </svg>
       {showValue && (
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-2xl font-bold text-[var(--text-primary)]">
+          <span className="text-2xl font-bold text-[var(--text-accent-crimson)]">
             <AnimatedNumber value={progress} suffix="%" />
           </span>
           {label && <span className="text-xs text-[var(--text-muted)]">{label}</span>}
@@ -188,15 +188,15 @@ const GradientStatCard = ({
       whileHover={{ scale: 1.02, y: -4 }}
       className="relative group cursor-default"
     >
-      <div className={`absolute -inset-1 bg-gradient-to-r ${c.bg} rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500`} />
+      <div className={`absolute -inset-1  ${c.bg} rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500`} />
       
-      <div className={`relative p-6 rounded-2xl border ${c.border} bg-gradient-to-br ${c.bg} backdrop-blur-sm overflow-hidden`}>
-        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-white/5 to-transparent rounded-full -translate-y-1/2 translate-x-1/2" />
+      <div className={`relative p-6 rounded-2xl border ${c.border}  ${c.bg}  overflow-hidden`}>
+        <div className="absolute top-0 right-0 w-32 h-32  from-white/5 to-transparent rounded-full -translate-y-1/2 translate-x-1/2" />
         
         <div className="relative flex items-start justify-between">
           <div className="flex-1">
             <p className="text-sm text-[var(--text-muted)] font-medium mb-1">{label}</p>
-            <p className="text-3xl font-bold text-[var(--text-primary)] tracking-tight">
+            <p className="text-3xl font-bold text-[var(--text-accent-crimson)] tracking-tight">
               <AnimatedNumber value={parseFloat(value) || 0} decimals={value.toString().includes('.') ? 1 : 0} />
               {value.toString().includes('%') && '%'}
             </p>
@@ -266,7 +266,7 @@ const Badge = ({ children, variant = 'default', size = 'md' }) => {
 // Skeleton Components
 // ============================================
 const StatCardSkeleton = () => (
-  <div className="relative p-6 rounded-2xl border border-[var(--border)]/60 bg-[var(--bg-primary)]/30 animate-pulse">
+  <div className="relative p-6 rounded-2xl border border-[var(--border)]/60 bg-[var(--bg-accent-crimson)]/30 animate-pulse">
     <div className="flex items-start justify-between">
       <div className="space-y-3">
         <div className="h-4 w-24 bg-[var(--card-bg)] rounded" />
@@ -305,7 +305,7 @@ const EmptyAnalytics = ({ onAddDebate }) => (
         initial={{ rotate: -10 }}
         animate={{ rotate: [0, 5, 0] }}
         transition={{ duration: 4, repeat: Infinity }}
-        className="relative p-6 rounded-3xl bg-gradient-to-br from-slate-800/80 to-slate-900/80 border border-[var(--border)]/50 backdrop-blur-xl shadow-2xl"
+        className="relative p-6 rounded-3xl /80 to-slate-900/80 border border-[var(--border)]/50  shadow-2xl"
       >
         <BarChart3 className="w-16 h-16 text-cyan-400" />
         <motion.div
@@ -318,7 +318,7 @@ const EmptyAnalytics = ({ onAddDebate }) => (
       </motion.div>
     </div>
     
-    <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-3">Start Your Debate Journey</h3>
+    <h3 className="text-2xl font-bold text-[var(--text-accent-crimson)] mb-3">Start Your Debate Journey</h3>
     <p className="text-[var(--text-muted)] max-w-md mx-auto mb-8 leading-relaxed">
       Track your debates to unlock powerful analytics, visualize your progress, 
       and gain insights that will help you win more rounds.
@@ -328,7 +328,7 @@ const EmptyAnalytics = ({ onAddDebate }) => (
       whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(6, 182, 212, 0.3)' }}
       whileTap={{ scale: 0.98 }}
       onClick={onAddDebate}
-      className="px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-[var(--text-primary)] font-semibold text-lg shadow-lg shadow-cyan-500/25 inline-flex items-center gap-3"
+      className="px-8 py-4 rounded-2xl  text-[var(--text-accent-crimson)] font-semibold text-lg shadow-lg shadow-cyan-500/25 inline-flex items-center gap-3"
     >
       <Plus className="w-5 h-5" />
       Record Your First Debate
@@ -371,20 +371,20 @@ const AddDebateModal = ({ isOpen, onClose, onSave }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70  p-4"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-        className="w-full max-w-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-[var(--border)] rounded-3xl shadow-2xl shadow-black/50 max-h-[90vh] overflow-hidden"
+        className="w-full max-w-2xl  border border-[var(--border)] rounded-3xl shadow-2xl shadow-black/50 max-h-[90vh] overflow-hidden"
       >
         <div className="relative p-6 border-b border-[var(--border)] overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-purple-500/10" />
+          <div className="absolute inset-0 /10 via-transparent to-purple-500/10" />
           <div className="relative flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-bold text-[var(--text-primary)] flex items-center gap-3">
+              <h2 className="text-2xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
                 <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/30">
                   <Trophy className="w-5 h-5 text-cyan-400" />
                 </div>
@@ -396,7 +396,7 @@ const AddDebateModal = ({ isOpen, onClose, onSave }) => {
               whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
               onClick={onClose}
-              className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
+              className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
             >
               <X className="w-5 h-5" />
             </motion.button>
@@ -411,7 +411,7 @@ const AddDebateModal = ({ isOpen, onClose, onSave }) => {
                 type="date"
                 value={formData.date}
                 onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
                 required
               />
             </div>
@@ -420,7 +420,7 @@ const AddDebateModal = ({ isOpen, onClose, onSave }) => {
               <select
                 value={formData.format}
                 onChange={(e) => setFormData({ ...formData, format: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
               >
                 {DEBATE_FORMATS.map(format => (
                   <option key={format} value={format}>{format}</option>
@@ -437,7 +437,7 @@ const AddDebateModal = ({ isOpen, onClose, onSave }) => {
                 value={formData.tournament}
                 onChange={(e) => setFormData({ ...formData, tournament: e.target.value })}
                 placeholder="e.g., Harvard Invitational"
-                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
               />
             </div>
             <div className="space-y-2">
@@ -445,7 +445,7 @@ const AddDebateModal = ({ isOpen, onClose, onSave }) => {
               <select
                 value={formData.round}
                 onChange={(e) => setFormData({ ...formData, round: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
               >
                 {['Round 1', 'Round 2', 'Round 3', 'Round 4', 'Round 5', 'Round 6', 'Octofinals', 'Quarterfinals', 'Semifinals', 'Finals'].map(r => (
                   <option key={r} value={r}>{r}</option>
@@ -462,7 +462,7 @@ const AddDebateModal = ({ isOpen, onClose, onSave }) => {
                 value={formData.opponent}
                 onChange={(e) => setFormData({ ...formData, opponent: e.target.value })}
                 placeholder="Opponent's name"
-                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
               />
             </div>
             <div className="space-y-2">
@@ -472,7 +472,7 @@ const AddDebateModal = ({ isOpen, onClose, onSave }) => {
                 value={formData.opponentSchool}
                 onChange={(e) => setFormData({ ...formData, opponentSchool: e.target.value })}
                 placeholder="School name"
-                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
               />
             </div>
           </div>
@@ -518,7 +518,7 @@ const AddDebateModal = ({ isOpen, onClose, onSave }) => {
               <select
                 value={formData.side}
                 onChange={(e) => setFormData({ ...formData, side: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
               >
                 <option value="Pro">Pro/Aff</option>
                 <option value="Con">Con/Neg</option>
@@ -534,7 +534,7 @@ const AddDebateModal = ({ isOpen, onClose, onSave }) => {
                 value={formData.speakerPoints}
                 onChange={(e) => setFormData({ ...formData, speakerPoints: e.target.value })}
                 placeholder="28.5"
-                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
               />
             </div>
           </div>
@@ -546,7 +546,7 @@ const AddDebateModal = ({ isOpen, onClose, onSave }) => {
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               placeholder="Key takeaways, what worked, areas to improve..."
               rows={3}
-              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all resize-none"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all resize-none"
             />
           </div>
 
@@ -556,7 +556,7 @@ const AddDebateModal = ({ isOpen, onClose, onSave }) => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={onClose}
-              className="px-6 py-3 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
+              className="px-6 py-3 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
             >
               Cancel
             </motion.button>
@@ -564,7 +564,7 @@ const AddDebateModal = ({ isOpen, onClose, onSave }) => {
               type="submit"
               whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(6, 182, 212, 0.3)' }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-[var(--text-primary)] font-semibold shadow-lg shadow-cyan-500/25"
+              className="px-8 py-3 rounded-xl  text-[var(--text-accent-crimson)] font-semibold shadow-lg shadow-cyan-500/25"
             >
               Save Debate
             </motion.button>
@@ -609,14 +609,14 @@ const WinRateChart = ({ wins, losses }) => {
             />
           </div>
           <div>
-            <span className="text-2xl font-bold text-[var(--text-primary)]">{wins}</span>
+            <span className="text-2xl font-bold text-[var(--text-accent-crimson)]">{wins}</span>
             <span className="text-[var(--text-muted)] ml-2">Wins</span>
           </div>
         </div>
         <div className="flex items-center gap-3">
           <div className="w-4 h-4 rounded-full bg-slate-600" />
           <div>
-            <span className="text-2xl font-bold text-[var(--text-primary)]">{losses}</span>
+            <span className="text-2xl font-bold text-[var(--text-accent-crimson)]">{losses}</span>
             <span className="text-[var(--text-muted)] ml-2">Losses</span>
           </div>
         </div>
@@ -650,7 +650,7 @@ const TrendChart = ({ data }) => {
       <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
         {[100, 75, 50, 25, 0].map(v => (
           <div key={v} className="flex items-center gap-2">
-            <span className="text-xs text-slate-600 w-8">{v}%</span>
+            <span className="text-xs text-ink-muted w-8">{v}%</span>
             <div className="flex-1 border-t border-[var(--border)]/50 border-dashed" />
           </div>
         ))}
@@ -680,7 +680,7 @@ const TrendChart = ({ data }) => {
                 }}
               />
               
-              <div className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-[var(--card-bg)] border border-[var(--border)] rounded-lg text-xs text-[var(--text-primary)] font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 shadow-xl">
+              <div className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-[var(--card-bg)] border border-[var(--border)] rounded-lg text-xs text-[var(--text-accent-crimson)] font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 shadow-xl">
                 {value.toFixed(0)}% win rate
                 <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[var(--card-bg)] border-r border-b border-[var(--border)] rotate-45" />
               </div>
@@ -722,7 +722,7 @@ const FormatBreakdown = ({ data }) => {
             className="group"
           >
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[var(--text-primary)] font-medium flex items-center gap-2">
+              <span className="text-[var(--text-accent-crimson)] font-medium flex items-center gap-2">
                 {format}
                 {winRate >= 70 && <Crown className="w-4 h-4 text-amber-400" />}
               </span>
@@ -753,7 +753,7 @@ const FormatBreakdown = ({ data }) => {
                 <motion.div
                   animate={{ x: ['-100%', '100%'] }}
                   transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                  className="absolute inset-0  from-transparent via-white/20 to-transparent"
                 />
               </motion.div>
             </div>
@@ -792,7 +792,7 @@ const HeadToHead = ({ data }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.05 }}
           whileHover={{ scale: 1.01, x: 4 }}
-          className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-slate-800/50 to-slate-900/30 border border-[var(--border)]/50 hover:border-[var(--border)]/50 transition-all cursor-pointer group"
+          className="flex items-center gap-4 p-4 rounded-xl /50 to-slate-900/30 border border-[var(--border)]/50 hover:border-[var(--border)]/50 transition-all cursor-pointer group"
         >
           <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg ${
             index === 0 ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' :
@@ -804,7 +804,7 @@ const HeadToHead = ({ data }) => {
           </div>
           
           <div className="flex-1 min-w-0">
-            <p className="text-[var(--text-primary)] font-medium truncate group-hover:text-cyan-400 transition-colors">
+            <p className="text-[var(--text-accent-crimson)] font-medium truncate group-hover:text-cyan-400 transition-colors">
               {opponent.name}
             </p>
             <p className="text-[var(--text-muted)] text-sm">{opponent.total} debates</p>
@@ -819,7 +819,7 @@ const HeadToHead = ({ data }) => {
             <p className="text-[var(--text-muted)] text-xs">{opponent.wins}W-{opponent.losses}L</p>
           </div>
           
-          <ChevronRight className="w-5 h-5 text-slate-600 group-hover:text-[var(--text-muted)] transition-colors" />
+          <ChevronRight className="w-5 h-5 text-ink-muted group-hover:text-[var(--text-muted)] transition-colors" />
         </motion.div>
       ))}
     </div>
@@ -852,8 +852,8 @@ const RecentDebates = ({ debates }) => (
         
         <div className="flex-1">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-[var(--text-primary)] font-medium">{debate.tournament || 'Practice'}</span>
-            <span className="text-slate-600">•</span>
+            <span className="text-[var(--text-accent-crimson)] font-medium">{debate.tournament || 'Practice'}</span>
+            <span className="text-ink-muted">•</span>
             <Badge variant="info" size="sm">{debate.format}</Badge>
           </div>
           <p className="text-[var(--text-muted)] text-sm mt-1">
@@ -928,8 +928,8 @@ const AnalyticsDashboard = ({ apiKey }) => {
           className="flex items-start justify-between"
         >
           <div>
-            <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/30">
+            <h1 className="text-3xl font-bold text-[var(--text-accent-crimson)] tracking-tight flex items-center gap-3">
+              <div className="p-2.5 rounded-xl /20 to-blue-600/20 border border-cyan-500/30">
                 <BarChart3 className="w-7 h-7 text-cyan-400" />
               </div>
               Analytics
@@ -942,7 +942,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
               whileHover={{ scale: 1.05, rotate: 180 }}
               whileTap={{ scale: 0.95 }}
               onClick={refetch}
-              className="p-3 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)]/50 transition-all"
+              className="p-3 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)]/50 transition-all"
               title="Refresh"
             >
               <RefreshCw className="w-5 h-5" />
@@ -951,7 +951,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
               whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(6, 182, 212, 0.3)' }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setShowAddModal(true)}
-              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-[var(--text-primary)] font-medium shadow-lg shadow-cyan-500/25 flex items-center gap-2"
+              className="px-5 py-2.5 rounded-xl  text-[var(--text-accent-crimson)] font-medium shadow-lg shadow-cyan-500/25 flex items-center gap-2"
             >
               <Plus className="w-5 h-5" />
               Record Debate
@@ -964,7 +964,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="flex items-center gap-2 p-1.5 bg-[var(--bg-primary)]/50 rounded-2xl border border-[var(--border)]/50 w-fit"
+          className="flex items-center gap-2 p-1.5 bg-[var(--bg-accent-crimson)]/50 rounded-2xl border border-[var(--border)]/50 w-fit"
         >
           {[
             { id: 'overview', label: 'Overview', icon: PieChart },
@@ -979,8 +979,8 @@ const AnalyticsDashboard = ({ apiKey }) => {
               onClick={() => setActiveView(tab.id)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
                 activeView === tab.id
-                  ? 'bg-[var(--card-bg)] text-[var(--text-primary)] shadow-lg'
-                  : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                  ? 'bg-[var(--card-bg)] text-[var(--text-accent-crimson)] shadow-lg'
+                  : 'text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)]'
               }`}
             >
               <tab.icon className="w-4 h-4" />
@@ -995,7 +995,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="p-8 rounded-3xl border border-[var(--border)]/60 bg-gradient-to-b from-slate-900/50 to-slate-950/50"
+            className="p-8 rounded-3xl border border-[var(--border)]/60 /50 to-slate-950/50"
           >
             <EmptyAnalytics onAddDebate={() => setShowAddModal(true)} />
           </motion.div>
@@ -1045,7 +1045,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
                     variants={itemVariants}
                     className="glass-panel p-6"
                   >
-                    <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-6 flex items-center gap-2">
+                    <h3 className="text-lg font-semibold text-[var(--text-accent-crimson)] mb-6 flex items-center gap-2">
                       <PieChart className="w-5 h-5 text-cyan-400" />
                       Win/Loss Ratio
                     </h3>
@@ -1056,7 +1056,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
                     variants={itemVariants}
                     className="glass-panel p-6"
                   >
-                    <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-6 flex items-center gap-2">
+                    <h3 className="text-lg font-semibold text-[var(--text-accent-crimson)] mb-6 flex items-center gap-2">
                       <BarChart3 className="w-5 h-5 text-purple-400" />
                       Performance by Format
                     </h3>
@@ -1068,7 +1068,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
                   variants={itemVariants}
                   className="glass-panel p-6"
                 >
-                  <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-6 flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-[var(--text-accent-crimson)] mb-6 flex items-center gap-2">
                     <Clock className="w-5 h-5 text-amber-400" />
                     Recent Debates
                   </h3>
@@ -1082,7 +1082,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
                 variants={itemVariants}
                 className="glass-panel p-6"
               >
-                <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-6 flex items-center gap-2">
+                <h3 className="text-lg font-semibold text-[var(--text-accent-crimson)] mb-6 flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-emerald-400" />
                   Win Rate Trend (Last 12 Months)
                 </h3>
@@ -1095,7 +1095,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
                 variants={itemVariants}
                 className="glass-panel p-6"
               >
-                <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-6 flex items-center gap-2">
+                <h3 className="text-lg font-semibold text-[var(--text-accent-crimson)] mb-6 flex items-center gap-2">
                   <Users className="w-5 h-5 text-cyan-400" />
                   Head-to-Head Records
                 </h3>
@@ -1120,7 +1120,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
                       className="glass-panel p-6 hover:border-white/20 transition-all"
                     >
                       <div className="flex items-center justify-between mb-6">
-                        <h4 className="text-[var(--text-primary)] font-semibold text-lg">{format}</h4>
+                        <h4 className="text-[var(--text-accent-crimson)] font-semibold text-lg">{format}</h4>
                         <ProgressRing
                           progress={winRate}
                           size={60}
@@ -1130,7 +1130,7 @@ const AnalyticsDashboard = ({ apiKey }) => {
                       </div>
                       <div className="grid grid-cols-3 gap-4 text-center">
                         <div className="p-3 rounded-xl bg-[var(--card-bg)]/30">
-                          <p className="text-2xl font-bold text-[var(--text-primary)]">{stats.total}</p>
+                          <p className="text-2xl font-bold text-[var(--text-accent-crimson)]">{stats.total}</p>
                           <p className="text-[var(--text-muted)] text-sm">Total</p>
                         </div>
                         <div className="p-3 rounded-xl bg-emerald-500/10">

@@ -50,7 +50,7 @@ const UserProfileMenu = ({ onSettingsClick }) => {
     
     if (customAvatar) {
       return (
-        <div className={`${sizeClasses} rounded-full bg-gradient-to-br ${customAvatar.gradient || customAvatar.color} flex items-center justify-center`}>
+        <div className={`${sizeClasses} rounded-full  ${customAvatar.gradient || customAvatar.color} flex items-center justify-center`}>
           {customAvatar.emoji}
         </div>
       );
@@ -67,8 +67,8 @@ const UserProfileMenu = ({ onSettingsClick }) => {
     }
     
     return (
-      <div className={`${sizeClasses} rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center`}>
-        <span className="text-[var(--text-primary)] font-medium">
+      <div className={`${sizeClasses} rounded-full  from-primary to-accent flex items-center justify-center`}>
+        <span className="text-[var(--text-accent-crimson)] font-medium">
           {displayName.charAt(0).toUpperCase()}
         </span>
       </div>
@@ -82,7 +82,7 @@ const UserProfileMenu = ({ onSettingsClick }) => {
         className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-[var(--card-bg)]/50 transition-all group"
       >
         {renderAvatar('small')}
-        <span className="hidden lg:block text-sm font-medium text-text-secondary group-hover:text-[var(--text-primary)] transition-colors">
+        <span className="hidden lg:block text-sm font-medium text-text-secondary group-hover:text-[var(--text-accent-crimson)] transition-colors">
           {displayName}
         </span>
         <ChevronDown className={`w-4 h-4 text-text-muted transition-transform ${isOpen ? 'rotate-180' : ''}`} />
@@ -91,11 +91,11 @@ const UserProfileMenu = ({ onSettingsClick }) => {
       {isOpen && (
         <div className="absolute right-0 mt-2 w-64 glass-card p-0 overflow-hidden animate-in fade-in slide-in-from-top-2 z-50">
           {/* User Info Header */}
-          <div className="p-4 bg-[var(--bg-primary)]/50 border-b border-[var(--border)]/50">
+          <div className="p-4 bg-[var(--bg-accent-crimson)]/50 border-b border-[var(--border)]/50">
             <div className="flex items-center gap-3">
               {renderAvatar('large')}
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-[var(--text-primary)] truncate">
+                <p className="text-sm font-medium text-[var(--text-accent-crimson)] truncate">
                   {displayName}
                 </p>
                 <p className="text-xs text-text-muted truncate">
@@ -117,7 +117,7 @@ const UserProfileMenu = ({ onSettingsClick }) => {
                 setIsOpen(false);
                 onSettingsClick?.();
               }}
-              className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-text-secondary hover:bg-[var(--card-bg)]/50 hover:text-[var(--text-primary)] transition-all"
+              className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-text-secondary hover:bg-[var(--card-bg)]/50 hover:text-[var(--text-accent-crimson)] transition-all"
             >
               <Settings className="w-4 h-4" />
               <span className="text-sm">Settings</span>
@@ -129,7 +129,7 @@ const UserProfileMenu = ({ onSettingsClick }) => {
                 // Navigate to profile tab or modal
                 onSettingsClick?.();
               }}
-              className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-text-secondary hover:bg-[var(--card-bg)]/50 hover:text-[var(--text-primary)] transition-all"
+              className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-text-secondary hover:bg-[var(--card-bg)]/50 hover:text-[var(--text-accent-crimson)] transition-all"
             >
               <User className="w-4 h-4" />
               <span className="text-sm">Edit Profile</span>

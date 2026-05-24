@@ -99,7 +99,7 @@ const NODE_TYPES = {
   question: {
     label: 'Question',
     color: 'from-slate-400 to-slate-600',
-    bgColor: 'bg-slate-500/10',
+    bgColor: 'bg-surface-offset0/10',
     borderColor: 'border-slate-500/50',
     textColor: 'text-[var(--text-muted)]',
     icon: HelpCircle,
@@ -223,7 +223,7 @@ const FlowNode = ({
         zIndex: isSelected ? 100 : localDragging ? 99 : 10
       }}
       className={`
-        w-64 rounded-xl border backdrop-blur-sm
+        w-64 rounded-xl border 
         ${config.bgColor} ${config.borderColor}
         ${isSelected ? 'ring-2 ring-cyan-500/50' : ''}
         transition-shadow duration-200
@@ -253,8 +253,8 @@ const FlowNode = ({
 
       {/* Header */}
       <div className={`flex items-center gap-2 p-3 border-b ${config.borderColor}`}>
-        <div className={`p-1.5 rounded-lg bg-gradient-to-br ${config.color}`}>
-          <Icon className="w-4 h-4 text-[var(--text-primary)]" />
+        <div className={`p-1.5 rounded-lg  ${config.color}`}>
+          <Icon className="w-4 h-4 text-[var(--text-accent-crimson)]" />
         </div>
         <span className={`text-xs font-semibold ${config.textColor} uppercase tracking-wider`}>
           {config.label}
@@ -267,7 +267,7 @@ const FlowNode = ({
               e.stopPropagation();
               onEdit?.(node);
             }}
-            className="p-1 rounded hover:bg-[var(--input-bg)]/50 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+            className="p-1 rounded hover:bg-[var(--input-bg)]/50 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
           >
             <Edit3 className="w-3.5 h-3.5" />
           </button>
@@ -285,7 +285,7 @@ const FlowNode = ({
 
       {/* Content */}
       <div className="p-3">
-        <h4 className="text-[var(--text-primary)] font-medium text-sm mb-1 line-clamp-2">
+        <h4 className="text-[var(--text-accent-crimson)] font-medium text-sm mb-1 line-clamp-2">
           {node.title || 'Untitled'}
         </h4>
         {node.content && (
@@ -447,19 +447,19 @@ const AddNodeModal = ({ isOpen, onClose, onAdd, editNode }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70  p-4"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="w-full max-w-lg bg-gradient-to-b from-slate-900 to-slate-950 border border-[var(--border)] rounded-3xl shadow-2xl overflow-hidden"
+        className="w-full max-w-lg  border border-[var(--border)] rounded-3xl shadow-2xl overflow-hidden"
       >
         <div className="relative p-6 border-b border-[var(--border)]">
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-purple-500/10" />
+          <div className="absolute inset-0 /10 via-transparent to-purple-500/10" />
           <div className="relative flex items-center justify-between">
-            <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/30">
+            <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
+              <div className="p-2 rounded-xl /20 to-blue-600/20 border border-cyan-500/30">
                 <GitBranch className="w-5 h-5 text-cyan-400" />
               </div>
               {editNode ? 'Edit Node' : 'Add Node'}
@@ -467,7 +467,7 @@ const AddNodeModal = ({ isOpen, onClose, onAdd, editNode }) => {
             <motion.button
               whileHover={{ scale: 1.1, rotate: 90 }}
               onClick={onClose}
-              className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
+              className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
             >
               <X className="w-5 h-5" />
             </motion.button>
@@ -510,7 +510,7 @@ const AddNodeModal = ({ isOpen, onClose, onAdd, editNode }) => {
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               placeholder="Enter node title..."
-              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
               required
             />
           </div>
@@ -523,7 +523,7 @@ const AddNodeModal = ({ isOpen, onClose, onAdd, editNode }) => {
               onChange={(e) => setFormData({ ...formData, content: e.target.value })}
               placeholder="Add details or explanation..."
               rows={3}
-              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all resize-none"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all resize-none"
             />
           </div>
 
@@ -535,7 +535,7 @@ const AddNodeModal = ({ isOpen, onClose, onAdd, editNode }) => {
               value={formData.source}
               onChange={(e) => setFormData({ ...formData, source: e.target.value })}
               placeholder="Citation or reference..."
-              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
             />
           </div>
 
@@ -546,7 +546,7 @@ const AddNodeModal = ({ isOpen, onClose, onAdd, editNode }) => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={onClose}
-              className="px-6 py-3 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
+              className="px-6 py-3 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
             >
               Cancel
             </motion.button>
@@ -554,7 +554,7 @@ const AddNodeModal = ({ isOpen, onClose, onAdd, editNode }) => {
               type="submit"
               whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(6, 182, 212, 0.3)' }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-[var(--text-primary)] font-semibold shadow-lg shadow-cyan-500/25"
+              className="px-8 py-3 rounded-xl  text-[var(--text-accent-crimson)] font-semibold shadow-lg shadow-cyan-500/25"
             >
               {editNode ? 'Save Changes' : 'Add Node'}
             </motion.button>
@@ -579,23 +579,23 @@ const ConnectionModal = ({ isOpen, onClose, onAdd, fromNode, toNode }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70  p-4"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="w-full max-w-md bg-gradient-to-b from-slate-900 to-slate-950 border border-[var(--border)] rounded-3xl shadow-2xl p-6"
+        className="w-full max-w-md  border border-[var(--border)] rounded-3xl shadow-2xl p-6"
       >
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
+          <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-2">
             <Link2 className="w-5 h-5 text-cyan-400" />
             Create Connection
           </h2>
           <motion.button
             whileHover={{ scale: 1.1, rotate: 90 }}
             onClick={onClose}
-            className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
+            className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
           >
             <X className="w-5 h-5" />
           </motion.button>
@@ -616,7 +616,7 @@ const ConnectionModal = ({ isOpen, onClose, onAdd, fromNode, toNode }) => {
                   w-full p-3 rounded-xl border transition-all flex items-center gap-3
                   ${connectionType === key 
                     ? 'bg-[var(--card-bg)] border-[var(--border)]' 
-                    : 'bg-[var(--bg-primary)]/50 border-[var(--border)] hover:bg-[var(--card-bg)]/50'
+                    : 'bg-[var(--bg-accent-crimson)]/50 border-[var(--border)] hover:bg-[var(--card-bg)]/50'
                   }
                 `}
               >
@@ -627,7 +627,7 @@ const ConnectionModal = ({ isOpen, onClose, onAdd, fromNode, toNode }) => {
                     backgroundImage: config.dash ? `repeating-linear-gradient(90deg, ${config.color}, ${config.color} 4px, transparent 4px, transparent 8px)` : 'none'
                   }}
                 />
-                <span className="text-[var(--text-primary)] font-medium">{config.label}</span>
+                <span className="text-[var(--text-accent-crimson)] font-medium">{config.label}</span>
                 {connectionType === key && (
                   <Check className="w-4 h-4 text-cyan-400 ml-auto" />
                 )}
@@ -641,7 +641,7 @@ const ConnectionModal = ({ isOpen, onClose, onAdd, fromNode, toNode }) => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={onClose}
-            className="px-6 py-3 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
+            className="px-6 py-3 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
           >
             Cancel
           </motion.button>
@@ -652,7 +652,7 @@ const ConnectionModal = ({ isOpen, onClose, onAdd, fromNode, toNode }) => {
               onAdd(connectionType);
               onClose();
             }}
-            className="px-8 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-[var(--text-primary)] font-semibold shadow-lg shadow-cyan-500/25"
+            className="px-8 py-3 rounded-xl  text-[var(--text-accent-crimson)] font-semibold shadow-lg shadow-cyan-500/25"
           >
             Connect
           </motion.button>
@@ -684,13 +684,13 @@ const Toolbar = ({
   return (
     <div className="absolute top-4 left-4 z-30 flex flex-col gap-2">
       {/* Tool Selection */}
-      <div className="p-2 rounded-xl bg-[var(--bg-primary)]/90 border border-[var(--border)] backdrop-blur-sm flex flex-col gap-1">
+      <div className="p-2 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-[var(--border)]  flex flex-col gap-1">
         <button
           onClick={() => setTool('select')}
           className={`p-2.5 rounded-lg transition-all ${
             tool === 'select' 
               ? 'bg-cyan-500/20 text-cyan-400' 
-              : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)]'
+              : 'text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)]'
           }`}
           title="Select Tool (V)"
         >
@@ -701,7 +701,7 @@ const Toolbar = ({
           className={`p-2.5 rounded-lg transition-all ${
             tool === 'pan' 
               ? 'bg-cyan-500/20 text-cyan-400' 
-              : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)]'
+              : 'text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)]'
           }`}
           title="Pan Tool (H)"
         >
@@ -710,10 +710,10 @@ const Toolbar = ({
       </div>
 
       {/* Zoom Controls */}
-      <div className="p-2 rounded-xl bg-[var(--bg-primary)]/90 border border-[var(--border)] backdrop-blur-sm flex flex-col gap-1">
+      <div className="p-2 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-[var(--border)]  flex flex-col gap-1">
         <button
           onClick={onZoomIn}
-          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
+          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
           title="Zoom In (+)"
         >
           <ZoomIn className="w-5 h-5" />
@@ -723,14 +723,14 @@ const Toolbar = ({
         </div>
         <button
           onClick={onZoomOut}
-          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
+          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
           title="Zoom Out (-)"
         >
           <ZoomOut className="w-5 h-5" />
         </button>
         <button
           onClick={onResetView}
-          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
+          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
           title="Reset View (R)"
         >
           <Maximize2 className="w-5 h-5" />
@@ -738,13 +738,13 @@ const Toolbar = ({
       </div>
 
       {/* View Options */}
-      <div className="p-2 rounded-xl bg-[var(--bg-primary)]/90 border border-[var(--border)] backdrop-blur-sm">
+      <div className="p-2 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-[var(--border)] ">
         <button
           onClick={() => setShowGrid(!showGrid)}
           className={`p-2.5 rounded-lg transition-all ${
             showGrid 
               ? 'bg-cyan-500/20 text-cyan-400' 
-              : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)]'
+              : 'text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)]'
           }`}
           title="Toggle Grid (G)"
         >
@@ -767,24 +767,24 @@ const RightPanel = ({ onAddNode, onExportPNG, onExportPDF, onSave, onLoad, onCle
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={onAddNode}
-        className="p-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-[var(--text-primary)] shadow-lg shadow-cyan-500/25"
+        className="p-3 rounded-xl  text-[var(--text-accent-crimson)] shadow-lg shadow-cyan-500/25"
         title="Add Node (N)"
       >
         <Plus className="w-5 h-5" />
       </motion.button>
 
       {/* File Operations */}
-      <div className="p-2 rounded-xl bg-[var(--bg-primary)]/90 border border-[var(--border)] backdrop-blur-sm flex flex-col gap-1">
+      <div className="p-2 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-[var(--border)]  flex flex-col gap-1">
         <button
           onClick={onSave}
-          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
+          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
           title="Save Flowchart"
         >
           <Save className="w-5 h-5" />
         </button>
         <button
           onClick={onLoad}
-          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
+          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
           title="Load Flowchart"
         >
           <FolderOpen className="w-5 h-5" />
@@ -792,17 +792,17 @@ const RightPanel = ({ onAddNode, onExportPNG, onExportPDF, onSave, onLoad, onCle
       </div>
 
       {/* Export */}
-      <div className="p-2 rounded-xl bg-[var(--bg-primary)]/90 border border-[var(--border)] backdrop-blur-sm flex flex-col gap-1">
+      <div className="p-2 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-[var(--border)]  flex flex-col gap-1">
         <button
           onClick={onExportPNG}
-          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
+          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
           title="Export as PNG"
         >
           <Image className="w-5 h-5" />
         </button>
         <button
           onClick={onExportPDF}
-          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
+          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
           title="Export as PDF"
         >
           <FileText className="w-5 h-5" />
@@ -812,7 +812,7 @@ const RightPanel = ({ onAddNode, onExportPNG, onExportPDF, onSave, onLoad, onCle
       {/* Clear */}
       <button
         onClick={onClear}
-        className="p-2.5 rounded-xl bg-[var(--bg-primary)]/90 border border-[var(--border)] backdrop-blur-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all"
+        className="p-2.5 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-[var(--border)]  text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all"
         title="Clear Canvas"
       >
         <Trash2 className="w-5 h-5" />
@@ -827,7 +827,7 @@ const RightPanel = ({ onAddNode, onExportPNG, onExportPDF, onSave, onLoad, onCle
 
 const Legend = () => {
   return (
-    <div className="absolute bottom-4 left-4 z-30 p-4 rounded-xl bg-[var(--bg-primary)]/90 border border-[var(--border)] backdrop-blur-sm">
+    <div className="absolute bottom-4 left-4 z-30 p-4 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-[var(--border)] ">
       <h4 className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">Node Types</h4>
       <div className="grid grid-cols-2 gap-2">
         {Object.entries(NODE_TYPES).map(([key, config]) => {
@@ -866,13 +866,13 @@ const EmptyState = ({ onAddNode }) => (
         <motion.div
           animate={{ y: [0, -5, 0] }}
           transition={{ duration: 3, repeat: Infinity }}
-          className="relative p-6 rounded-3xl bg-gradient-to-br from-slate-800/80 to-slate-900/80 border border-[var(--border)]/50 backdrop-blur-xl shadow-2xl"
+          className="relative p-6 rounded-3xl /80 to-slate-900/80 border border-[var(--border)]/50  shadow-2xl"
         >
           <GitBranch className="w-16 h-16 text-cyan-400" />
         </motion.div>
       </div>
       
-      <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-3">Start Building Your Flow</h3>
+      <h3 className="text-2xl font-bold text-[var(--text-accent-crimson)] mb-3">Start Building Your Flow</h3>
       <p className="text-[var(--text-muted)] max-w-md mx-auto mb-8 leading-relaxed">
         Create argument structures visually. Add claims, evidence, warrants, and connect them to see your case flow.
       </p>
@@ -881,7 +881,7 @@ const EmptyState = ({ onAddNode }) => (
         whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(6, 182, 212, 0.3)' }}
         whileTap={{ scale: 0.98 }}
         onClick={onAddNode}
-        className="px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-[var(--text-primary)] font-semibold text-lg shadow-lg shadow-cyan-500/25 inline-flex items-center gap-3"
+        className="px-8 py-4 rounded-2xl  text-[var(--text-accent-crimson)] font-semibold text-lg shadow-lg shadow-cyan-500/25 inline-flex items-center gap-3"
       >
         <Plus className="w-5 h-5" />
         Add First Node
@@ -1213,8 +1213,8 @@ const ArgumentFlowchart = () => {
         {/* Header */}
         <div className="flex items-start justify-between flex-shrink-0">
           <div>
-            <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/30">
+            <h1 className="text-3xl font-bold text-[var(--text-accent-crimson)] tracking-tight flex items-center gap-3">
+              <div className="p-2.5 rounded-xl /20 to-blue-600/20 border border-cyan-500/30">
                 <GitBranch className="w-7 h-7 text-cyan-400" />
               </div>
               Argument Flowchart

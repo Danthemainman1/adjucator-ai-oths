@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useMemo, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as framerMotion, AnimatePresence } from 'framer-motion';
 import {
   BookOpen,
   Search,
@@ -1112,7 +1112,7 @@ const MotionCard = ({ motion, onEdit, onDelete, onToggleFavorite, onCopy, viewMo
 
   if (viewMode === 'compact') {
     return (
-      <motion.div
+      <framerMotion.div
         layout
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -1124,12 +1124,12 @@ const MotionCard = ({ motion, onEdit, onDelete, onToggleFavorite, onCopy, viewMo
             <CategoryIcon className={`w-4 h-4 ${category.textColor}`} />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[var(--text-primary)] text-sm line-clamp-2">{motion.text}</p>
+            <p className="text-[var(--text-accent-crimson)] text-sm line-clamp-2">{motion.text}</p>
             <div className="flex items-center gap-2 mt-2 flex-wrap">
               <span className="text-xs text-[var(--text-muted)]">{format.short}</span>
-              <span className="text-slate-600">•</span>
+              <span className="text-ink-muted">•</span>
               <DifficultyBadge level={motion.difficulty} />
-              <span className="text-slate-600">•</span>
+              <span className="text-ink-muted">•</span>
               <span className="text-xs text-[var(--text-muted)]">{motion.year}</span>
             </div>
           </div>
@@ -1146,18 +1146,18 @@ const MotionCard = ({ motion, onEdit, onDelete, onToggleFavorite, onCopy, viewMo
             </button>
             <button
               onClick={handleCopy}
-              className="p-1.5 text-[var(--text-muted)] hover:text-[var(--text-primary)] rounded transition-colors"
+              className="p-1.5 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] rounded transition-colors"
             >
               <Copy className="w-4 h-4" />
             </button>
           </div>
         </div>
-      </motion.div>
+      </framerMotion.div>
     );
   }
 
   return (
-    <motion.div
+    <framerMotion.div
       layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -1174,7 +1174,7 @@ const MotionCard = ({ motion, onEdit, onDelete, onToggleFavorite, onCopy, viewMo
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <span className={`text-xs font-medium ${category.textColor}`}>{category.label}</span>
-                <span className="text-slate-600">•</span>
+                <span className="text-ink-muted">•</span>
                 <span className="text-xs text-[var(--text-muted)]">{format.label}</span>
               </div>
               <DifficultyBadge level={motion.difficulty} />
@@ -1194,14 +1194,14 @@ const MotionCard = ({ motion, onEdit, onDelete, onToggleFavorite, onCopy, viewMo
             </button>
             <button
               onClick={handleCopy}
-              className="p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--input-bg)]/50 rounded-lg transition-colors"
+              className="p-2 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--input-bg)]/50 rounded-lg transition-colors"
               title="Copy motion text"
             >
               <Copy className="w-4 h-4" />
             </button>
             <button
               onClick={() => onEdit(motion)}
-              className="p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--input-bg)]/50 rounded-lg transition-colors"
+              className="p-2 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--input-bg)]/50 rounded-lg transition-colors"
             >
               <Edit3 className="w-4 h-4" />
             </button>
@@ -1217,13 +1217,13 @@ const MotionCard = ({ motion, onEdit, onDelete, onToggleFavorite, onCopy, viewMo
 
       {/* Motion Text */}
       <div className="p-4">
-        <p className="text-[var(--text-primary)] font-medium leading-relaxed">{motion.text}</p>
+        <p className="text-[var(--text-accent-crimson)] font-medium leading-relaxed">{motion.text}</p>
       </div>
 
       {/* Tags */}
       {motion.tags && motion.tags.length > 0 && (
         <div className="px-4 pb-3 flex items-center gap-2 flex-wrap">
-          {motion.tags.map((tag, idx) => (
+          {(motion.tags || []).map((tag, idx) => (
             <span
               key={idx}
               className="inline-flex items-center gap-1 px-2 py-0.5 bg-[var(--input-bg)]/50 text-[var(--text-secondary)] text-xs rounded-full"
@@ -1239,7 +1239,7 @@ const MotionCard = ({ motion, onEdit, onDelete, onToggleFavorite, onCopy, viewMo
       <div className="px-4 pb-4">
         <button
           onClick={() => setExpanded(!expanded)}
-          className="flex items-center gap-2 text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+          className="flex items-center gap-2 text-sm text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
         >
           {expanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
           <span>Details</span>
@@ -1247,7 +1247,7 @@ const MotionCard = ({ motion, onEdit, onDelete, onToggleFavorite, onCopy, viewMo
 
         <AnimatePresence>
           {expanded && (
-            <motion.div
+            <framerMotion.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
@@ -1258,12 +1258,12 @@ const MotionCard = ({ motion, onEdit, onDelete, onToggleFavorite, onCopy, viewMo
                 <div className="grid grid-cols-2 gap-3 text-sm">
                   <div>
                     <span className="text-[var(--text-muted)] text-xs uppercase tracking-wide">Tournament</span>
-                    <p className="text-[var(--text-primary)]">{motion.tournament || 'N/A'}</p>
+                    <p className="text-[var(--text-accent-crimson)]">{motion.tournament || 'N/A'}</p>
                   </div>
                   <div>
                     <span className="text-[var(--text-muted)] text-xs uppercase tracking-wide">Source</span>
                     <div className="flex items-center gap-1">
-                      <p className="text-[var(--text-primary)]">{motion.source || 'Unknown'}</p>
+                      <p className="text-[var(--text-accent-crimson)]">{motion.source || 'Unknown'}</p>
                       {motion.sourceUrl && (
                         <a 
                           href={motion.sourceUrl} 
@@ -1278,11 +1278,11 @@ const MotionCard = ({ motion, onEdit, onDelete, onToggleFavorite, onCopy, viewMo
                   </div>
                   <div>
                     <span className="text-[var(--text-muted)] text-xs uppercase tracking-wide">Date</span>
-                    <p className="text-[var(--text-primary)]">{motion.month} {motion.year}</p>
+                    <p className="text-[var(--text-accent-crimson)]">{motion.month} {motion.year}</p>
                   </div>
                   <div>
                     <span className="text-[var(--text-muted)] text-xs uppercase tracking-wide">Times Used</span>
-                    <p className="text-[var(--text-primary)]">{motion.timesUsed || 0}</p>
+                    <p className="text-[var(--text-accent-crimson)]">{motion.timesUsed || 0}</p>
                   </div>
                 </div>
 
@@ -1294,11 +1294,11 @@ const MotionCard = ({ motion, onEdit, onDelete, onToggleFavorite, onCopy, viewMo
                   </div>
                 )}
               </div>
-            </motion.div>
+            </framerMotion.div>
           )}
         </AnimatePresence>
       </div>
-    </motion.div>
+    </framerMotion.div>
   );
 };
 
@@ -1389,8 +1389,8 @@ const MotionModal = ({ isOpen, onClose, motion, onSave }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <motion.div
+    <div className="fixed inset-0 bg-black/50  z-50 flex items-center justify-center p-4">
+      <framerMotion.div
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
@@ -1400,13 +1400,13 @@ const MotionModal = ({ isOpen, onClose, motion, onSave }) => {
           {/* Header */}
           <div className="p-6 border-b border-[var(--border)]">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold text-[var(--text-primary)]">
+              <h2 className="text-xl font-bold text-[var(--text-accent-crimson)]">
                 {motion ? 'Edit Motion' : 'Add New Motion'}
               </h2>
               <button
                 type="button"
                 onClick={onClose}
-                className="p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--input-bg)] rounded-lg transition-colors"
+                className="p-2 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--input-bg)] rounded-lg transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1423,7 +1423,7 @@ const MotionModal = ({ isOpen, onClose, motion, onSave }) => {
                 onChange={(e) => setFormData(prev => ({ ...prev, text: e.target.value }))}
                 placeholder="Resolved: ..."
                 rows={3}
-                className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50 resize-none"
+                className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50 resize-none"
                 required
               />
             </div>
@@ -1435,7 +1435,7 @@ const MotionModal = ({ isOpen, onClose, motion, onSave }) => {
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-                  className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                  className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
                 >
                   {Object.entries(CATEGORIES).map(([key, cat]) => (
                     <option key={key} value={key}>{cat.label}</option>
@@ -1447,7 +1447,7 @@ const MotionModal = ({ isOpen, onClose, motion, onSave }) => {
                 <select
                   value={formData.format}
                   onChange={(e) => setFormData(prev => ({ ...prev, format: e.target.value }))}
-                  className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                  className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
                 >
                   {Object.entries(FORMATS).map(([key, fmt]) => (
                     <option key={key} value={key}>{fmt.label}</option>
@@ -1486,7 +1486,7 @@ const MotionModal = ({ isOpen, onClose, motion, onSave }) => {
                   value={formData.tournament}
                   onChange={(e) => setFormData(prev => ({ ...prev, tournament: e.target.value }))}
                   placeholder="e.g., NSDA Nationals"
-                  className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                  className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
                 />
               </div>
               <div>
@@ -1496,7 +1496,7 @@ const MotionModal = ({ isOpen, onClose, motion, onSave }) => {
                   value={formData.source}
                   onChange={(e) => setFormData(prev => ({ ...prev, source: e.target.value }))}
                   placeholder="e.g., NSDA"
-                  className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                  className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
                 />
               </div>
             </div>
@@ -1511,7 +1511,7 @@ const MotionModal = ({ isOpen, onClose, motion, onSave }) => {
                   onChange={(e) => setFormData(prev => ({ ...prev, year: parseInt(e.target.value) }))}
                   min={2000}
                   max={2030}
-                  className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                  className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
                 />
               </div>
               <div>
@@ -1519,7 +1519,7 @@ const MotionModal = ({ isOpen, onClose, motion, onSave }) => {
                 <select
                   value={formData.month}
                   onChange={(e) => setFormData(prev => ({ ...prev, month: e.target.value }))}
-                  className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                  className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
                 >
                   <option value="">Select month...</option>
                   {['January', 'February', 'March', 'April', 'May', 'June', 
@@ -1538,7 +1538,7 @@ const MotionModal = ({ isOpen, onClose, motion, onSave }) => {
                 value={formData.sourceUrl}
                 onChange={(e) => setFormData(prev => ({ ...prev, sourceUrl: e.target.value }))}
                 placeholder="https://..."
-                className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
               />
             </div>
 
@@ -1552,19 +1552,19 @@ const MotionModal = ({ isOpen, onClose, motion, onSave }) => {
                   onChange={(e) => setTagInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
                   placeholder="Add a tag..."
-                  className="flex-1 bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                  className="flex-1 bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
                 />
                 <button
                   type="button"
                   onClick={handleAddTag}
-                  className="px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-primary)] rounded-lg transition-colors"
+                  className="px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
                 >
                   Add
                 </button>
               </div>
               {formData.tags.length > 0 && (
                 <div className="flex items-center gap-2 flex-wrap">
-                  {formData.tags.map((tag, idx) => (
+                  {(formData.tags || []).map((tag, idx) => (
                     <span
                       key={idx}
                       className="inline-flex items-center gap-1 px-2.5 py-1 bg-[var(--input-bg)] text-[var(--text-secondary)] text-sm rounded-full"
@@ -1592,7 +1592,7 @@ const MotionModal = ({ isOpen, onClose, motion, onSave }) => {
                 onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
                 placeholder="Strategy notes, key arguments, etc."
                 rows={3}
-                className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50 resize-none"
+                className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50 resize-none"
               />
             </div>
           </div>
@@ -1602,19 +1602,19 @@ const MotionModal = ({ isOpen, onClose, motion, onSave }) => {
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+              className="px-4 py-2 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-6 py-2 bg-cyan-600 hover:bg-cyan-500 text-[var(--text-primary)] rounded-lg transition-colors font-medium"
+              className="px-6 py-2 bg-cyan-600 hover:bg-cyan-500 text-[var(--text-accent-crimson)] rounded-lg transition-colors font-medium"
             >
               {motion ? 'Save Changes' : 'Add Motion'}
             </button>
           </div>
         </form>
-      </motion.div>
+      </framerMotion.div>
     </div>
   );
 };
@@ -1794,9 +1794,9 @@ const MotionLibrary = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--text-primary)] flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl">
-              <BookOpen className="w-6 h-6 text-[var(--text-primary)]" />
+          <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
+            <div className="p-2  rounded-xl">
+              <BookOpen className="w-6 h-6 text-[var(--text-accent-crimson)]" />
             </div>
             Motion Library
           </h1>
@@ -1806,7 +1806,7 @@ const MotionLibrary = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <label className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-primary)] rounded-lg transition-colors cursor-pointer">
+          <label className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors cursor-pointer">
             <Upload className="w-4 h-4" />
             Import
             <input
@@ -1818,7 +1818,7 @@ const MotionLibrary = () => {
           </label>
           <button
             onClick={handleExport}
-            className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-primary)] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
           >
             <Download className="w-4 h-4" />
             Export
@@ -1828,7 +1828,7 @@ const MotionLibrary = () => {
               setEditingMotion(null);
               setShowModal(true);
             }}
-            className="flex items-center gap-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-[var(--text-primary)] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
           >
             <Plus className="w-4 h-4" />
             Add Motion
@@ -1847,7 +1847,7 @@ const MotionLibrary = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search motions, tags, tournaments..."
-              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] pl-10 pr-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] pl-10 pr-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
             />
           </div>
 
@@ -1857,7 +1857,7 @@ const MotionLibrary = () => {
             className={`flex items-center gap-2 px-4 py-2.5 rounded-lg transition-colors ${
               showFavoritesOnly
                 ? 'bg-amber-500/20 text-amber-400 border border-amber-500/50'
-                : 'bg-[var(--input-bg)]/50 text-[var(--text-muted)] border border-[var(--border)] hover:text-[var(--text-primary)]'
+                : 'bg-[var(--input-bg)]/50 text-[var(--text-muted)] border border-[var(--border)] hover:text-[var(--text-accent-crimson)]'
             }`}
           >
             <Star className={`w-4 h-4 ${showFavoritesOnly ? 'fill-current' : ''}`} />
@@ -1870,13 +1870,13 @@ const MotionLibrary = () => {
             className={`flex items-center gap-2 px-4 py-2.5 rounded-lg transition-colors ${
               showFilters || activeFiltersCount > 0
                 ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/50'
-                : 'bg-[var(--input-bg)]/50 text-[var(--text-muted)] border border-[var(--border)] hover:text-[var(--text-primary)]'
+                : 'bg-[var(--input-bg)]/50 text-[var(--text-muted)] border border-[var(--border)] hover:text-[var(--text-accent-crimson)]'
             }`}
           >
             <Filter className="w-4 h-4" />
             Filters
             {activeFiltersCount > 0 && (
-              <span className="w-5 h-5 bg-cyan-500 text-[var(--text-primary)] text-xs rounded-full flex items-center justify-center">
+              <span className="w-5 h-5 bg-cyan-500 text-[var(--text-accent-crimson)] text-xs rounded-full flex items-center justify-center">
                 {activeFiltersCount}
               </span>
             )}
@@ -1886,13 +1886,13 @@ const MotionLibrary = () => {
           <div className="flex items-center gap-1 bg-[var(--input-bg)]/50 rounded-lg p-1">
             <button
               onClick={() => setViewMode('full')}
-              className={`p-2 rounded ${viewMode === 'full' ? 'bg-slate-600 text-[var(--text-primary)]' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'}`}
+              className={`p-2 rounded ${viewMode === 'full' ? 'bg-slate-600 text-[var(--text-accent-crimson)]' : 'text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)]'}`}
             >
               <Grid3X3 className="w-4 h-4" />
             </button>
             <button
               onClick={() => setViewMode('compact')}
-              className={`p-2 rounded ${viewMode === 'compact' ? 'bg-slate-600 text-[var(--text-primary)]' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'}`}
+              className={`p-2 rounded ${viewMode === 'compact' ? 'bg-slate-600 text-[var(--text-accent-crimson)]' : 'text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)]'}`}
             >
               <List className="w-4 h-4" />
             </button>
@@ -1902,7 +1902,7 @@ const MotionLibrary = () => {
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-3 py-2.5 rounded-lg focus:outline-none"
+            className="bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-3 py-2.5 rounded-lg focus:outline-none"
           >
             <option value="newest">Newest First</option>
             <option value="oldest">Oldest First</option>
@@ -1916,7 +1916,7 @@ const MotionLibrary = () => {
         {/* Expanded Filters */}
         <AnimatePresence>
           {showFilters && (
-            <motion.div
+            <framerMotion.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
@@ -1929,7 +1929,7 @@ const MotionLibrary = () => {
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-3 py-2 rounded-lg focus:outline-none text-sm"
+                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-3 py-2 rounded-lg focus:outline-none text-sm"
                   >
                     <option value="all">All Categories</option>
                     {Object.entries(CATEGORIES).map(([key, cat]) => (
@@ -1944,7 +1944,7 @@ const MotionLibrary = () => {
                   <select
                     value={selectedFormat}
                     onChange={(e) => setSelectedFormat(e.target.value)}
-                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-3 py-2 rounded-lg focus:outline-none text-sm"
+                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-3 py-2 rounded-lg focus:outline-none text-sm"
                   >
                     <option value="all">All Formats</option>
                     {Object.entries(FORMATS).map(([key, fmt]) => (
@@ -1959,7 +1959,7 @@ const MotionLibrary = () => {
                   <select
                     value={selectedDifficulty}
                     onChange={(e) => setSelectedDifficulty(e.target.value)}
-                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-3 py-2 rounded-lg focus:outline-none text-sm"
+                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-3 py-2 rounded-lg focus:outline-none text-sm"
                   >
                     <option value="all">All Levels</option>
                     {DIFFICULTY_LEVELS.map((level) => (
@@ -1974,7 +1974,7 @@ const MotionLibrary = () => {
                   <select
                     value={selectedYear}
                     onChange={(e) => setSelectedYear(e.target.value)}
-                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-3 py-2 rounded-lg focus:outline-none text-sm"
+                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-3 py-2 rounded-lg focus:outline-none text-sm"
                   >
                     <option value="all">All Years</option>
                     {years.map((year) => (
@@ -1988,13 +1988,13 @@ const MotionLibrary = () => {
                 <div className="mt-3 flex items-center justify-end">
                   <button
                     onClick={resetFilters}
-                    className="text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+                    className="text-sm text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
                   >
                     Clear all filters
                   </button>
                 </div>
               )}
-            </motion.div>
+            </framerMotion.div>
           )}
         </AnimatePresence>
       </div>
@@ -2005,8 +2005,8 @@ const MotionLibrary = () => {
           onClick={() => setSelectedCategory('all')}
           className={`flex-shrink-0 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
             selectedCategory === 'all'
-              ? 'bg-[var(--input-bg)] text-[var(--text-primary)]'
-              : 'bg-[var(--card-bg)]/50 text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+              ? 'bg-[var(--input-bg)] text-[var(--text-accent-crimson)]'
+              : 'bg-[var(--card-bg)]/50 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)]'
           }`}
         >
           All
@@ -2021,7 +2021,7 @@ const MotionLibrary = () => {
               className={`flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 selectedCategory === key
                   ? `${cat.bgColor} ${cat.textColor} border ${cat.borderColor}`
-                  : 'bg-[var(--card-bg)]/50 text-[var(--text-muted)] hover:text-[var(--text-primary)] border border-transparent'
+                  : 'bg-[var(--card-bg)]/50 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] border border-transparent'
               }`}
             >
               <Icon className="w-4 h-4" />
@@ -2035,7 +2035,7 @@ const MotionLibrary = () => {
       {/* Motions Grid/List */}
       {filteredMotions.length === 0 ? (
         <div className="text-center py-16">
-          <BookOpen className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+          <BookOpen className="w-16 h-16 text-ink-muted mx-auto mb-4" />
           <h3 className="text-lg font-medium text-[var(--text-muted)]">No motions found</h3>
           <p className="text-[var(--text-muted)] mt-1">
             {searchQuery || activeFiltersCount > 0
@@ -2045,7 +2045,7 @@ const MotionLibrary = () => {
           {(searchQuery || activeFiltersCount > 0) && (
             <button
               onClick={resetFilters}
-              className="mt-4 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-primary)] rounded-lg transition-colors"
+              className="mt-4 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
             >
               Clear Filters
             </button>
@@ -2072,15 +2072,15 @@ const MotionLibrary = () => {
       {/* Copy Toast */}
       <AnimatePresence>
         {copiedId && (
-          <motion.div
+          <framerMotion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-6 right-6 bg-emerald-600 text-[var(--text-primary)] px-4 py-3 rounded-lg shadow-lg flex items-center gap-2"
+            className="fixed bottom-6 right-6 bg-emerald-600 text-[var(--text-accent-crimson)] px-4 py-3 rounded-lg shadow-lg flex items-center gap-2"
           >
             <Check className="w-5 h-5" />
             Motion copied to clipboard!
-          </motion.div>
+          </framerMotion.div>
         )}
       </AnimatePresence>
 

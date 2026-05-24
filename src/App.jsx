@@ -99,7 +99,24 @@ const SettingsModal = ({ isOpen, onClose, apiKey, setApiKey, openaiKey, setOpena
 };
 
 function AppContent() {
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const [activeTab, setActiveTab] = useState(() => {
+    const hash = window.location.hash.replace('#', '');
+    return hash || 'dashboard';
+  });
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) setActiveTab(hash);
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const handleTabChange = (tab) => {
+    window.location.hash = tab;
+    setActiveTab(tab);
+  };
   const [showSettings, setShowSettings] = useState(false);
   const [showLanding, setShowLanding] = useState(true);
   const [apiKey, setApiKey] = useState(localStorage.getItem('gemini_key') || '');
@@ -155,10 +172,10 @@ function AppContent() {
       
       <EnterpriseLayout
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={handleTabChange}
         onSettingsClick={() => setShowSettings(true)}
       >
-        {activeTab === 'dashboard' && <Dashboard setActiveTab={setActiveTab} />}
+        {activeTab === 'dashboard' && <Dashboard setActiveTab={handleTabChange} />}
         {activeTab === 'analytics' && <AnalyticsDashboard />}
         {activeTab === 'judge' && <JudgeSpeech apiKey={apiKey} />}
         {activeTab === 'board' && <EvaluateBoard apiKey={apiKey} />}
@@ -189,7 +206,7 @@ function AppContent() {
         {activeTab === 'validator' && <ArgumentValidator />}
         {activeTab === 'judgenotes' && <JudgeNotes />}
         {activeTab === 'roster' && <TeamRoster />}
-        {activeTab === 'teams' && <TeamBrowser setActiveTab={setActiveTab} />}
+        {activeTab === 'teams' && <TeamBrowser setActiveTab={handleTabChange} />}
 
         <SettingsModal
           isOpen={showSettings}

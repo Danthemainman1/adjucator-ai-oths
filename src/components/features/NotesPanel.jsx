@@ -96,17 +96,17 @@ const NotesPanel = () => {
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 rounded-lg">
+            <div className="p-2 /20 to-teal-500/20 rounded-lg">
               <FileText className="w-6 h-6 text-emerald-400" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-[var(--text-primary)]">Notes Panel</h1>
+              <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)]">Notes Panel</h1>
               <p className="text-[var(--text-muted)] text-sm">Save debate notes and key points</p>
             </div>
           </div>
           <button
             onClick={createNote}
-            className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-[var(--text-primary)] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
           >
             <Plus className="w-4 h-4" />
             New Note
@@ -124,7 +124,7 @@ const NotesPanel = () => {
                 placeholder="Search notes..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-[var(--bg-primary)]/50 border border-[var(--border)] rounded-lg text-[var(--text-primary)] placeholder-slate-500 focus:outline-none focus:border-emerald-500/50"
+                className="w-full pl-10 pr-4 py-2 bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)] rounded-lg text-[var(--text-accent-crimson)] placeholder-slate-500 focus:outline-none focus:border-emerald-500/50"
               />
             </div>
 
@@ -151,12 +151,12 @@ const NotesPanel = () => {
                     className={`p-3 rounded-lg cursor-pointer transition-all ${
                       activeNoteId === note.id
                         ? 'bg-emerald-500/20 border border-emerald-500/50'
-                        : 'bg-[var(--bg-primary)]/50 border border-transparent hover:border-[var(--border)]'
+                        : 'bg-[var(--bg-accent-crimson)]/50 border border-transparent hover:border-[var(--border)]'
                     }`}
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-[var(--text-primary)] font-medium truncate">
+                        <h3 className="text-[var(--text-accent-crimson)] font-medium truncate">
                           {note.title || 'Untitled'}
                         </h3>
                         <p className="text-[var(--text-muted)] text-sm truncate">
@@ -198,7 +198,7 @@ const NotesPanel = () => {
                     value={activeNote.title}
                     onChange={(e) => updateNote('title', e.target.value)}
                     placeholder="Note title..."
-                    className="flex-1 text-xl font-semibold bg-transparent text-[var(--text-primary)] placeholder-slate-500 focus:outline-none"
+                    className="flex-1 text-xl font-semibold bg-transparent text-[var(--text-accent-crimson)] placeholder-slate-500 focus:outline-none"
                   />
                   {saveStatus && (
                     <motion.div
@@ -229,7 +229,7 @@ const NotesPanel = () => {
 • Rebuttals
 • Cross-examination questions
 • Strategy notes"
-                  className="flex-1 min-h-[500px] w-full bg-[var(--bg-primary)]/50 border border-[var(--border)] rounded-lg p-4 text-[var(--text-primary)] placeholder-slate-600 focus:outline-none focus:border-emerald-500/50 resize-none font-mono text-sm leading-relaxed"
+                  className="flex-1 min-h-[500px] w-full bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)] rounded-lg p-4 text-[var(--text-accent-crimson)] placeholder-slate-600 focus:outline-none focus:border-emerald-500/50 resize-none font-mono text-sm leading-relaxed"
                 />
 
                 {/* Footer */}
@@ -245,7 +245,7 @@ const NotesPanel = () => {
                   <p className="text-lg">Select a note or create a new one</p>
                   <button
                     onClick={createNote}
-                    className="mt-4 flex items-center gap-2 mx-auto px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-primary)] rounded-lg transition-colors"
+                    className="mt-4 flex items-center gap-2 mx-auto px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                     Create Note

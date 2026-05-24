@@ -24,9 +24,9 @@ const getColorClasses = (color) => {
   const colors = {
     emerald: { bg: 'bg-emerald-500/20', border: 'border-emerald-500/50', text: 'text-emerald-400', badge: 'bg-emerald-500' },
     red: { bg: 'bg-red-500/20', border: 'border-red-500/50', text: 'text-red-400', badge: 'bg-red-500' },
-    blue: { bg: 'bg-blue-500/20', border: 'border-blue-500/50', text: 'text-blue-400', badge: 'bg-blue-500' },
+    blue: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-blue-400', badge: 'bg-accent-crimson' },
     purple: { bg: 'bg-purple-500/20', border: 'border-purple-500/50', text: 'text-purple-400', badge: 'bg-purple-500' },
-    slate: { bg: 'bg-slate-500/20', border: 'border-slate-500/50', text: 'text-[var(--text-muted)]', badge: 'bg-slate-500' }
+    slate: { bg: 'bg-surface-offset0/20', border: 'border-slate-500/50', text: 'text-[var(--text-muted)]', badge: 'bg-surface-offset0' }
   };
   return colors[color] || colors.slate;
 };
@@ -95,11 +95,11 @@ const CardOrganizer = () => {
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-br from-violet-500/20 to-purple-500/20 rounded-lg">
+            <div className="p-2 /20 to-purple-500/20 rounded-lg">
               <Layers className="w-6 h-6 text-violet-400" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-[var(--text-primary)]">Card Organizer</h1>
+              <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)]">Card Organizer</h1>
               <p className="text-[var(--text-muted)] text-sm">Organize debate arguments by category</p>
             </div>
           </div>
@@ -120,13 +120,13 @@ const CardOrganizer = () => {
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
                   activeCategory === category.id
                     ? `${catColors.bg} ${catColors.border} border ${catColors.text}`
-                    : 'bg-[var(--card-bg)]/50 border border-[var(--border)]/50 text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:border-[var(--border)]'
+                    : 'bg-[var(--card-bg)]/50 border border-[var(--border)]/50 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:border-[var(--border)]'
                 }`}
               >
                 <span className={`w-2 h-2 rounded-full ${catColors.badge}`} />
                 {category.name}
                 {count > 0 && (
-                  <span className="px-1.5 py-0.5 bg-[var(--bg-primary)]/50 rounded text-xs">
+                  <span className="px-1.5 py-0.5 bg-[var(--bg-accent-crimson)]/50 rounded text-xs">
                     {count}
                   </span>
                 )}
@@ -152,21 +152,21 @@ const CardOrganizer = () => {
                 value={newCardText}
                 onChange={(e) => setNewCardText(e.target.value)}
                 placeholder="Enter argument, evidence, or note..."
-                className="w-full bg-[var(--bg-primary)]/50 border border-[var(--border)] rounded-lg p-3 text-[var(--text-primary)] placeholder-slate-500 focus:outline-none focus:border-[var(--border)] resize-none"
+                className="w-full bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)] rounded-lg p-3 text-[var(--text-accent-crimson)] placeholder-slate-500 focus:outline-none focus:border-[var(--border)] resize-none"
                 rows={3}
                 autoFocus
               />
               <div className="flex justify-end gap-2 mt-3">
                 <button
                   onClick={() => { setShowAddForm(false); setNewCardText(''); }}
-                  className="px-3 py-1.5 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+                  className="px-3 py-1.5 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={addCard}
                   disabled={!newCardText.trim()}
-                  className={`px-4 py-1.5 ${colors.badge} text-[var(--text-primary)] rounded-lg disabled:opacity-50 disabled:cursor-not-allowed`}
+                  className={`px-4 py-1.5 ${colors.badge} text-[var(--text-accent-crimson)] rounded-lg disabled:opacity-50 disabled:cursor-not-allowed`}
                 >
                   Add Card
                 </button>
@@ -226,21 +226,21 @@ const CardItem = ({ card, colors, isEditing, onEdit, onSave, onCancel, onDelete,
   return (
     <motion.div
       layout
-      className={`group p-4 bg-[var(--bg-primary)]/50 border border-[var(--border)]/50 rounded-lg hover:border-[var(--border)] transition-colors`}
+      className={`group p-4 bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)]/50 rounded-lg hover:border-[var(--border)] transition-colors`}
     >
       {isEditing ? (
         <div>
           <textarea
             value={editText}
             onChange={(e) => setEditText(e.target.value)}
-            className="w-full bg-[var(--card-bg)] border border-[var(--border)] rounded-lg p-3 text-[var(--text-primary)] focus:outline-none resize-none"
+            className="w-full bg-[var(--card-bg)] border border-[var(--border)] rounded-lg p-3 text-[var(--text-accent-crimson)] focus:outline-none resize-none"
             rows={3}
             autoFocus
           />
           <div className="flex justify-end gap-2 mt-2">
             <button
               onClick={onCancel}
-              className="p-1.5 text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+              className="p-1.5 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)]"
             >
               <X className="w-4 h-4" />
             </button>
@@ -254,16 +254,16 @@ const CardItem = ({ card, colors, isEditing, onEdit, onSave, onCancel, onDelete,
         </div>
       ) : (
         <div className="flex items-start gap-3">
-          <div className="text-slate-600 mt-1">
+          <div className="text-ink-muted mt-1">
             <GripVertical className="w-4 h-4" />
           </div>
-          <p className="flex-1 text-[var(--text-primary)] whitespace-pre-wrap">{card.text}</p>
+          <p className="flex-1 text-[var(--text-accent-crimson)] whitespace-pre-wrap">{card.text}</p>
           <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
             {/* Move to category */}
             <div className="relative">
               <button
                 onClick={() => setShowMoveMenu(!showMoveMenu)}
-                className="p-1.5 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+                className="p-1.5 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
                 title="Move to category"
               >
                 <Tag className="w-4 h-4" />
@@ -293,7 +293,7 @@ const CardItem = ({ card, colors, isEditing, onEdit, onSave, onCancel, onDelete,
             </div>
             <button
               onClick={onEdit}
-              className="p-1.5 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+              className="p-1.5 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
               title="Edit"
             >
               <Edit3 className="w-4 h-4" />

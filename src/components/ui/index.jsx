@@ -13,16 +13,16 @@ export const Button = React.forwardRef(({
 }, ref) => {
   const variants = {
     // Teal-Gold (Primary)
-    primary: 'bg-teal text-[var(--text-primary)] border border-teal-dark hover:bg-teal-dark shadow-sm hover:shadow-gold/20',
+    primary: 'bg-teal text-[var(--text-accent-crimson)] border border-teal-dark hover:bg-teal-dark shadow-sm hover:shadow-gold/20',
     
     // Emerald-Gold (Success/Alternative)
-    success: 'bg-emerald text-[var(--text-primary)] border border-emerald-dark hover:bg-emerald-dark shadow-sm',
+    success: 'bg-emerald text-[var(--text-accent-crimson)] border border-emerald-dark hover:bg-emerald-dark shadow-sm',
     
     // Red-Gold (Danger/Action)
-    danger: 'bg-red text-[var(--text-primary)] border border-red-dark hover:bg-red-dark shadow-sm',
+    danger: 'bg-red text-[var(--text-accent-crimson)] border border-red-dark hover:bg-red-dark shadow-sm',
     
     // Gold (Accent)
-    gold: 'bg-base-white text-gold-dim border border-gold hover:bg-gold hover:text-[var(--text-primary)]',
+    gold: 'bg-base-white text-gold-dim border border-gold hover:bg-gold hover:text-[var(--text-accent-crimson)]',
     
     // Ghost
     ghost: 'bg-transparent text-teal-dark hover:bg-gold-light/20 hover:text-gold-dim',
@@ -80,7 +80,7 @@ export const Card = React.forwardRef(({
       {...props}
     >
       {/* Optional Gold Top Line for Sophistication */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent opacity-50" />
+      <div className="absolute top-0 left-0 right-0 h-[2px]  from-transparent via-gold to-transparent opacity-50" />
       {children}
     </div>
   )
@@ -169,7 +169,7 @@ export const Textarea = React.forwardRef(({
       <textarea
         ref={ref}
         className={cn(
-          'w-full bg-white border border-greige text-anthracite px-4 py-3 rounded-[2px]',
+          'w-full bg-surface-parchment border border-greige text-anthracite px-4 py-3 rounded-[2px]',
           'outline-none transition-all duration-300 resize-y min-h-[100px]',
           'placeholder:text-stone-300',
           'focus:border-slate-blue focus:ring-0 focus:bg-bone',
@@ -210,7 +210,7 @@ export const Select = React.forwardRef(({
         <select
           ref={ref}
           className={cn(
-            'w-full bg-white border border-greige text-anthracite px-4 py-3 rounded-[2px]',
+            'w-full bg-surface-parchment border border-greige text-anthracite px-4 py-3 rounded-[2px]',
             'outline-none appearance-none cursor-pointer',
             'transition-all duration-300',
             'focus:border-slate-blue focus:ring-0 focus:bg-bone',
@@ -270,18 +270,18 @@ export const Progress = ({ value = 0, max = 100, className, showLabel = false, c
   const percentage = Math.min(100, Math.max(0, (value / max) * 100))
   
   const colors = {
-    primary: 'bg-primary',
+    primary: 'bg-accent-crimson',
     cyan: 'bg-cyan-600', // Keeping for legacy support if needed
     purple: 'bg-purple-600',
     emerald: 'bg-emerald-600',
     amber: 'bg-amber-600',
     red: 'bg-red-600',
-    gradient: 'bg-primary'
+    gradient: 'bg-accent-crimson'
   }
 
   return (
     <div className={cn('w-full', className)}>
-      <div className="h-1.5 bg-gray-100 rounded-sm overflow-hidden border border-gray-200">
+      <div className="h-1.5 bg-surface-offset rounded-sm overflow-hidden border border-hairline">
         <div
           className={cn(
             'h-full transition-all duration-500 ease-out',
@@ -304,7 +304,7 @@ export const Skeleton = ({ className, ...props }) => {
   return (
     <div
       className={cn(
-        'bg-gray-100 rounded-sm animate-pulse',
+        'bg-surface-offset rounded-sm animate-pulse',
         className
       )}
       {...props}
@@ -327,7 +327,7 @@ export const Tooltip = ({ children, content, side = 'top' }) => {
       <div
         className={cn(
           'absolute z-50 px-3 py-1.5 text-xs font-medium whitespace-nowrap',
-          'bg-[var(--bg-primary)] text-[var(--text-primary)] rounded-sm shadow-md',
+          'bg-[var(--bg-accent-crimson)] text-[var(--text-accent-crimson)] rounded-sm shadow-md',
           'invisible opacity-0 group-hover:visible group-hover:opacity-100',
           'transition-all duration-200',
           positions[side]
@@ -356,26 +356,26 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'md' }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/40 "
         onClick={onClose}
       />
       
       {/* Modal content */}
       <div 
         className={cn(
-          'relative w-full bg-white',
-          'border border-gray-200 rounded-sm shadow-2xl',
+          'relative w-full bg-surface-parchment',
+          'border border-hairline rounded-sm shadow-2xl',
           'animate-slide-up',
           sizes[size]
         )}
       >
         {/* Header */}
         {title && (
-          <div className="flex items-center justify-between p-6 border-b border-gray-100">
+          <div className="flex items-center justify-between p-6 border-b border-hairline">
             <h2 className="text-2xl font-serif font-bold text-ink-black">{title}</h2>
             <button
               onClick={onClose}
-              className="p-2 text-[var(--text-muted)] hover:text-ink-black hover:bg-gray-100 rounded-sm transition-colors"
+              className="p-2 text-[var(--text-muted)] hover:text-ink-black hover:bg-surface-offset rounded-sm transition-colors"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -396,7 +396,7 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'md' }) => {
 // Tabs Component - Minimalist text tabs
 export const Tabs = ({ tabs, activeTab, onChange, className }) => {
   return (
-    <div className={cn('flex gap-6 border-b border-gray-200 mb-6', className)}>
+    <div className={cn('flex gap-6 border-b border-hairline mb-6', className)}>
       {tabs.map((tab) => (
         <button
           key={tab.id}
@@ -404,8 +404,8 @@ export const Tabs = ({ tabs, activeTab, onChange, className }) => {
           className={cn(
             'px-1 py-3 text-sm font-semibold tracking-wide uppercase transition-all duration-200 border-b-2',
             activeTab === tab.id
-              ? 'border-primary text-primary'
-              : 'border-transparent text-[var(--text-muted)] hover:text-ink-black hover:border-gray-300'
+              ? 'border-primary text-accent-crimson'
+              : 'border-transparent text-[var(--text-muted)] hover:text-ink-black hover:border-hairline'
           )}
         >
           {tab.label}
@@ -418,9 +418,9 @@ export const Tabs = ({ tabs, activeTab, onChange, className }) => {
 // Empty State Component
 export const EmptyState = ({ icon: Icon, title, description, action }) => {
   return (
-    <div className="flex flex-col items-center justify-center py-16 text-center border-2 border-dashed border-gray-200 rounded-sm bg-gray-50/50">
+    <div className="flex flex-col items-center justify-center py-16 text-center border-2 border-dashed border-hairline rounded-sm bg-surface-offset/50">
       {Icon && (
-        <div className="w-16 h-16 bg-white border border-gray-200 rounded-full flex items-center justify-center mb-4 shadow-sm">
+        <div className="w-16 h-16 bg-surface-parchment border border-hairline rounded-full flex items-center justify-center mb-4 shadow-sm">
           <Icon className="w-6 h-6 text-[var(--text-muted)]" />
         </div>
       )}

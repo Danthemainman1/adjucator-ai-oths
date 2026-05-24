@@ -213,7 +213,7 @@ const JudgeSpeech = ({ apiKey }) => {
                                 {eventConfig.focusAreas.slice(0, 4).map((area, idx) => (
                                     <span 
                                         key={idx}
-                                        className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-white text-teal-dark rounded-full border border-teal/10 shadow-sm"
+                                        className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-surface-parchment text-teal-dark rounded-full border border-teal/10 shadow-sm"
                                     >
                                         {area}
                                     </span>
@@ -242,7 +242,7 @@ const JudgeSpeech = ({ apiKey }) => {
                             <button
                                 onClick={handleAnalyze}
                                 disabled={loading}
-                                className="px-8 py-3 rounded-sm bg-teal text-[var(--text-primary)] font-bold uppercase tracking-widest text-xs shadow-md shadow-teal/20 hover:bg-teal-dark hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                                className="px-8 py-3 rounded-sm bg-teal text-[var(--text-accent-crimson)] font-bold uppercase tracking-widest text-xs shadow-md shadow-teal/20 hover:bg-teal-dark hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                             >
                                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                                 {loading ? 'Analyzing...' : 'Analyze Speech'}

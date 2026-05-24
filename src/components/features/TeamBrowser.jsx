@@ -420,13 +420,13 @@ const TeamBrowser = ({ setActiveTab }) => {
     return (
       <div className="min-h-[80vh] flex flex-col items-center justify-center text-center space-y-6 px-4">
         <div className="relative">
-          <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full blur opacity-30" />
-          <div className="relative w-24 h-24 bg-[var(--bg-primary)] rounded-full flex items-center justify-center border-2 border-[var(--border)]">
+          <div className="absolute -inset-1  rounded-full blur opacity-30" />
+          <div className="relative w-24 h-24 bg-[var(--bg-accent-crimson)] rounded-full flex items-center justify-center border-2 border-[var(--border)]">
             <Lock className="w-12 h-12 text-cyan-400" />
           </div>
         </div>
         <div className="space-y-2">
-          <h2 className="text-3xl font-bold text-[var(--text-primary)]">Authentication Required</h2>
+          <h2 className="text-3xl font-bold text-[var(--text-accent-crimson)]">Authentication Required</h2>
           <p className="text-[var(--text-muted)] max-w-md">
             Please sign in to browse teams, create your own team, and collaborate with other debaters.
           </p>
@@ -458,12 +458,12 @@ const TeamBrowser = ({ setActiveTab }) => {
       {notification && (
         <div className={`fixed top-20 right-6 z-50 glass-card px-6 py-4 flex items-center gap-3 animate-in slide-in-from-top ${
           notification.type === 'error' ? 'border-red-500/50' : 
-          notification.type === 'info' ? 'border-blue-500/50' : 'border-green-500/50'
+          notification.type === 'info' ? 'border-accent-crimson/50' : 'border-green-500/50'
         }`}>
           {notification.type === 'success' && <Check className="w-5 h-5 text-green-400" />}
           {notification.type === 'error' && <AlertCircle className="w-5 h-5 text-red-400" />}
           {notification.type === 'info' && <AlertCircle className="w-5 h-5 text-blue-400" />}
-          <span className="text-[var(--text-primary)]">{notification.message}</span>
+          <span className="text-[var(--text-accent-crimson)]">{notification.message}</span>
         </div>
       )}
 
@@ -471,7 +471,7 @@ const TeamBrowser = ({ setActiveTab }) => {
       <div className="glass-card space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-[var(--text-primary)] flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
               <Users className="w-8 h-8 text-cyan-400" />
               Team Browser
             </h1>
@@ -534,7 +534,7 @@ const TeamBrowser = ({ setActiveTab }) => {
       {/* My Teams */}
       {myTeams.length > 0 && (
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
+          <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-2">
             <Crown className="w-5 h-5 text-yellow-400" />
             My Teams ({myTeams.length})
           </h2>
@@ -561,15 +561,15 @@ const TeamBrowser = ({ setActiveTab }) => {
 
       {/* All Teams */}
       <div className="space-y-4">
-        <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
+        <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-2">
           <Users className="w-5 h-5 text-cyan-400" />
           Browse Teams ({filteredTeams.length})
         </h2>
         
         {filteredTeams.length === 0 ? (
           <div className="glass-card text-center py-12">
-            <Users className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-[var(--text-primary)] mb-2">No teams found</h3>
+            <Users className="w-16 h-16 text-ink-muted mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-[var(--text-accent-crimson)] mb-2">No teams found</h3>
             <p className="text-[var(--text-muted)] mb-6">
               {searchQuery || filterCategory !== 'all' 
                 ? 'Try adjusting your search or filters'
@@ -607,10 +607,10 @@ const TeamBrowser = ({ setActiveTab }) => {
 
       {/* Create Team Modal */}
       {showCreateModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60  p-4 animate-in fade-in">
           <div className="glass-card w-full max-w-2xl max-h-[90vh] overflow-y-auto animate-in zoom-in-95">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-[var(--text-primary)] flex items-center gap-3">
+              <h2 className="text-2xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
                 <Plus className="w-6 h-6 text-cyan-400" />
                 Create New Team
               </h2>
@@ -739,7 +739,7 @@ const TeamBrowser = ({ setActiveTab }) => {
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="px-6 py-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+                  className="px-6 py-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
                 >
                   Cancel
                 </button>
@@ -754,11 +754,11 @@ const TeamBrowser = ({ setActiveTab }) => {
 
       {/* Team Chat Modal */}
       {showChatModal && selectedTeam && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60  p-4 animate-in fade-in">
           <div className="glass-card w-full max-w-2xl h-[600px] flex flex-col animate-in zoom-in-95">
             <div className="flex items-center justify-between mb-4 pb-4 border-b border-[var(--border)]">
               <div>
-                <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
+                <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-2">
                   <MessageSquare className="w-5 h-5 text-cyan-400" />
                   {selectedTeam.name} Chat
                 </h2>
@@ -780,7 +780,7 @@ const TeamBrowser = ({ setActiveTab }) => {
             <div className="chat-messages-container flex-1 overflow-y-auto space-y-3 mb-4 scroll-smooth">
               {chatMessages.length === 0 ? (
                 <div className="text-center py-12">
-                  <MessageSquare className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+                  <MessageSquare className="w-12 h-12 text-ink-muted mx-auto mb-3" />
                   <p className="text-[var(--text-muted)]">No messages yet. Start the conversation!</p>
                 </div>
               ) : (
@@ -792,7 +792,7 @@ const TeamBrowser = ({ setActiveTab }) => {
                     <div
                       className={`max-w-[70%] rounded-lg p-3 ${
                         message.userId === user.uid
-                          ? 'bg-cyan-500 text-[var(--text-primary)]'
+                          ? 'bg-cyan-500 text-[var(--text-accent-crimson)]'
                           : 'bg-[var(--card-bg)] text-[var(--text-secondary)]'
                       }`}
                     >
@@ -834,10 +834,10 @@ const TeamBrowser = ({ setActiveTab }) => {
 
       {/* Team Settings Modal */}
       {showTeamSettings && selectedTeam && selectedTeam.owner === user.uid && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60  p-4 animate-in fade-in">
           <div className="glass-card w-full max-w-lg animate-in zoom-in-95">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
+              <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-2">
                 <Settings className="w-5 h-5 text-cyan-400" />
                 Team Settings
               </h2>
@@ -911,7 +911,7 @@ const TeamBrowser = ({ setActiveTab }) => {
                     setShowTeamSettings(false);
                     setSelectedTeam(null);
                   }}
-                  className="px-4 py-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+                  className="px-4 py-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
                 >
                   Cancel
                 </button>
@@ -934,10 +934,10 @@ const TeamBrowser = ({ setActiveTab }) => {
 
       {/* Join Requests Modal */}
       {showJoinRequests && selectedTeam && selectedTeam.owner === user.uid && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60  p-4 animate-in fade-in">
           <div className="glass-card w-full max-w-lg max-h-[600px] flex flex-col animate-in zoom-in-95">
             <div className="flex items-center justify-between mb-4 pb-4 border-b border-[var(--border)]">
-              <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
+              <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-2">
                 <Bell className="w-5 h-5 text-cyan-400" />
                 Join Requests
               </h2>
@@ -956,7 +956,7 @@ const TeamBrowser = ({ setActiveTab }) => {
             <div className="flex-1 overflow-y-auto space-y-3">
               {joinRequests.length === 0 ? (
                 <div className="text-center py-12">
-                  <UserPlus className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+                  <UserPlus className="w-12 h-12 text-ink-muted mx-auto mb-3" />
                   <p className="text-[var(--text-muted)]">No pending join requests</p>
                 </div>
               ) : (
@@ -966,7 +966,7 @@ const TeamBrowser = ({ setActiveTab }) => {
                     className="glass-card p-4 flex items-center justify-between"
                   >
                     <div className="flex-1">
-                      <p className="font-semibold text-[var(--text-primary)]">
+                      <p className="font-semibold text-[var(--text-accent-crimson)]">
                         @{request.username || request.displayName}
                       </p>
                       <p className="text-sm text-[var(--text-muted)]">{request.email}</p>
@@ -1012,7 +1012,7 @@ const TeamCard = ({ team, user, onJoin, onLeave, onOpenChat, onOpenSettings, onO
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="text-lg font-bold text-[var(--text-primary)]">{team.name}</h3>
+            <h3 className="text-lg font-bold text-[var(--text-accent-crimson)]">{team.name}</h3>
             {team.isPrivate && <Lock className="w-4 h-4 text-[var(--text-muted)]" />}
             {isOwner && <Crown className="w-4 h-4 text-yellow-400" />}
           </div>
@@ -1098,7 +1098,7 @@ const TeamCard = ({ team, user, onJoin, onLeave, onOpenChat, onOpenSettings, onO
             className={`w-full py-2 rounded-lg font-medium transition-all flex items-center justify-center gap-2 ${
               isFull
                 ? 'bg-[var(--card-bg)] text-[var(--text-muted)] cursor-not-allowed'
-                : 'bg-cyan-500 hover:bg-cyan-600 text-[var(--text-primary)]'
+                : 'bg-cyan-500 hover:bg-cyan-600 text-[var(--text-accent-crimson)]'
             }`}
           >
             <UserPlus className="w-4 h-4" />

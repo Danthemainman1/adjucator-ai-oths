@@ -32,10 +32,10 @@ const Layout = ({ children, activeTab, setActiveTab, showSettings, setShowSettin
     ];
 
     return (
-        <div className="min-h-screen flex" style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
+        <div className="min-h-screen flex" style={{ backgroundColor: 'var(--bg-accent-crimson)', color: 'var(--text-accent-crimson)' }}>
             {/* Sidebar - Desktop */}
             <aside 
-                className="hidden md:flex flex-col w-64 border-r backdrop-blur-xl fixed h-full z-20"
+                className="hidden md:flex flex-col w-64 border-r  fixed h-full z-20"
                 style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border)' }}
             >
                 <div className="p-6 flex items-center space-x-3 border-b" style={{ borderColor: 'var(--border)' }}>
@@ -43,9 +43,9 @@ const Layout = ({ children, activeTab, setActiveTab, showSettings, setShowSettin
                         className="w-8 h-8 rounded-lg flex items-center justify-center shadow-lg"
                         style={{ background: `linear-gradient(135deg, var(--primary), var(--accent))` }}
                     >
-                        <Gavel className="w-5 h-5 text-[var(--text-primary)]" />
+                        <Gavel className="w-5 h-5 text-[var(--text-accent-crimson)]" />
                     </div>
-                    <span className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                    <span className="text-xl font-bold" style={{ color: 'var(--text-accent-crimson)' }}>
                         Adjudicator
                     </span>
                 </div>
@@ -94,7 +94,7 @@ const Layout = ({ children, activeTab, setActiveTab, showSettings, setShowSettin
 
             {/* Mobile Header */}
             <div 
-                className="md:hidden fixed top-0 left-0 right-0 z-30 backdrop-blur-lg border-b px-4 py-3 flex items-center justify-between"
+                className="md:hidden fixed top-0 left-0 right-0 z-30  border-b px-4 py-3 flex items-center justify-between"
                 style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border)' }}
             >
                 <div className="flex items-center space-x-2">
@@ -102,9 +102,9 @@ const Layout = ({ children, activeTab, setActiveTab, showSettings, setShowSettin
                         className="w-8 h-8 rounded-lg flex items-center justify-center"
                         style={{ background: `linear-gradient(135deg, var(--primary), var(--accent))` }}
                     >
-                        <Gavel className="w-5 h-5 text-[var(--text-primary)]" />
+                        <Gavel className="w-5 h-5 text-[var(--text-accent-crimson)]" />
                     </div>
-                    <span className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>Adjudicator</span>
+                    <span className="font-bold text-lg" style={{ color: 'var(--text-accent-crimson)' }}>Adjudicator</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <ThemeSelector compact />
@@ -121,8 +121,8 @@ const Layout = ({ children, activeTab, setActiveTab, showSettings, setShowSettin
             {/* Mobile Menu Overlay */}
             {isMobileMenuOpen && (
                 <div 
-                    className="fixed inset-0 z-20 backdrop-blur-xl pt-20 px-6 space-y-4 md:hidden animate-in slide-in-from-top-10"
-                    style={{ backgroundColor: 'var(--bg-primary)', opacity: 0.98 }}
+                    className="fixed inset-0 z-20  pt-20 px-6 space-y-4 md:hidden animate-in slide-in-from-top-10"
+                    style={{ backgroundColor: 'var(--bg-accent-crimson)', opacity: 0.98 }}
                 >
                     {navItems.map((item) => (
                         <button

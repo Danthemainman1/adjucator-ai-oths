@@ -36,18 +36,18 @@ const AvatarSelectionPrompt = () => {
   return (
     <>
       {/* Full screen overlay */}
-      <div className="fixed inset-0 z-50 bg-bg-primary/95 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="fixed inset-0 z-50 bg-bg-accent-crimson/95  flex items-center justify-center p-4">
         <div className="w-full max-w-md">
           {/* Card */}
           <div className="glass-card space-y-6 text-center">
             {/* Header */}
-            <div className="flex items-center justify-center gap-2 text-primary">
+            <div className="flex items-center justify-center gap-2 text-accent-crimson">
               <Sparkles className="w-5 h-5" />
               <span className="text-sm font-medium">Profile Setup</span>
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-2">
+              <h2 className="text-2xl font-bold text-[var(--text-accent-crimson)] mb-2">
                 Welcome, {displayName}!
               </h2>
               <p className="text-text-secondary">
@@ -61,11 +61,11 @@ const AvatarSelectionPrompt = () => {
                 onClick={() => setShowSelector(true)}
                 className="group relative"
               >
-                <div className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${currentAvatar.gradient || currentAvatar.color} flex items-center justify-center text-4xl shadow-lg transition-transform group-hover:scale-105`}>
+                <div className={`w-24 h-24 rounded-2xl  ${currentAvatar.gradient || currentAvatar.color} flex items-center justify-center text-4xl shadow-lg transition-transform group-hover:scale-105`}>
                   {currentAvatar.emoji}
                 </div>
                 <div className="absolute inset-0 rounded-2xl bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span className="text-[var(--text-primary)] text-sm font-medium">Change</span>
+                  <span className="text-[var(--text-accent-crimson)] text-sm font-medium">Change</span>
                 </div>
               </button>
             </div>

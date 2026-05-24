@@ -594,7 +594,7 @@ const EvidenceTag = ({ evidence, onChange, onDelete }) => {
             value={evidence.tag}
             onChange={(e) => onChange({ ...evidence, tag: e.target.value })}
             placeholder="Evidence tag..."
-            className="w-full bg-transparent text-[var(--text-primary)] text-sm font-medium focus:outline-none"
+            className="w-full bg-transparent text-[var(--text-accent-crimson)] text-sm font-medium focus:outline-none"
           />
         </div>
         <button
@@ -674,7 +674,7 @@ const SubPoint = ({ subPoint, onChange, onDelete, index }) => {
           <GripVertical className="w-4 h-4 text-[var(--text-muted)] cursor-grab" />
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="p-1 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+            className="p-1 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
           >
             {isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
           </button>
@@ -686,7 +686,7 @@ const SubPoint = ({ subPoint, onChange, onDelete, index }) => {
             value={subPoint.title}
             onChange={(e) => onChange({ ...subPoint, title: e.target.value })}
             placeholder="Sub-point title..."
-            className="flex-1 bg-transparent text-[var(--text-primary)] font-medium focus:outline-none"
+            className="flex-1 bg-transparent text-[var(--text-accent-crimson)] font-medium focus:outline-none"
           />
           <div className="flex items-center gap-1 text-xs text-[var(--text-muted)]">
             <Clock className="w-3 h-3" />
@@ -804,7 +804,7 @@ const Contention = ({ contention, onChange, onDelete, index }) => {
           <GripVertical className="w-5 h-5 text-[var(--text-muted)] cursor-grab" />
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="p-1 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+            className="p-1 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
           >
             {isCollapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
           </button>
@@ -816,7 +816,7 @@ const Contention = ({ contention, onChange, onDelete, index }) => {
             value={contention.title}
             onChange={(e) => onChange({ ...contention, title: e.target.value })}
             placeholder="Contention title..."
-            className="flex-1 bg-transparent text-[var(--text-primary)] text-lg font-semibold focus:outline-none"
+            className="flex-1 bg-transparent text-[var(--text-accent-crimson)] text-lg font-semibold focus:outline-none"
           />
           
           {/* Time Allocation */}
@@ -1184,9 +1184,9 @@ const SpeechOutlineBuilder = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--text-primary)] flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl">
-              <FileText className="w-6 h-6 text-[var(--text-primary)]" />
+          <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
+            <div className="p-2  rounded-xl">
+              <FileText className="w-6 h-6 text-[var(--text-accent-crimson)]" />
             </div>
             Speech Outline Builder
           </h1>
@@ -1198,14 +1198,14 @@ const SpeechOutlineBuilder = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setShowTemplates(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-primary)] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
           >
             <Layout className="w-4 h-4" />
             Templates
           </button>
           <button
             onClick={() => setShowSavedOutlines(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-primary)] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
           >
             <FolderOpen className="w-4 h-4" />
             Saved
@@ -1217,14 +1217,14 @@ const SpeechOutlineBuilder = () => {
       <AnimatePresence>
         {showTemplates && (
           <div
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/50  z-50 flex items-center justify-center p-4"
             onClick={() => setShowTemplates(false)}
           >
             <div
               onClick={(e) => e.stopPropagation()}
               className="bg-[var(--card-bg)] border border-[var(--border)] rounded-2xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
             >
-              <h2 className="text-xl font-bold text-[var(--text-primary)] mb-4">Choose a Template</h2>
+              <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] mb-4">Choose a Template</h2>
               <div className="grid grid-cols-2 gap-4">
                 {Object.entries(OUTLINE_TEMPLATES).map(([key, template]) => (
                   <button
@@ -1232,7 +1232,7 @@ const SpeechOutlineBuilder = () => {
                     onClick={() => loadTemplate(key)}
                     className="p-4 bg-[var(--input-bg)]/50 hover:bg-[var(--input-bg)] border border-[var(--border)] hover:border-purple-500 rounded-xl text-left transition-all"
                   >
-                    <div className="font-semibold text-[var(--text-primary)]">{template.name}</div>
+                    <div className="font-semibold text-[var(--text-accent-crimson)]">{template.name}</div>
                     <div className="text-sm text-[var(--text-muted)] mt-1">{template.format}</div>
                     <div className="text-xs text-[var(--text-muted)] mt-2">
                       {formatTime(template.totalTime)} • {template.sections.length} sections
@@ -1249,14 +1249,14 @@ const SpeechOutlineBuilder = () => {
       <AnimatePresence>
         {showSavedOutlines && (
           <div
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/50  z-50 flex items-center justify-center p-4"
             onClick={() => setShowSavedOutlines(false)}
           >
             <div
               onClick={(e) => e.stopPropagation()}
               className="bg-[var(--card-bg)] border border-[var(--border)] rounded-2xl p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto"
             >
-              <h2 className="text-xl font-bold text-[var(--text-primary)] mb-4">Saved Outlines</h2>
+              <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] mb-4">Saved Outlines</h2>
               {savedOutlines.length === 0 ? (
                 <p className="text-[var(--text-muted)] text-center py-8">No saved outlines yet</p>
               ) : (
@@ -1267,7 +1267,7 @@ const SpeechOutlineBuilder = () => {
                       onClick={() => loadSavedOutline(saved)}
                       className="w-full p-3 bg-[var(--input-bg)]/50 hover:bg-[var(--input-bg)] border border-[var(--border)] rounded-lg text-left transition-colors"
                     >
-                      <div className="font-medium text-[var(--text-primary)]">{saved.name}</div>
+                      <div className="font-medium text-[var(--text-accent-crimson)]">{saved.name}</div>
                       <div className="text-xs text-[var(--text-muted)] mt-1">
                         {saved.format} • Updated {new Date(saved.updatedAt).toLocaleDateString()}
                       </div>
@@ -1289,7 +1289,7 @@ const SpeechOutlineBuilder = () => {
               type="text"
               value={outline.name}
               onChange={(e) => setOutline(prev => ({ ...prev, name: e.target.value }))}
-              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50"
             />
           </div>
           <div>
@@ -1297,7 +1297,7 @@ const SpeechOutlineBuilder = () => {
             <select
               value={outline.format}
               onChange={(e) => setOutline(prev => ({ ...prev, format: e.target.value }))}
-              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50"
             >
               <option value="Custom">Custom</option>
               <option value="Policy">Policy</option>
@@ -1312,7 +1312,7 @@ const SpeechOutlineBuilder = () => {
               type="number"
               value={outline.totalTime}
               onChange={(e) => setOutline(prev => ({ ...prev, totalTime: parseInt(e.target.value) || 0 }))}
-              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50"
             />
           </div>
         </div>
@@ -1350,14 +1350,14 @@ const SpeechOutlineBuilder = () => {
       <div className="flex items-center gap-2 flex-wrap">
         <button
           onClick={addContention}
-          className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-500 text-[var(--text-primary)] rounded-lg transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-500 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
         >
           <Plus className="w-4 h-4" />
           Add Contention
         </button>
         <button
           onClick={saveOutline}
-          className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-primary)] rounded-lg transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
         >
           <Save className="w-4 h-4" />
           Save
@@ -1407,19 +1407,19 @@ const SpeechOutlineBuilder = () => {
       <div className="space-y-4">
         {outline.sections.length === 0 ? (
           <div className="text-center py-16">
-            <FileText className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+            <FileText className="w-16 h-16 text-ink-muted mx-auto mb-4" />
             <h3 className="text-lg font-medium text-[var(--text-muted)]">No contentions yet</h3>
             <p className="text-[var(--text-muted)] mt-1">Start by choosing a template or adding your first contention</p>
             <div className="flex items-center justify-center gap-3 mt-4">
               <button
                 onClick={() => setShowTemplates(true)}
-                className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-[var(--text-primary)] rounded-lg transition-colors"
+                className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
               >
                 Choose Template
               </button>
               <button
                 onClick={addContention}
-                className="px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-primary)] rounded-lg transition-colors"
+                className="px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
               >
                 Start from Scratch
               </button>

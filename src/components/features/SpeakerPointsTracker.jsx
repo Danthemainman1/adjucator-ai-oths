@@ -86,11 +86,11 @@ const SpeakerPointsTracker = () => {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="flex items-center gap-3 mb-6">
-          <div className="p-2 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-lg">
+          <div className="p-2 /20 to-orange-500/20 rounded-lg">
             <Award className="w-6 h-6 text-yellow-400" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-[var(--text-primary)]">Speaker Points Tracker</h1>
+            <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)]">Speaker Points Tracker</h1>
             <p className="text-[var(--text-muted)] text-sm">Track and analyze your speaker points</p>
           </div>
         </div>
@@ -147,7 +147,7 @@ const SpeakerPointsTracker = () => {
 
         {/* Add Entry Form */}
         <div className="bg-[var(--card-bg)]/50 border border-[var(--border)]/50 rounded-xl p-4 mb-6">
-          <h3 className="text-[var(--text-primary)] font-medium mb-4">Add Speaker Points</h3>
+          <h3 className="text-[var(--text-accent-crimson)] font-medium mb-4">Add Speaker Points</h3>
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
             <input
               type="number"
@@ -157,26 +157,26 @@ const SpeakerPointsTracker = () => {
               placeholder="Points (20-30)"
               value={newPoints}
               onChange={(e) => setNewPoints(e.target.value)}
-              className="px-4 py-2 bg-[var(--bg-primary)]/50 border border-[var(--border)] rounded-lg text-[var(--text-primary)] placeholder-slate-500 focus:outline-none focus:border-yellow-500/50"
+              className="px-4 py-2 bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)] rounded-lg text-[var(--text-accent-crimson)] placeholder-slate-500 focus:outline-none focus:border-yellow-500/50"
             />
             <input
               type="text"
               placeholder="Round (optional)"
               value={newRound}
               onChange={(e) => setNewRound(e.target.value)}
-              className="px-4 py-2 bg-[var(--bg-primary)]/50 border border-[var(--border)] rounded-lg text-[var(--text-primary)] placeholder-slate-500 focus:outline-none focus:border-yellow-500/50"
+              className="px-4 py-2 bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)] rounded-lg text-[var(--text-accent-crimson)] placeholder-slate-500 focus:outline-none focus:border-yellow-500/50"
             />
             <input
               type="text"
               placeholder="Tournament (optional)"
               value={newTournament}
               onChange={(e) => setNewTournament(e.target.value)}
-              className="px-4 py-2 bg-[var(--bg-primary)]/50 border border-[var(--border)] rounded-lg text-[var(--text-primary)] placeholder-slate-500 focus:outline-none focus:border-yellow-500/50"
+              className="px-4 py-2 bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)] rounded-lg text-[var(--text-accent-crimson)] placeholder-slate-500 focus:outline-none focus:border-yellow-500/50"
             />
             <button
               onClick={addEntry}
               disabled={!newPoints || parseFloat(newPoints) < 20 || parseFloat(newPoints) > 30}
-              className="flex items-center justify-center gap-2 px-4 py-2 bg-yellow-600 hover:bg-yellow-500 disabled:bg-[var(--input-bg)] disabled:cursor-not-allowed text-[var(--text-primary)] rounded-lg transition-colors"
+              className="flex items-center justify-center gap-2 px-4 py-2 bg-yellow-600 hover:bg-yellow-500 disabled:bg-[var(--input-bg)] disabled:cursor-not-allowed text-[var(--text-accent-crimson)] rounded-lg transition-colors"
             >
               <Plus className="w-4 h-4" />
               Add
@@ -186,7 +186,7 @@ const SpeakerPointsTracker = () => {
 
         {/* Entries List */}
         <div className="bg-[var(--card-bg)]/50 border border-[var(--border)]/50 rounded-xl p-4">
-          <h3 className="text-[var(--text-primary)] font-medium mb-4">History</h3>
+          <h3 className="text-[var(--text-accent-crimson)] font-medium mb-4">History</h3>
           
           {entries.length === 0 ? (
             <div className="text-center py-12 text-[var(--text-muted)]">
@@ -201,7 +201,7 @@ const SpeakerPointsTracker = () => {
                   key={entry.id}
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center justify-between p-3 bg-[var(--bg-primary)]/50 rounded-lg group"
+                  className="flex items-center justify-between p-3 bg-[var(--bg-accent-crimson)]/50 rounded-lg group"
                 >
                   <div className="flex items-center gap-4">
                     <div className={`text-2xl font-bold ${
@@ -213,7 +213,7 @@ const SpeakerPointsTracker = () => {
                       {entry.points}
                     </div>
                     <div>
-                      <div className="text-[var(--text-primary)]">{entry.round}</div>
+                      <div className="text-[var(--text-accent-crimson)]">{entry.round}</div>
                       <div className="text-[var(--text-muted)] text-sm">{entry.tournament}</div>
                     </div>
                   </div>
@@ -247,12 +247,12 @@ const StatCard = ({ label, value, icon, color }) => {
   };
 
   return (
-    <div className={`bg-gradient-to-br ${colors[color]} p-4 rounded-xl`}>
+    <div className={` ${colors[color]} p-4 rounded-xl`}>
       <div className="flex items-center justify-between mb-2">
         <span className="text-[var(--text-muted)] text-sm">{label}</span>
         {icon}
       </div>
-      <div className="text-2xl font-bold text-[var(--text-primary)]">{value}</div>
+      <div className="text-2xl font-bold text-[var(--text-accent-crimson)]">{value}</div>
     </div>
   );
 };

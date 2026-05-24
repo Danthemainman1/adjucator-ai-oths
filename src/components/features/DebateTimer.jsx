@@ -266,7 +266,7 @@ const CircularProgress = ({ progress, size = 300, strokeWidth = 12, timeRemainin
             isOvertime ? 'text-red-400' : 
             progress <= 10 ? 'text-red-400' : 
             progress <= 25 ? 'text-amber-400' : 
-            'text-[var(--text-primary)]'
+            'text-[var(--text-accent-crimson)]'
           }`}
         >
           {formatTime(timeRemaining)}
@@ -313,7 +313,7 @@ const SegmentCard = ({ segment, index, isActive, isCompleted, onClick }) => {
       case 'both':
         return 'bg-purple-500/10 border-purple-500/30 text-purple-400';
       default:
-        return 'bg-slate-500/10 border-slate-500/30 text-[var(--text-muted)]';
+        return 'bg-surface-offset0/10 border-slate-500/30 text-[var(--text-muted)]';
     }
   };
 
@@ -349,7 +349,7 @@ const SegmentCard = ({ segment, index, isActive, isCompleted, onClick }) => {
         
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <span className={`font-semibold ${isActive ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
+            <span className={`font-semibold ${isActive ? 'text-[var(--text-accent-crimson)]' : 'text-[var(--text-secondary)]'}`}>
               {segment.name}
             </span>
             <span className={`px-2 py-0.5 rounded-full text-xs border ${getSpeakerColor(segment.speaker)}`}>
@@ -376,7 +376,7 @@ const PrepTimePanel = ({ prepTime, usedPrepTime, onUsePrep, onStopPrep, activePr
   
   return (
     <div>
-      <h3 className="text-[var(--text-primary)] font-semibold mb-3 flex items-center gap-2">
+      <h3 className="text-[var(--text-accent-crimson)] font-semibold mb-3 flex items-center gap-2">
         <Clock className="w-4 h-4 text-amber-400" />
         Prep Time
       </h3>
@@ -397,7 +397,7 @@ const PrepTimePanel = ({ prepTime, usedPrepTime, onUsePrep, onStopPrep, activePr
                 }`}>
                   {side}
                 </span>
-                <span className="text-[var(--text-primary)] font-mono text-sm">
+                <span className="text-[var(--text-accent-crimson)] font-mono text-sm">
                   {formatTime(remaining)}
                 </span>
               </div>
@@ -420,10 +420,10 @@ const PrepTimePanel = ({ prepTime, usedPrepTime, onUsePrep, onStopPrep, activePr
                 className={`
                   w-full py-2 rounded-lg text-sm font-medium transition-all
                   ${isActive
-                    ? 'bg-amber-500 text-[var(--text-primary)]'
+                    ? 'bg-amber-500 text-[var(--text-accent-crimson)]'
                     : remaining <= 0
-                    ? 'bg-[var(--card-bg)] text-slate-600 cursor-not-allowed'
-                    : 'bg-[var(--input-bg)] text-[var(--text-primary)] hover:bg-slate-600'
+                    ? 'bg-[var(--card-bg)] text-ink-muted cursor-not-allowed'
+                    : 'bg-[var(--input-bg)] text-[var(--text-accent-crimson)] hover:bg-slate-600'
                   }
                 `}
               >
@@ -461,23 +461,23 @@ const KeyboardShortcutsModal = ({ isOpen, onClose }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70  p-4"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="w-full max-w-md bg-gradient-to-b from-slate-900 to-slate-950 border border-[var(--border)] rounded-3xl shadow-2xl p-6"
+        className="w-full max-w-md  border border-[var(--border)] rounded-3xl shadow-2xl p-6"
       >
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
+          <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-2">
             <Keyboard className="w-5 h-5 text-cyan-400" />
             Keyboard Shortcuts
           </h2>
           <motion.button
             whileHover={{ scale: 1.1, rotate: 90 }}
             onClick={onClose}
-            className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
+            className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
           >
             <X className="w-5 h-5" />
           </motion.button>
@@ -487,7 +487,7 @@ const KeyboardShortcutsModal = ({ isOpen, onClose }) => {
           {shortcuts.map(({ key, action }) => (
             <div key={key} className="flex items-center justify-between p-3 rounded-lg bg-[var(--card-bg)]/30">
               <span className="text-[var(--text-secondary)]">{action}</span>
-              <kbd className="px-3 py-1.5 rounded-lg bg-[var(--input-bg)] text-[var(--text-primary)] text-sm font-mono border border-[var(--border)]">
+              <kbd className="px-3 py-1.5 rounded-lg bg-[var(--input-bg)] text-[var(--text-accent-crimson)] text-sm font-mono border border-[var(--border)]">
                 {key}
               </kbd>
             </div>
@@ -510,23 +510,23 @@ const SettingsModal = ({ isOpen, onClose, settings, onSettingsChange }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70  p-4"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="w-full max-w-md bg-gradient-to-b from-slate-900 to-slate-950 border border-[var(--border)] rounded-3xl shadow-2xl p-6"
+        className="w-full max-w-md  border border-[var(--border)] rounded-3xl shadow-2xl p-6"
       >
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-[var(--text-primary)] flex items-center gap-2">
+          <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-2">
             <Settings className="w-5 h-5 text-cyan-400" />
             Timer Settings
           </h2>
           <motion.button
             whileHover={{ scale: 1.1, rotate: 90 }}
             onClick={onClose}
-            className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all"
+            className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
           >
             <X className="w-5 h-5" />
           </motion.button>
@@ -543,7 +543,7 @@ const SettingsModal = ({ isOpen, onClose, settings, onSettingsChange }) => {
                   settings.soundEnabled ? 'bg-cyan-500' : 'bg-[var(--input-bg)]'
                 }`}
               >
-                <span className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${
+                <span className={`absolute top-1 w-4 h-4 bg-surface-parchment rounded-full shadow transition-transform ${
                   settings.soundEnabled ? 'left-7' : 'left-1'
                 }`} />
               </button>
@@ -566,7 +566,7 @@ const SettingsModal = ({ isOpen, onClose, settings, onSettingsChange }) => {
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
                     settings.alertTimes.includes(time)
                       ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'
-                      : 'bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                      : 'bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)]'
                   }`}
                 >
                   {time === 0 ? 'End' : `${time}s`}
@@ -585,7 +585,7 @@ const SettingsModal = ({ isOpen, onClose, settings, onSettingsChange }) => {
                   settings.allowOvertime ? 'bg-cyan-500' : 'bg-[var(--input-bg)]'
                 }`}
               >
-                <span className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${
+                <span className={`absolute top-1 w-4 h-4 bg-surface-parchment rounded-full shadow transition-transform ${
                   settings.allowOvertime ? 'left-7' : 'left-1'
                 }`} />
               </button>
@@ -602,7 +602,7 @@ const SettingsModal = ({ isOpen, onClose, settings, onSettingsChange }) => {
                   settings.autoAdvance ? 'bg-cyan-500' : 'bg-[var(--input-bg)]'
                 }`}
               >
-                <span className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${
+                <span className={`absolute top-1 w-4 h-4 bg-surface-parchment rounded-full shadow transition-transform ${
                   settings.autoAdvance ? 'left-7' : 'left-1'
                 }`} />
               </button>
@@ -615,7 +615,7 @@ const SettingsModal = ({ isOpen, onClose, settings, onSettingsChange }) => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={onClose}
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-[var(--text-primary)] font-semibold"
+            className="w-full py-3 rounded-xl  text-[var(--text-accent-crimson)] font-semibold"
           >
             Done
           </motion.button>
@@ -956,8 +956,8 @@ const DebateTimer = () => {
         {/* Header */}
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/30">
+            <h1 className="text-3xl font-bold text-[var(--text-accent-crimson)] tracking-tight flex items-center gap-3">
+              <div className="p-2.5 rounded-xl /20 to-blue-600/20 border border-cyan-500/30">
                 <Timer className="w-7 h-7 text-cyan-400" />
               </div>
               Debate Timer
@@ -972,7 +972,7 @@ const DebateTimer = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowShortcuts(true)}
-              className="p-2.5 rounded-xl bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-all"
+              className="p-2.5 rounded-xl bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-all"
               title="Keyboard Shortcuts"
             >
               <Keyboard className="w-5 h-5" />
@@ -981,7 +981,7 @@ const DebateTimer = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setSettings(prev => ({ ...prev, soundEnabled: !prev.soundEnabled }))}
-              className="p-2.5 rounded-xl bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-all"
+              className="p-2.5 rounded-xl bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-all"
               title={settings.soundEnabled ? 'Mute' : 'Unmute'}
             >
               {settings.soundEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
@@ -990,7 +990,7 @@ const DebateTimer = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={toggleFullscreen}
-              className="p-2.5 rounded-xl bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-all"
+              className="p-2.5 rounded-xl bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-all"
               title="Toggle Fullscreen"
             >
               {isFullscreen ? <Minimize2 className="w-5 h-5" /> : <Maximize2 className="w-5 h-5" />}
@@ -999,7 +999,7 @@ const DebateTimer = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowSettings(true)}
-              className="p-2.5 rounded-xl bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-all"
+              className="p-2.5 rounded-xl bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-all"
               title="Settings"
             >
               <Settings className="w-5 h-5" />
@@ -1018,7 +1018,7 @@ const DebateTimer = () => {
               className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                 selectedFormat === key
                   ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'
-                  : 'bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-primary)] border border-[var(--border)]'
+                  : 'bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] border border-[var(--border)]'
               }`}
             >
               {format.shortName}
@@ -1032,7 +1032,7 @@ const DebateTimer = () => {
             <div className="glass-panel p-8">
               {/* Current Segment Info */}
               <div className="text-center mb-6">
-                <h2 className="text-2xl font-bold text-[var(--text-primary)]">
+                <h2 className="text-2xl font-bold text-[var(--text-accent-crimson)]">
                   {currentSegment?.fullName || 'No Segment'}
                 </h2>
                 <p className="text-[var(--text-muted)] mt-1">
@@ -1060,7 +1060,7 @@ const DebateTimer = () => {
                   whileTap={{ scale: 0.9 }}
                   onClick={prevSegment}
                   disabled={currentSegmentIndex === 0}
-                  className="p-3 rounded-xl bg-[var(--input-bg)] text-[var(--text-primary)] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-600 transition-all"
+                  className="p-3 rounded-xl bg-[var(--input-bg)] text-[var(--text-accent-crimson)] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-600 transition-all"
                 >
                   <ChevronLeft className="w-6 h-6" />
                 </motion.button>
@@ -1069,7 +1069,7 @@ const DebateTimer = () => {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={resetSegment}
-                  className="p-3 rounded-xl bg-[var(--input-bg)] text-[var(--text-primary)] hover:bg-slate-600 transition-all"
+                  className="p-3 rounded-xl bg-[var(--input-bg)] text-[var(--text-accent-crimson)] hover:bg-slate-600 transition-all"
                 >
                   <RotateCcw className="w-6 h-6" />
                 </motion.button>
@@ -1081,13 +1081,13 @@ const DebateTimer = () => {
                   className={`p-5 rounded-2xl shadow-lg transition-all ${
                     isRunning
                       ? 'bg-amber-500 hover:bg-amber-600 shadow-amber-500/25'
-                      : 'bg-gradient-to-r from-cyan-500 to-blue-600 shadow-cyan-500/25'
+                      : ' shadow-cyan-500/25'
                   }`}
                 >
                   {isRunning ? (
-                    <Pause className="w-8 h-8 text-[var(--text-primary)]" />
+                    <Pause className="w-8 h-8 text-[var(--text-accent-crimson)]" />
                   ) : (
-                    <Play className="w-8 h-8 text-[var(--text-primary)]" />
+                    <Play className="w-8 h-8 text-[var(--text-accent-crimson)]" />
                   )}
                 </motion.button>
 
@@ -1095,7 +1095,7 @@ const DebateTimer = () => {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={resetAll}
-                  className="p-3 rounded-xl bg-[var(--input-bg)] text-[var(--text-primary)] hover:bg-slate-600 transition-all"
+                  className="p-3 rounded-xl bg-[var(--input-bg)] text-[var(--text-accent-crimson)] hover:bg-slate-600 transition-all"
                   title="Reset All"
                 >
                   <RotateCcw className="w-6 h-6" />
@@ -1106,7 +1106,7 @@ const DebateTimer = () => {
                   whileTap={{ scale: 0.9 }}
                   onClick={nextSegment}
                   disabled={currentSegmentIndex === segments.length - 1}
-                  className="p-3 rounded-xl bg-[var(--input-bg)] text-[var(--text-primary)] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-600 transition-all"
+                  className="p-3 rounded-xl bg-[var(--input-bg)] text-[var(--text-accent-crimson)] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-600 transition-all"
                 >
                   <ChevronRight className="w-6 h-6" />
                 </motion.button>
@@ -1134,7 +1134,7 @@ const DebateTimer = () => {
 
           {/* Segment List */}
           <div className="space-y-4">
-            <h3 className="text-[var(--text-primary)] font-semibold flex items-center gap-2">
+            <h3 className="text-[var(--text-accent-crimson)] font-semibold flex items-center gap-2">
               <MessageSquare className="w-5 h-5 text-cyan-400" />
               Speech Segments
             </h3>
@@ -1156,7 +1156,7 @@ const DebateTimer = () => {
             <div className="glass-panel p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-[var(--text-muted)] text-sm">Progress</span>
-                <span className="text-[var(--text-primary)] font-medium">
+                <span className="text-[var(--text-accent-crimson)] font-medium">
                   {completedSegments.length} / {segments.length}
                 </span>
               </div>
@@ -1164,7 +1164,7 @@ const DebateTimer = () => {
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${(completedSegments.length / segments.length) * 100}%` }}
-                  className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500"
+                  className="h-full rounded-full "
                 />
               </div>
             </div>

@@ -29,7 +29,7 @@ export const Avatar = ({ avatar, size = 'md', className, showName = false, onCli
     <div className={cn('flex flex-col items-center gap-1', onClick && 'cursor-pointer')} onClick={onClick}>
       <div className={cn(
         'rounded-full flex items-center justify-center transition-all duration-200',
-        `bg-gradient-to-br ${avatar.gradient}`,
+        ` ${avatar.gradient}`,
         sizes[size],
         selected && 'ring-4 ring-cyan-500 ring-offset-2 ring-offset-slate-900',
         onClick && 'hover:scale-110 hover:shadow-lg',
@@ -78,21 +78,21 @@ const AvatarSelector = ({ isOpen, onClose, onSelect, currentAvatarId }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/70 "
         onClick={onClose}
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-2xl bg-[var(--bg-primary)] border border-[var(--border)] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-2xl bg-[var(--bg-accent-crimson)] border border-[var(--border)] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="p-6 border-b border-[var(--border)] flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-bold text-[var(--text-primary)]">Choose Your Avatar</h2>
+            <h2 className="text-xl font-bold text-[var(--text-accent-crimson)]">Choose Your Avatar</h2>
             <p className="text-sm text-[var(--text-muted)] mt-1">Select a profile picture that represents you</p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+            className="p-2 rounded-lg hover:bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -102,13 +102,13 @@ const AvatarSelector = ({ isOpen, onClose, onSelect, currentAvatarId }) => {
         <div className="px-6 py-4 border-b border-[var(--border)] flex items-center justify-between">
           <button
             onClick={handlePrevCategory}
-            className="p-2 rounded-lg hover:bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+            className="p-2 rounded-lg hover:bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           
           <div className="flex-1 text-center">
-            <span className="text-lg font-semibold text-[var(--text-primary)]">{selectedCategory}</span>
+            <span className="text-lg font-semibold text-[var(--text-accent-crimson)]">{selectedCategory}</span>
             <div className="flex justify-center gap-1 mt-2">
               {categories.map((cat, idx) => (
                 <button
@@ -116,7 +116,7 @@ const AvatarSelector = ({ isOpen, onClose, onSelect, currentAvatarId }) => {
                   onClick={() => setSelectedCategory(cat)}
                   className={cn(
                     'w-2 h-2 rounded-full transition-all',
-                    cat === selectedCategory ? 'bg-cyan-500 w-4' : 'bg-slate-600 hover:bg-slate-500'
+                    cat === selectedCategory ? 'bg-cyan-500 w-4' : 'bg-slate-600 hover:bg-surface-offset0'
                   )}
                 />
               ))}
@@ -125,7 +125,7 @@ const AvatarSelector = ({ isOpen, onClose, onSelect, currentAvatarId }) => {
 
           <button
             onClick={handleNextCategory}
-            className="p-2 rounded-lg hover:bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+            className="p-2 rounded-lg hover:bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
@@ -148,13 +148,13 @@ const AvatarSelector = ({ isOpen, onClose, onSelect, currentAvatarId }) => {
         </div>
 
         {/* Preview & Confirm */}
-        <div className="p-6 border-t border-[var(--border)] bg-[var(--bg-primary)]/50 flex items-center justify-between">
+        <div className="p-6 border-t border-[var(--border)] bg-[var(--bg-accent-crimson)]/50 flex items-center justify-between">
           <div className="flex items-center gap-4">
             {selectedAvatar ? (
               <>
                 <Avatar avatar={selectedAvatar} size="lg" />
                 <div>
-                  <p className="text-[var(--text-primary)] font-medium">{selectedAvatar.name}</p>
+                  <p className="text-[var(--text-accent-crimson)] font-medium">{selectedAvatar.name}</p>
                   <p className="text-sm text-[var(--text-muted)]">{selectedAvatar.category}</p>
                 </div>
               </>
@@ -173,7 +173,7 @@ const AvatarSelector = ({ isOpen, onClose, onSelect, currentAvatarId }) => {
             <button
               onClick={handleSelect}
               disabled={!selectedAvatar}
-              className="px-6 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 text-[var(--text-primary)] font-medium hover:shadow-lg hover:shadow-cyan-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="px-6 py-2 rounded-xl  text-[var(--text-accent-crimson)] font-medium hover:shadow-lg hover:shadow-cyan-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               <Check className="w-4 h-4" />
               Select Avatar
@@ -200,17 +200,17 @@ export const AvatarOnboarding = ({ onComplete, userName }) => {
   };
 
   return (
-    <div className="min-h-screen bg-bg-primary flex items-center justify-center p-4">
+    <div className="min-h-screen bg-bg-accent-crimson flex items-center justify-center p-4">
       {/* Background effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-cyan-500/10 to-transparent rounded-full blur-3xl" />
-        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-purple-500/10 to-transparent rounded-full blur-3xl" />
+        <div className="absolute -top-1/2 -left-1/2 w-full h-full /10 to-transparent rounded-full blur-3xl" />
+        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full /10 to-transparent rounded-full blur-3xl" />
       </div>
 
       <div className="relative z-10 w-full max-w-3xl">
         {/* Welcome Message */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-[var(--text-primary)] mb-2">
+          <h1 className="text-3xl font-bold text-[var(--text-accent-crimson)] mb-2">
             Welcome{userName ? `, ${userName}` : ''}! 🎉
           </h1>
           <p className="text-[var(--text-muted)] text-lg">
@@ -219,7 +219,7 @@ export const AvatarOnboarding = ({ onComplete, userName }) => {
         </div>
 
         {/* Avatar Selection Card */}
-        <div className="bg-[var(--bg-primary)]/50 backdrop-blur-xl border border-[var(--border)] rounded-2xl overflow-hidden">
+        <div className="bg-[var(--bg-accent-crimson)]/50  border border-[var(--border)] rounded-2xl overflow-hidden">
           {/* Category Tabs */}
           <div className="p-4 border-b border-[var(--border)] overflow-x-auto">
             <div className="flex gap-2 min-w-max">
@@ -231,7 +231,7 @@ export const AvatarOnboarding = ({ onComplete, userName }) => {
                     'px-4 py-2 rounded-xl text-sm font-medium transition-all whitespace-nowrap',
                     cat === selectedCategory
                       ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'
-                      : 'bg-[var(--card-bg)]/50 text-[var(--text-muted)] border border-[var(--border)]/50 hover:bg-[var(--card-bg)] hover:text-[var(--text-primary)]'
+                      : 'bg-[var(--card-bg)]/50 text-[var(--text-muted)] border border-[var(--border)]/50 hover:bg-[var(--card-bg)] hover:text-[var(--text-accent-crimson)]'
                   )}
                 >
                   {cat}
@@ -257,13 +257,13 @@ export const AvatarOnboarding = ({ onComplete, userName }) => {
           </div>
 
           {/* Selection Preview */}
-          <div className="p-6 border-t border-[var(--border)] bg-[var(--bg-primary)]/80 flex items-center justify-between">
+          <div className="p-6 border-t border-[var(--border)] bg-[var(--bg-accent-crimson)]/80 flex items-center justify-between">
             <div className="flex items-center gap-4">
               {selectedAvatar ? (
                 <>
                   <Avatar avatar={selectedAvatar} size="lg" className="shadow-xl" />
                   <div>
-                    <p className="text-[var(--text-primary)] font-semibold text-lg">{selectedAvatar.name}</p>
+                    <p className="text-[var(--text-accent-crimson)] font-semibold text-lg">{selectedAvatar.name}</p>
                     <p className="text-sm text-[var(--text-muted)]">{selectedAvatar.category}</p>
                   </div>
                 </>
@@ -280,7 +280,7 @@ export const AvatarOnboarding = ({ onComplete, userName }) => {
             <button
               onClick={handleComplete}
               disabled={!selectedAvatar}
-              className="px-8 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 text-[var(--text-primary)] font-semibold text-lg hover:shadow-xl hover:shadow-cyan-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="px-8 py-3 rounded-xl  text-[var(--text-accent-crimson)] font-semibold text-lg hover:shadow-xl hover:shadow-cyan-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               Continue
               <ChevronRight className="w-5 h-5" />

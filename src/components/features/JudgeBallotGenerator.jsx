@@ -201,7 +201,7 @@ const RubricScore = ({ category, score, onChange, maxScore = 10 }) => {
     <div className="bg-[var(--input-bg)]/30 rounded-lg p-4">
       <div className="flex items-start justify-between mb-2">
         <div>
-          <h4 className="text-[var(--text-primary)] font-medium">{category.label}</h4>
+          <h4 className="text-[var(--text-accent-crimson)] font-medium">{category.label}</h4>
           <p className="text-xs text-[var(--text-muted)] mt-0.5">{category.description}</p>
         </div>
         <span className="text-xs text-[var(--text-muted)] bg-[var(--input-bg)] px-2 py-0.5 rounded">
@@ -257,7 +257,7 @@ const SpeakerPointsInput = ({ speaker, points, onChange, format, showGuide = fal
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <User className="w-4 h-4 text-[var(--text-muted)]" />
-          <span className="text-[var(--text-primary)] font-medium">{speaker.name || `Speaker ${speaker.position}`}</span>
+          <span className="text-[var(--text-accent-crimson)] font-medium">{speaker.name || `Speaker ${speaker.position}`}</span>
           <span className="text-xs text-[var(--text-muted)]">({speaker.side})</span>
         </div>
         <button
@@ -344,7 +344,7 @@ const TeamCard = ({ team, isWinner, onToggleWinner, onUpdateSpeaker, onUpdateRub
                 value={team.name}
                 onChange={(e) => onUpdateSpeaker(team.id, 'name', e.target.value)}
                 placeholder="Team Name"
-                className="bg-transparent text-[var(--text-primary)] font-semibold text-lg focus:outline-none"
+                className="bg-transparent text-[var(--text-accent-crimson)] font-semibold text-lg focus:outline-none"
               />
               <div className="flex items-center gap-2 text-sm">
                 <span className={`${
@@ -369,8 +369,8 @@ const TeamCard = ({ team, isWinner, onToggleWinner, onUpdateSpeaker, onUpdateRub
             onClick={() => onToggleWinner(team.id)}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
               isWinner 
-                ? 'bg-emerald-500 text-[var(--text-primary)]' 
-                : 'bg-[var(--input-bg)] text-[var(--text-muted)] hover:bg-slate-600 hover:text-[var(--text-primary)]'
+                ? 'bg-emerald-500 text-[var(--text-accent-crimson)]' 
+                : 'bg-[var(--input-bg)] text-[var(--text-muted)] hover:bg-slate-600 hover:text-[var(--text-accent-crimson)]'
             }`}
           >
             <Trophy className={`w-4 h-4 ${isWinner ? 'fill-current' : ''}`} />
@@ -383,14 +383,14 @@ const TeamCard = ({ team, isWinner, onToggleWinner, onUpdateSpeaker, onUpdateRub
           <div className="flex items-center gap-1 text-[var(--text-muted)]">
             <Star className="w-4 h-4 text-amber-400" />
             <span>Avg Points:</span>
-            <span className="text-[var(--text-primary)] font-medium">
+            <span className="text-[var(--text-accent-crimson)] font-medium">
               {(team.speakers.reduce((sum, s) => sum + s.points, 0) / team.speakers.length).toFixed(1)}
             </span>
           </div>
           <div className="flex items-center gap-1 text-[var(--text-muted)]">
             <Target className="w-4 h-4 text-cyan-400" />
             <span>Rubric:</span>
-            <span className="text-[var(--text-primary)] font-medium">{avgRubricScore.toFixed(1)}/10</span>
+            <span className="text-[var(--text-accent-crimson)] font-medium">{avgRubricScore.toFixed(1)}/10</span>
           </div>
         </div>
       </div>
@@ -462,7 +462,7 @@ const RFDSection = ({ rfd, onChange }) => {
   return (
     <div className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-[var(--text-primary)] flex items-center gap-2">
+        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
           <MessageSquare className="w-5 h-5 text-purple-400" />
           Reason for Decision (RFD)
         </h3>
@@ -480,7 +480,7 @@ Consider addressing:
 • Specific feedback for each team
 • What each side did well and areas for improvement"
         rows={8}
-        className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50 resize-none"
+        className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50 resize-none"
       />
 
       {/* Quick RFD Templates */}
@@ -559,7 +559,7 @@ const JudgeSignature = ({ signature, onChange }) => {
 
   return (
     <div className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-6">
-      <h3 className="font-semibold text-[var(--text-primary)] flex items-center gap-2 mb-4">
+      <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2 mb-4">
         <PenTool className="w-5 h-5 text-cyan-400" />
         Judge Information & Signature
       </h3>
@@ -572,7 +572,7 @@ const JudgeSignature = ({ signature, onChange }) => {
             value={signature.name || ''}
             onChange={(e) => onChange({ ...signature, name: e.target.value })}
             placeholder="Enter your name"
-            className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+            className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
           />
         </div>
         <div>
@@ -582,7 +582,7 @@ const JudgeSignature = ({ signature, onChange }) => {
             value={signature.affiliation || ''}
             onChange={(e) => onChange({ ...signature, affiliation: e.target.value })}
             placeholder="School/Organization"
-            className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+            className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
           />
         </div>
       </div>
@@ -592,13 +592,13 @@ const JudgeSignature = ({ signature, onChange }) => {
           <label className="text-sm text-[var(--text-muted)]">Signature (draw below)</label>
           <button
             onClick={clearSignature}
-            className="text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] flex items-center gap-1"
+            className="text-xs text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] flex items-center gap-1"
           >
             <RotateCcw className="w-3 h-3" />
             Clear
           </button>
         </div>
-        <div className="relative bg-[var(--bg-primary)] border border-[var(--border)] rounded-lg overflow-hidden">
+        <div className="relative bg-[var(--bg-accent-crimson)] border border-[var(--border)] rounded-lg overflow-hidden">
           <canvas
             ref={canvasRef}
             width={400}
@@ -615,7 +615,7 @@ const JudgeSignature = ({ signature, onChange }) => {
           />
           {!signature.image && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <span className="text-slate-600 text-sm">Sign here</span>
+              <span className="text-ink-muted text-sm">Sign here</span>
             </div>
           )}
         </div>
@@ -942,9 +942,9 @@ const JudgeBallotGenerator = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--text-primary)] flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
-              <Gavel className="w-6 h-6 text-[var(--text-primary)]" />
+          <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
+            <div className="p-2  rounded-xl">
+              <Gavel className="w-6 h-6 text-[var(--text-accent-crimson)]" />
             </div>
             Judge Ballot Generator
           </h1>
@@ -956,14 +956,14 @@ const JudgeBallotGenerator = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={resetBallot}
-            className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-primary)] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
           >
             <RotateCcw className="w-4 h-4" />
             Reset
           </button>
           <button
             onClick={saveBallot}
-            className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-primary)] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
           >
             <Save className="w-4 h-4" />
             Save
@@ -973,7 +973,7 @@ const JudgeBallotGenerator = () => {
             disabled={!isComplete}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
               isComplete
-                ? 'bg-amber-600 hover:bg-amber-500 text-[var(--text-primary)]'
+                ? 'bg-amber-600 hover:bg-amber-500 text-[var(--text-accent-crimson)]'
                 : 'bg-[var(--input-bg)] text-[var(--text-muted)] cursor-not-allowed'
             }`}
           >
@@ -991,7 +991,7 @@ const JudgeBallotGenerator = () => {
             <select
               value={ballotFormat}
               onChange={(e) => handleFormatChange(e.target.value)}
-              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
             >
               {Object.entries(DEBATE_FORMATS).map(([key, fmt]) => (
                 <option key={key} value={key}>{fmt.name}</option>
@@ -1005,7 +1005,7 @@ const JudgeBallotGenerator = () => {
               value={roundInfo.tournament}
               onChange={(e) => setRoundInfo(prev => ({ ...prev, tournament: e.target.value }))}
               placeholder="Tournament name"
-              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
             />
           </div>
           <div>
@@ -1015,7 +1015,7 @@ const JudgeBallotGenerator = () => {
               value={roundInfo.round}
               onChange={(e) => setRoundInfo(prev => ({ ...prev, round: e.target.value }))}
               placeholder="Round 1"
-              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
             />
           </div>
           <div>
@@ -1025,7 +1025,7 @@ const JudgeBallotGenerator = () => {
               value={roundInfo.room}
               onChange={(e) => setRoundInfo(prev => ({ ...prev, room: e.target.value }))}
               placeholder="Room 101"
-              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
             />
           </div>
         </div>
@@ -1037,7 +1037,7 @@ const JudgeBallotGenerator = () => {
               type="date"
               value={roundInfo.date}
               onChange={(e) => setRoundInfo(prev => ({ ...prev, date: e.target.value }))}
-              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
             />
           </div>
           <div className="md:col-span-3">
@@ -1047,7 +1047,7 @@ const JudgeBallotGenerator = () => {
               value={roundInfo.motion}
               onChange={(e) => setRoundInfo(prev => ({ ...prev, motion: e.target.value }))}
               placeholder="Resolved: ..."
-              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-primary)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
             />
           </div>
         </div>
@@ -1091,7 +1091,7 @@ const JudgeBallotGenerator = () => {
 
       {/* Score Summary */}
       <div className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-6">
-        <h3 className="font-semibold text-[var(--text-primary)] flex items-center gap-2 mb-4">
+        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2 mb-4">
           <Award className="w-5 h-5 text-amber-400" />
           Score Summary
         </h3>
@@ -1113,7 +1113,7 @@ const JudgeBallotGenerator = () => {
               >
                 <div className="flex items-center justify-between mb-3">
                   <div>
-                    <div className="font-semibold text-[var(--text-primary)]">{team.name || 'Team'}</div>
+                    <div className="font-semibold text-[var(--text-accent-crimson)]">{team.name || 'Team'}</div>
                     <div className="text-sm text-[var(--text-muted)]">{team.side}</div>
                   </div>
                   {winnerId === team.id && (

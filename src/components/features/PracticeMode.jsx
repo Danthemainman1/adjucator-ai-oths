@@ -115,7 +115,7 @@ const AnimatedProgressRing = ({ progress, size = 200, strokeWidth = 8, color = '
           stroke="currentColor"
           strokeWidth={strokeWidth}
           fill="none"
-          className="text-slate-800/60"
+          className="text-ink/60"
         />
         {/* Progress circle */}
         <motion.circle
@@ -167,7 +167,7 @@ const PulsingIndicator = ({ isActive, color = 'red' }) => (
 
 // Shimmer Loading Effect
 const Shimmer = ({ className = '' }) => (
-  <div className={`animate-pulse bg-gradient-to-r from-slate-800/50 via-slate-700/50 to-slate-800/50 rounded-xl ${className}`} />
+  <div className={`animate-pulse /50 via-slate-700/50 to-slate-800/50 rounded-xl ${className}`} />
 );
 
 // Animated Counter
@@ -294,7 +294,7 @@ const EmptyPractice = ({ onStart }) => (
       <motion.div
         animate={{ scale: [1, 1.1, 1] }}
         transition={{ duration: 2, repeat: Infinity }}
-        className="absolute inset-4 rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-cyan-500/30 flex items-center justify-center"
+        className="absolute inset-4 rounded-full /20 to-purple-500/20 border border-cyan-500/30 flex items-center justify-center"
       >
         <Target className="w-12 h-12 text-cyan-400" />
       </motion.div>
@@ -315,7 +315,7 @@ const EmptyPractice = ({ onStart }) => (
       ))}
     </div>
     
-    <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-3">Ready to Level Up?</h3>
+    <h3 className="text-2xl font-bold text-[var(--text-accent-crimson)] mb-3">Ready to Level Up?</h3>
     <p className="text-[var(--text-muted)] max-w-md mx-auto mb-8 text-lg">
       Sharpen your skills with timed drills, refutation practice, and cross-examination simulations.
     </p>
@@ -324,7 +324,7 @@ const EmptyPractice = ({ onStart }) => (
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={onStart}
-      className="group relative px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-500 text-[var(--text-primary)] font-semibold shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-all inline-flex items-center gap-3"
+      className="group relative px-8 py-4 rounded-2xl  text-[var(--text-accent-crimson)] font-semibold shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-all inline-flex items-center gap-3"
     >
       <Play className="w-5 h-5" />
       Start Your First Drill
@@ -362,7 +362,7 @@ const GradientStatCard = ({ icon: Icon, label, value, color, suffix = '' }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -4, scale: 1.02 }}
-      className={`relative overflow-hidden p-5 rounded-2xl bg-gradient-to-br ${gradients[color]} border backdrop-blur-sm transition-all duration-300`}
+      className={`relative overflow-hidden p-5 rounded-2xl  ${gradients[color]} border  transition-all duration-300`}
     >
       {/* Background glow */}
       <div className={`absolute -top-10 -right-10 w-32 h-32 rounded-full bg-${color}-500/10 blur-3xl`} />
@@ -398,7 +398,7 @@ const DrillCard = ({ drill, onSelect, index }) => {
       whileHover={{ y: -8, scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       onClick={() => onSelect(drill)}
-      className={`group relative w-full p-6 rounded-2xl border border-[var(--border)]/60 bg-gradient-to-br ${drill.gradient} backdrop-blur-sm hover:border-${drill.color}-500/50 ${drill.borderGlow} transition-all duration-500 text-left overflow-hidden`}
+      className={`group relative w-full p-6 rounded-2xl border border-[var(--border)]/60  ${drill.gradient}  hover:border-${drill.color}-500/50 ${drill.borderGlow} transition-all duration-500 text-left overflow-hidden`}
     >
       {/* Animated background pattern */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -419,7 +419,7 @@ const DrillCard = ({ drill, onSelect, index }) => {
           <Icon className={`w-8 h-8 text-${drill.color}-400`} />
         </motion.div>
         
-        <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-${drill.color}-300 transition-colors">
+        <h3 className="text-xl font-bold text-[var(--text-accent-crimson)] mb-2 group-hover:text-${drill.color}-300 transition-colors">
           {drill.name}
         </h3>
         <p className="text-[var(--text-muted)] text-sm mb-5 line-clamp-2">{drill.description}</p>
@@ -467,13 +467,13 @@ const DurationSelector = ({ drill, onSelect, onCancel }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70  p-4"
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-        className={`w-full max-w-md bg-gradient-to-br from-slate-900 via-slate-900 to-${drill.color}-950/20 border border-[var(--border)] rounded-3xl shadow-2xl shadow-${drill.color}-500/10 p-8`}
+        className={`w-full max-w-md  to-${drill.color}-950/20 border border-[var(--border)] rounded-3xl shadow-2xl shadow-${drill.color}-500/10 p-8`}
       >
         <div className="text-center mb-8">
           <motion.div 
@@ -484,7 +484,7 @@ const DurationSelector = ({ drill, onSelect, onCancel }) => {
           >
             <Icon className={`w-10 h-10 text-${drill.color}-400`} />
           </motion.div>
-          <h2 className="text-2xl font-bold text-[var(--text-primary)]">{drill.name}</h2>
+          <h2 className="text-2xl font-bold text-[var(--text-accent-crimson)]">{drill.name}</h2>
           <p className="text-[var(--text-muted)] text-sm mt-2">How long do you want to practice?</p>
         </div>
 
@@ -500,7 +500,7 @@ const DurationSelector = ({ drill, onSelect, onCancel }) => {
               onClick={() => onSelect(d)}
               className={`group p-5 rounded-2xl bg-[var(--card-bg)]/50 border border-[var(--border)]/50 hover:border-${drill.color}-500/50 hover:bg-${drill.color}-500/10 transition-all text-center`}
             >
-              <span className={`text-3xl font-bold text-[var(--text-primary)] group-hover:text-${drill.color}-400 transition-colors`}>
+              <span className={`text-3xl font-bold text-[var(--text-accent-crimson)] group-hover:text-${drill.color}-400 transition-colors`}>
                 {d < 60 ? d : d / 60}
               </span>
               <span className="text-[var(--text-muted)] text-sm ml-1 block mt-1">
@@ -515,7 +515,7 @@ const DurationSelector = ({ drill, onSelect, onCancel }) => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
           onClick={onCancel}
-          className="w-full mt-6 py-4 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)]/50 transition-all font-medium"
+          className="w-full mt-6 py-4 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)]/50 transition-all font-medium"
         >
           Cancel
         </motion.button>
@@ -614,7 +614,7 @@ const CompletionCelebration = ({ score, onContinue }) => {
         initial={{ scale: 0, rotate: -180 }}
         animate={{ scale: 1, rotate: 0 }}
         transition={{ type: "spring", damping: 10 }}
-        className={`w-28 h-28 rounded-full bg-gradient-to-br from-${details.color}-500/20 to-${details.color}-600/10 border-2 border-${details.color}-500/40 mx-auto mb-6 flex items-center justify-center shadow-xl shadow-${details.color}-500/20`}
+        className={`w-28 h-28 rounded-full  from-${details.color}-500/20 to-${details.color}-600/10 border-2 border-${details.color}-500/40 mx-auto mb-6 flex items-center justify-center shadow-xl shadow-${details.color}-500/20`}
       >
         <Icon className={`w-14 h-14 text-${details.color}-400`} />
       </motion.div>
@@ -623,7 +623,7 @@ const CompletionCelebration = ({ score, onContinue }) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="text-3xl font-bold text-[var(--text-primary)] mb-2"
+        className="text-3xl font-bold text-[var(--text-accent-crimson)] mb-2"
       >
         {details.message}
       </motion.h2>
@@ -645,7 +645,7 @@ const CompletionCelebration = ({ score, onContinue }) => {
           className={`inline-flex items-center gap-3 px-6 py-3 rounded-2xl bg-${details.color}-500/10 border border-${details.color}-500/30`}
         >
           <Sparkles className={`w-5 h-5 text-${details.color}-400`} />
-          <span className="text-3xl font-bold text-[var(--text-primary)]">{score}</span>
+          <span className="text-3xl font-bold text-[var(--text-accent-crimson)]">{score}</span>
           <span className="text-[var(--text-muted)]">/100</span>
         </motion.div>
       )}
@@ -657,7 +657,7 @@ const CompletionCelebration = ({ score, onContinue }) => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={onContinue}
-        className="block mx-auto mt-8 px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-500 text-[var(--text-primary)] font-semibold shadow-lg shadow-cyan-500/25"
+        className="block mx-auto mt-8 px-8 py-4 rounded-2xl  text-[var(--text-accent-crimson)] font-semibold shadow-lg shadow-cyan-500/25"
       >
         Continue
       </motion.button>
@@ -795,7 +795,7 @@ Keep the response concise but actionable.`;
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 backdrop-blur-xl flex items-center justify-center p-6 overflow-y-auto"
+      className="fixed inset-0 z-50   flex items-center justify-center p-6 overflow-y-auto"
     >
       <Confetti show={showConfetti} />
       
@@ -807,7 +807,7 @@ Keep the response concise but actionable.`;
           className="flex items-center justify-between mb-8"
         >
           <div>
-            <h2 className="text-2xl font-bold text-[var(--text-primary)] flex items-center gap-3">
+            <h2 className="text-2xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
               <div className={`w-10 h-10 rounded-xl bg-${drill.color}-500/10 border border-${drill.color}-500/30 flex items-center justify-center`}>
                 <Icon className={`w-5 h-5 text-${drill.color}-400`} />
               </div>
@@ -824,7 +824,7 @@ Keep the response concise but actionable.`;
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={onCancel}
-            className="px-4 py-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)]/50 transition-all border border-transparent hover:border-[var(--border)]"
+            className="px-4 py-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)]/50 transition-all border border-transparent hover:border-[var(--border)]"
           >
             Exit
           </motion.button>
@@ -834,7 +834,7 @@ Keep the response concise but actionable.`;
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`p-6 rounded-2xl bg-gradient-to-br from-${drill.color}-500/10 to-transparent border border-${drill.color}-500/20 mb-8`}
+          className={`p-6 rounded-2xl  from-${drill.color}-500/10 to-transparent border border-${drill.color}-500/20 mb-8`}
         >
           <div className="flex items-start gap-4">
             <div className={`p-2 rounded-lg bg-${drill.color}-500/10`}>
@@ -842,7 +842,7 @@ Keep the response concise but actionable.`;
             </div>
             <div>
               <h3 className="text-sm font-medium text-[var(--text-muted)] mb-2">Your Prompt</h3>
-              <p className="text-xl text-[var(--text-primary)] font-medium">
+              <p className="text-xl text-[var(--text-accent-crimson)] font-medium">
                 {typeof prompt === 'object' ? prompt.claim || prompt.topic : prompt}
               </p>
               {typeof prompt === 'object' && prompt.role && (
@@ -885,7 +885,7 @@ Keep the response concise but actionable.`;
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handlePrepComplete}
-                  className="px-10 py-5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-500 text-[var(--text-primary)] font-bold text-lg shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all flex items-center gap-3"
+                  className="px-10 py-5 rounded-2xl  text-[var(--text-accent-crimson)] font-bold text-lg shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all flex items-center gap-3"
                 >
                   <Play className="w-6 h-6" />
                   Start Speaking
@@ -895,13 +895,13 @@ Keep the response concise but actionable.`;
               <div className="flex items-center justify-center gap-3 mt-6">
                 <button
                   onClick={() => setPrepTime(Math.max(5, prepTime - 5))}
-                  className="px-4 py-2 rounded-xl bg-[var(--card-bg)]/50 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors border border-[var(--border)]/50 hover:border-[var(--border)]"
+                  className="px-4 py-2 rounded-xl bg-[var(--card-bg)]/50 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors border border-[var(--border)]/50 hover:border-[var(--border)]"
                 >
                   -5s
                 </button>
                 <button
                   onClick={() => setPrepTime(prepTime + 5)}
-                  className="px-4 py-2 rounded-xl bg-[var(--card-bg)]/50 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors border border-[var(--border)]/50 hover:border-[var(--border)]"
+                  className="px-4 py-2 rounded-xl bg-[var(--card-bg)]/50 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors border border-[var(--border)]/50 hover:border-[var(--border)]"
                 >
                   +5s
                 </button>
@@ -954,7 +954,7 @@ Keep the response concise but actionable.`;
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleDrillComplete}
-                  className="px-6 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all flex items-center gap-2"
+                  className="px-6 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all flex items-center gap-2"
                 >
                   <CheckCircle className="w-5 h-5" />
                   Finish Early
@@ -1014,7 +1014,7 @@ Keep the response concise but actionable.`;
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="p-5 rounded-2xl bg-gradient-to-br from-emerald-500/10 to-transparent border border-emerald-500/20"
+                  className="p-5 rounded-2xl /10 to-transparent border border-emerald-500/20"
                 >
                   <h4 className="text-sm font-medium text-emerald-400 mb-3 flex items-center gap-2">
                     <Brain className="w-4 h-4" />
@@ -1029,7 +1029,7 @@ Keep the response concise but actionable.`;
                   className="text-center py-12"
                 >
                   <div className="w-16 h-16 rounded-full bg-[var(--card-bg)]/50 mx-auto mb-4 flex items-center justify-center">
-                    <MicOff className="w-8 h-8 text-slate-600" />
+                    <MicOff className="w-8 h-8 text-ink-muted" />
                   </div>
                   <p className="text-[var(--text-muted)]">No speech detected. Make sure your microphone is enabled.</p>
                 </motion.div>
@@ -1050,7 +1050,7 @@ Keep the response concise but actionable.`;
                     setTranscript('');
                     setAnalysis(null);
                   }}
-                  className="px-6 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--card-bg)] transition-all flex items-center gap-2"
+                  className="px-6 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all flex items-center gap-2"
                 >
                   <RotateCcw className="w-5 h-5" />
                   Try Again
@@ -1059,7 +1059,7 @@ Keep the response concise but actionable.`;
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleSaveAndExit}
-                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-[var(--text-primary)] font-semibold shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-all flex items-center gap-2"
+                  className="px-6 py-3 rounded-xl  text-[var(--text-accent-crimson)] font-semibold shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-all flex items-center gap-2"
                 >
                   <CheckCircle className="w-5 h-5" />
                   Save & Exit
@@ -1107,19 +1107,19 @@ const RecentSessionCard = ({ session, drillType, index }) => {
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: index * 0.1 }}
       whileHover={{ x: 4 }}
-      className={`p-4 rounded-xl bg-gradient-to-r from-${drillType.color}-500/5 to-transparent border border-[var(--border)]/50 hover:border-${drillType.color}-500/30 flex items-center gap-4 transition-all`}
+      className={`p-4 rounded-xl  from-${drillType.color}-500/5 to-transparent border border-[var(--border)]/50 hover:border-${drillType.color}-500/30 flex items-center gap-4 transition-all`}
     >
       <div className={`w-12 h-12 rounded-xl bg-${drillType.color}-500/10 border border-${drillType.color}-500/20 flex items-center justify-center`}>
         <Icon className={`w-6 h-6 text-${drillType.color}-400`} />
       </div>
       <div className="flex-1">
-        <p className="text-[var(--text-primary)] font-medium">{drillType.name}</p>
+        <p className="text-[var(--text-accent-crimson)] font-medium">{drillType.name}</p>
         <div className="flex items-center gap-3 mt-1">
           <span className="text-[var(--text-muted)] text-sm flex items-center gap-1">
             <Clock className="w-3 h-3" />
             {session.duration}s
           </span>
-          <span className="text-slate-600">•</span>
+          <span className="text-ink-muted">•</span>
           <span className="text-[var(--text-muted)] text-sm">
             {new Date(session.createdAt?.toDate?.() || session.createdAt).toLocaleDateString()}
           </span>
@@ -1181,11 +1181,11 @@ const PracticeMode = ({ apiKey }) => {
       >
         <div className="absolute -top-20 -left-20 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl" />
         <div className="relative">
-          <h1 className="text-4xl font-bold text-[var(--text-primary)] tracking-tight flex items-center gap-4">
+          <h1 className="text-4xl font-bold text-[var(--text-accent-crimson)] tracking-tight flex items-center gap-4">
             <motion.div 
               whileHover={{ rotate: 180 }}
               transition={{ duration: 0.5 }}
-              className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 flex items-center justify-center"
+              className="w-14 h-14 rounded-2xl /20 to-blue-500/20 border border-cyan-500/30 flex items-center justify-center"
             >
               <Target className="w-7 h-7 text-cyan-400" />
             </motion.div>
@@ -1210,7 +1210,7 @@ const PracticeMode = ({ apiKey }) => {
         <motion.h2 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-xl font-bold text-[var(--text-primary)] mb-6 flex items-center gap-3"
+          className="text-xl font-bold text-[var(--text-accent-crimson)] mb-6 flex items-center gap-3"
         >
           <Zap className="w-5 h-5 text-amber-400" />
           Choose Your Drill
@@ -1227,7 +1227,7 @@ const PracticeMode = ({ apiKey }) => {
         <motion.h2 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-xl font-bold text-[var(--text-primary)] mb-6 flex items-center gap-3"
+          className="text-xl font-bold text-[var(--text-accent-crimson)] mb-6 flex items-center gap-3"
         >
           <BarChart3 className="w-5 h-5 text-purple-400" />
           Recent Practice
@@ -1243,7 +1243,7 @@ const PracticeMode = ({ apiKey }) => {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="p-8 rounded-2xl border border-[var(--border)]/60 bg-gradient-to-br from-slate-900/50 to-slate-900/30"
+            className="p-8 rounded-2xl border border-[var(--border)]/60 /50 to-slate-900/30"
           >
             <EmptyPractice onStart={() => handleSelectDrill(DRILL_TYPES[0])} />
           </motion.div>
