@@ -47,7 +47,7 @@ const AvatarSelectionPrompt = () => {
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold text-[var(--text-accent-crimson)] mb-2">
+              <h2 className="text-2xl font-bold text-accent-crimson mb-2">
                 Welcome, {displayName}!
               </h2>
               <p className="text-text-secondary">
@@ -65,7 +65,7 @@ const AvatarSelectionPrompt = () => {
                   {currentAvatar.emoji}
                 </div>
                 <div className="absolute inset-0 rounded-2xl bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span className="text-[var(--text-accent-crimson)] text-sm font-medium">Change</span>
+                  <span className="text-accent-crimson text-sm font-medium">Change</span>
                 </div>
               </button>
             </div>

@@ -54,45 +54,45 @@ const NODE_TYPES = {
   claim: {
     label: 'Claim',
     color: 'from-cyan-500 to-blue-600',
-    bgColor: 'bg-cyan-500/10',
-    borderColor: 'border-cyan-500/50',
-    textColor: 'text-cyan-400',
+    bgColor: 'bg-surface-offset',
+    borderColor: 'border-hairline',
+    textColor: 'text-ink',
     icon: Target,
     description: 'Main argument assertion'
   },
   evidence: {
     label: 'Evidence',
     color: 'from-emerald-500 to-green-600',
-    bgColor: 'bg-emerald-500/10',
-    borderColor: 'border-emerald-500/50',
-    textColor: 'text-emerald-400',
+    bgColor: 'bg-surface-offset',
+    borderColor: 'border-hairline',
+    textColor: 'text-ink',
     icon: FileText,
     description: 'Supporting data or facts'
   },
   warrant: {
     label: 'Warrant',
     color: 'from-purple-500 to-indigo-600',
-    bgColor: 'bg-purple-500/10',
-    borderColor: 'border-purple-500/50',
-    textColor: 'text-purple-400',
+    bgColor: 'bg-surface-offset',
+    borderColor: 'border-hairline',
+    textColor: 'text-ink',
     icon: Lightbulb,
     description: 'Reasoning connecting evidence to claim'
   },
   impact: {
     label: 'Impact',
     color: 'from-amber-500 to-orange-600',
-    bgColor: 'bg-amber-500/10',
-    borderColor: 'border-amber-500/50',
-    textColor: 'text-amber-400',
+    bgColor: 'bg-surface-offset',
+    borderColor: 'border-hairline',
+    textColor: 'text-ink',
     icon: AlertTriangle,
     description: 'Significance or consequence'
   },
   response: {
     label: 'Response',
     color: 'from-red-500 to-rose-600',
-    bgColor: 'bg-red-500/10',
-    borderColor: 'border-red-500/50',
-    textColor: 'text-red-400',
+    bgColor: 'bg-accent-crimson/10',
+    borderColor: 'border-accent-crimson/50',
+    textColor: 'text-accent-crimson',
     icon: Shield,
     description: 'Counter-argument or rebuttal'
   },
@@ -100,8 +100,8 @@ const NODE_TYPES = {
     label: 'Question',
     color: 'from-slate-400 to-slate-600',
     bgColor: 'bg-surface-offset0/10',
-    borderColor: 'border-slate-500/50',
-    textColor: 'text-[var(--text-muted)]',
+    borderColor: 'border-hairline',
+    textColor: 'text-ink-muted',
     icon: HelpCircle,
     description: 'Cross-examination point'
   }
@@ -225,7 +225,7 @@ const FlowNode = ({
       className={`
         w-64 rounded-xl border 
         ${config.bgColor} ${config.borderColor}
-        ${isSelected ? 'ring-2 ring-cyan-500/50' : ''}
+        ${isSelected ? 'ring-2 ring-hairline' : ''}
         transition-shadow duration-200
       `}
       onMouseDown={handleMouseDown}
@@ -234,18 +234,18 @@ const FlowNode = ({
       <div
         className={`
           absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full 
-          bg-[var(--input-bg)] border-2 border-slate-500 cursor-crosshair
-          hover:bg-cyan-500 hover:border-cyan-400 hover:scale-125
+          bg-surface-parchment border-2 border-hairline cursor-crosshair
+          hover:bg-surface-offset hover:border-hairline hover:scale-125
           transition-all duration-200
-          ${isConnecting ? 'animate-pulse bg-cyan-500 border-cyan-400' : ''}
+          ${isConnecting ? 'animate-pulse bg-surface-offset border-hairline' : ''}
         `}
         onClick={(e) => handleConnectionClick(e, false)}
       />
       <div
         className={`
           absolute -right-2 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full 
-          bg-[var(--input-bg)] border-2 border-slate-500 cursor-crosshair
-          hover:bg-emerald-500 hover:border-emerald-400 hover:scale-125
+          bg-surface-parchment border-2 border-hairline cursor-crosshair
+          hover:bg-surface-offset hover:border-hairline hover:scale-125
           transition-all duration-200
         `}
         onClick={(e) => handleConnectionClick(e, true)}
@@ -254,7 +254,7 @@ const FlowNode = ({
       {/* Header */}
       <div className={`flex items-center gap-2 p-3 border-b ${config.borderColor}`}>
         <div className={`p-1.5 rounded-lg  ${config.color}`}>
-          <Icon className="w-4 h-4 text-[var(--text-accent-crimson)]" />
+          <Icon className="w-4 h-4 text-accent-crimson" />
         </div>
         <span className={`text-xs font-semibold ${config.textColor} uppercase tracking-wider`}>
           {config.label}
@@ -267,7 +267,7 @@ const FlowNode = ({
               e.stopPropagation();
               onEdit?.(node);
             }}
-            className="p-1 rounded hover:bg-[var(--input-bg)]/50 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
+            className="p-1 rounded hover:bg-surface-parchment/50 text-ink-muted hover:text-accent-crimson transition-colors"
           >
             <Edit3 className="w-3.5 h-3.5" />
           </button>
@@ -276,7 +276,7 @@ const FlowNode = ({
               e.stopPropagation();
               onDelete?.(node.id);
             }}
-            className="p-1 rounded hover:bg-red-500/20 text-[var(--text-muted)] hover:text-red-400 transition-colors"
+            className="p-1 rounded hover:bg-accent-crimson/20 text-ink-muted hover:text-accent-crimson transition-colors"
           >
             <Trash2 className="w-3.5 h-3.5" />
           </button>
@@ -285,11 +285,11 @@ const FlowNode = ({
 
       {/* Content */}
       <div className="p-3">
-        <h4 className="text-[var(--text-accent-crimson)] font-medium text-sm mb-1 line-clamp-2">
+        <h4 className="text-accent-crimson font-medium text-sm mb-1 line-clamp-2">
           {node.title || 'Untitled'}
         </h4>
         {node.content && (
-          <p className="text-[var(--text-muted)] text-xs line-clamp-3">
+          <p className="text-ink-muted text-xs line-clamp-3">
             {node.content}
           </p>
         )}
@@ -298,7 +298,7 @@ const FlowNode = ({
       {/* Footer */}
       {node.source && (
         <div className="px-3 pb-3">
-          <p className="text-[var(--text-muted)] text-[10px] truncate">
+          <p className="text-ink-muted text-[10px] truncate">
             Source: {node.source}
           </p>
         </div>
@@ -453,21 +453,21 @@ const AddNodeModal = ({ isOpen, onClose, onAdd, editNode }) => {
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="w-full max-w-lg  border border-[var(--border)] rounded-3xl shadow-2xl overflow-hidden"
+        className="w-full max-w-lg  border border-hairline rounded-3xl shadow-2xl overflow-hidden"
       >
-        <div className="relative p-6 border-b border-[var(--border)]">
+        <div className="relative p-6 border-b border-hairline">
           <div className="absolute inset-0 /10 via-transparent to-purple-500/10" />
           <div className="relative flex items-center justify-between">
-            <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
-              <div className="p-2 rounded-xl /20 to-blue-600/20 border border-cyan-500/30">
-                <GitBranch className="w-5 h-5 text-cyan-400" />
+            <h2 className="text-xl font-bold text-accent-crimson flex items-center gap-3">
+              <div className="p-2 rounded-xl /20 to-blue-600/20 border border-hairline">
+                <GitBranch className="w-5 h-5 text-ink" />
               </div>
               {editNode ? 'Edit Node' : 'Add Node'}
             </h2>
             <motion.button
               whileHover={{ scale: 1.1, rotate: 90 }}
               onClick={onClose}
-              className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+              className="p-2 rounded-xl text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
             >
               <X className="w-5 h-5" />
             </motion.button>
@@ -477,7 +477,7 @@ const AddNodeModal = ({ isOpen, onClose, onAdd, editNode }) => {
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           {/* Node Type */}
           <div className="space-y-3">
-            <label className="block text-sm font-medium text-[var(--text-muted)]">Node Type</label>
+            <label className="block text-sm font-medium text-ink-muted">Node Type</label>
             <div className="grid grid-cols-3 gap-2">
               {Object.entries(NODE_TYPES).map(([key, config]) => {
                 const Icon = config.icon;
@@ -490,7 +490,7 @@ const AddNodeModal = ({ isOpen, onClose, onAdd, editNode }) => {
                       p-3 rounded-xl border transition-all text-left
                       ${formData.type === key 
                         ? `${config.bgColor} ${config.borderColor} ${config.textColor}` 
-                        : 'bg-[var(--card-bg)]/30 border-[var(--border)] text-[var(--text-muted)] hover:bg-[var(--card-bg)]/50'
+                        : 'bg-[var(--card-bg)]/30 border-hairline text-ink-muted hover:bg-[var(--card-bg)]/50'
                       }
                     `}
                   >
@@ -504,49 +504,49 @@ const AddNodeModal = ({ isOpen, onClose, onAdd, editNode }) => {
 
           {/* Title */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-[var(--text-muted)]">Title *</label>
+            <label className="block text-sm font-medium text-ink-muted">Title *</label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               placeholder="Enter node title..."
-              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson placeholder-slate-500 focus:border-hairline focus:ring-2 focus:ring-hairline outline-none transition-all"
               required
             />
           </div>
 
           {/* Content */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-[var(--text-muted)]">Content</label>
+            <label className="block text-sm font-medium text-ink-muted">Content</label>
             <textarea
               value={formData.content}
               onChange={(e) => setFormData({ ...formData, content: e.target.value })}
               placeholder="Add details or explanation..."
               rows={3}
-              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all resize-none"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson placeholder-slate-500 focus:border-hairline focus:ring-2 focus:ring-hairline outline-none transition-all resize-none"
             />
           </div>
 
           {/* Source */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-[var(--text-muted)]">Source (optional)</label>
+            <label className="block text-sm font-medium text-ink-muted">Source (optional)</label>
             <input
               type="text"
               value={formData.source}
               onChange={(e) => setFormData({ ...formData, source: e.target.value })}
               placeholder="Citation or reference..."
-              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson placeholder-slate-500 focus:border-hairline focus:ring-2 focus:ring-hairline outline-none transition-all"
             />
           </div>
 
           {/* Actions */}
-          <div className="flex justify-end gap-3 pt-4 border-t border-[var(--border)]">
+          <div className="flex justify-end gap-3 pt-4 border-t border-hairline">
             <motion.button
               type="button"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={onClose}
-              className="px-6 py-3 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+              className="px-6 py-3 rounded-xl text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
             >
               Cancel
             </motion.button>
@@ -554,7 +554,7 @@ const AddNodeModal = ({ isOpen, onClose, onAdd, editNode }) => {
               type="submit"
               whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(6, 182, 212, 0.3)' }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-3 rounded-xl  text-[var(--text-accent-crimson)] font-semibold shadow-lg shadow-cyan-500/25"
+              className="px-8 py-3 rounded-xl  text-accent-crimson font-semibold shadow-lg shadow-cyan-500/25"
             >
               {editNode ? 'Save Changes' : 'Add Node'}
             </motion.button>
@@ -585,26 +585,26 @@ const ConnectionModal = ({ isOpen, onClose, onAdd, fromNode, toNode }) => {
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="w-full max-w-md  border border-[var(--border)] rounded-3xl shadow-2xl p-6"
+        className="w-full max-w-md  border border-hairline rounded-3xl shadow-2xl p-6"
       >
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-2">
-            <Link2 className="w-5 h-5 text-cyan-400" />
+          <h2 className="text-xl font-bold text-accent-crimson flex items-center gap-2">
+            <Link2 className="w-5 h-5 text-ink" />
             Create Connection
           </h2>
           <motion.button
             whileHover={{ scale: 1.1, rotate: 90 }}
             onClick={onClose}
-            className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+            className="p-2 rounded-xl text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
           >
             <X className="w-5 h-5" />
           </motion.button>
         </div>
 
         <div className="mb-6">
-          <p className="text-[var(--text-muted)] text-sm mb-4">
-            Connecting <span className="text-cyan-400 font-medium">{fromNode?.title}</span> to{' '}
-            <span className="text-emerald-400 font-medium">{toNode?.title}</span>
+          <p className="text-ink-muted text-sm mb-4">
+            Connecting <span className="text-ink font-medium">{fromNode?.title}</span> to{' '}
+            <span className="text-ink font-medium">{toNode?.title}</span>
           </p>
 
           <div className="space-y-2">
@@ -615,8 +615,8 @@ const ConnectionModal = ({ isOpen, onClose, onAdd, fromNode, toNode }) => {
                 className={`
                   w-full p-3 rounded-xl border transition-all flex items-center gap-3
                   ${connectionType === key 
-                    ? 'bg-[var(--card-bg)] border-[var(--border)]' 
-                    : 'bg-[var(--bg-accent-crimson)]/50 border-[var(--border)] hover:bg-[var(--card-bg)]/50'
+                    ? 'bg-[var(--card-bg)] border-hairline' 
+                    : 'bg-[var(--bg-accent-crimson)]/50 border-hairline hover:bg-[var(--card-bg)]/50'
                   }
                 `}
               >
@@ -627,9 +627,9 @@ const ConnectionModal = ({ isOpen, onClose, onAdd, fromNode, toNode }) => {
                     backgroundImage: config.dash ? `repeating-linear-gradient(90deg, ${config.color}, ${config.color} 4px, transparent 4px, transparent 8px)` : 'none'
                   }}
                 />
-                <span className="text-[var(--text-accent-crimson)] font-medium">{config.label}</span>
+                <span className="text-accent-crimson font-medium">{config.label}</span>
                 {connectionType === key && (
-                  <Check className="w-4 h-4 text-cyan-400 ml-auto" />
+                  <Check className="w-4 h-4 text-ink ml-auto" />
                 )}
               </button>
             ))}
@@ -641,7 +641,7 @@ const ConnectionModal = ({ isOpen, onClose, onAdd, fromNode, toNode }) => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={onClose}
-            className="px-6 py-3 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+            className="px-6 py-3 rounded-xl text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
           >
             Cancel
           </motion.button>
@@ -652,7 +652,7 @@ const ConnectionModal = ({ isOpen, onClose, onAdd, fromNode, toNode }) => {
               onAdd(connectionType);
               onClose();
             }}
-            className="px-8 py-3 rounded-xl  text-[var(--text-accent-crimson)] font-semibold shadow-lg shadow-cyan-500/25"
+            className="px-8 py-3 rounded-xl  text-accent-crimson font-semibold shadow-lg shadow-cyan-500/25"
           >
             Connect
           </motion.button>
@@ -684,13 +684,13 @@ const Toolbar = ({
   return (
     <div className="absolute top-4 left-4 z-30 flex flex-col gap-2">
       {/* Tool Selection */}
-      <div className="p-2 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-[var(--border)]  flex flex-col gap-1">
+      <div className="p-2 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-hairline  flex flex-col gap-1">
         <button
           onClick={() => setTool('select')}
           className={`p-2.5 rounded-lg transition-all ${
             tool === 'select' 
-              ? 'bg-cyan-500/20 text-cyan-400' 
-              : 'text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)]'
+              ? 'bg-surface-offset text-ink' 
+              : 'text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)]'
           }`}
           title="Select Tool (V)"
         >
@@ -700,8 +700,8 @@ const Toolbar = ({
           onClick={() => setTool('pan')}
           className={`p-2.5 rounded-lg transition-all ${
             tool === 'pan' 
-              ? 'bg-cyan-500/20 text-cyan-400' 
-              : 'text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)]'
+              ? 'bg-surface-offset text-ink' 
+              : 'text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)]'
           }`}
           title="Pan Tool (H)"
         >
@@ -710,27 +710,27 @@ const Toolbar = ({
       </div>
 
       {/* Zoom Controls */}
-      <div className="p-2 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-[var(--border)]  flex flex-col gap-1">
+      <div className="p-2 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-hairline  flex flex-col gap-1">
         <button
           onClick={onZoomIn}
-          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+          className="p-2.5 rounded-lg text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
           title="Zoom In (+)"
         >
           <ZoomIn className="w-5 h-5" />
         </button>
-        <div className="text-center text-xs text-[var(--text-muted)] py-1">
+        <div className="text-center text-xs text-ink-muted py-1">
           {Math.round(scale * 100)}%
         </div>
         <button
           onClick={onZoomOut}
-          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+          className="p-2.5 rounded-lg text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
           title="Zoom Out (-)"
         >
           <ZoomOut className="w-5 h-5" />
         </button>
         <button
           onClick={onResetView}
-          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+          className="p-2.5 rounded-lg text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
           title="Reset View (R)"
         >
           <Maximize2 className="w-5 h-5" />
@@ -738,13 +738,13 @@ const Toolbar = ({
       </div>
 
       {/* View Options */}
-      <div className="p-2 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-[var(--border)] ">
+      <div className="p-2 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-hairline ">
         <button
           onClick={() => setShowGrid(!showGrid)}
           className={`p-2.5 rounded-lg transition-all ${
             showGrid 
-              ? 'bg-cyan-500/20 text-cyan-400' 
-              : 'text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)]'
+              ? 'bg-surface-offset text-ink' 
+              : 'text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)]'
           }`}
           title="Toggle Grid (G)"
         >
@@ -767,24 +767,24 @@ const RightPanel = ({ onAddNode, onExportPNG, onExportPDF, onSave, onLoad, onCle
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={onAddNode}
-        className="p-3 rounded-xl  text-[var(--text-accent-crimson)] shadow-lg shadow-cyan-500/25"
+        className="p-3 rounded-xl  text-accent-crimson shadow-lg shadow-cyan-500/25"
         title="Add Node (N)"
       >
         <Plus className="w-5 h-5" />
       </motion.button>
 
       {/* File Operations */}
-      <div className="p-2 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-[var(--border)]  flex flex-col gap-1">
+      <div className="p-2 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-hairline  flex flex-col gap-1">
         <button
           onClick={onSave}
-          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+          className="p-2.5 rounded-lg text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
           title="Save Flowchart"
         >
           <Save className="w-5 h-5" />
         </button>
         <button
           onClick={onLoad}
-          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+          className="p-2.5 rounded-lg text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
           title="Load Flowchart"
         >
           <FolderOpen className="w-5 h-5" />
@@ -792,17 +792,17 @@ const RightPanel = ({ onAddNode, onExportPNG, onExportPDF, onSave, onLoad, onCle
       </div>
 
       {/* Export */}
-      <div className="p-2 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-[var(--border)]  flex flex-col gap-1">
+      <div className="p-2 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-hairline  flex flex-col gap-1">
         <button
           onClick={onExportPNG}
-          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+          className="p-2.5 rounded-lg text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
           title="Export as PNG"
         >
           <Image className="w-5 h-5" />
         </button>
         <button
           onClick={onExportPDF}
-          className="p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+          className="p-2.5 rounded-lg text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
           title="Export as PDF"
         >
           <FileText className="w-5 h-5" />
@@ -812,7 +812,7 @@ const RightPanel = ({ onAddNode, onExportPNG, onExportPDF, onSave, onLoad, onCle
       {/* Clear */}
       <button
         onClick={onClear}
-        className="p-2.5 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-[var(--border)]  text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all"
+        className="p-2.5 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-hairline  text-accent-crimson hover:text-accent-crimson hover:bg-accent-crimson/10 transition-all"
         title="Clear Canvas"
       >
         <Trash2 className="w-5 h-5" />
@@ -827,8 +827,8 @@ const RightPanel = ({ onAddNode, onExportPNG, onExportPDF, onSave, onLoad, onCle
 
 const Legend = () => {
   return (
-    <div className="absolute bottom-4 left-4 z-30 p-4 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-[var(--border)] ">
-      <h4 className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">Node Types</h4>
+    <div className="absolute bottom-4 left-4 z-30 p-4 rounded-xl bg-[var(--bg-accent-crimson)]/90 border border-hairline ">
+      <h4 className="text-xs font-semibold text-ink-muted uppercase tracking-wider mb-3">Node Types</h4>
       <div className="grid grid-cols-2 gap-2">
         {Object.entries(NODE_TYPES).map(([key, config]) => {
           const Icon = config.icon;
@@ -837,7 +837,7 @@ const Legend = () => {
               <div className={`p-1 rounded ${config.bgColor}`}>
                 <Icon className={`w-3 h-3 ${config.textColor}`} />
               </div>
-              <span className="text-xs text-[var(--text-muted)]">{config.label}</span>
+              <span className="text-xs text-ink-muted">{config.label}</span>
             </div>
           );
         })}
@@ -861,19 +861,19 @@ const EmptyState = ({ onAddNode }) => (
         <motion.div
           animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.1, 0.3] }}
           transition={{ duration: 3, repeat: Infinity }}
-          className="absolute inset-0 w-32 h-32 rounded-full bg-cyan-500/20 blur-xl"
+          className="absolute inset-0 w-32 h-32 rounded-full bg-surface-offset blur-xl"
         />
         <motion.div
           animate={{ y: [0, -5, 0] }}
           transition={{ duration: 3, repeat: Infinity }}
-          className="relative p-6 rounded-3xl /80 to-slate-900/80 border border-[var(--border)]/50  shadow-2xl"
+          className="relative p-6 rounded-3xl /80 to-slate-900/80 border border-hairline/50  shadow-2xl"
         >
-          <GitBranch className="w-16 h-16 text-cyan-400" />
+          <GitBranch className="w-16 h-16 text-ink" />
         </motion.div>
       </div>
       
-      <h3 className="text-2xl font-bold text-[var(--text-accent-crimson)] mb-3">Start Building Your Flow</h3>
-      <p className="text-[var(--text-muted)] max-w-md mx-auto mb-8 leading-relaxed">
+      <h3 className="text-2xl font-bold text-accent-crimson mb-3">Start Building Your Flow</h3>
+      <p className="text-ink-muted max-w-md mx-auto mb-8 leading-relaxed">
         Create argument structures visually. Add claims, evidence, warrants, and connect them to see your case flow.
       </p>
       
@@ -881,7 +881,7 @@ const EmptyState = ({ onAddNode }) => (
         whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(6, 182, 212, 0.3)' }}
         whileTap={{ scale: 0.98 }}
         onClick={onAddNode}
-        className="px-8 py-4 rounded-2xl  text-[var(--text-accent-crimson)] font-semibold text-lg shadow-lg shadow-cyan-500/25 inline-flex items-center gap-3"
+        className="px-8 py-4 rounded-2xl  text-accent-crimson font-semibold text-lg shadow-lg shadow-cyan-500/25 inline-flex items-center gap-3"
       >
         <Plus className="w-5 h-5" />
         Add First Node
@@ -1213,13 +1213,13 @@ const ArgumentFlowchart = () => {
         {/* Header */}
         <div className="flex items-start justify-between flex-shrink-0">
           <div>
-            <h1 className="text-3xl font-bold text-[var(--text-accent-crimson)] tracking-tight flex items-center gap-3">
-              <div className="p-2.5 rounded-xl /20 to-blue-600/20 border border-cyan-500/30">
-                <GitBranch className="w-7 h-7 text-cyan-400" />
+            <h1 className="text-3xl font-bold text-accent-crimson tracking-tight flex items-center gap-3">
+              <div className="p-2.5 rounded-xl /20 to-blue-600/20 border border-hairline">
+                <GitBranch className="w-7 h-7 text-ink" />
               </div>
               Argument Flowchart
             </h1>
-            <p className="text-[var(--text-muted)] mt-2">
+            <p className="text-ink-muted mt-2">
               {nodes.length} nodes • {connections.length} connections
             </p>
           </div>
@@ -1228,7 +1228,7 @@ const ArgumentFlowchart = () => {
         {/* Canvas Container */}
         <div 
           ref={containerRef}
-          className="flex-1 relative rounded-2xl border border-[var(--border)]/60 bg-slate-950 overflow-hidden"
+          className="flex-1 relative rounded-2xl border border-hairline/60 bg-surface-offset overflow-hidden"
           style={{ cursor: tool === 'pan' ? 'grab' : isPanning ? 'grabbing' : 'default' }}
           onMouseDown={handleCanvasMouseDown}
           onMouseMove={handleCanvasMouseMove}
@@ -1352,7 +1352,7 @@ const ArgumentFlowchart = () => {
 
           {/* Connection mode indicator */}
           {isConnecting && (
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-cyan-500/20 border border-cyan-500/50 text-cyan-400 text-sm font-medium flex items-center gap-2">
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-surface-offset border border-hairline text-ink text-sm font-medium flex items-center gap-2">
               <Link2 className="w-4 h-4" />
               Click a node to connect
               <button
@@ -1360,7 +1360,7 @@ const ArgumentFlowchart = () => {
                   setIsConnecting(false);
                   setConnectionStart(null);
                 }}
-                className="ml-2 p-1 rounded hover:bg-cyan-500/20"
+                className="ml-2 p-1 rounded hover:bg-surface-offset"
               >
                 <X className="w-4 h-4" />
               </button>

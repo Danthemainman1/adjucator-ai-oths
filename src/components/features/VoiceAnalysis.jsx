@@ -148,7 +148,7 @@ const WaveformVisualizer = ({ analyser, isRecording, audioData }) => {
       ref={canvasRef}
       width={800}
       height={150}
-      className="w-full h-32 rounded-xl border border-[var(--border)]"
+      className="w-full h-32 rounded-xl border border-hairline"
     />
   );
 };
@@ -231,7 +231,7 @@ const SpectrumAnalyzer = ({ analyser, isRecording }) => {
       ref={canvasRef}
       width={400}
       height={120}
-      className="w-full h-28 rounded-xl border border-[var(--border)]"
+      className="w-full h-28 rounded-xl border border-hairline"
     />
   );
 };
@@ -321,7 +321,7 @@ const PitchTracker = ({ pitchHistory, currentPitch }) => {
       ref={canvasRef}
       width={300}
       height={100}
-      className="w-full h-24 rounded-xl border border-[var(--border)]"
+      className="w-full h-24 rounded-xl border border-hairline"
     />
   );
 };
@@ -332,11 +332,11 @@ const PitchTracker = ({ pitchHistory, currentPitch }) => {
 
 const StatCard = ({ icon: Icon, label, value, subValue, trend, color = 'cyan' }) => {
   const colors = {
-    cyan: 'from-cyan-500/20 to-cyan-600/20 border-cyan-500/30 text-cyan-400',
-    emerald: 'from-emerald-500/20 to-emerald-600/20 border-emerald-500/30 text-emerald-400',
-    purple: 'from-purple-500/20 to-purple-600/20 border-purple-500/30 text-purple-400',
-    amber: 'from-amber-500/20 to-amber-600/20 border-amber-500/30 text-amber-400',
-    red: 'from-red-500/20 to-red-600/20 border-red-500/30 text-red-400'
+    cyan: 'from-cyan-500/20 to-cyan-600/20 border-hairline text-ink',
+    emerald: 'from-emerald-500/20 to-emerald-600/20 border-hairline text-ink',
+    purple: 'from-purple-500/20 to-purple-600/20 border-hairline text-ink',
+    amber: 'from-amber-500/20 to-amber-600/20 border-hairline text-ink',
+    red: 'from-red-500/20 to-red-600/20 border-accent-crimson/30 text-accent-crimson'
   };
 
   const TrendIcon = trend === 'up' ? TrendingUp : trend === 'down' ? TrendingDown : Minus;
@@ -345,18 +345,18 @@ const StatCard = ({ icon: Icon, label, value, subValue, trend, color = 'cyan' })
     <div className={`p-4 rounded-xl  ${colors[color]} border `}>
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-[var(--text-muted)] text-xs font-medium uppercase tracking-wider">{label}</p>
-          <p className="text-2xl font-bold text-[var(--text-accent-crimson)] mt-1">{value}</p>
+          <p className="text-ink-muted text-xs font-medium uppercase tracking-wider">{label}</p>
+          <p className="text-2xl font-bold text-accent-crimson mt-1">{value}</p>
           {subValue && (
-            <p className="text-[var(--text-muted)] text-xs mt-1">{subValue}</p>
+            <p className="text-ink-muted text-xs mt-1">{subValue}</p>
           )}
         </div>
         <div className="flex items-center gap-2">
           {trend && (
             <TrendIcon className={`w-4 h-4 ${
-              trend === 'up' ? 'text-emerald-400' : 
-              trend === 'down' ? 'text-red-400' : 
-              'text-[var(--text-muted)]'
+              trend === 'up' ? 'text-ink' : 
+              trend === 'down' ? 'text-accent-crimson' : 
+              'text-ink-muted'
             }`} />
           )}
           <div className={`p-2 rounded-lg  ${colors[color]}`}>
@@ -376,10 +376,10 @@ const FillerWordBadge = ({ word, count }) => (
   <motion.div
     initial={{ scale: 0 }}
     animate={{ scale: 1 }}
-    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30"
+    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-offset border border-hairline"
   >
-    <span className="text-amber-400 text-sm font-medium">"{word}"</span>
-    <span className="px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold">
+    <span className="text-ink text-sm font-medium">"{word}"</span>
+    <span className="px-1.5 py-0.5 rounded-full bg-surface-offset text-ink text-xs font-bold">
       {count}
     </span>
   </motion.div>
@@ -391,10 +391,10 @@ const FillerWordBadge = ({ word, count }) => (
 
 const ConfidenceMeter = ({ score }) => {
   const getColor = () => {
-    if (score >= CONFIDENCE_THRESHOLDS.excellent) return { bg: 'bg-emerald-500', text: 'text-emerald-400', label: 'Excellent' };
-    if (score >= CONFIDENCE_THRESHOLDS.good) return { bg: 'bg-cyan-500', text: 'text-cyan-400', label: 'Good' };
-    if (score >= CONFIDENCE_THRESHOLDS.fair) return { bg: 'bg-amber-500', text: 'text-amber-400', label: 'Fair' };
-    return { bg: 'bg-red-500', text: 'text-red-400', label: 'Needs Work' };
+    if (score >= CONFIDENCE_THRESHOLDS.excellent) return { bg: 'bg-surface-offset', text: 'text-ink', label: 'Excellent' };
+    if (score >= CONFIDENCE_THRESHOLDS.good) return { bg: 'bg-surface-offset', text: 'text-ink', label: 'Good' };
+    if (score >= CONFIDENCE_THRESHOLDS.fair) return { bg: 'bg-surface-offset', text: 'text-ink', label: 'Fair' };
+    return { bg: 'bg-accent-crimson', text: 'text-accent-crimson', label: 'Needs Work' };
   };
 
   const { bg, text, label } = getColor();
@@ -402,7 +402,7 @@ const ConfidenceMeter = ({ score }) => {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <span className="text-[var(--text-muted)] text-sm">Confidence Score</span>
+        <span className="text-ink-muted text-sm">Confidence Score</span>
         <span className={`${text} font-bold`}>{score}%</span>
       </div>
       <div className="h-3 rounded-full bg-[var(--card-bg)] overflow-hidden">
@@ -415,7 +415,7 @@ const ConfidenceMeter = ({ score }) => {
       </div>
       <div className="flex items-center justify-between text-xs">
         <span className={text}>{label}</span>
-        <span className="text-[var(--text-muted)]">Target: 85%+</span>
+        <span className="text-ink-muted">Target: 85%+</span>
       </div>
     </div>
   );
@@ -436,7 +436,7 @@ const RecordingItem = ({ recording, onPlay, onDelete, isPlaying }) => {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex items-center gap-4 p-4 rounded-xl bg-[var(--card-bg)]/30 border border-[var(--border)]/60 hover:border-[var(--border)]/60 transition-all group"
+      className="flex items-center gap-4 p-4 rounded-xl bg-[var(--card-bg)]/30 border border-hairline/60 hover:border-hairline/60 transition-all group"
     >
       <motion.button
         whileHover={{ scale: 1.1 }}
@@ -444,16 +444,16 @@ const RecordingItem = ({ recording, onPlay, onDelete, isPlaying }) => {
         onClick={() => onPlay(recording)}
         className={`p-3 rounded-xl transition-all ${
           isPlaying 
-            ? 'bg-cyan-500 text-[var(--text-accent-crimson)]' 
-            : 'bg-[var(--input-bg)] text-[var(--text-secondary)] hover:bg-cyan-500 hover:text-[var(--text-accent-crimson)]'
+            ? 'bg-surface-offset text-accent-crimson' 
+            : 'bg-surface-parchment text-ink-muted hover:bg-surface-offset hover:text-accent-crimson'
         }`}
       >
         {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
       </motion.button>
 
       <div className="flex-1 min-w-0">
-        <h4 className="text-[var(--text-accent-crimson)] font-medium truncate">{recording.name}</h4>
-        <div className="flex items-center gap-3 text-sm text-[var(--text-muted)]">
+        <h4 className="text-accent-crimson font-medium truncate">{recording.name}</h4>
+        <div className="flex items-center gap-3 text-sm text-ink-muted">
           <span className="flex items-center gap-1">
             <Clock className="w-3.5 h-3.5" />
             {formatDuration(recording.duration)}
@@ -465,10 +465,10 @@ const RecordingItem = ({ recording, onPlay, onDelete, isPlaying }) => {
       <div className="flex items-center gap-2">
         <span className={`px-2 py-1 rounded-full text-xs font-medium ${
           recording.confidence >= 80 
-            ? 'bg-emerald-500/10 text-emerald-400' 
+            ? 'bg-surface-offset text-ink' 
             : recording.confidence >= 60 
-            ? 'bg-amber-500/10 text-amber-400'
-            : 'bg-red-500/10 text-red-400'
+            ? 'bg-surface-offset text-ink'
+            : 'bg-accent-crimson/10 text-accent-crimson'
         }`}>
           {recording.confidence}%
         </span>
@@ -478,7 +478,7 @@ const RecordingItem = ({ recording, onPlay, onDelete, isPlaying }) => {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => onDelete(recording.id)}
-        className="p-2 rounded-lg text-[var(--text-muted)] hover:text-red-400 hover:bg-red-500/10 opacity-0 group-hover:opacity-100 transition-all"
+        className="p-2 rounded-lg text-ink-muted hover:text-accent-crimson hover:bg-accent-crimson/10 opacity-0 group-hover:opacity-100 transition-all"
       >
         <Trash2 className="w-4 h-4" />
       </motion.button>
@@ -493,10 +493,10 @@ const RecordingItem = ({ recording, onPlay, onDelete, isPlaying }) => {
 const EmptyRecordings = () => (
   <div className="text-center py-8">
     <div className="inline-flex p-4 rounded-full bg-[var(--card-bg)]/50 mb-4">
-      <Radio className="w-8 h-8 text-[var(--text-muted)]" />
+      <Radio className="w-8 h-8 text-ink-muted" />
     </div>
-    <p className="text-[var(--text-muted)]">No recordings yet</p>
-    <p className="text-[var(--text-muted)] text-sm">Start recording to analyze your speech</p>
+    <p className="text-ink-muted">No recordings yet</p>
+    <p className="text-ink-muted text-sm">Start recording to analyze your speech</p>
   </div>
 );
 
@@ -809,11 +809,11 @@ const VoiceAnalysis = () => {
 
   // Get speaking rate label
   const getSpeakingRateLabel = () => {
-    if (speakingRate < SPEAKING_RATE.slow) return { label: 'Too Slow', color: 'text-amber-400' };
-    if (speakingRate < SPEAKING_RATE.normal) return { label: 'Slow', color: 'text-cyan-400' };
-    if (speakingRate < SPEAKING_RATE.fast) return { label: 'Normal', color: 'text-emerald-400' };
-    if (speakingRate < SPEAKING_RATE.veryFast) return { label: 'Fast', color: 'text-amber-400' };
-    return { label: 'Too Fast', color: 'text-red-400' };
+    if (speakingRate < SPEAKING_RATE.slow) return { label: 'Too Slow', color: 'text-ink' };
+    if (speakingRate < SPEAKING_RATE.normal) return { label: 'Slow', color: 'text-ink' };
+    if (speakingRate < SPEAKING_RATE.fast) return { label: 'Normal', color: 'text-ink' };
+    if (speakingRate < SPEAKING_RATE.veryFast) return { label: 'Fast', color: 'text-ink' };
+    return { label: 'Too Fast', color: 'text-accent-crimson' };
   };
 
   const totalFillers = Object.values(fillerWords).reduce((a, b) => a + b, 0);
@@ -827,13 +827,13 @@ const VoiceAnalysis = () => {
         {/* Header */}
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-[var(--text-accent-crimson)] tracking-tight flex items-center gap-3">
-              <div className="p-2.5 rounded-xl /20 to-blue-600/20 border border-cyan-500/30">
-                <Waves className="w-7 h-7 text-cyan-400" />
+            <h1 className="text-3xl font-bold text-accent-crimson tracking-tight flex items-center gap-3">
+              <div className="p-2.5 rounded-xl /20 to-blue-600/20 border border-hairline">
+                <Waves className="w-7 h-7 text-ink" />
               </div>
               Voice Analysis
             </h1>
-            <p className="text-[var(--text-muted)] mt-2">
+            <p className="text-ink-muted mt-2">
               Real-time speech pattern analysis and feedback
             </p>
           </div>
@@ -845,17 +845,17 @@ const VoiceAnalysis = () => {
             {/* Waveform */}
             <div className="glass-panel p-6 /80 to-slate-950/80">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-[var(--text-accent-crimson)] font-semibold flex items-center gap-2">
-                  <Activity className="w-5 h-5 text-cyan-400" />
+                <h3 className="text-accent-crimson font-semibold flex items-center gap-2">
+                  <Activity className="w-5 h-5 text-ink" />
                   Waveform
                 </h3>
                 {isRecording && (
                   <div className="flex items-center gap-2">
                     <span className="relative flex h-3 w-3">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-crimson opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-accent-crimson"></span>
                     </span>
-                    <span className="text-red-400 text-sm font-medium">Recording</span>
+                    <span className="text-accent-crimson text-sm font-medium">Recording</span>
                   </div>
                 )}
               </div>
@@ -872,7 +872,7 @@ const VoiceAnalysis = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={startRecording}
-                    className="px-8 py-4 rounded-2xl  text-[var(--text-accent-crimson)] font-semibold text-lg shadow-lg shadow-red-500/25 flex items-center gap-3"
+                    className="px-8 py-4 rounded-2xl  text-accent-crimson font-semibold text-lg shadow-lg shadow-red-500/25 flex items-center gap-3"
                   >
                     <Mic className="w-6 h-6" />
                     Start Recording
@@ -885,7 +885,7 @@ const VoiceAnalysis = () => {
                       onClick={togglePause}
                       className={`p-4 rounded-xl ${
                         isPaused 
-                          ? 'bg-emerald-500 text-[var(--text-accent-crimson)]' 
+                          ? 'bg-surface-offset text-accent-crimson' 
                           : 'glass-button-secondary'
                       }`}
                     >
@@ -893,10 +893,10 @@ const VoiceAnalysis = () => {
                     </motion.button>
                     
                     <div className="text-center">
-                      <p className="text-3xl font-bold text-[var(--text-accent-crimson)] font-mono">
+                      <p className="text-3xl font-bold text-accent-crimson font-mono">
                         {formatTime(recordingTime)}
                       </p>
-                      <p className="text-[var(--text-muted)] text-sm">
+                      <p className="text-ink-muted text-sm">
                         {isPaused ? 'Paused' : 'Recording...'}
                       </p>
                     </div>
@@ -905,7 +905,7 @@ const VoiceAnalysis = () => {
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                       onClick={stopRecording}
-                      className="p-4 rounded-xl bg-red-500 text-[var(--text-accent-crimson)] hover:bg-red-600"
+                      className="p-4 rounded-xl bg-accent-crimson text-accent-crimson hover:bg-accent-crimson"
                     >
                       <Square className="w-6 h-6" />
                     </motion.button>
@@ -942,8 +942,8 @@ const VoiceAnalysis = () => {
             <div className="grid md:grid-cols-2 gap-4">
               {/* Spectrum Analyzer */}
               <div className="glass-panel p-4">
-                <h4 className="text-[var(--text-accent-crimson)] font-medium mb-3 flex items-center gap-2">
-                  <BarChart3 className="w-4 h-4 text-purple-400" />
+                <h4 className="text-accent-crimson font-medium mb-3 flex items-center gap-2">
+                  <BarChart3 className="w-4 h-4 text-ink" />
                   Frequency Spectrum
                 </h4>
                 <SpectrumAnalyzer 
@@ -954,8 +954,8 @@ const VoiceAnalysis = () => {
 
               {/* Pitch Tracker */}
               <div className="glass-panel p-4">
-                <h4 className="text-[var(--text-accent-crimson)] font-medium mb-3 flex items-center gap-2">
-                  <TrendingUp className="w-4 h-4 text-cyan-400" />
+                <h4 className="text-accent-crimson font-medium mb-3 flex items-center gap-2">
+                  <TrendingUp className="w-4 h-4 text-ink" />
                   Pitch Variation
                 </h4>
                 <PitchTracker 
@@ -968,14 +968,14 @@ const VoiceAnalysis = () => {
             {/* Filler Words */}
             <div className="glass-panel p-5">
               <div className="flex items-center justify-between mb-4">
-                <h4 className="text-[var(--text-accent-crimson)] font-medium flex items-center gap-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-400" />
+                <h4 className="text-accent-crimson font-medium flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 text-ink" />
                   Filler Words Detected
                 </h4>
                 <span className={`text-2xl font-bold ${
-                  totalFillers > 10 ? 'text-red-400' : 
-                  totalFillers > 5 ? 'text-amber-400' : 
-                  'text-emerald-400'
+                  totalFillers > 10 ? 'text-accent-crimson' : 
+                  totalFillers > 5 ? 'text-ink' : 
+                  'text-ink'
                 }`}>
                   {totalFillers}
                 </span>
@@ -988,7 +988,7 @@ const VoiceAnalysis = () => {
                   ))}
                 </div>
               ) : (
-                <p className="text-[var(--text-muted)] text-sm">
+                <p className="text-ink-muted text-sm">
                   {isRecording ? 'Listening for filler words...' : 'No filler words detected'}
                 </p>
               )}
@@ -999,8 +999,8 @@ const VoiceAnalysis = () => {
           <div className="space-y-6">
             {/* Real-time Stats */}
             <div className="space-y-4">
-              <h3 className="text-[var(--text-accent-crimson)] font-semibold flex items-center gap-2">
-                <Zap className="w-5 h-5 text-amber-400" />
+              <h3 className="text-accent-crimson font-semibold flex items-center gap-2">
+                <Zap className="w-5 h-5 text-ink" />
                 Live Metrics
               </h3>
 
@@ -1037,8 +1037,8 @@ const VoiceAnalysis = () => {
 
             {/* Confidence Score */}
             <div className="glass-panel p-5">
-              <h3 className="text-[var(--text-accent-crimson)] font-semibold mb-4 flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-cyan-400" />
+              <h3 className="text-accent-crimson font-semibold mb-4 flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-ink" />
                 Confidence Analysis
               </h3>
               <ConfidenceMeter score={confidenceScore} />
@@ -1046,11 +1046,11 @@ const VoiceAnalysis = () => {
 
             {/* Saved Recordings */}
             <div className="glass-panel p-5">
-              <h3 className="text-[var(--text-accent-crimson)] font-semibold mb-4 flex items-center gap-2">
-                <Radio className="w-5 h-5 text-purple-400" />
+              <h3 className="text-accent-crimson font-semibold mb-4 flex items-center gap-2">
+                <Radio className="w-5 h-5 text-ink" />
                 Saved Recordings
                 {recordings.length > 0 && (
-                  <span className="ml-auto px-2 py-0.5 rounded-full bg-[var(--card-bg)] text-[var(--text-muted)] text-xs">
+                  <span className="ml-auto px-2 py-0.5 rounded-full bg-[var(--card-bg)] text-ink-muted text-xs">
                     {recordings.length}
                   </span>
                 )}
@@ -1074,26 +1074,26 @@ const VoiceAnalysis = () => {
             </div>
 
             {/* Tips */}
-            <div className="p-4 rounded-xl border border-cyan-500/20 bg-cyan-500/5">
-              <h4 className="text-cyan-400 font-medium mb-2 flex items-center gap-2">
+            <div className="p-4 rounded-xl border border-hairline bg-surface-offset">
+              <h4 className="text-ink font-medium mb-2 flex items-center gap-2">
                 <Info className="w-4 h-4" />
                 Tips for Better Speech
               </h4>
-              <ul className="space-y-2 text-sm text-[var(--text-muted)]">
+              <ul className="space-y-2 text-sm text-ink-muted">
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <Check className="w-4 h-4 text-ink mt-0.5 flex-shrink-0" />
                   Aim for 130-160 words per minute
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <Check className="w-4 h-4 text-ink mt-0.5 flex-shrink-0" />
                   Vary your pitch to maintain engagement
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <Check className="w-4 h-4 text-ink mt-0.5 flex-shrink-0" />
                   Pause instead of using filler words
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <Check className="w-4 h-4 text-ink mt-0.5 flex-shrink-0" />
                   Practice breath control for steady volume
                 </li>
               </ul>

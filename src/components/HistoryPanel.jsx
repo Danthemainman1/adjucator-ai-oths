@@ -30,38 +30,38 @@ const TYPE_CONFIG = {
   judge: { 
     icon: Gavel, 
     label: 'Speech Analysis', 
-    color: 'text-cyan-400',
-    bg: 'bg-cyan-500/10 border-cyan-500/20'
+    color: 'text-ink',
+    bg: 'bg-surface-offset border-hairline'
   },
   board: { 
     icon: Image, 
     label: 'Board Evaluation', 
-    color: 'text-purple-400',
-    bg: 'bg-purple-500/10 border-purple-500/20'
+    color: 'text-ink',
+    bg: 'bg-surface-offset border-hairline'
   },
   coach: { 
     icon: Mic, 
     label: 'Live Coaching', 
-    color: 'text-emerald-400',
-    bg: 'bg-emerald-500/10 border-emerald-500/20'
+    color: 'text-ink',
+    bg: 'bg-surface-offset border-hairline'
   },
   strategy: { 
     icon: Target, 
     label: 'Strategy', 
-    color: 'text-orange-400',
-    bg: 'bg-orange-500/10 border-orange-500/20'
+    color: 'text-accent-crimson',
+    bg: 'bg-accent-crimson/10 border-accent-crimson/20'
   },
   extemp: { 
     icon: HelpCircle, 
     label: 'Extemp Question', 
-    color: 'text-amber-400',
-    bg: 'bg-amber-500/10 border-amber-500/20'
+    color: 'text-ink',
+    bg: 'bg-surface-offset border-hairline'
   },
   tone: { 
     icon: Brain, 
     label: 'Tone Analysis', 
-    color: 'text-pink-400',
-    bg: 'bg-pink-500/10 border-pink-500/20'
+    color: 'text-accent-crimson',
+    bg: 'bg-accent-crimson/10 border-accent-crimson/20'
   },
 };
 
@@ -71,7 +71,7 @@ const SessionCard = ({ session, onView, onDelete }) => {
   const Icon = config.icon;
 
   return (
-    <div className="rounded-2xl border border-[var(--border)]/60 bg-[var(--bg-accent-crimson)]/30  overflow-hidden group">
+    <div className="rounded-2xl border border-hairline/60 bg-[var(--bg-accent-crimson)]/30  overflow-hidden group">
       {/* Header */}
       <div 
         className="p-4 cursor-pointer hover:bg-[var(--card-bg)]/30 transition-colors"
@@ -88,17 +88,17 @@ const SessionCard = ({ session, onView, onDelete }) => {
                 {config.label}
               </span>
               {session.metadata?.speechType && (
-                <span className="text-xs text-[var(--text-muted)]">
+                <span className="text-xs text-ink-muted">
                   {session.metadata.speechType}
                 </span>
               )}
             </div>
             
-            <h3 className="font-medium text-[var(--text-accent-crimson)] truncate">
+            <h3 className="font-medium text-accent-crimson truncate">
               {session.title || session.metadata?.topic || 'Untitled Session'}
             </h3>
             
-            <div className="flex items-center gap-3 mt-2 text-xs text-[var(--text-muted)]">
+            <div className="flex items-center gap-3 mt-2 text-xs text-ink-muted">
               <span className="flex items-center gap-1">
                 <Calendar className="w-3 h-3" />
                 {formatDate(session.createdAt)}
@@ -113,15 +113,15 @@ const SessionCard = ({ session, onView, onDelete }) => {
           <div className="flex items-center gap-2">
             <button 
               onClick={(e) => { e.stopPropagation(); onDelete(session.id); }}
-              className="p-2 text-[var(--text-muted)] hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
+              className="p-2 text-ink-muted hover:text-accent-crimson hover:bg-accent-crimson/10 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
               title="Delete session"
             >
               <Trash2 className="w-4 h-4" />
             </button>
             {isExpanded ? (
-              <ChevronDown className="w-5 h-5 text-[var(--text-muted)]" />
+              <ChevronDown className="w-5 h-5 text-ink-muted" />
             ) : (
-              <ChevronRight className="w-5 h-5 text-[var(--text-muted)]" />
+              <ChevronRight className="w-5 h-5 text-ink-muted" />
             )}
           </div>
         </div>
@@ -129,17 +129,17 @@ const SessionCard = ({ session, onView, onDelete }) => {
 
       {/* Expanded Content */}
       {isExpanded && (
-        <div className="border-t border-[var(--border)]/60 p-4 animate-in slide-in-from-top-2">
+        <div className="border-t border-hairline/60 p-4 animate-in slide-in-from-top-2">
           {/* Metadata */}
           {session.metadata && (
             <div className="flex flex-wrap gap-2 mb-4">
               {session.metadata.side && (
-                <span className="text-xs px-2.5 py-1 bg-[var(--card-bg)]/50 rounded-lg text-[var(--text-muted)] border border-[var(--border)]/50">
+                <span className="text-xs px-2.5 py-1 bg-[var(--card-bg)]/50 rounded-lg text-ink-muted border border-hairline/50">
                   {session.metadata.side}
                 </span>
               )}
               {session.metadata.difficulty && (
-                <span className="text-xs px-2.5 py-1 bg-[var(--card-bg)]/50 rounded-lg text-[var(--text-muted)] border border-[var(--border)]/50">
+                <span className="text-xs px-2.5 py-1 bg-[var(--card-bg)]/50 rounded-lg text-ink-muted border border-hairline/50">
                   {session.metadata.difficulty} difficulty
                 </span>
               )}
@@ -147,8 +147,8 @@ const SessionCard = ({ session, onView, onDelete }) => {
           )}
 
           {/* Result Preview */}
-          <div className="bg-[var(--bg-accent-crimson)]/50 rounded-xl p-4 max-h-[400px] overflow-y-auto border border-[var(--border)]/50">
-            <div className="prose prose-invert prose-sm max-w-none prose-headings:text-cyan-400 prose-headings:font-semibold prose-a:text-cyan-400 prose-strong:text-[var(--text-accent-crimson)] prose-table:border-collapse prose-th:border prose-th:border-[var(--border)] prose-td:border prose-td:border-[var(--border)] prose-th:p-3 prose-td:p-3 prose-th:bg-[var(--card-bg)]/50">
+          <div className="bg-[var(--bg-accent-crimson)]/50 rounded-xl p-4 max-h-[400px] overflow-y-auto border border-hairline/50">
+            <div className="prose prose-invert prose-sm max-w-none prose-headings:text-ink prose-headings:font-semibold prose-a:text-ink prose-strong:text-accent-crimson prose-table:border-collapse prose-th:border prose-th:border-hairline prose-td:border prose-td:border-hairline prose-th:p-3 prose-td:p-3 prose-th:bg-[var(--card-bg)]/50">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {session.result || 'No analysis result available'}
               </ReactMarkdown>
@@ -157,9 +157,9 @@ const SessionCard = ({ session, onView, onDelete }) => {
 
           {/* Input Preview for Extemp */}
           {session.type === 'extemp' && session.input?.question && (
-            <div className="mt-4 p-4 bg-[var(--card-bg)]/30 rounded-xl border border-[var(--border)]/50">
-              <h4 className="text-xs font-medium text-[var(--text-muted)] mb-2">Generated Question</h4>
-              <p className="text-[var(--text-accent-crimson)] font-serif text-lg">"{session.input.question}"</p>
+            <div className="mt-4 p-4 bg-[var(--card-bg)]/30 rounded-xl border border-hairline/50">
+              <h4 className="text-xs font-medium text-ink-muted mb-2">Generated Question</h4>
+              <p className="text-accent-crimson font-serif text-lg">"{session.input.question}"</p>
             </div>
           )}
         </div>
@@ -218,8 +218,8 @@ const HistoryPanel = () => {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)] tracking-tight">Session History</h1>
-          <p className="text-[var(--text-muted)] mt-1">
+          <h1 className="text-2xl font-bold text-accent-crimson tracking-tight">Session History</h1>
+          <p className="text-ink-muted mt-1">
             {stats.total} {stats.total === 1 ? 'session' : 'sessions'} recorded
           </p>
         </div>
@@ -228,7 +228,7 @@ const HistoryPanel = () => {
           <button
             onClick={exportHistory}
             disabled={history.length === 0}
-            className="p-2.5 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] rounded-xl transition-colors disabled:opacity-50 border border-[var(--border)]"
+            className="p-2.5 text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] rounded-xl transition-colors disabled:opacity-50 border border-hairline"
             title="Export history"
           >
             <Download className="w-5 h-5" />
@@ -236,7 +236,7 @@ const HistoryPanel = () => {
           
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="p-2.5 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] rounded-xl transition-colors border border-[var(--border)]"
+            className="p-2.5 text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] rounded-xl transition-colors border border-hairline"
             title="Import history"
           >
             <Upload className="w-5 h-5" />
@@ -252,7 +252,7 @@ const HistoryPanel = () => {
           {history.length > 0 && (
             <button
               onClick={() => setShowClearConfirm(true)}
-              className="p-2.5 text-[var(--text-muted)] hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-colors border border-[var(--border)]"
+              className="p-2.5 text-ink-muted hover:text-accent-crimson hover:bg-accent-crimson/10 rounded-xl transition-colors border border-hairline"
               title="Clear all history"
             >
               <Trash2 className="w-5 h-5" />
@@ -265,8 +265,8 @@ const HistoryPanel = () => {
       {importStatus && (
         <div className={`p-4 rounded-xl flex items-center gap-3 text-sm animate-in fade-in ${
           importStatus.success 
-            ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-400'
-            : 'bg-red-500/10 border border-red-500/20 text-red-400'
+            ? 'bg-surface-offset border border-hairline text-ink'
+            : 'bg-accent-crimson/10 border border-accent-crimson/20 text-accent-crimson'
         }`}>
           {importStatus.success ? (
             <>
@@ -293,15 +293,15 @@ const HistoryPanel = () => {
               onClick={() => setFilterType(filterType === type ? 'all' : type)}
               className={`p-4 rounded-xl border text-left transition-all ${
                 filterType === type 
-                  ? 'border-cyan-500/30 bg-cyan-500/10 shadow-lg shadow-cyan-500/10' 
-                  : 'border-[var(--border)]/60 bg-[var(--bg-accent-crimson)]/30 hover:bg-[var(--card-bg)]/30 hover:border-[var(--border)]'
+                  ? 'border-hairline bg-surface-offset shadow-lg shadow-cyan-500/10' 
+                  : 'border-hairline/60 bg-[var(--bg-accent-crimson)]/30 hover:bg-[var(--card-bg)]/30 hover:border-hairline'
               }`}
             >
               <div className="flex items-center gap-3">
                 <Icon className={`w-5 h-5 ${config.color}`} />
                 <div>
-                  <div className="text-xl font-bold text-[var(--text-accent-crimson)]">{count}</div>
-                  <div className="text-xs text-[var(--text-muted)]">{config.label}</div>
+                  <div className="text-xl font-bold text-accent-crimson">{count}</div>
+                  <div className="text-xs text-ink-muted">{config.label}</div>
                 </div>
               </div>
             </button>
@@ -312,20 +312,20 @@ const HistoryPanel = () => {
       {/* Search and Filter */}
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-muted" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search sessions..."
-            className="w-full pl-11 pr-4 py-3 rounded-xl bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+            className="w-full pl-11 pr-4 py-3 rounded-xl bg-[var(--bg-accent-crimson)]/50 border border-hairline text-accent-crimson placeholder-slate-500 focus:border-hairline focus:ring-1 focus:ring-hairline transition-all"
           />
         </div>
         
         <select
           value={filterType}
           onChange={(e) => setFilterType(e.target.value)}
-          className="px-4 py-3 rounded-xl bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all w-full sm:w-48"
+          className="px-4 py-3 rounded-xl bg-[var(--bg-accent-crimson)]/50 border border-hairline text-accent-crimson focus:border-hairline focus:ring-1 focus:ring-hairline transition-all w-full sm:w-48"
         >
           <option value="all">All Types</option>
           {Object.entries(TYPE_CONFIG).map(([type, config]) => (
@@ -346,14 +346,14 @@ const HistoryPanel = () => {
           ))}
         </div>
       ) : (
-        <div className="rounded-2xl border border-[var(--border)]/60 bg-[var(--bg-accent-crimson)]/30  flex flex-col items-center justify-center min-h-[40vh] text-center p-8">
+        <div className="rounded-2xl border border-hairline/60 bg-[var(--bg-accent-crimson)]/30  flex flex-col items-center justify-center min-h-[40vh] text-center p-8">
           {history.length === 0 ? (
             <>
               <div className="w-16 h-16 rounded-2xl bg-[var(--card-bg)]/50 flex items-center justify-center mb-4">
                 <HistoryIcon className="w-8 h-8 text-ink-muted" />
               </div>
-              <h3 className="text-xl font-bold text-[var(--text-accent-crimson)] mb-2">No Sessions Yet</h3>
-              <p className="text-[var(--text-muted)] max-w-md">
+              <h3 className="text-xl font-bold text-accent-crimson mb-2">No Sessions Yet</h3>
+              <p className="text-ink-muted max-w-md">
                 Your analysis sessions will appear here. Try analyzing a speech, using the live coach, 
                 or generating a strategy to get started!
               </p>
@@ -363,13 +363,13 @@ const HistoryPanel = () => {
               <div className="w-16 h-16 rounded-2xl bg-[var(--card-bg)]/50 flex items-center justify-center mb-4">
                 <Search className="w-8 h-8 text-ink-muted" />
               </div>
-              <h3 className="text-xl font-bold text-[var(--text-accent-crimson)] mb-2">No Results Found</h3>
-              <p className="text-[var(--text-muted)]">
+              <h3 className="text-xl font-bold text-accent-crimson mb-2">No Results Found</h3>
+              <p className="text-ink-muted">
                 No sessions match your search criteria.
               </p>
               <button
                 onClick={() => { setSearchQuery(''); setFilterType('all'); }}
-                className="mt-4 text-cyan-400 hover:text-cyan-300 font-medium"
+                className="mt-4 text-ink hover:text-ink font-medium"
               >
                 Clear filters
               </button>
@@ -381,18 +381,18 @@ const HistoryPanel = () => {
       {/* Clear Confirmation Modal */}
       {showClearConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60  p-4 animate-in fade-in">
-          <div className="w-full max-w-md p-6 rounded-2xl border border-[var(--border)] bg-[var(--bg-accent-crimson)] shadow-2xl animate-in zoom-in-95">
-            <div className="flex items-center gap-3 text-red-400 mb-4">
+          <div className="w-full max-w-md p-6 rounded-2xl border border-hairline bg-[var(--bg-accent-crimson)] shadow-2xl animate-in zoom-in-95">
+            <div className="flex items-center gap-3 text-accent-crimson mb-4">
               <AlertCircle className="w-6 h-6" />
               <h2 className="text-xl font-bold">Clear All History?</h2>
             </div>
-            <p className="text-[var(--text-muted)] mb-6">
+            <p className="text-ink-muted mb-6">
               This will permanently delete all {stats.total} sessions. This action cannot be undone.
             </p>
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setShowClearConfirm(false)}
-                className="px-4 py-2.5 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-colors"
+                className="px-4 py-2.5 rounded-xl text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-colors"
               >
                 Cancel
               </button>
@@ -401,7 +401,7 @@ const HistoryPanel = () => {
                   clearHistory();
                   setShowClearConfirm(false);
                 }}
-                className="px-4 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-[var(--text-accent-crimson)] font-medium transition-colors"
+                className="px-4 py-2.5 rounded-xl bg-accent-crimson hover:bg-accent-crimson text-accent-crimson font-medium transition-colors"
               >
                 Delete All
               </button>

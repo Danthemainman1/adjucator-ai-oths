@@ -24,11 +24,11 @@ const ROLES = [
 
 const getColorClasses = (color) => {
   const colors = {
-    yellow: { bg: 'bg-yellow-500/20', border: 'border-yellow-500/50', text: 'text-yellow-400', badge: 'bg-yellow-500' },
-    purple: { bg: 'bg-purple-500/20', border: 'border-purple-500/50', text: 'text-purple-400', badge: 'bg-purple-500' },
-    blue: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-blue-400', badge: 'bg-accent-crimson' },
-    green: { bg: 'bg-green-500/20', border: 'border-green-500/50', text: 'text-green-400', badge: 'bg-green-500' },
-    red: { bg: 'bg-red-500/20', border: 'border-red-500/50', text: 'text-red-400', badge: 'bg-red-500' }
+    yellow: { bg: 'bg-surface-offset', border: 'border-hairline', text: 'text-ink', badge: 'bg-surface-offset' },
+    purple: { bg: 'bg-surface-offset', border: 'border-hairline', text: 'text-ink', badge: 'bg-surface-offset' },
+    blue: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-ink', badge: 'bg-accent-crimson' },
+    green: { bg: 'bg-surface-offset', border: 'border-hairline', text: 'text-ink', badge: 'bg-surface-offset' },
+    red: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-accent-crimson', badge: 'bg-accent-crimson' }
   };
   return colors[color] || colors.blue;
 };
@@ -103,16 +103,16 @@ const TeamRoster = () => {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <div className="p-2 /20 to-blue-500/20 rounded-lg">
-              <Users className="w-6 h-6 text-cyan-400" />
+              <Users className="w-6 h-6 text-ink" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)]">Team Roster</h1>
-              <p className="text-[var(--text-muted)] text-sm">{members.length} team member{members.length !== 1 ? 's' : ''}</p>
+              <h1 className="text-2xl font-bold text-accent-crimson">Team Roster</h1>
+              <p className="text-ink-muted text-sm">{members.length} team member{members.length !== 1 ? 's' : ''}</p>
             </div>
           </div>
           <button
             onClick={() => setShowForm(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-surface-offset hover:bg-surface-offset text-accent-crimson rounded-lg transition-colors"
           >
             <Plus className="w-4 h-4" />
             Add Member
@@ -134,35 +134,35 @@ const TeamRoster = () => {
                 animate={{ scale: 1 }}
                 exit={{ scale: 0.95 }}
                 onClick={e => e.stopPropagation()}
-                className="bg-[var(--card-bg)] border border-[var(--border)] rounded-xl p-6 w-full max-w-md"
+                className="bg-[var(--card-bg)] border border-hairline rounded-xl p-6 w-full max-w-md"
               >
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-bold text-[var(--text-accent-crimson)]">
+                  <h2 className="text-xl font-bold text-accent-crimson">
                     {editingId ? 'Edit Member' : 'Add Team Member'}
                   </h2>
-                  <button onClick={resetForm} className="text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)]">
+                  <button onClick={resetForm} className="text-ink-muted hover:text-accent-crimson">
                     <X className="w-5 h-5" />
                   </button>
                 </div>
 
                 <div className="space-y-4">
                   <div>
-                    <label className="text-[var(--text-muted)] text-sm mb-1 block">Name *</label>
+                    <label className="text-ink-muted text-sm mb-1 block">Name *</label>
                     <input
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="Full name"
-                      className="w-full px-4 py-2 bg-[var(--bg-accent-crimson)] border border-[var(--border)] rounded-lg text-[var(--text-accent-crimson)] placeholder-slate-500 focus:outline-none focus:border-cyan-500/50"
+                      className="w-full px-4 py-2 bg-[var(--bg-accent-crimson)] border border-hairline rounded-lg text-accent-crimson placeholder-slate-500 focus:outline-none focus:border-hairline"
                     />
                   </div>
 
                   <div>
-                    <label className="text-[var(--text-muted)] text-sm mb-1 block">Role</label>
+                    <label className="text-ink-muted text-sm mb-1 block">Role</label>
                     <select
                       value={formData.role}
                       onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                      className="w-full px-4 py-2 bg-[var(--bg-accent-crimson)] border border-[var(--border)] rounded-lg text-[var(--text-accent-crimson)] focus:outline-none focus:border-cyan-500/50"
+                      className="w-full px-4 py-2 bg-[var(--bg-accent-crimson)] border border-hairline rounded-lg text-accent-crimson focus:outline-none focus:border-hairline"
                     >
                       {ROLES.map(role => (
                         <option key={role.id} value={role.id}>{role.label}</option>
@@ -171,35 +171,35 @@ const TeamRoster = () => {
                   </div>
 
                   <div>
-                    <label className="text-[var(--text-muted)] text-sm mb-1 block">Email</label>
+                    <label className="text-ink-muted text-sm mb-1 block">Email</label>
                     <input
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="email@example.com"
-                      className="w-full px-4 py-2 bg-[var(--bg-accent-crimson)] border border-[var(--border)] rounded-lg text-[var(--text-accent-crimson)] placeholder-slate-500 focus:outline-none focus:border-cyan-500/50"
+                      className="w-full px-4 py-2 bg-[var(--bg-accent-crimson)] border border-hairline rounded-lg text-accent-crimson placeholder-slate-500 focus:outline-none focus:border-hairline"
                     />
                   </div>
 
                   <div>
-                    <label className="text-[var(--text-muted)] text-sm mb-1 block">Phone</label>
+                    <label className="text-ink-muted text-sm mb-1 block">Phone</label>
                     <input
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       placeholder="(555) 123-4567"
-                      className="w-full px-4 py-2 bg-[var(--bg-accent-crimson)] border border-[var(--border)] rounded-lg text-[var(--text-accent-crimson)] placeholder-slate-500 focus:outline-none focus:border-cyan-500/50"
+                      className="w-full px-4 py-2 bg-[var(--bg-accent-crimson)] border border-hairline rounded-lg text-accent-crimson placeholder-slate-500 focus:outline-none focus:border-hairline"
                     />
                   </div>
 
                   <div>
-                    <label className="text-[var(--text-muted)] text-sm mb-1 block">Notes</label>
+                    <label className="text-ink-muted text-sm mb-1 block">Notes</label>
                     <input
                       type="text"
                       value={formData.notes}
                       onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                       placeholder="Partner, events, etc."
-                      className="w-full px-4 py-2 bg-[var(--bg-accent-crimson)] border border-[var(--border)] rounded-lg text-[var(--text-accent-crimson)] placeholder-slate-500 focus:outline-none focus:border-cyan-500/50"
+                      className="w-full px-4 py-2 bg-[var(--bg-accent-crimson)] border border-hairline rounded-lg text-accent-crimson placeholder-slate-500 focus:outline-none focus:border-hairline"
                     />
                   </div>
                 </div>
@@ -207,14 +207,14 @@ const TeamRoster = () => {
                 <div className="flex gap-3 mt-6">
                   <button
                     onClick={resetForm}
-                    className="flex-1 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+                    className="flex-1 py-2 bg-surface-parchment hover:bg-surface-offset text-accent-crimson rounded-lg transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleSubmit}
                     disabled={!formData.name.trim()}
-                    className="flex-1 py-2 bg-cyan-600 hover:bg-cyan-500 disabled:bg-[var(--input-bg)] disabled:cursor-not-allowed text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+                    className="flex-1 py-2 bg-surface-offset hover:bg-surface-offset disabled:bg-surface-parchment disabled:cursor-not-allowed text-accent-crimson rounded-lg transition-colors"
                   >
                     {editingId ? 'Save Changes' : 'Add Member'}
                   </button>
@@ -226,12 +226,12 @@ const TeamRoster = () => {
 
         {/* Roster List */}
         {members.length === 0 ? (
-          <div className="bg-[var(--card-bg)]/50 border border-[var(--border)]/50 rounded-xl p-12 text-center">
+          <div className="bg-[var(--card-bg)]/50 border border-hairline/50 rounded-xl p-12 text-center">
             <Users className="w-12 h-12 mx-auto mb-3 text-ink-muted" />
-            <p className="text-[var(--text-muted)] mb-4">No team members yet</p>
+            <p className="text-ink-muted mb-4">No team members yet</p>
             <button
               onClick={() => setShowForm(true)}
-              className="px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+              className="px-4 py-2 bg-surface-parchment hover:bg-surface-offset text-accent-crimson rounded-lg transition-colors"
             >
               Add First Member
             </button>
@@ -249,8 +249,8 @@ const TeamRoster = () => {
                 <div key={role.id}>
                   <div className="flex items-center gap-2 mb-3">
                     <Icon className={`w-4 h-4 ${colors.text}`} />
-                    <h2 className="text-[var(--text-accent-crimson)] font-medium">{role.label}</h2>
-                    <span className="text-[var(--text-muted)] text-sm">({roleMembers.length})</span>
+                    <h2 className="text-accent-crimson font-medium">{role.label}</h2>
+                    <span className="text-ink-muted text-sm">({roleMembers.length})</span>
                   </div>
                   <div className="grid gap-3 sm:grid-cols-2">
                     {roleMembers.map(member => (
@@ -263,21 +263,21 @@ const TeamRoster = () => {
                       >
                         <div className="flex items-start justify-between">
                           <div>
-                            <h3 className="text-[var(--text-accent-crimson)] font-semibold">{member.name}</h3>
+                            <h3 className="text-accent-crimson font-semibold">{member.name}</h3>
                             {member.notes && (
-                              <p className="text-[var(--text-muted)] text-sm mt-1">{member.notes}</p>
+                              <p className="text-ink-muted text-sm mt-1">{member.notes}</p>
                             )}
                           </div>
                           <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                             <button
                               onClick={() => editMember(member)}
-                              className="p-1.5 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
+                              className="p-1.5 text-ink-muted hover:text-accent-crimson transition-colors"
                             >
                               <Edit3 className="w-4 h-4" />
                             </button>
                             <button
                               onClick={() => deleteMember(member.id)}
-                              className="p-1.5 text-[var(--text-muted)] hover:text-red-400 transition-colors"
+                              className="p-1.5 text-ink-muted hover:text-accent-crimson transition-colors"
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
@@ -288,7 +288,7 @@ const TeamRoster = () => {
                             {member.email && (
                               <a
                                 href={`mailto:${member.email}`}
-                                className="flex items-center gap-1 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
+                                className="flex items-center gap-1 text-ink-muted hover:text-accent-crimson transition-colors"
                               >
                                 <Mail className="w-3 h-3" />
                                 {member.email}
@@ -297,7 +297,7 @@ const TeamRoster = () => {
                             {member.phone && (
                               <a
                                 href={`tel:${member.phone}`}
-                                className="flex items-center gap-1 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
+                                className="flex items-center gap-1 text-ink-muted hover:text-accent-crimson transition-colors"
                               >
                                 <Phone className="w-3 h-3" />
                                 {member.phone}

@@ -179,26 +179,26 @@ const TeamInput = ({ team, onChange, onDelete }) => {
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
-      className="flex items-center gap-2 bg-[var(--input-bg)]/50 rounded-lg p-2"
+      className="flex items-center gap-2 bg-surface-parchment/50 rounded-lg p-2"
     >
-      <Users className="w-4 h-4 text-[var(--text-muted)]" />
+      <Users className="w-4 h-4 text-ink-muted" />
       <input
         type="text"
         value={team.name}
         onChange={(e) => onChange({ ...team, name: e.target.value })}
         placeholder="Team name..."
-        className="flex-1 bg-transparent text-[var(--text-accent-crimson)] text-sm focus:outline-none"
+        className="flex-1 bg-transparent text-accent-crimson text-sm focus:outline-none"
       />
       <input
         type="text"
         value={team.school || ''}
         onChange={(e) => onChange({ ...team, school: e.target.value })}
         placeholder="School..."
-        className="w-32 bg-transparent text-[var(--text-muted)] text-sm focus:outline-none"
+        className="w-32 bg-transparent text-ink-muted text-sm focus:outline-none"
       />
       <button
         onClick={onDelete}
-        className="p-1 text-[var(--text-muted)] hover:text-red-400 transition-colors"
+        className="p-1 text-ink-muted hover:text-accent-crimson transition-colors"
       >
         <Trash2 className="w-4 h-4" />
       </button>
@@ -214,28 +214,28 @@ const VenueInput = ({ venue, onChange, onDelete }) => {
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
-      className="flex items-center gap-2 bg-[var(--input-bg)]/50 rounded-lg p-2"
+      className="flex items-center gap-2 bg-surface-parchment/50 rounded-lg p-2"
     >
-      <MapPin className="w-4 h-4 text-[var(--text-muted)]" />
+      <MapPin className="w-4 h-4 text-ink-muted" />
       <input
         type="text"
         value={venue.name}
         onChange={(e) => onChange({ ...venue, name: e.target.value })}
         placeholder="Room/Venue name..."
-        className="flex-1 bg-transparent text-[var(--text-accent-crimson)] text-sm focus:outline-none"
+        className="flex-1 bg-transparent text-accent-crimson text-sm focus:outline-none"
       />
-      <label className="flex items-center gap-1 text-xs text-[var(--text-muted)]">
+      <label className="flex items-center gap-1 text-xs text-ink-muted">
         <input
           type="checkbox"
           checked={venue.available}
           onChange={(e) => onChange({ ...venue, available: e.target.checked })}
-          className="rounded border-[var(--border)]"
+          className="rounded border-hairline"
         />
         Available
       </label>
       <button
         onClick={onDelete}
-        className="p-1 text-[var(--text-muted)] hover:text-red-400 transition-colors"
+        className="p-1 text-ink-muted hover:text-accent-crimson transition-colors"
       >
         <Trash2 className="w-4 h-4" />
       </button>
@@ -252,22 +252,22 @@ const MatchCard = ({ match, teams, venues, onUpdate, onDelete, compact = false }
   const venue = venues.find(v => v.id === match.venue);
 
   const statusColors = {
-    scheduled: 'bg-slate-600 text-[var(--text-secondary)]',
-    in_progress: 'bg-yellow-500/20 text-yellow-400',
-    completed: 'bg-green-500/20 text-green-400',
-    cancelled: 'bg-red-500/20 text-red-400'
+    scheduled: 'bg-surface-offset text-ink-muted',
+    in_progress: 'bg-surface-offset text-ink',
+    completed: 'bg-surface-offset text-ink',
+    cancelled: 'bg-accent-crimson/20 text-accent-crimson'
   };
 
   if (compact) {
     return (
-      <div className="flex items-center justify-between bg-[var(--input-bg)]/30 rounded-lg p-2 text-sm">
+      <div className="flex items-center justify-between bg-surface-parchment/30 rounded-lg p-2 text-sm">
         <div className="flex items-center gap-2">
-          <span className="text-cyan-400 font-medium">{affTeam?.name || '?'}</span>
-          <span className="text-[var(--text-muted)]">vs</span>
-          <span className="text-orange-400 font-medium">{negTeam?.name || '?'}</span>
+          <span className="text-ink font-medium">{affTeam?.name || '?'}</span>
+          <span className="text-ink-muted">vs</span>
+          <span className="text-accent-crimson font-medium">{negTeam?.name || '?'}</span>
         </div>
         {venue && (
-          <span className="text-[var(--text-muted)] text-xs">{venue.name}</span>
+          <span className="text-ink-muted text-xs">{venue.name}</span>
         )}
       </div>
     );
@@ -276,18 +276,18 @@ const MatchCard = ({ match, teams, venues, onUpdate, onDelete, compact = false }
   return (
     <motion.div
       layout
-      className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-lg overflow-hidden"
+      className="bg-[var(--card-bg)]/50 border border-hairline rounded-lg overflow-hidden"
     >
       <div className="p-4">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-xs text-[var(--text-muted)]">Match #{match.matchNumber}</span>
+          <span className="text-xs text-ink-muted">Match #{match.matchNumber}</span>
           <div className="flex items-center gap-2">
             <span className={`px-2 py-0.5 rounded text-xs ${statusColors[match.status]}`}>
               {match.status.replace('_', ' ')}
             </span>
             <button
               onClick={() => setIsEditing(!isEditing)}
-              className="p-1 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
+              className="p-1 text-ink-muted hover:text-accent-crimson transition-colors"
             >
               <Edit2 className="w-3 h-3" />
             </button>
@@ -297,27 +297,27 @@ const MatchCard = ({ match, teams, venues, onUpdate, onDelete, compact = false }
         <div className="flex items-center gap-4">
           {/* Aff Team */}
           <div className="flex-1 text-center">
-            <div className="text-xs text-cyan-400 uppercase tracking-wide mb-1">Aff</div>
-            <div className="font-semibold text-[var(--text-accent-crimson)]">{affTeam?.name || 'TBD'}</div>
+            <div className="text-xs text-ink uppercase tracking-wide mb-1">Aff</div>
+            <div className="font-semibold text-accent-crimson">{affTeam?.name || 'TBD'}</div>
             {affTeam?.school && (
-              <div className="text-xs text-[var(--text-muted)]">{affTeam.school}</div>
+              <div className="text-xs text-ink-muted">{affTeam.school}</div>
             )}
           </div>
 
-          <div className="text-[var(--text-muted)] font-bold">vs</div>
+          <div className="text-ink-muted font-bold">vs</div>
 
           {/* Neg Team */}
           <div className="flex-1 text-center">
-            <div className="text-xs text-orange-400 uppercase tracking-wide mb-1">Neg</div>
-            <div className="font-semibold text-[var(--text-accent-crimson)]">{negTeam?.name || 'TBD'}</div>
+            <div className="text-xs text-accent-crimson uppercase tracking-wide mb-1">Neg</div>
+            <div className="font-semibold text-accent-crimson">{negTeam?.name || 'TBD'}</div>
             {negTeam?.school && (
-              <div className="text-xs text-[var(--text-muted)]">{negTeam.school}</div>
+              <div className="text-xs text-ink-muted">{negTeam.school}</div>
             )}
           </div>
         </div>
 
         {/* Venue & Time */}
-        <div className="flex items-center justify-center gap-4 mt-3 text-xs text-[var(--text-muted)]">
+        <div className="flex items-center justify-center gap-4 mt-3 text-xs text-ink-muted">
           {venue && (
             <div className="flex items-center gap-1">
               <MapPin className="w-3 h-3" />
@@ -335,7 +335,7 @@ const MatchCard = ({ match, teams, venues, onUpdate, onDelete, compact = false }
         {/* Winner indicator */}
         {match.winner && (
           <div className="mt-3 text-center">
-            <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">
+            <span className="inline-flex items-center gap-1 px-2 py-1 bg-surface-offset text-ink text-xs rounded">
               <Trophy className="w-3 h-3" />
               Winner: {teams.find(t => t.id === match.winner)?.name}
             </span>
@@ -350,16 +350,16 @@ const MatchCard = ({ match, teams, venues, onUpdate, onDelete, compact = false }
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="border-t border-[var(--border)]"
+            className="border-t border-hairline"
           >
             <div className="p-4 space-y-3">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs text-[var(--text-muted)] mb-1">Venue</label>
+                  <label className="block text-xs text-ink-muted mb-1">Venue</label>
                   <select
                     value={match.venue || ''}
                     onChange={(e) => onUpdate({ ...match, venue: e.target.value || null })}
-                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] text-sm px-2 py-1 rounded focus:outline-none"
+                    className="w-full bg-surface-parchment/50 border border-hairline text-accent-crimson text-sm px-2 py-1 rounded focus:outline-none"
                   >
                     <option value="">Select venue...</option>
                     {venues.filter(v => v.available).map((v) => (
@@ -368,11 +368,11 @@ const MatchCard = ({ match, teams, venues, onUpdate, onDelete, compact = false }
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs text-[var(--text-muted)] mb-1">Status</label>
+                  <label className="block text-xs text-ink-muted mb-1">Status</label>
                   <select
                     value={match.status}
                     onChange={(e) => onUpdate({ ...match, status: e.target.value })}
-                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] text-sm px-2 py-1 rounded focus:outline-none"
+                    className="w-full bg-surface-parchment/50 border border-hairline text-accent-crimson text-sm px-2 py-1 rounded focus:outline-none"
                   >
                     <option value="scheduled">Scheduled</option>
                     <option value="in_progress">In Progress</option>
@@ -384,11 +384,11 @@ const MatchCard = ({ match, teams, venues, onUpdate, onDelete, compact = false }
 
               {match.status === 'completed' && (
                 <div>
-                  <label className="block text-xs text-[var(--text-muted)] mb-1">Winner</label>
+                  <label className="block text-xs text-ink-muted mb-1">Winner</label>
                   <select
                     value={match.winner || ''}
                     onChange={(e) => onUpdate({ ...match, winner: e.target.value || null })}
-                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] text-sm px-2 py-1 rounded focus:outline-none"
+                    className="w-full bg-surface-parchment/50 border border-hairline text-accent-crimson text-sm px-2 py-1 rounded focus:outline-none"
                   >
                     <option value="">Select winner...</option>
                     <option value={match.affTeam}>{affTeam?.name} (Aff)</option>
@@ -398,13 +398,13 @@ const MatchCard = ({ match, teams, venues, onUpdate, onDelete, compact = false }
               )}
 
               <div>
-                <label className="block text-xs text-[var(--text-muted)] mb-1">Notes</label>
+                <label className="block text-xs text-ink-muted mb-1">Notes</label>
                 <input
                   type="text"
                   value={match.notes}
                   onChange={(e) => onUpdate({ ...match, notes: e.target.value })}
                   placeholder="Match notes..."
-                  className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] text-sm px-2 py-1 rounded focus:outline-none"
+                  className="w-full bg-surface-parchment/50 border border-hairline text-accent-crimson text-sm px-2 py-1 rounded focus:outline-none"
                 />
               </div>
             </div>
@@ -425,7 +425,7 @@ const RoundCard = ({ round, teams, venues, onUpdateMatch, onUpdateRound, expande
   return (
     <motion.div
       layout
-      className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl overflow-hidden"
+      className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl overflow-hidden"
     >
       {/* Round Header */}
       <div
@@ -434,12 +434,12 @@ const RoundCard = ({ round, teams, venues, onUpdateMatch, onUpdateRound, expande
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <button className="p-1 text-[var(--text-muted)]">
+            <button className="p-1 text-ink-muted">
               {isExpanded ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
             </button>
             <div>
-              <h3 className="font-semibold text-[var(--text-accent-crimson)]">Round {round.roundNumber}</h3>
-              <p className="text-xs text-[var(--text-muted)]">
+              <h3 className="font-semibold text-accent-crimson">Round {round.roundNumber}</h3>
+              <p className="text-xs text-ink-muted">
                 {round.matches.length} matches • {completedMatches} completed
               </p>
             </div>
@@ -447,20 +447,20 @@ const RoundCard = ({ round, teams, venues, onUpdateMatch, onUpdateRound, expande
 
           <div className="flex items-center gap-4">
             {round.startTime && (
-              <div className="flex items-center gap-1 text-sm text-[var(--text-muted)]">
+              <div className="flex items-center gap-1 text-sm text-ink-muted">
                 <Clock className="w-4 h-4" />
                 {round.startTime}
               </div>
             )}
             
             {/* Progress bar */}
-            <div className="w-24 h-2 bg-[var(--input-bg)] rounded-full overflow-hidden">
+            <div className="w-24 h-2 bg-surface-parchment rounded-full overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${progress}%` }}
                 className={`h-full ${
-                  progress === 100 ? 'bg-green-500' :
-                  progress > 0 ? 'bg-yellow-500' : 'bg-slate-600'
+                  progress === 100 ? 'bg-surface-offset' :
+                  progress > 0 ? 'bg-surface-offset' : 'bg-surface-offset'
                 }`}
               />
             </div>
@@ -475,25 +475,25 @@ const RoundCard = ({ round, teams, venues, onUpdateMatch, onUpdateRound, expande
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="border-t border-[var(--border)]"
+            className="border-t border-hairline"
           >
             {/* Round Settings */}
             <div className="p-4 bg-[var(--card-bg)]/30 flex items-center gap-4">
               <div>
-                <label className="block text-xs text-[var(--text-muted)] mb-1">Start Time</label>
+                <label className="block text-xs text-ink-muted mb-1">Start Time</label>
                 <input
                   type="time"
                   value={round.startTime || ''}
                   onChange={(e) => onUpdateRound({ ...round, startTime: e.target.value })}
-                  className="bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] text-sm px-2 py-1 rounded focus:outline-none"
+                  className="bg-surface-parchment/50 border border-hairline text-accent-crimson text-sm px-2 py-1 rounded focus:outline-none"
                 />
               </div>
               <div>
-                <label className="block text-xs text-[var(--text-muted)] mb-1">Status</label>
+                <label className="block text-xs text-ink-muted mb-1">Status</label>
                 <select
                   value={round.status}
                   onChange={(e) => onUpdateRound({ ...round, status: e.target.value })}
-                  className="bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] text-sm px-2 py-1 rounded focus:outline-none"
+                  className="bg-surface-parchment/50 border border-hairline text-accent-crimson text-sm px-2 py-1 rounded focus:outline-none"
                 >
                   <option value="pending">Pending</option>
                   <option value="in_progress">In Progress</option>
@@ -529,9 +529,9 @@ const BracketView = ({ rounds, teams, venues }) => {
         {rounds.map((round) => (
           <div key={round.id} className="w-64 flex-shrink-0">
             <div className="text-center mb-4">
-              <h3 className="font-semibold text-[var(--text-accent-crimson)]">Round {round.roundNumber}</h3>
+              <h3 className="font-semibold text-accent-crimson">Round {round.roundNumber}</h3>
               {round.startTime && (
-                <p className="text-xs text-[var(--text-muted)]">{round.startTime}</p>
+                <p className="text-xs text-ink-muted">{round.startTime}</p>
               )}
             </div>
             <div className="space-y-3">
@@ -606,17 +606,17 @@ const StandingsView = ({ rounds, teams }) => {
   }, [rounds, teams]);
 
   return (
-    <div className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl overflow-hidden">
-      <div className="p-4 border-b border-[var(--border)]">
-        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
-          <BarChart3 className="w-5 h-5 text-purple-400" />
+    <div className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl overflow-hidden">
+      <div className="p-4 border-b border-hairline">
+        <h3 className="font-semibold text-accent-crimson flex items-center gap-2">
+          <BarChart3 className="w-5 h-5 text-ink" />
           Current Standings
         </h3>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead className="bg-[var(--card-bg)]/50">
-            <tr className="text-left text-xs text-[var(--text-muted)] uppercase tracking-wide">
+            <tr className="text-left text-xs text-ink-muted uppercase tracking-wide">
               <th className="px-4 py-3">Rank</th>
               <th className="px-4 py-3">Team</th>
               <th className="px-4 py-3">School</th>
@@ -634,24 +634,24 @@ const StandingsView = ({ rounds, teams }) => {
                 : '-';
               
               return (
-                <tr key={stat.team.id} className="border-t border-[var(--border)]/50 hover:bg-[var(--input-bg)]/30">
+                <tr key={stat.team.id} className="border-t border-hairline/50 hover:bg-surface-parchment/30">
                   <td className="px-4 py-3">
                     <span className={`font-bold ${
-                      idx === 0 ? 'text-yellow-400' :
-                      idx === 1 ? 'text-[var(--text-secondary)]' :
-                      idx === 2 ? 'text-orange-400' :
-                      'text-[var(--text-muted)]'
+                      idx === 0 ? 'text-ink' :
+                      idx === 1 ? 'text-ink-muted' :
+                      idx === 2 ? 'text-accent-crimson' :
+                      'text-ink-muted'
                     }`}>
                       {idx + 1}
                     </span>
                   </td>
-                  <td className="px-4 py-3 font-medium text-[var(--text-accent-crimson)]">{stat.team.name}</td>
-                  <td className="px-4 py-3 text-[var(--text-muted)]">{stat.team.school || '-'}</td>
-                  <td className="px-4 py-3 text-center text-green-400 font-medium">{stat.wins}</td>
-                  <td className="px-4 py-3 text-center text-red-400 font-medium">{stat.losses}</td>
-                  <td className="px-4 py-3 text-center text-cyan-400">{stat.affWins}</td>
-                  <td className="px-4 py-3 text-center text-orange-400">{stat.negWins}</td>
-                  <td className="px-4 py-3 text-center text-[var(--text-secondary)]">
+                  <td className="px-4 py-3 font-medium text-accent-crimson">{stat.team.name}</td>
+                  <td className="px-4 py-3 text-ink-muted">{stat.team.school || '-'}</td>
+                  <td className="px-4 py-3 text-center text-ink font-medium">{stat.wins}</td>
+                  <td className="px-4 py-3 text-center text-accent-crimson font-medium">{stat.losses}</td>
+                  <td className="px-4 py-3 text-center text-ink">{stat.affWins}</td>
+                  <td className="px-4 py-3 text-center text-accent-crimson">{stat.negWins}</td>
+                  <td className="px-4 py-3 text-center text-ink-muted">
                     {winPct !== '-' ? `${winPct}%` : '-'}
                   </td>
                 </tr>
@@ -869,13 +869,13 @@ const RoundRobinScheduler = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
+          <h1 className="text-2xl font-bold text-accent-crimson flex items-center gap-3">
             <div className="p-2  rounded-xl">
-              <Calendar className="w-6 h-6 text-[var(--text-accent-crimson)]" />
+              <Calendar className="w-6 h-6 text-accent-crimson" />
             </div>
             Round Robin Scheduler
           </h1>
-          <p className="text-[var(--text-muted)] mt-1">
+          <p className="text-ink-muted mt-1">
             Generate tournament schedules with conflict detection
           </p>
         </div>
@@ -885,21 +885,21 @@ const RoundRobinScheduler = () => {
             <>
               <button
                 onClick={() => setShowSetup(!showSetup)}
-                className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-surface-parchment hover:bg-surface-offset text-accent-crimson rounded-lg transition-colors"
               >
                 <Settings className="w-4 h-4" />
                 Setup
               </button>
               <button
                 onClick={printSchedule}
-                className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-surface-parchment hover:bg-surface-offset text-accent-crimson rounded-lg transition-colors"
               >
                 <Printer className="w-4 h-4" />
                 Print
               </button>
               <button
                 onClick={exportSchedule}
-                className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-500 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-surface-offset hover:bg-surface-offset text-accent-crimson rounded-lg transition-colors"
               >
                 <Download className="w-4 h-4" />
                 Export
@@ -916,35 +916,35 @@ const RoundRobinScheduler = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl overflow-hidden"
+            className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl overflow-hidden"
           >
             <div className="p-6 space-y-6">
               {/* Tournament Info */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="md:col-span-2">
-                  <label className="block text-sm text-[var(--text-muted)] mb-1">Tournament Name</label>
+                  <label className="block text-sm text-ink-muted mb-1">Tournament Name</label>
                   <input
                     type="text"
                     value={tournamentName}
                     onChange={(e) => setTournamentName(e.target.value)}
-                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                    className="w-full bg-surface-parchment/50 border border-hairline text-accent-crimson px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-hairline"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-[var(--text-muted)] mb-1">Date</label>
+                  <label className="block text-sm text-ink-muted mb-1">Date</label>
                   <input
                     type="date"
                     value={tournamentDate}
                     onChange={(e) => setTournamentDate(e.target.value)}
-                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                    className="w-full bg-surface-parchment/50 border border-hairline text-accent-crimson px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-hairline"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-[var(--text-muted)] mb-1">Format</label>
+                  <label className="block text-sm text-ink-muted mb-1">Format</label>
                   <select
                     value={format}
                     onChange={(e) => setFormat(e.target.value)}
-                    className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500/50"
+                    className="w-full bg-surface-parchment/50 border border-hairline text-accent-crimson px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-hairline"
                   >
                     {Object.entries(FORMAT_PRESETS).map(([key, preset]) => (
                       <option key={key} value={key}>{preset.name}</option>
@@ -956,13 +956,13 @@ const RoundRobinScheduler = () => {
               {/* Teams Section */}
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
-                    <Users className="w-5 h-5 text-cyan-400" />
+                  <h3 className="font-semibold text-accent-crimson flex items-center gap-2">
+                    <Users className="w-5 h-5 text-ink" />
                     Teams ({teams.length})
                   </h3>
                   <button
                     onClick={addTeam}
-                    className="flex items-center gap-1 text-sm text-cyan-400 hover:text-cyan-300 transition-colors"
+                    className="flex items-center gap-1 text-sm text-ink hover:text-ink transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                     Add Team
@@ -980,7 +980,7 @@ const RoundRobinScheduler = () => {
                     ))}
                   </AnimatePresence>
                   {teams.length === 0 && (
-                    <p className="text-[var(--text-muted)] text-sm text-center py-4">
+                    <p className="text-ink-muted text-sm text-center py-4">
                       Add teams to generate schedule
                     </p>
                   )}
@@ -990,13 +990,13 @@ const RoundRobinScheduler = () => {
               {/* Venues Section */}
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
-                    <MapPin className="w-5 h-5 text-orange-400" />
+                  <h3 className="font-semibold text-accent-crimson flex items-center gap-2">
+                    <MapPin className="w-5 h-5 text-accent-crimson" />
                     Venues ({venues.length})
                   </h3>
                   <button
                     onClick={addVenue}
-                    className="flex items-center gap-1 text-sm text-orange-400 hover:text-orange-300 transition-colors"
+                    className="flex items-center gap-1 text-sm text-accent-crimson hover:text-accent-crimson transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                     Add Venue
@@ -1014,7 +1014,7 @@ const RoundRobinScheduler = () => {
                     ))}
                   </AnimatePresence>
                   {venues.length === 0 && (
-                    <p className="text-[var(--text-muted)] text-sm text-center py-4">
+                    <p className="text-ink-muted text-sm text-center py-4">
                       Add venues for room assignments
                     </p>
                   )}
@@ -1022,11 +1022,11 @@ const RoundRobinScheduler = () => {
               </div>
 
               {/* Generate Button */}
-              <div className="flex items-center gap-3 pt-4 border-t border-[var(--border)]">
+              <div className="flex items-center gap-3 pt-4 border-t border-hairline">
                 <button
                   onClick={generateSchedule}
                   disabled={teams.filter(t => t.name.trim()).length < 2}
-                  className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-500 disabled:bg-[var(--input-bg)] disabled:text-[var(--text-muted)] text-[var(--text-accent-crimson)] rounded-lg transition-colors font-medium"
+                  className="flex items-center gap-2 px-6 py-3 bg-surface-offset hover:bg-surface-offset disabled:bg-surface-parchment disabled:text-ink-muted text-accent-crimson rounded-lg transition-colors font-medium"
                 >
                   <Calendar className="w-5 h-5" />
                   Generate Schedule
@@ -1035,21 +1035,21 @@ const RoundRobinScheduler = () => {
                   <>
                     <button
                       onClick={shuffleMatchups}
-                      className="flex items-center gap-2 px-4 py-3 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+                      className="flex items-center gap-2 px-4 py-3 bg-surface-parchment hover:bg-surface-offset text-accent-crimson rounded-lg transition-colors"
                     >
                       <Shuffle className="w-4 h-4" />
                       Shuffle
                     </button>
                     <button
                       onClick={autoAssignTimes}
-                      className="flex items-center gap-2 px-4 py-3 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+                      className="flex items-center gap-2 px-4 py-3 bg-surface-parchment hover:bg-surface-offset text-accent-crimson rounded-lg transition-colors"
                     >
                       <Clock className="w-4 h-4" />
                       Auto Times
                     </button>
                   </>
                 )}
-                <div className="ml-auto text-sm text-[var(--text-muted)]">
+                <div className="ml-auto text-sm text-ink-muted">
                   {teams.filter(t => t.name.trim()).length} teams → {
                     Math.max(0, teams.filter(t => t.name.trim()).length - 1)
                   } rounds
@@ -1062,10 +1062,10 @@ const RoundRobinScheduler = () => {
 
       {/* Conflict Alerts */}
       {conflicts.length > 0 && (
-        <div className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-4">
+        <div className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl p-4">
           <div className="flex items-center gap-3 mb-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400" />
-            <span className="font-medium text-[var(--text-accent-crimson)]">
+            <AlertTriangle className="w-5 h-5 text-ink" />
+            <span className="font-medium text-accent-crimson">
               {errorCount} errors, {warningCount} warnings detected
             </span>
           </div>
@@ -1075,8 +1075,8 @@ const RoundRobinScheduler = () => {
                 key={idx}
                 className={`flex items-center gap-2 text-sm px-3 py-2 rounded ${
                   conflict.severity === 'error' 
-                    ? 'bg-red-500/20 text-red-400' 
-                    : 'bg-yellow-500/20 text-yellow-400'
+                    ? 'bg-accent-crimson/20 text-accent-crimson' 
+                    : 'bg-surface-offset text-ink'
                 }`}
               >
                 {conflict.severity === 'error' ? (
@@ -1099,8 +1099,8 @@ const RoundRobinScheduler = () => {
               onClick={() => setViewMode('rounds')}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                 viewMode === 'rounds'
-                  ? 'bg-green-600 text-[var(--text-accent-crimson)]'
-                  : 'bg-[var(--input-bg)] text-[var(--text-secondary)] hover:bg-slate-600'
+                  ? 'bg-surface-offset text-accent-crimson'
+                  : 'bg-surface-parchment text-ink-muted hover:bg-surface-offset'
               }`}
             >
               <List className="w-4 h-4" />
@@ -1110,8 +1110,8 @@ const RoundRobinScheduler = () => {
               onClick={() => setViewMode('bracket')}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                 viewMode === 'bracket'
-                  ? 'bg-green-600 text-[var(--text-accent-crimson)]'
-                  : 'bg-[var(--input-bg)] text-[var(--text-secondary)] hover:bg-slate-600'
+                  ? 'bg-surface-offset text-accent-crimson'
+                  : 'bg-surface-parchment text-ink-muted hover:bg-surface-offset'
               }`}
             >
               <Grid3X3 className="w-4 h-4" />
@@ -1121,8 +1121,8 @@ const RoundRobinScheduler = () => {
               onClick={() => setViewMode('standings')}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                 viewMode === 'standings'
-                  ? 'bg-green-600 text-[var(--text-accent-crimson)]'
-                  : 'bg-[var(--input-bg)] text-[var(--text-secondary)] hover:bg-slate-600'
+                  ? 'bg-surface-offset text-accent-crimson'
+                  : 'bg-surface-parchment text-ink-muted hover:bg-surface-offset'
               }`}
             >
               <Trophy className="w-4 h-4" />
@@ -1159,7 +1159,7 @@ const RoundRobinScheduler = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl"
+                className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl"
               >
                 <BracketView rounds={rounds} teams={teams} venues={venues} />
               </motion.div>
@@ -1183,11 +1183,11 @@ const RoundRobinScheduler = () => {
       {rounds.length === 0 && !showSetup && (
         <div className="text-center py-16">
           <Calendar className="w-16 h-16 text-ink-muted mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-[var(--text-muted)]">No schedule generated</h3>
-          <p className="text-[var(--text-muted)] mt-1">Set up your tournament to generate a schedule</p>
+          <h3 className="text-lg font-medium text-ink-muted">No schedule generated</h3>
+          <p className="text-ink-muted mt-1">Set up your tournament to generate a schedule</p>
           <button
             onClick={() => setShowSetup(true)}
-            className="mt-4 px-4 py-2 bg-green-600 hover:bg-green-500 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+            className="mt-4 px-4 py-2 bg-surface-offset hover:bg-surface-offset text-accent-crimson rounded-lg transition-colors"
           >
             Open Setup
           </button>

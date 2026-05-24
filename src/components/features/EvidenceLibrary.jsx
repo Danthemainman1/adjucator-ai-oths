@@ -77,7 +77,7 @@ const QualityStars = ({ rating, onChange, readonly = true, size = 'md' }) => {
           >
             <Star 
               className={`${sizes[size]} transition-colors ${
-                filled ? 'text-amber-400 fill-amber-400' : 'text-ink'
+                filled ? 'text-ink fill-ink' : 'text-ink'
               }`}
             />
           </motion.button>
@@ -90,13 +90,13 @@ const QualityStars = ({ rating, onChange, readonly = true, size = 'md' }) => {
 // Tag Pill Component
 const TagPill = ({ label, color = 'slate', onRemove, onClick }) => {
   const colors = {
-    slate: 'bg-[var(--card-bg)] text-[var(--text-secondary)] hover:bg-[var(--input-bg)] border-[var(--border)]',
-    cyan: 'bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 border-cyan-500/30',
-    emerald: 'bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border-emerald-500/30',
-    purple: 'bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 border-purple-500/30',
-    amber: 'bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 border-amber-500/30',
-    red: 'bg-red-500/10 text-red-400 hover:bg-red-500/20 border-red-500/30',
-    blue: 'bg-accent-crimson/10 text-blue-400 hover:bg-accent-crimson/20 border-accent-crimson/30'
+    slate: 'bg-[var(--card-bg)] text-ink-muted hover:bg-surface-parchment border-hairline',
+    cyan: 'bg-surface-offset text-ink hover:bg-surface-offset border-hairline',
+    emerald: 'bg-surface-offset text-ink hover:bg-surface-offset border-hairline',
+    purple: 'bg-surface-offset text-ink hover:bg-surface-offset border-hairline',
+    amber: 'bg-surface-offset text-ink hover:bg-surface-offset border-hairline',
+    red: 'bg-accent-crimson/10 text-accent-crimson hover:bg-accent-crimson/20 border-accent-crimson/30',
+    blue: 'bg-accent-crimson/10 text-ink hover:bg-accent-crimson/20 border-accent-crimson/30'
   };
 
   return (
@@ -117,7 +117,7 @@ const TagPill = ({ label, color = 'slate', onRemove, onClick }) => {
             e.stopPropagation();
             onRemove();
           }}
-          className="ml-0.5 hover:text-[var(--text-accent-crimson)] transition-colors"
+          className="ml-0.5 hover:text-accent-crimson transition-colors"
         >
           ×
         </button>
@@ -137,7 +137,7 @@ const EmptyEvidence = ({ onAdd }) => (
       <motion.div
         animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.1, 0.3] }}
         transition={{ duration: 3, repeat: Infinity }}
-        className="absolute inset-0 w-32 h-32 rounded-full bg-cyan-500/20 blur-xl"
+        className="absolute inset-0 w-32 h-32 rounded-full bg-surface-offset blur-xl"
       />
       <motion.div
         animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.05, 0.2] }}
@@ -148,21 +148,21 @@ const EmptyEvidence = ({ onAdd }) => (
       <motion.div
         animate={{ y: [0, -5, 0] }}
         transition={{ duration: 3, repeat: Infinity }}
-        className="relative p-6 rounded-3xl /80 to-slate-900/80 border border-[var(--border)]/50  shadow-2xl"
+        className="relative p-6 rounded-3xl /80 to-slate-900/80 border border-hairline/50  shadow-2xl"
       >
-        <BookOpen className="w-16 h-16 text-cyan-400" />
+        <BookOpen className="w-16 h-16 text-ink" />
         <motion.div
           animate={{ rotate: [0, 10, 0, -10, 0] }}
           transition={{ duration: 4, repeat: Infinity }}
           className="absolute -top-2 -right-2"
         >
-          <Sparkles className="w-6 h-6 text-amber-400" />
+          <Sparkles className="w-6 h-6 text-ink" />
         </motion.div>
       </motion.div>
     </div>
     
-    <h3 className="text-2xl font-bold text-[var(--text-accent-crimson)] mb-3">Build Your Evidence Arsenal</h3>
-    <p className="text-[var(--text-muted)] max-w-md mx-auto mb-8 leading-relaxed">
+    <h3 className="text-2xl font-bold text-accent-crimson mb-3">Build Your Evidence Arsenal</h3>
+    <p className="text-ink-muted max-w-md mx-auto mb-8 leading-relaxed">
       Store your best cards, organize by topic, and access them instantly during rounds. 
       Quality evidence wins debates.
     </p>
@@ -171,7 +171,7 @@ const EmptyEvidence = ({ onAdd }) => (
       whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(6, 182, 212, 0.3)' }}
       whileTap={{ scale: 0.98 }}
       onClick={onAdd}
-      className="px-8 py-4 rounded-2xl  text-[var(--text-accent-crimson)] font-semibold text-lg shadow-lg shadow-cyan-500/25 inline-flex items-center gap-3"
+      className="px-8 py-4 rounded-2xl  text-accent-crimson font-semibold text-lg shadow-lg shadow-cyan-500/25 inline-flex items-center gap-3"
     >
       <Plus className="w-5 h-5" />
       Add Your First Card
@@ -212,10 +212,10 @@ const EvidenceCard = ({ evidence, onClick, onCopy, isExpanded }) => {
         {/* Header */}
         <div className="relative flex items-start justify-between gap-3 mb-3">
           <div className="flex-1 min-w-0">
-            <h3 className="text-[var(--text-accent-crimson)] font-semibold text-lg truncate group-hover:text-cyan-400 transition-colors">
+            <h3 className="text-accent-crimson font-semibold text-lg truncate group-hover:text-ink transition-colors">
               {evidence.title}
             </h3>
-            <div className="flex items-center gap-3 mt-1 text-sm text-[var(--text-muted)]">
+            <div className="flex items-center gap-3 mt-1 text-sm text-ink-muted">
               <span className="flex items-center gap-1">
                 <User className="w-3.5 h-3.5" />
                 {evidence.author || 'Unknown'}
@@ -236,9 +236,9 @@ const EvidenceCard = ({ evidence, onClick, onCopy, isExpanded }) => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={handleCopy}
-                className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+                className="p-2 rounded-lg text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
               >
-                {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                {copied ? <Check className="w-4 h-4 text-ink" /> : <Copy className="w-4 h-4" />}
               </motion.button>
             </div>
           </div>
@@ -247,7 +247,7 @@ const EvidenceCard = ({ evidence, onClick, onCopy, isExpanded }) => {
         {/* Content Preview */}
         <div className="relative mb-4">
           <div className="absolute left-0 top-0 bottom-0 w-1 rounded-full " />
-          <p className="pl-4 text-[var(--text-muted)] text-sm line-clamp-3 leading-relaxed italic">
+          <p className="pl-4 text-ink-muted text-sm line-clamp-3 leading-relaxed italic">
             "{evidence.content}"
           </p>
         </div>
@@ -255,8 +255,8 @@ const EvidenceCard = ({ evidence, onClick, onCopy, isExpanded }) => {
         {/* Source */}
         {evidence.source && (
           <div className="flex items-center gap-2 mb-3 text-sm">
-            <Link2 className="w-4 h-4 text-[var(--text-muted)]" />
-            <span className="text-[var(--text-muted)] truncate">{evidence.source}</span>
+            <Link2 className="w-4 h-4 text-ink-muted" />
+            <span className="text-ink-muted truncate">{evidence.source}</span>
           </div>
         )}
 
@@ -270,15 +270,15 @@ const EvidenceCard = ({ evidence, onClick, onCopy, isExpanded }) => {
             />
           ))}
           {evidence.tags?.length > 4 && (
-            <span className="text-xs text-[var(--text-muted)] self-center">
+            <span className="text-xs text-ink-muted self-center">
               +{evidence.tags.length - 4} more
             </span>
           )}
         </div>
 
         {/* Usage stats */}
-        <div className="flex items-center justify-between mt-4 pt-3 border-t border-[var(--border)]/50">
-          <div className="flex items-center gap-4 text-xs text-[var(--text-muted)]">
+        <div className="flex items-center justify-between mt-4 pt-3 border-t border-hairline/50">
+          <div className="flex items-center gap-4 text-xs text-ink-muted">
             <span className="flex items-center gap-1">
               <FileText className="w-3.5 h-3.5" />
               Used {evidence.usageCount || 0} times
@@ -290,7 +290,7 @@ const EvidenceCard = ({ evidence, onClick, onCopy, isExpanded }) => {
           </div>
           
           {evidence.bookmarked && (
-            <BookMarked className="w-4 h-4 text-amber-400" />
+            <BookMarked className="w-4 h-4 text-ink" />
           )}
         </div>
 
@@ -326,15 +326,15 @@ const CitationFormatter = ({ evidence, format = 'mla' }) => {
   };
 
   return (
-    <div className="p-4 rounded-xl bg-slate-950/30 border border-white/10">
-      <p className="text-[var(--text-secondary)] text-sm font-mono">{formatCitation()}</p>
+    <div className="p-4 rounded-xl bg-surface-offset border border-white/10">
+      <p className="text-ink-muted text-sm font-mono">{formatCitation()}</p>
       <motion.button
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         onClick={handleCopy}
-        className="mt-3 px-4 py-2 rounded-lg bg-[var(--input-bg)] text-[var(--text-accent-crimson)] text-sm font-medium hover:bg-slate-600 transition-colors flex items-center gap-2"
+        className="mt-3 px-4 py-2 rounded-lg bg-surface-parchment text-accent-crimson text-sm font-medium hover:bg-surface-offset transition-colors flex items-center gap-2"
       >
-        {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+        {copied ? <Check className="w-4 h-4 text-ink" /> : <Copy className="w-4 h-4" />}
         {copied ? 'Copied!' : 'Copy Citation'}
       </motion.button>
     </div>
@@ -372,13 +372,13 @@ const EvidenceDetailModal = ({ evidence, isOpen, onClose, onEdit, onDelete }) =>
           <div className="absolute inset-0 /10 via-transparent to-blue-500/10" />
           <div className="relative flex items-start justify-between">
             <div className="flex-1">
-              <h2 className="text-2xl font-bold text-[var(--text-accent-crimson)]">{evidence.title}</h2>
+              <h2 className="text-2xl font-bold text-accent-crimson">{evidence.title}</h2>
               <div className="flex items-center gap-4 mt-2">
-                <span className="text-[var(--text-muted)] flex items-center gap-1.5">
+                <span className="text-ink-muted flex items-center gap-1.5">
                   <User className="w-4 h-4" />
                   {evidence.author || 'Unknown'}
                 </span>
-                <span className="text-[var(--text-muted)] flex items-center gap-1.5">
+                <span className="text-ink-muted flex items-center gap-1.5">
                   <Calendar className="w-4 h-4" />
                   {evidence.year || 'N/A'}
                 </span>
@@ -390,14 +390,14 @@ const EvidenceDetailModal = ({ evidence, isOpen, onClose, onEdit, onDelete }) =>
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 onClick={onEdit}
-                className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+                className="p-2 rounded-xl text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
               >
                 <Edit3 className="w-5 h-5" />
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.1, rotate: 90 }}
                 onClick={onClose}
-                className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+                className="p-2 rounded-xl text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
               >
                 <X className="w-5 h-5" />
               </motion.button>
@@ -409,23 +409,23 @@ const EvidenceDetailModal = ({ evidence, isOpen, onClose, onEdit, onDelete }) =>
           {/* Content */}
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-[var(--text-accent-crimson)] font-semibold flex items-center gap-2">
-                <Quote className="w-5 h-5 text-cyan-400" />
+              <h3 className="text-accent-crimson font-semibold flex items-center gap-2">
+                <Quote className="w-5 h-5 text-ink" />
                 Evidence Content
               </h3>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleCopyContent}
-                className="px-3 py-1.5 rounded-lg bg-[var(--card-bg)] text-[var(--text-secondary)] text-sm font-medium hover:bg-[var(--input-bg)] transition-colors flex items-center gap-2"
+                className="px-3 py-1.5 rounded-lg bg-[var(--card-bg)] text-ink-muted text-sm font-medium hover:bg-surface-parchment transition-colors flex items-center gap-2"
               >
-                {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                {copied ? <Check className="w-4 h-4 text-ink" /> : <Copy className="w-4 h-4" />}
                 {copied ? 'Copied!' : 'Copy'}
               </motion.button>
             </div>
-            <div className="relative p-5 rounded-xl bg-slate-950/30 border border-white/5">
+            <div className="relative p-5 rounded-xl bg-surface-offset border border-white/5">
               <div className="absolute left-0 top-0 bottom-0 w-1 rounded-full " />
-              <p className="pl-4 text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap">
+              <p className="pl-4 text-ink-muted leading-relaxed whitespace-pre-wrap">
                 {evidence.content}
               </p>
             </div>
@@ -433,13 +433,13 @@ const EvidenceDetailModal = ({ evidence, isOpen, onClose, onEdit, onDelete }) =>
 
           {/* Source */}
           {evidence.source && (
-            <div className="flex items-center gap-3 p-4 rounded-xl bg-slate-950/30 border border-white/5">
-              <Link2 className="w-5 h-5 text-[var(--text-muted)]" />
+            <div className="flex items-center gap-3 p-4 rounded-xl bg-surface-offset border border-white/5">
+              <Link2 className="w-5 h-5 text-ink-muted" />
               <a 
                 href={evidence.url} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-2"
+                className="text-ink hover:text-ink transition-colors flex items-center gap-2"
               >
                 {evidence.source}
                 <ExternalLink className="w-4 h-4" />
@@ -449,8 +449,8 @@ const EvidenceDetailModal = ({ evidence, isOpen, onClose, onEdit, onDelete }) =>
 
           {/* Tags */}
           <div>
-            <h3 className="text-[var(--text-accent-crimson)] font-semibold mb-3 flex items-center gap-2">
-              <Tag className="w-5 h-5 text-purple-400" />
+            <h3 className="text-accent-crimson font-semibold mb-3 flex items-center gap-2">
+              <Tag className="w-5 h-5 text-ink" />
               Tags
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -466,8 +466,8 @@ const EvidenceDetailModal = ({ evidence, isOpen, onClose, onEdit, onDelete }) =>
 
           {/* Citation Formatter */}
           <div>
-            <h3 className="text-[var(--text-accent-crimson)] font-semibold mb-3 flex items-center gap-2">
-              <FileText className="w-5 h-5 text-amber-400" />
+            <h3 className="text-accent-crimson font-semibold mb-3 flex items-center gap-2">
+              <FileText className="w-5 h-5 text-ink" />
               Citation
             </h3>
             <div className="flex items-center gap-2 mb-3">
@@ -477,8 +477,8 @@ const EvidenceDetailModal = ({ evidence, isOpen, onClose, onEdit, onDelete }) =>
                   onClick={() => setActiveFormat(format)}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                     activeFormat === format
-                      ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'
-                      : 'bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)]'
+                      ? 'bg-surface-offset text-ink border border-hairline'
+                      : 'bg-[var(--card-bg)] text-ink-muted hover:text-accent-crimson'
                   }`}
                 >
                   {format.toUpperCase()}
@@ -490,19 +490,19 @@ const EvidenceDetailModal = ({ evidence, isOpen, onClose, onEdit, onDelete }) =>
 
           {/* Usage Stats */}
           <div className="grid grid-cols-3 gap-4">
-            <div className="p-4 rounded-xl bg-slate-950/30 text-center border border-white/5">
-              <p className="text-2xl font-bold text-[var(--text-accent-crimson)]">{evidence.usageCount || 0}</p>
-              <p className="text-[var(--text-muted)] text-sm">Times Used</p>
+            <div className="p-4 rounded-xl bg-surface-offset text-center border border-white/5">
+              <p className="text-2xl font-bold text-accent-crimson">{evidence.usageCount || 0}</p>
+              <p className="text-ink-muted text-sm">Times Used</p>
             </div>
-            <div className="p-4 rounded-xl bg-slate-950/30 text-center border border-white/5">
-              <p className="text-2xl font-bold text-[var(--text-accent-crimson)]">{evidence.quality || 0}</p>
-              <p className="text-[var(--text-muted)] text-sm">Quality Rating</p>
+            <div className="p-4 rounded-xl bg-surface-offset text-center border border-white/5">
+              <p className="text-2xl font-bold text-accent-crimson">{evidence.quality || 0}</p>
+              <p className="text-ink-muted text-sm">Quality Rating</p>
             </div>
-            <div className="p-4 rounded-xl bg-slate-950/30 text-center border border-white/5">
-              <p className="text-2xl font-bold text-[var(--text-accent-crimson)]">
+            <div className="p-4 rounded-xl bg-surface-offset text-center border border-white/5">
+              <p className="text-2xl font-bold text-accent-crimson">
                 {evidence.lastUsed ? new Date(evidence.lastUsed).toLocaleDateString() : 'Never'}
               </p>
-              <p className="text-[var(--text-muted)] text-sm">Last Used</p>
+              <p className="text-ink-muted text-sm">Last Used</p>
             </div>
           </div>
         </div>
@@ -564,9 +564,9 @@ const AddEvidenceModal = ({ isOpen, onClose, onSave }) => {
           <div className="absolute inset-0 /10 via-transparent to-blue-500/10" />
           <div className="relative flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/30">
-                  <BookOpen className="w-5 h-5 text-cyan-400" />
+              <h2 className="text-2xl font-bold text-accent-crimson flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-surface-offset border border-hairline">
+                  <BookOpen className="w-5 h-5 text-ink" />
                 </div>
                 Add Evidence Card
               </h2>
@@ -574,7 +574,7 @@ const AddEvidenceModal = ({ isOpen, onClose, onSave }) => {
             <motion.button
               whileHover={{ scale: 1.1, rotate: 90 }}
               onClick={onClose}
-              className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+              className="p-2 rounded-xl text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
             >
               <X className="w-5 h-5" />
             </motion.button>
@@ -583,40 +583,40 @@ const AddEvidenceModal = ({ isOpen, onClose, onSave }) => {
 
         <form onSubmit={handleSubmit} className="p-6 space-y-5 overflow-y-auto max-h-[calc(90vh-140px)]">
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-[var(--text-muted)]">Card Title *</label>
+            <label className="block text-sm font-medium text-ink-muted">Card Title *</label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               placeholder="e.g., Climate Change Impact on Economy"
-              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson placeholder-slate-500 focus:border-hairline focus:ring-2 focus:ring-hairline outline-none transition-all"
               required
             />
           </div>
 
           <div className="grid grid-cols-3 gap-4">
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-[var(--text-muted)]">Author</label>
+              <label className="block text-sm font-medium text-ink-muted">Author</label>
               <input
                 type="text"
                 value={formData.author}
                 onChange={(e) => setFormData({ ...formData, author: e.target.value })}
                 placeholder="Author name"
-                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson placeholder-slate-500 focus:border-hairline focus:ring-2 focus:ring-hairline outline-none transition-all"
               />
             </div>
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-[var(--text-muted)]">Year</label>
+              <label className="block text-sm font-medium text-ink-muted">Year</label>
               <input
                 type="text"
                 value={formData.year}
                 onChange={(e) => setFormData({ ...formData, year: e.target.value })}
                 placeholder="2024"
-                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson placeholder-slate-500 focus:border-hairline focus:ring-2 focus:ring-hairline outline-none transition-all"
               />
             </div>
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-[var(--text-muted)]">Quality</label>
+              <label className="block text-sm font-medium text-ink-muted">Quality</label>
               <div className="pt-2">
                 <QualityStars 
                   rating={formData.quality} 
@@ -628,57 +628,57 @@ const AddEvidenceModal = ({ isOpen, onClose, onSave }) => {
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-[var(--text-muted)]">Source / Publication</label>
+            <label className="block text-sm font-medium text-ink-muted">Source / Publication</label>
             <input
               type="text"
               value={formData.source}
               onChange={(e) => setFormData({ ...formData, source: e.target.value })}
               placeholder="e.g., The New York Times, Nature Journal"
-              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson placeholder-slate-500 focus:border-hairline focus:ring-2 focus:ring-hairline outline-none transition-all"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-[var(--text-muted)]">URL (optional)</label>
+            <label className="block text-sm font-medium text-ink-muted">URL (optional)</label>
             <input
               type="url"
               value={formData.url}
               onChange={(e) => setFormData({ ...formData, url: e.target.value })}
               placeholder="https://..."
-              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson placeholder-slate-500 focus:border-hairline focus:ring-2 focus:ring-hairline outline-none transition-all"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-[var(--text-muted)]">Evidence Content *</label>
+            <label className="block text-sm font-medium text-ink-muted">Evidence Content *</label>
             <textarea
               value={formData.content}
               onChange={(e) => setFormData({ ...formData, content: e.target.value })}
               placeholder="Paste your evidence card content here..."
               rows={5}
-              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all resize-none"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson placeholder-slate-500 focus:border-hairline focus:ring-2 focus:ring-hairline outline-none transition-all resize-none"
               required
             />
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-[var(--text-muted)]">Tags (comma-separated)</label>
+            <label className="block text-sm font-medium text-ink-muted">Tags (comma-separated)</label>
             <input
               type="text"
               value={formData.tags}
               onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
               placeholder="e.g., climate, economy, impact, 2024"
-              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson placeholder-slate-500 focus:border-hairline focus:ring-2 focus:ring-hairline outline-none transition-all"
             />
           </div>
 
-          <div className="flex justify-end gap-3 pt-4 border-t border-[var(--border)]">
+          <div className="flex justify-end gap-3 pt-4 border-t border-hairline">
             <motion.button
               type="button"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={onClose}
-              className="px-6 py-3 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+              className="px-6 py-3 rounded-xl text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
             >
               Cancel
             </motion.button>
@@ -686,7 +686,7 @@ const AddEvidenceModal = ({ isOpen, onClose, onSave }) => {
               type="submit"
               whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(6, 182, 212, 0.3)' }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-3 rounded-xl  text-[var(--text-accent-crimson)] font-semibold shadow-lg shadow-cyan-500/25"
+              className="px-8 py-3 rounded-xl  text-accent-crimson font-semibold shadow-lg shadow-cyan-500/25"
             >
               Add Evidence
             </motion.button>
@@ -762,13 +762,13 @@ const EvidenceLibrary = ({ apiKey }) => {
         {/* Header */}
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-[var(--text-accent-crimson)] tracking-tight flex items-center gap-3">
-              <div className="p-2.5 rounded-xl /20 to-blue-600/20 border border-cyan-500/30">
-                <BookOpen className="w-7 h-7 text-cyan-400" />
+            <h1 className="text-3xl font-bold text-accent-crimson tracking-tight flex items-center gap-3">
+              <div className="p-2.5 rounded-xl /20 to-blue-600/20 border border-hairline">
+                <BookOpen className="w-7 h-7 text-ink" />
               </div>
               Evidence Library
             </h1>
-            <p className="text-[var(--text-muted)] mt-2">
+            <p className="text-ink-muted mt-2">
               {evidence?.length || 0} cards • Organize and access your research instantly
             </p>
           </div>
@@ -776,7 +776,7 @@ const EvidenceLibrary = ({ apiKey }) => {
             whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(6, 182, 212, 0.3)' }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setShowAddModal(true)}
-            className="px-5 py-2.5 rounded-xl  text-[var(--text-accent-crimson)] font-medium shadow-lg shadow-cyan-500/25 flex items-center gap-2"
+            className="px-5 py-2.5 rounded-xl  text-accent-crimson font-medium shadow-lg shadow-cyan-500/25 flex items-center gap-2"
           >
             <Plus className="w-5 h-5" />
             Add Card
@@ -786,13 +786,13 @@ const EvidenceLibrary = ({ apiKey }) => {
         {/* Search and Filters */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)]" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-muted" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search evidence..."
-              className="w-full pl-12 pr-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+              className="w-full pl-12 pr-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson placeholder-slate-500 focus:border-hairline focus:ring-2 focus:ring-hairline outline-none transition-all"
             />
           </div>
           
@@ -801,7 +801,7 @@ const EvidenceLibrary = ({ apiKey }) => {
             <select
               value={filterTag}
               onChange={(e) => setFilterTag(e.target.value)}
-              className="px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] focus:border-cyan-500 outline-none transition-all"
+              className="px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson focus:border-hairline outline-none transition-all"
             >
               <option value="all">All Tags</option>
               {allTags.map(tag => (
@@ -813,7 +813,7 @@ const EvidenceLibrary = ({ apiKey }) => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] focus:border-cyan-500 outline-none transition-all"
+              className="px-4 py-2.5 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson focus:border-hairline outline-none transition-all"
             >
               <option value="recent">Most Recent</option>
               <option value="quality">Highest Quality</option>
@@ -827,7 +827,7 @@ const EvidenceLibrary = ({ apiKey }) => {
         {loading ? (
           <div className="grid md:grid-cols-2 gap-4">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className="p-6 rounded-2xl border border-[var(--border)]/60 bg-[var(--bg-accent-crimson)]/30 animate-pulse">
+              <div key={i} className="p-6 rounded-2xl border border-hairline/60 bg-[var(--bg-accent-crimson)]/30 animate-pulse">
                 <div className="space-y-3">
                   <div className="h-5 w-3/4 bg-[var(--card-bg)] rounded" />
                   <div className="h-4 w-1/2 bg-[var(--card-bg)] rounded" />
@@ -841,14 +841,14 @@ const EvidenceLibrary = ({ apiKey }) => {
             ))}
           </div>
         ) : filteredEvidence.length === 0 ? (
-          <div className="p-8 rounded-3xl border border-[var(--border)]/60 /50 to-slate-950/50">
+          <div className="p-8 rounded-3xl border border-hairline/60 /50 to-slate-950/50">
             {evidence?.length === 0 ? (
               <EmptyEvidence onAdd={() => setShowAddModal(true)} />
             ) : (
               <div className="text-center py-12">
                 <Search className="w-12 h-12 text-ink-muted mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-[var(--text-accent-crimson)] mb-2">No Results Found</h3>
-                <p className="text-[var(--text-muted)]">Try adjusting your search or filters</p>
+                <h3 className="text-xl font-semibold text-accent-crimson mb-2">No Results Found</h3>
+                <p className="text-ink-muted">Try adjusting your search or filters</p>
               </div>
             )}
           </div>

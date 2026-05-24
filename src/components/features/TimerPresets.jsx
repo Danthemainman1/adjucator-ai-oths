@@ -262,17 +262,17 @@ const formatMinutes = (seconds) => {
 
 const getColorClasses = (color) => {
   const colors = {
-    blue: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-blue-400', badge: 'bg-accent-crimson' },
-    green: { bg: 'bg-green-500/20', border: 'border-green-500/50', text: 'text-green-400', badge: 'bg-green-500' },
-    purple: { bg: 'bg-purple-500/20', border: 'border-purple-500/50', text: 'text-purple-400', badge: 'bg-purple-500' },
-    amber: { bg: 'bg-amber-500/20', border: 'border-amber-500/50', text: 'text-amber-400', badge: 'bg-amber-500' },
-    red: { bg: 'bg-red-500/20', border: 'border-red-500/50', text: 'text-red-400', badge: 'bg-red-500' },
-    cyan: { bg: 'bg-cyan-500/20', border: 'border-cyan-500/50', text: 'text-cyan-400', badge: 'bg-cyan-500' },
-    indigo: { bg: 'bg-accent-crimson/20', border: 'border-indigo-500/50', text: 'text-indigo-400', badge: 'bg-accent-crimson' },
+    blue: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-ink', badge: 'bg-accent-crimson' },
+    green: { bg: 'bg-surface-offset', border: 'border-hairline', text: 'text-ink', badge: 'bg-surface-offset' },
+    purple: { bg: 'bg-surface-offset', border: 'border-hairline', text: 'text-ink', badge: 'bg-surface-offset' },
+    amber: { bg: 'bg-surface-offset', border: 'border-hairline', text: 'text-ink', badge: 'bg-surface-offset' },
+    red: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-accent-crimson', badge: 'bg-accent-crimson' },
+    cyan: { bg: 'bg-surface-offset', border: 'border-hairline', text: 'text-ink', badge: 'bg-surface-offset' },
+    indigo: { bg: 'bg-accent-crimson/20', border: 'border-hairline', text: 'text-ink', badge: 'bg-accent-crimson' },
     teal: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-teal-400', badge: 'bg-accent-crimson' },
-    rose: { bg: 'bg-rose-500/20', border: 'border-rose-500/50', text: 'text-rose-400', badge: 'bg-rose-500' },
+    rose: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-accent-crimson', badge: 'bg-accent-crimson' },
     violet: { bg: 'bg-violet-500/20', border: 'border-violet-500/50', text: 'text-violet-400', badge: 'bg-violet-500' },
-    emerald: { bg: 'bg-emerald-500/20', border: 'border-emerald-500/50', text: 'text-emerald-400', badge: 'bg-emerald-500' },
+    emerald: { bg: 'bg-surface-offset', border: 'border-hairline', text: 'text-ink', badge: 'bg-surface-offset' },
     sky: { bg: 'bg-sky-500/20', border: 'border-sky-500/50', text: 'text-sky-400', badge: 'bg-sky-500' }
   };
   return colors[color] || colors.blue;
@@ -312,11 +312,11 @@ const TimerPresets = () => {
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 /20 to-red-500/20 rounded-lg">
-              <Timer className="w-6 h-6 text-orange-400" />
+              <Timer className="w-6 h-6 text-accent-crimson" />
             </div>
-            <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)]">Timer Presets</h1>
+            <h1 className="text-2xl font-bold text-accent-crimson">Timer Presets</h1>
           </div>
-          <p className="text-[var(--text-muted)]">
+          <p className="text-ink-muted">
             Pre-configured timing structures for common debate formats
           </p>
         </div>
@@ -325,8 +325,8 @@ const TimerPresets = () => {
         {favoritePresets.length > 0 && (
           <div className="mb-8">
             <div className="flex items-center gap-2 mb-4">
-              <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-              <h2 className="text-lg font-semibold text-[var(--text-accent-crimson)]">Favorites</h2>
+              <Star className="w-4 h-4 text-ink fill-ink" />
+              <h2 className="text-lg font-semibold text-accent-crimson">Favorites</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {favoritePresets.map(preset => (
@@ -347,7 +347,7 @@ const TimerPresets = () => {
 
         {/* All Presets */}
         <div className="mb-8">
-          <h2 className="text-lg font-semibold text-[var(--text-accent-crimson)] mb-4">
+          <h2 className="text-lg font-semibold text-accent-crimson mb-4">
             {favoritePresets.length > 0 ? 'All Formats' : 'Debate Formats'}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -373,7 +373,7 @@ const TimerPresets = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
-              className="bg-[var(--card-bg)]/50 border border-[var(--border)]/50 rounded-xl p-6"
+              className="bg-[var(--card-bg)]/50 border border-hairline/50 rounded-xl p-6"
             >
               <PresetDetails preset={selectedPreset} />
             </motion.div>
@@ -381,12 +381,12 @@ const TimerPresets = () => {
         </AnimatePresence>
 
         {/* Quick Reference */}
-        <div className="mt-8 bg-[var(--card-bg)]/30 border border-[var(--border)]/50 rounded-xl p-6">
-          <h3 className="text-lg font-semibold text-[var(--text-accent-crimson)] mb-4">Quick Reference</h3>
+        <div className="mt-8 bg-[var(--card-bg)]/30 border border-hairline/50 rounded-xl p-6">
+          <h3 className="text-lg font-semibold text-accent-crimson mb-4">Quick Reference</h3>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-[var(--text-muted)] border-b border-[var(--border)]">
+                <tr className="text-ink-muted border-b border-hairline">
                   <th className="text-left py-2 px-3">Format</th>
                   <th className="text-center py-2 px-3">Total Time</th>
                   <th className="text-center py-2 px-3">Speeches</th>
@@ -400,20 +400,20 @@ const TimerPresets = () => {
                     ? Object.values(preset.prepTime).reduce((a, b) => a + b, 0)
                     : 0;
                   return (
-                    <tr key={preset.id} className="border-b border-[var(--border)]/50 hover:bg-[var(--card-bg)]/30">
+                    <tr key={preset.id} className="border-b border-hairline/50 hover:bg-[var(--card-bg)]/30">
                       <td className="py-3 px-3">
                         <div className="flex items-center gap-2">
                           <span className={`w-2 h-2 rounded-full ${colors.badge}`} />
-                          <span className="text-[var(--text-accent-crimson)] font-medium">{preset.shortName}</span>
+                          <span className="text-accent-crimson font-medium">{preset.shortName}</span>
                         </div>
                       </td>
-                      <td className="text-center py-3 px-3 text-[var(--text-secondary)]">
+                      <td className="text-center py-3 px-3 text-ink-muted">
                         {typeof preset.totalTime === 'number' ? `${preset.totalTime} min` : preset.totalTime}
                       </td>
-                      <td className="text-center py-3 px-3 text-[var(--text-secondary)]">
+                      <td className="text-center py-3 px-3 text-ink-muted">
                         {preset.speeches.length}
                       </td>
-                      <td className="text-center py-3 px-3 text-[var(--text-secondary)]">
+                      <td className="text-center py-3 px-3 text-ink-muted">
                         {totalPrepTime > 0 ? formatMinutes(totalPrepTime) + ' per side' : 'N/A'}
                       </td>
                     </tr>
@@ -441,7 +441,7 @@ const PresetCard = ({ preset, isSelected, isFavorite, onSelect, onToggleFavorite
       className={`relative p-4 rounded-xl border cursor-pointer transition-all ${
         isSelected
           ? `${colors.bg} ${colors.border}`
-          : 'bg-[var(--card-bg)]/50 border-[var(--border)]/50 hover:border-[var(--border)]'
+          : 'bg-[var(--card-bg)]/50 border-hairline/50 hover:border-hairline'
       }`}
       onClick={onSelect}
     >
@@ -452,23 +452,23 @@ const PresetCard = ({ preset, isSelected, isFavorite, onSelect, onToggleFavorite
             e.stopPropagation();
             onCopy();
           }}
-          className="p-1.5 rounded-lg hover:bg-[var(--input-bg)]/50 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
+          className="p-1.5 rounded-lg hover:bg-surface-parchment/50 text-ink-muted hover:text-accent-crimson transition-colors"
           title="Copy configuration"
         >
-          {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
+          {copied ? <Check className="w-4 h-4 text-ink" /> : <Copy className="w-4 h-4" />}
         </button>
         <button
           onClick={(e) => {
             e.stopPropagation();
             onToggleFavorite();
           }}
-          className="p-1.5 rounded-lg hover:bg-[var(--input-bg)]/50 transition-colors"
+          className="p-1.5 rounded-lg hover:bg-surface-parchment/50 transition-colors"
           title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
         >
           {isFavorite ? (
-            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+            <Star className="w-4 h-4 text-ink fill-ink" />
           ) : (
-            <StarOff className="w-4 h-4 text-[var(--text-muted)] hover:text-yellow-400" />
+            <StarOff className="w-4 h-4 text-ink-muted hover:text-ink" />
           )}
         </button>
       </div>
@@ -479,24 +479,24 @@ const PresetCard = ({ preset, isSelected, isFavorite, onSelect, onToggleFavorite
           <Gavel className={`w-5 h-5 ${colors.text}`} />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-[var(--text-accent-crimson)] font-semibold">{preset.name}</h3>
-          <p className="text-[var(--text-muted)] text-sm truncate">{preset.description}</p>
+          <h3 className="text-accent-crimson font-semibold">{preset.name}</h3>
+          <p className="text-ink-muted text-sm truncate">{preset.description}</p>
         </div>
       </div>
 
       {/* Stats */}
       <div className="flex items-center gap-4 text-sm">
-        <div className="flex items-center gap-1.5 text-[var(--text-secondary)]">
-          <Clock className="w-4 h-4 text-[var(--text-muted)]" />
+        <div className="flex items-center gap-1.5 text-ink-muted">
+          <Clock className="w-4 h-4 text-ink-muted" />
           <span>{typeof preset.totalTime === 'number' ? `${preset.totalTime} min` : preset.totalTime}</span>
         </div>
-        <div className="flex items-center gap-1.5 text-[var(--text-secondary)]">
-          <Users className="w-4 h-4 text-[var(--text-muted)]" />
+        <div className="flex items-center gap-1.5 text-ink-muted">
+          <Users className="w-4 h-4 text-ink-muted" />
           <span>{preset.speeches.length} speeches</span>
         </div>
         {totalPrepTime > 0 && (
-          <div className="flex items-center gap-1.5 text-[var(--text-secondary)]">
-            <Timer className="w-4 h-4 text-[var(--text-muted)]" />
+          <div className="flex items-center gap-1.5 text-ink-muted">
+            <Timer className="w-4 h-4 text-ink-muted" />
             <span>{formatMinutes(totalPrepTime)} prep</span>
           </div>
         )}
@@ -504,7 +504,7 @@ const PresetCard = ({ preset, isSelected, isFavorite, onSelect, onToggleFavorite
 
       {/* Expand indicator */}
       <div className={`absolute bottom-3 right-3 transition-transform ${isSelected ? 'rotate-90' : ''}`}>
-        <ChevronRight className="w-4 h-4 text-[var(--text-muted)]" />
+        <ChevronRight className="w-4 h-4 text-ink-muted" />
       </div>
     </motion.div>
   );
@@ -531,18 +531,18 @@ const PresetDetails = ({ preset }) => {
 
   const getSideColor = (side) => {
     const sideColors = {
-      aff: 'text-blue-400',
-      neg: 'text-red-400',
-      a: 'text-blue-400',
-      b: 'text-red-400',
-      pro: 'text-green-400',
-      con: 'text-red-400',
-      gov: 'text-blue-400',
-      opp: 'text-red-400',
-      prop: 'text-blue-400',
-      both: 'text-purple-400'
+      aff: 'text-ink',
+      neg: 'text-accent-crimson',
+      a: 'text-ink',
+      b: 'text-accent-crimson',
+      pro: 'text-ink',
+      con: 'text-accent-crimson',
+      gov: 'text-ink',
+      opp: 'text-accent-crimson',
+      prop: 'text-ink',
+      both: 'text-ink'
     };
-    return sideColors[side] || 'text-[var(--text-muted)]';
+    return sideColors[side] || 'text-ink-muted';
   };
 
   return (
@@ -554,8 +554,8 @@ const PresetDetails = ({ preset }) => {
             <Gavel className={`w-6 h-6 ${colors.text}`} />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-[var(--text-accent-crimson)]">{preset.name}</h2>
-            <p className="text-[var(--text-muted)]">{preset.description}</p>
+            <h2 className="text-xl font-bold text-accent-crimson">{preset.name}</h2>
+            <p className="text-ink-muted">{preset.description}</p>
           </div>
         </div>
         <div className={`px-3 py-1.5 rounded-lg ${colors.bg} ${colors.text} font-medium`}>
@@ -566,12 +566,12 @@ const PresetDetails = ({ preset }) => {
       {/* Prep Time */}
       {preset.prepTime && Object.values(preset.prepTime).some(t => t > 0) && (
         <div className="mb-6 p-4 bg-[var(--bg-accent-crimson)]/50 rounded-lg">
-          <h3 className="text-sm font-medium text-[var(--text-muted)] mb-3">Prep Time</h3>
+          <h3 className="text-sm font-medium text-ink-muted mb-3">Prep Time</h3>
           <div className="flex flex-wrap gap-4">
             {Object.entries(preset.prepTime).map(([side, time]) => (
               <div key={side} className="flex items-center gap-2">
                 <span className={getSideColor(side)}>{getSideLabel(side)}:</span>
-                <span className="text-[var(--text-accent-crimson)] font-mono">{formatTime(time)}</span>
+                <span className="text-accent-crimson font-mono">{formatTime(time)}</span>
               </div>
             ))}
           </div>
@@ -580,14 +580,14 @@ const PresetDetails = ({ preset }) => {
 
       {/* Notes */}
       {preset.notes && (
-        <div className="mb-6 p-4 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-          <p className="text-amber-300 text-sm">{preset.notes}</p>
+        <div className="mb-6 p-4 bg-surface-offset border border-hairline rounded-lg">
+          <p className="text-ink text-sm">{preset.notes}</p>
         </div>
       )}
 
       {/* Speech Order */}
       <div>
-        <h3 className="text-sm font-medium text-[var(--text-muted)] mb-3">Speech Order</h3>
+        <h3 className="text-sm font-medium text-ink-muted mb-3">Speech Order</h3>
         <div className="space-y-2">
           {preset.speeches.map((speech, index) => (
             <motion.div
@@ -597,13 +597,13 @@ const PresetDetails = ({ preset }) => {
               transition={{ delay: index * 0.05 }}
               className="flex items-center gap-4 p-3 bg-[var(--bg-accent-crimson)]/50 rounded-lg"
             >
-              <div className="w-8 h-8 rounded-full bg-[var(--card-bg)] flex items-center justify-center text-[var(--text-muted)] text-sm font-medium">
+              <div className="w-8 h-8 rounded-full bg-[var(--card-bg)] flex items-center justify-center text-ink-muted text-sm font-medium">
                 {index + 1}
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-[var(--text-accent-crimson)] font-medium">{speech.name}</span>
-                  <span className="px-2 py-0.5 bg-[var(--card-bg)] rounded text-xs text-[var(--text-muted)] font-mono">
+                  <span className="text-accent-crimson font-medium">{speech.name}</span>
+                  <span className="px-2 py-0.5 bg-[var(--card-bg)] rounded text-xs text-ink-muted font-mono">
                     {speech.abbrev}
                   </span>
                 </div>
@@ -612,8 +612,8 @@ const PresetDetails = ({ preset }) => {
                 </span>
               </div>
               <div className="text-right">
-                <div className="text-[var(--text-accent-crimson)] font-mono text-lg">{formatTime(speech.time)}</div>
-                <div className="text-[var(--text-muted)] text-xs">{formatMinutes(speech.time)}</div>
+                <div className="text-accent-crimson font-mono text-lg">{formatTime(speech.time)}</div>
+                <div className="text-ink-muted text-xs">{formatMinutes(speech.time)}</div>
               </div>
             </motion.div>
           ))}

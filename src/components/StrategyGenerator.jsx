@@ -426,21 +426,21 @@ Crossfire zingers (use sparingly):
         <div className="space-y-6">
             {/* Page Header */}
             <div>
-                <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)] tracking-tight">Strategy Generator</h1>
-                <p className="text-[var(--text-muted)] mt-1">Build winning debate strategies with AI</p>
+                <h1 className="text-2xl font-bold text-accent-crimson tracking-tight">Strategy Generator</h1>
+                <p className="text-ink-muted mt-1">Build winning debate strategies with AI</p>
             </div>
 
             <div className="flex flex-col lg:flex-row gap-6">
                 {/* Input Panel */}
                 <div className="w-full lg:w-1/2 flex flex-col gap-4">
-                    <div className="p-6 rounded-2xl border border-[var(--border)]/60 bg-[var(--bg-accent-crimson)]/30  space-y-4">
+                    <div className="p-6 rounded-2xl border border-hairline/60 bg-[var(--bg-accent-crimson)]/30  space-y-4">
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Debate Format</label>
+                                <label className="block text-sm font-medium text-ink-muted mb-2">Debate Format</label>
                                 <select
                                     value={speechType}
                                     onChange={(e) => handleSpeechTypeChange(e.target.value)}
-                                    className="w-full px-4 py-3 rounded-xl bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
+                                    className="w-full px-4 py-3 rounded-xl bg-[var(--bg-accent-crimson)]/50 border border-hairline text-accent-crimson focus:border-accent-crimson focus:ring-1 focus:ring-accent-crimson transition-all"
                                 >
                                     {Object.entries(groupedDebateEvents).map(([subcategory, types]) => (
                                         <optgroup key={subcategory} label={subcategory}>
@@ -450,11 +450,11 @@ Crossfire zingers (use sparingly):
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Side</label>
+                                <label className="block text-sm font-medium text-ink-muted mb-2">Side</label>
                                 <select
                                     value={side}
                                     onChange={(e) => setSide(e.target.value)}
-                                    className="w-full px-4 py-3 rounded-xl bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
+                                    className="w-full px-4 py-3 rounded-xl bg-[var(--bg-accent-crimson)]/50 border border-hairline text-accent-crimson focus:border-accent-crimson focus:ring-1 focus:ring-accent-crimson transition-all"
                                 >
                                     {applicableSides.map(s => <option key={s} value={s}>{s}</option>)}
                                 </select>
@@ -463,39 +463,39 @@ Crossfire zingers (use sparingly):
 
                         {/* Info banner */}
                         <div className="p-4 rounded-xl bg-accent-crimson/10 border border-accent-crimson/20">
-                            <div className="flex items-center gap-3 text-blue-400 text-sm">
+                            <div className="flex items-center gap-3 text-ink text-sm">
                                 <Info className="w-5 h-5 flex-shrink-0" />
                                 <span>Strategy Generator is optimized for all NSDA debate formats including Congressional, Parli, and World Schools.</span>
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">Topic / Resolution</label>
+                            <label className="block text-sm font-medium text-ink-muted mb-2">Topic / Resolution</label>
                             <input
                                 type="text"
                                 value={topic}
                                 onChange={(e) => setTopic(e.target.value)}
                                 placeholder="Resolved: The United States should substantially increase..."
-                                className="w-full px-4 py-3 rounded-xl bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
+                                className="w-full px-4 py-3 rounded-xl bg-[var(--bg-accent-crimson)]/50 border border-hairline text-accent-crimson placeholder-slate-500 focus:border-accent-crimson focus:ring-1 focus:ring-accent-crimson transition-all"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-[var(--text-muted)] mb-2">
+                            <label className="block text-sm font-medium text-ink-muted mb-2">
                                 Additional Context <span className="text-ink-muted">(optional)</span>
                             </label>
                             <textarea
                                 value={context}
                                 onChange={(e) => setContext(e.target.value)}
                                 placeholder="E.g., specific arguments you want to focus on, your opponent's known style..."
-                                className="w-full px-4 py-3 rounded-xl bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all resize-none h-24"
+                                className="w-full px-4 py-3 rounded-xl bg-[var(--bg-accent-crimson)]/50 border border-hairline text-accent-crimson placeholder-slate-500 focus:border-accent-crimson focus:ring-1 focus:ring-accent-crimson transition-all resize-none h-24"
                             />
                         </div>
                     </div>
 
                     {/* Strategy Type Selection */}
-                    <div className="p-6 rounded-2xl border border-[var(--border)]/60 bg-[var(--bg-accent-crimson)]/30 ">
-                        <label className="block text-sm font-medium text-[var(--text-secondary)] mb-4">Strategy Type</label>
+                    <div className="p-6 rounded-2xl border border-hairline/60 bg-[var(--bg-accent-crimson)]/30 ">
+                        <label className="block text-sm font-medium text-ink-muted mb-4">Strategy Type</label>
                         <div className="grid grid-cols-2 gap-3">
                             {strategyTypes.map((type) => {
                                 const Icon = type.icon;
@@ -505,17 +505,17 @@ Crossfire zingers (use sparingly):
                                         onClick={() => setStrategyType(type.id)}
                                         className={`p-4 rounded-xl border text-left transition-all ${
                                             strategyType === type.id
-                                                ? 'bg-orange-500/10 border-orange-500/30 shadow-lg shadow-orange-500/10'
-                                                : 'bg-[var(--bg-accent-crimson)]/30 border-[var(--border)] hover:border-[var(--border)] hover:bg-[var(--card-bg)]/50'
+                                                ? 'bg-accent-crimson/10 border-accent-crimson/30 shadow-lg shadow-orange-500/10'
+                                                : 'bg-[var(--bg-accent-crimson)]/30 border-hairline hover:border-hairline hover:bg-[var(--card-bg)]/50'
                                         }`}
                                     >
                                         <div className="flex items-center gap-3 mb-2">
-                                            <Icon className={`w-5 h-5 ${strategyType === type.id ? 'text-orange-400' : 'text-[var(--text-muted)]'}`} />
-                                            <span className={`font-medium ${strategyType === type.id ? 'text-[var(--text-accent-crimson)]' : 'text-[var(--text-muted)]'}`}>
+                                            <Icon className={`w-5 h-5 ${strategyType === type.id ? 'text-accent-crimson' : 'text-ink-muted'}`} />
+                                            <span className={`font-medium ${strategyType === type.id ? 'text-accent-crimson' : 'text-ink-muted'}`}>
                                                 {type.label}
                                             </span>
                                         </div>
-                                        <p className="text-xs text-[var(--text-muted)]">{type.description}</p>
+                                        <p className="text-xs text-ink-muted">{type.description}</p>
                                     </button>
                                 );
                             })}
@@ -526,7 +526,7 @@ Crossfire zingers (use sparingly):
                     <button
                         onClick={handleGenerate}
                         disabled={loading || !topic.trim()}
-                        className="w-full py-4 rounded-xl  text-[var(--text-accent-crimson)] text-lg font-semibold shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-[1.01] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-3"
+                        className="w-full py-4 rounded-xl  text-accent-crimson text-lg font-semibold shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-[1.01] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-3"
                     >
                         {loading ? (
                             <>
@@ -542,7 +542,7 @@ Crossfire zingers (use sparingly):
                     </button>
 
                     {error && (
-                        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center gap-3 text-red-400">
+                        <div className="p-4 rounded-xl bg-accent-crimson/10 border border-accent-crimson/20 flex items-center gap-3 text-accent-crimson">
                             <AlertCircle className="w-5 h-5 flex-shrink-0" />
                             <span className="text-sm">{error}</span>
                         </div>
@@ -550,25 +550,25 @@ Crossfire zingers (use sparingly):
                 </div>
 
                 {/* Output Panel */}
-                <div className="w-full lg:w-1/2 rounded-2xl border border-[var(--border)]/60 bg-[var(--bg-accent-crimson)]/30  overflow-hidden flex flex-col">
-                    <div className="p-4 border-b border-[var(--border)]/60 bg-[var(--bg-accent-crimson)]/50 flex justify-between items-center">
-                        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
-                            <BookOpen className="w-5 h-5 text-orange-400" />
+                <div className="w-full lg:w-1/2 rounded-2xl border border-hairline/60 bg-[var(--bg-accent-crimson)]/30  overflow-hidden flex flex-col">
+                    <div className="p-4 border-b border-hairline/60 bg-[var(--bg-accent-crimson)]/50 flex justify-between items-center">
+                        <h3 className="font-semibold text-accent-crimson flex items-center gap-2">
+                            <BookOpen className="w-5 h-5 text-accent-crimson" />
                             Strategy Playbook
                         </h3>
                         {result && (
                             <div className="flex items-center gap-3">
                                 {saved && (
-                                    <span className="text-xs text-emerald-400 flex items-center gap-1 font-medium">
+                                    <span className="text-xs text-ink flex items-center gap-1 font-medium">
                                         <History className="w-3 h-3" /> Saved
                                     </span>
                                 )}
                                 <button
                                     onClick={copyToClipboard}
-                                    className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+                                    className="p-2 rounded-lg text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
                                     title="Copy to clipboard"
                                 >
-                                    {copied ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
+                                    {copied ? <CheckCircle2 className="w-4 h-4 text-ink" /> : <Copy className="w-4 h-4" />}
                                 </button>
                             </div>
                         )}
@@ -576,11 +576,11 @@ Crossfire zingers (use sparingly):
 
                     <div className="flex-1 overflow-y-auto p-6">
                         {result ? (
-                            <div className="prose prose-invert prose-sm max-w-none prose-headings:text-orange-400 prose-headings:font-semibold prose-a:text-orange-400 prose-strong:text-[var(--text-accent-crimson)] prose-table:border-collapse prose-th:border prose-th:border-[var(--border)] prose-td:border prose-td:border-[var(--border)] prose-th:p-3 prose-td:p-3 prose-th:bg-[var(--card-bg)]/50 prose-th:text-left prose-code:bg-[var(--card-bg)] prose-code:px-1.5 prose-code:rounded prose-pre:bg-[var(--bg-accent-crimson)] prose-pre:border prose-pre:border-[var(--border)] prose-blockquote:border-l-orange-500 prose-blockquote:bg-[var(--bg-accent-crimson)]/50 prose-blockquote:py-1">
+                            <div className="prose prose-invert prose-sm max-w-none prose-headings:text-accent-crimson prose-headings:font-semibold prose-a:text-accent-crimson prose-strong:text-accent-crimson prose-table:border-collapse prose-th:border prose-th:border-hairline prose-td:border prose-td:border-hairline prose-th:p-3 prose-td:p-3 prose-th:bg-[var(--card-bg)]/50 prose-th:text-left prose-code:bg-[var(--card-bg)] prose-code:px-1.5 prose-code:rounded prose-pre:bg-[var(--bg-accent-crimson)] prose-pre:border prose-pre:border-hairline prose-blockquote:border-l-orange-500 prose-blockquote:bg-[var(--bg-accent-crimson)]/50 prose-blockquote:py-1">
                                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{result}</ReactMarkdown>
                             </div>
                         ) : (
-                            <div className="h-full flex flex-col items-center justify-center text-[var(--text-muted)] py-16">
+                            <div className="h-full flex flex-col items-center justify-center text-ink-muted py-16">
                                 <div className="w-16 h-16 rounded-2xl bg-[var(--card-bg)]/50 flex items-center justify-center mb-4">
                                     <Target className="w-8 h-8" />
                                 </div>

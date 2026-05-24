@@ -190,21 +190,21 @@ const RubricScore = ({ category, score, onChange, maxScore = 10 }) => {
   const percentage = (score / maxScore) * 100;
   
   const getScoreColor = (pct) => {
-    if (pct >= 90) return 'text-emerald-400';
-    if (pct >= 80) return 'text-cyan-400';
-    if (pct >= 70) return 'text-amber-400';
-    if (pct >= 60) return 'text-orange-400';
-    return 'text-red-400';
+    if (pct >= 90) return 'text-ink';
+    if (pct >= 80) return 'text-ink';
+    if (pct >= 70) return 'text-ink';
+    if (pct >= 60) return 'text-accent-crimson';
+    return 'text-accent-crimson';
   };
 
   return (
-    <div className="bg-[var(--input-bg)]/30 rounded-lg p-4">
+    <div className="bg-surface-parchment/30 rounded-lg p-4">
       <div className="flex items-start justify-between mb-2">
         <div>
-          <h4 className="text-[var(--text-accent-crimson)] font-medium">{category.label}</h4>
-          <p className="text-xs text-[var(--text-muted)] mt-0.5">{category.description}</p>
+          <h4 className="text-accent-crimson font-medium">{category.label}</h4>
+          <p className="text-xs text-ink-muted mt-0.5">{category.description}</p>
         </div>
-        <span className="text-xs text-[var(--text-muted)] bg-[var(--input-bg)] px-2 py-0.5 rounded">
+        <span className="text-xs text-ink-muted bg-surface-parchment px-2 py-0.5 rounded">
           Weight: {category.weight}%
         </span>
       </div>
@@ -217,7 +217,7 @@ const RubricScore = ({ category, score, onChange, maxScore = 10 }) => {
           step={0.5}
           value={score}
           onChange={(e) => onChange(parseFloat(e.target.value))}
-          className="flex-1 h-2 bg-slate-600 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+          className="flex-1 h-2 bg-surface-offset rounded-lg appearance-none cursor-pointer accent-cyan-500"
         />
         <div className={`text-2xl font-bold w-16 text-right ${getScoreColor(percentage)}`}>
           {score.toFixed(1)}
@@ -225,7 +225,7 @@ const RubricScore = ({ category, score, onChange, maxScore = 10 }) => {
       </div>
       
       {/* Score indicators */}
-      <div className="flex justify-between mt-1 text-xs text-[var(--text-muted)]">
+      <div className="flex justify-between mt-1 text-xs text-ink-muted">
         <span>0</span>
         <span>Poor</span>
         <span>Average</span>
@@ -243,26 +243,26 @@ const SpeakerPointsInput = ({ speaker, points, onChange, format, showGuide = fal
   const { minSpeakerPoints, maxSpeakerPoints } = format;
 
   const getPointsColor = (pts) => {
-    if (pts >= 29.5) return 'text-emerald-400';
-    if (pts >= 29) return 'text-cyan-400';
-    if (pts >= 28.5) return 'text-blue-400';
-    if (pts >= 28) return 'text-purple-400';
-    if (pts >= 27.5) return 'text-amber-400';
-    if (pts >= 27) return 'text-orange-400';
-    return 'text-red-400';
+    if (pts >= 29.5) return 'text-ink';
+    if (pts >= 29) return 'text-ink';
+    if (pts >= 28.5) return 'text-ink';
+    if (pts >= 28) return 'text-ink';
+    if (pts >= 27.5) return 'text-ink';
+    if (pts >= 27) return 'text-accent-crimson';
+    return 'text-accent-crimson';
   };
 
   return (
-    <div className="bg-[var(--input-bg)]/30 rounded-lg p-4">
+    <div className="bg-surface-parchment/30 rounded-lg p-4">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <User className="w-4 h-4 text-[var(--text-muted)]" />
-          <span className="text-[var(--text-accent-crimson)] font-medium">{speaker.name || `Speaker ${speaker.position}`}</span>
-          <span className="text-xs text-[var(--text-muted)]">({speaker.side})</span>
+          <User className="w-4 h-4 text-ink-muted" />
+          <span className="text-accent-crimson font-medium">{speaker.name || `Speaker ${speaker.position}`}</span>
+          <span className="text-xs text-ink-muted">({speaker.side})</span>
         </div>
         <button
           onClick={() => setShowPointGuide(!showPointGuide)}
-          className="text-xs text-cyan-400 hover:text-cyan-300 flex items-center gap-1"
+          className="text-xs text-ink hover:text-ink flex items-center gap-1"
         >
           <Info className="w-3 h-3" />
           Guide
@@ -277,7 +277,7 @@ const SpeakerPointsInput = ({ speaker, points, onChange, format, showGuide = fal
           step={0.1}
           value={points}
           onChange={(e) => onChange(parseFloat(e.target.value) || minSpeakerPoints)}
-          className={`w-24 bg-[var(--card-bg)] border border-[var(--border)] text-center text-2xl font-bold px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50 ${getPointsColor(points)}`}
+          className={`w-24 bg-[var(--card-bg)] border border-hairline text-center text-2xl font-bold px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-hairline ${getPointsColor(points)}`}
         />
         <input
           type="range"
@@ -286,7 +286,7 @@ const SpeakerPointsInput = ({ speaker, points, onChange, format, showGuide = fal
           step={0.1}
           value={points}
           onChange={(e) => onChange(parseFloat(e.target.value))}
-          className="flex-1 h-2 bg-slate-600 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+          className="flex-1 h-2 bg-surface-offset rounded-lg appearance-none cursor-pointer accent-cyan-500"
         />
       </div>
 
@@ -299,11 +299,11 @@ const SpeakerPointsInput = ({ speaker, points, onChange, format, showGuide = fal
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
-            <div className="mt-3 pt-3 border-t border-[var(--border)] grid grid-cols-3 gap-2 text-xs">
+            <div className="mt-3 pt-3 border-t border-hairline grid grid-cols-3 gap-2 text-xs">
               {SPEAKER_POINT_GUIDE.map((guide) => (
                 <div key={guide.range} className="text-center">
-                  <div className="font-medium text-[var(--text-secondary)]">{guide.range}</div>
-                  <div className="text-[var(--text-muted)]">{guide.label}</div>
+                  <div className="font-medium text-ink-muted">{guide.range}</div>
+                  <div className="text-ink-muted">{guide.label}</div>
                 </div>
               ))}
             </div>
@@ -325,16 +325,16 @@ const TeamCard = ({ team, isWinner, onToggleWinner, onUpdateSpeaker, onUpdateRub
 
   return (
     <div className={`bg-[var(--card-bg)]/50 border rounded-xl overflow-hidden transition-all ${
-      isWinner ? 'border-emerald-500/50 ring-2 ring-emerald-500/20' : 'border-[var(--border)]'
+      isWinner ? 'border-hairline ring-2 ring-hairline' : 'border-hairline'
     }`}>
       {/* Team Header */}
-      <div className={`p-4 border-b ${isWinner ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-[var(--card-bg)]/50 border-[var(--border)]'}`}>
+      <div className={`p-4 border-b ${isWinner ? 'bg-surface-offset border-hairline' : 'bg-[var(--card-bg)]/50 border-hairline'}`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className={`p-2 rounded-lg ${
               team.side === 'Aff' || team.side === 'Pro' || team.side === 'Gov'
-                ? 'bg-cyan-500/20 text-cyan-400' 
-                : 'bg-orange-500/20 text-orange-400'
+                ? 'bg-surface-offset text-ink' 
+                : 'bg-accent-crimson/20 text-accent-crimson'
             }`}>
               <Scale className="w-5 h-5" />
             </div>
@@ -344,22 +344,22 @@ const TeamCard = ({ team, isWinner, onToggleWinner, onUpdateSpeaker, onUpdateRub
                 value={team.name}
                 onChange={(e) => onUpdateSpeaker(team.id, 'name', e.target.value)}
                 placeholder="Team Name"
-                className="bg-transparent text-[var(--text-accent-crimson)] font-semibold text-lg focus:outline-none"
+                className="bg-transparent text-accent-crimson font-semibold text-lg focus:outline-none"
               />
               <div className="flex items-center gap-2 text-sm">
                 <span className={`${
                   team.side === 'Aff' || team.side === 'Pro' || team.side === 'Gov'
-                    ? 'text-cyan-400' : 'text-orange-400'
+                    ? 'text-ink' : 'text-accent-crimson'
                 }`}>
                   {team.side}
                 </span>
-                <span className="text-[var(--text-muted)]">•</span>
+                <span className="text-ink-muted">•</span>
                 <input
                   type="text"
                   value={team.school || ''}
                   onChange={(e) => onUpdateSpeaker(team.id, 'school', e.target.value)}
                   placeholder="School"
-                  className="bg-transparent text-[var(--text-muted)] focus:outline-none"
+                  className="bg-transparent text-ink-muted focus:outline-none"
                 />
               </div>
             </div>
@@ -369,8 +369,8 @@ const TeamCard = ({ team, isWinner, onToggleWinner, onUpdateSpeaker, onUpdateRub
             onClick={() => onToggleWinner(team.id)}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
               isWinner 
-                ? 'bg-emerald-500 text-[var(--text-accent-crimson)]' 
-                : 'bg-[var(--input-bg)] text-[var(--text-muted)] hover:bg-slate-600 hover:text-[var(--text-accent-crimson)]'
+                ? 'bg-surface-offset text-accent-crimson' 
+                : 'bg-surface-parchment text-ink-muted hover:bg-surface-offset hover:text-accent-crimson'
             }`}
           >
             <Trophy className={`w-4 h-4 ${isWinner ? 'fill-current' : ''}`} />
@@ -380,24 +380,24 @@ const TeamCard = ({ team, isWinner, onToggleWinner, onUpdateSpeaker, onUpdateRub
 
         {/* Quick Stats */}
         <div className="flex items-center gap-4 mt-3 text-sm">
-          <div className="flex items-center gap-1 text-[var(--text-muted)]">
-            <Star className="w-4 h-4 text-amber-400" />
+          <div className="flex items-center gap-1 text-ink-muted">
+            <Star className="w-4 h-4 text-ink" />
             <span>Avg Points:</span>
-            <span className="text-[var(--text-accent-crimson)] font-medium">
+            <span className="text-accent-crimson font-medium">
               {(team.speakers.reduce((sum, s) => sum + s.points, 0) / team.speakers.length).toFixed(1)}
             </span>
           </div>
-          <div className="flex items-center gap-1 text-[var(--text-muted)]">
-            <Target className="w-4 h-4 text-cyan-400" />
+          <div className="flex items-center gap-1 text-ink-muted">
+            <Target className="w-4 h-4 text-ink" />
             <span>Rubric:</span>
-            <span className="text-[var(--text-accent-crimson)] font-medium">{avgRubricScore.toFixed(1)}/10</span>
+            <span className="text-accent-crimson font-medium">{avgRubricScore.toFixed(1)}/10</span>
           </div>
         </div>
       </div>
 
       {/* Speaker Points */}
       <div className="p-4 space-y-3">
-        <h4 className="text-sm text-[var(--text-muted)] uppercase tracking-wide flex items-center gap-2">
+        <h4 className="text-sm text-ink-muted uppercase tracking-wide flex items-center gap-2">
           <Mic className="w-4 h-4" />
           Speaker Points
         </h4>
@@ -413,10 +413,10 @@ const TeamCard = ({ team, isWinner, onToggleWinner, onUpdateSpeaker, onUpdateRub
       </div>
 
       {/* Rubric Scoring */}
-      <div className="p-4 border-t border-[var(--border)]">
+      <div className="p-4 border-t border-hairline">
         <button
           onClick={() => setShowRubric(!showRubric)}
-          className="flex items-center justify-between w-full text-sm text-[var(--text-muted)] uppercase tracking-wide mb-3"
+          className="flex items-center justify-between w-full text-sm text-ink-muted uppercase tracking-wide mb-3"
         >
           <div className="flex items-center gap-2">
             <Target className="w-4 h-4" />
@@ -460,13 +460,13 @@ const RFDSection = ({ rfd, onChange }) => {
   };
 
   return (
-    <div className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-6">
+    <div className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl p-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
-          <MessageSquare className="w-5 h-5 text-purple-400" />
+        <h3 className="font-semibold text-accent-crimson flex items-center gap-2">
+          <MessageSquare className="w-5 h-5 text-ink" />
           Reason for Decision (RFD)
         </h3>
-        <span className="text-xs text-[var(--text-muted)]">{charCount} characters</span>
+        <span className="text-xs text-ink-muted">{charCount} characters</span>
       </div>
 
       <textarea
@@ -480,12 +480,12 @@ Consider addressing:
 • Specific feedback for each team
 • What each side did well and areas for improvement"
         rows={8}
-        className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50 resize-none"
+        className="w-full bg-surface-parchment/50 border border-hairline text-accent-crimson px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-hairline resize-none"
       />
 
       {/* Quick RFD Templates */}
       <div className="mt-3 flex flex-wrap gap-2">
-        <span className="text-xs text-[var(--text-muted)]">Quick add:</span>
+        <span className="text-xs text-ink-muted">Quick add:</span>
         {[
           'Better weighing on impacts',
           'Clearer extensions in rebuttals',
@@ -495,7 +495,7 @@ Consider addressing:
           <button
             key={template}
             onClick={() => onChange(rfd + (rfd ? '\n\n' : '') + template)}
-            className="text-xs px-2 py-1 bg-[var(--input-bg)] text-[var(--text-secondary)] rounded hover:bg-slate-600 transition-colors"
+            className="text-xs px-2 py-1 bg-surface-parchment text-ink-muted rounded hover:bg-surface-offset transition-colors"
           >
             + {template}
           </button>
@@ -558,47 +558,47 @@ const JudgeSignature = ({ signature, onChange }) => {
   };
 
   return (
-    <div className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-6">
-      <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2 mb-4">
-        <PenTool className="w-5 h-5 text-cyan-400" />
+    <div className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl p-6">
+      <h3 className="font-semibold text-accent-crimson flex items-center gap-2 mb-4">
+        <PenTool className="w-5 h-5 text-ink" />
         Judge Information & Signature
       </h3>
 
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div>
-          <label className="block text-sm text-[var(--text-muted)] mb-1">Judge Name</label>
+          <label className="block text-sm text-ink-muted mb-1">Judge Name</label>
           <input
             type="text"
             value={signature.name || ''}
             onChange={(e) => onChange({ ...signature, name: e.target.value })}
             placeholder="Enter your name"
-            className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+            className="w-full bg-surface-parchment/50 border border-hairline text-accent-crimson px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-hairline"
           />
         </div>
         <div>
-          <label className="block text-sm text-[var(--text-muted)] mb-1">Affiliation</label>
+          <label className="block text-sm text-ink-muted mb-1">Affiliation</label>
           <input
             type="text"
             value={signature.affiliation || ''}
             onChange={(e) => onChange({ ...signature, affiliation: e.target.value })}
             placeholder="School/Organization"
-            className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+            className="w-full bg-surface-parchment/50 border border-hairline text-accent-crimson px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-hairline"
           />
         </div>
       </div>
 
       <div>
         <div className="flex items-center justify-between mb-2">
-          <label className="text-sm text-[var(--text-muted)]">Signature (draw below)</label>
+          <label className="text-sm text-ink-muted">Signature (draw below)</label>
           <button
             onClick={clearSignature}
-            className="text-xs text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] flex items-center gap-1"
+            className="text-xs text-ink-muted hover:text-accent-crimson flex items-center gap-1"
           >
             <RotateCcw className="w-3 h-3" />
             Clear
           </button>
         </div>
-        <div className="relative bg-[var(--bg-accent-crimson)] border border-[var(--border)] rounded-lg overflow-hidden">
+        <div className="relative bg-[var(--bg-accent-crimson)] border border-hairline rounded-lg overflow-hidden">
           <canvas
             ref={canvasRef}
             width={400}
@@ -942,13 +942,13 @@ const JudgeBallotGenerator = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
+          <h1 className="text-2xl font-bold text-accent-crimson flex items-center gap-3">
             <div className="p-2  rounded-xl">
-              <Gavel className="w-6 h-6 text-[var(--text-accent-crimson)]" />
+              <Gavel className="w-6 h-6 text-accent-crimson" />
             </div>
             Judge Ballot Generator
           </h1>
-          <p className="text-[var(--text-muted)] mt-1">
+          <p className="text-ink-muted mt-1">
             Create standardized ballots with rubric scoring
           </p>
         </div>
@@ -956,14 +956,14 @@ const JudgeBallotGenerator = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={resetBallot}
-            className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-surface-parchment hover:bg-surface-offset text-accent-crimson rounded-lg transition-colors"
           >
             <RotateCcw className="w-4 h-4" />
             Reset
           </button>
           <button
             onClick={saveBallot}
-            className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-surface-parchment hover:bg-surface-offset text-accent-crimson rounded-lg transition-colors"
           >
             <Save className="w-4 h-4" />
             Save
@@ -973,8 +973,8 @@ const JudgeBallotGenerator = () => {
             disabled={!isComplete}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
               isComplete
-                ? 'bg-amber-600 hover:bg-amber-500 text-[var(--text-accent-crimson)]'
-                : 'bg-[var(--input-bg)] text-[var(--text-muted)] cursor-not-allowed'
+                ? 'bg-surface-offset hover:bg-surface-offset text-accent-crimson'
+                : 'bg-surface-parchment text-ink-muted cursor-not-allowed'
             }`}
           >
             <Download className="w-4 h-4" />
@@ -984,14 +984,14 @@ const JudgeBallotGenerator = () => {
       </div>
 
       {/* Format Selection & Round Info */}
-      <div className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-6">
+      <div className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl p-6">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
           <div className="md:col-span-2">
-            <label className="block text-sm text-[var(--text-muted)] mb-1">Debate Format</label>
+            <label className="block text-sm text-ink-muted mb-1">Debate Format</label>
             <select
               value={ballotFormat}
               onChange={(e) => handleFormatChange(e.target.value)}
-              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+              className="w-full bg-surface-parchment/50 border border-hairline text-accent-crimson px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-hairline"
             >
               {Object.entries(DEBATE_FORMATS).map(([key, fmt]) => (
                 <option key={key} value={key}>{fmt.name}</option>
@@ -999,55 +999,55 @@ const JudgeBallotGenerator = () => {
             </select>
           </div>
           <div className="md:col-span-2">
-            <label className="block text-sm text-[var(--text-muted)] mb-1">Tournament</label>
+            <label className="block text-sm text-ink-muted mb-1">Tournament</label>
             <input
               type="text"
               value={roundInfo.tournament}
               onChange={(e) => setRoundInfo(prev => ({ ...prev, tournament: e.target.value }))}
               placeholder="Tournament name"
-              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+              className="w-full bg-surface-parchment/50 border border-hairline text-accent-crimson px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-hairline"
             />
           </div>
           <div>
-            <label className="block text-sm text-[var(--text-muted)] mb-1">Round</label>
+            <label className="block text-sm text-ink-muted mb-1">Round</label>
             <input
               type="text"
               value={roundInfo.round}
               onChange={(e) => setRoundInfo(prev => ({ ...prev, round: e.target.value }))}
               placeholder="Round 1"
-              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+              className="w-full bg-surface-parchment/50 border border-hairline text-accent-crimson px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-hairline"
             />
           </div>
           <div>
-            <label className="block text-sm text-[var(--text-muted)] mb-1">Room</label>
+            <label className="block text-sm text-ink-muted mb-1">Room</label>
             <input
               type="text"
               value={roundInfo.room}
               onChange={(e) => setRoundInfo(prev => ({ ...prev, room: e.target.value }))}
               placeholder="Room 101"
-              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+              className="w-full bg-surface-parchment/50 border border-hairline text-accent-crimson px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-hairline"
             />
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
           <div>
-            <label className="block text-sm text-[var(--text-muted)] mb-1">Date</label>
+            <label className="block text-sm text-ink-muted mb-1">Date</label>
             <input
               type="date"
               value={roundInfo.date}
               onChange={(e) => setRoundInfo(prev => ({ ...prev, date: e.target.value }))}
-              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+              className="w-full bg-surface-parchment/50 border border-hairline text-accent-crimson px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-hairline"
             />
           </div>
           <div className="md:col-span-3">
-            <label className="block text-sm text-[var(--text-muted)] mb-1">Motion/Resolution (Optional)</label>
+            <label className="block text-sm text-ink-muted mb-1">Motion/Resolution (Optional)</label>
             <input
               type="text"
               value={roundInfo.motion}
               onChange={(e) => setRoundInfo(prev => ({ ...prev, motion: e.target.value }))}
               placeholder="Resolved: ..."
-              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+              className="w-full bg-surface-parchment/50 border border-hairline text-accent-crimson px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-hairline"
             />
           </div>
         </div>
@@ -1055,11 +1055,11 @@ const JudgeBallotGenerator = () => {
 
       {/* Completion Status */}
       {!isComplete && (
-        <div className="flex items-center gap-3 p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl">
-          <AlertCircle className="w-5 h-5 text-amber-400" />
+        <div className="flex items-center gap-3 p-4 bg-surface-offset border border-hairline rounded-xl">
+          <AlertCircle className="w-5 h-5 text-ink" />
           <div className="text-sm">
-            <span className="text-amber-400 font-medium">Ballot incomplete:</span>
-            <span className="text-[var(--text-muted)] ml-2">
+            <span className="text-ink font-medium">Ballot incomplete:</span>
+            <span className="text-ink-muted ml-2">
               {!winnerId && 'Select a winner • '}
               {!signature.name && 'Enter judge name • '}
               {rfd.length === 0 && 'Write an RFD'}
@@ -1090,9 +1090,9 @@ const JudgeBallotGenerator = () => {
       <JudgeSignature signature={signature} onChange={setSignature} />
 
       {/* Score Summary */}
-      <div className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-6">
-        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2 mb-4">
-          <Award className="w-5 h-5 text-amber-400" />
+      <div className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl p-6">
+        <h3 className="font-semibold text-accent-crimson flex items-center gap-2 mb-4">
+          <Award className="w-5 h-5 text-ink" />
           Score Summary
         </h3>
 
@@ -1107,38 +1107,38 @@ const JudgeBallotGenerator = () => {
                 key={team.id}
                 className={`p-4 rounded-lg border ${
                   winnerId === team.id
-                    ? 'bg-emerald-500/10 border-emerald-500/30'
-                    : 'bg-[var(--input-bg)]/30 border-[var(--border)]'
+                    ? 'bg-surface-offset border-hairline'
+                    : 'bg-surface-parchment/30 border-hairline'
                 }`}
               >
                 <div className="flex items-center justify-between mb-3">
                   <div>
-                    <div className="font-semibold text-[var(--text-accent-crimson)]">{team.name || 'Team'}</div>
-                    <div className="text-sm text-[var(--text-muted)]">{team.side}</div>
+                    <div className="font-semibold text-accent-crimson">{team.name || 'Team'}</div>
+                    <div className="text-sm text-ink-muted">{team.side}</div>
                   </div>
                   {winnerId === team.id && (
-                    <Trophy className="w-6 h-6 text-emerald-400 fill-current" />
+                    <Trophy className="w-6 h-6 text-ink fill-current" />
                   )}
                 </div>
                 
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
-                    <div className="text-2xl font-bold text-amber-400">
+                    <div className="text-2xl font-bold text-ink">
                       {totalPoints.toFixed(1)}
                     </div>
-                    <div className="text-xs text-[var(--text-muted)]">Total Points</div>
+                    <div className="text-xs text-ink-muted">Total Points</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-cyan-400">
+                    <div className="text-2xl font-bold text-ink">
                       {avgPoints.toFixed(1)}
                     </div>
-                    <div className="text-xs text-[var(--text-muted)]">Avg Points</div>
+                    <div className="text-xs text-ink-muted">Avg Points</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-purple-400">
+                    <div className="text-2xl font-bold text-ink">
                       {weightedScore.toFixed(1)}
                     </div>
-                    <div className="text-xs text-[var(--text-muted)]">Rubric Score</div>
+                    <div className="text-xs text-ink-muted">Rubric Score</div>
                   </div>
                 </div>
               </div>

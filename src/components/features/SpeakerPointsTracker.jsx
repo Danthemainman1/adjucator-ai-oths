@@ -87,11 +87,11 @@ const SpeakerPointsTracker = () => {
         {/* Header */}
         <div className="flex items-center gap-3 mb-6">
           <div className="p-2 /20 to-orange-500/20 rounded-lg">
-            <Award className="w-6 h-6 text-yellow-400" />
+            <Award className="w-6 h-6 text-ink" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)]">Speaker Points Tracker</h1>
-            <p className="text-[var(--text-muted)] text-sm">Track and analyze your speaker points</p>
+            <h1 className="text-2xl font-bold text-accent-crimson">Speaker Points Tracker</h1>
+            <p className="text-ink-muted text-sm">Track and analyze your speaker points</p>
           </div>
         </div>
 
@@ -126,17 +126,17 @@ const SpeakerPointsTracker = () => {
         {/* Trend Indicator */}
         {entries.length >= 4 && (
           <div className={`mb-6 p-4 rounded-lg flex items-center gap-3 ${
-            trend === 'up' ? 'bg-green-500/10 border border-green-500/30' :
-            trend === 'down' ? 'bg-red-500/10 border border-red-500/30' :
-            'bg-[var(--card-bg)]/50 border border-[var(--border)]/50'
+            trend === 'up' ? 'bg-surface-offset border border-hairline' :
+            trend === 'down' ? 'bg-accent-crimson/10 border border-accent-crimson/30' :
+            'bg-[var(--card-bg)]/50 border border-hairline/50'
           }`}>
-            {trend === 'up' && <TrendingUp className="w-5 h-5 text-green-400" />}
-            {trend === 'down' && <TrendingDown className="w-5 h-5 text-red-400" />}
-            {trend === 'neutral' && <Minus className="w-5 h-5 text-[var(--text-muted)]" />}
+            {trend === 'up' && <TrendingUp className="w-5 h-5 text-ink" />}
+            {trend === 'down' && <TrendingDown className="w-5 h-5 text-accent-crimson" />}
+            {trend === 'neutral' && <Minus className="w-5 h-5 text-ink-muted" />}
             <span className={
-              trend === 'up' ? 'text-green-400' :
-              trend === 'down' ? 'text-red-400' :
-              'text-[var(--text-muted)]'
+              trend === 'up' ? 'text-ink' :
+              trend === 'down' ? 'text-accent-crimson' :
+              'text-ink-muted'
             }>
               {trend === 'up' && 'Your speaker points are trending upward!'}
               {trend === 'down' && 'Your speaker points have declined recently'}
@@ -146,8 +146,8 @@ const SpeakerPointsTracker = () => {
         )}
 
         {/* Add Entry Form */}
-        <div className="bg-[var(--card-bg)]/50 border border-[var(--border)]/50 rounded-xl p-4 mb-6">
-          <h3 className="text-[var(--text-accent-crimson)] font-medium mb-4">Add Speaker Points</h3>
+        <div className="bg-[var(--card-bg)]/50 border border-hairline/50 rounded-xl p-4 mb-6">
+          <h3 className="text-accent-crimson font-medium mb-4">Add Speaker Points</h3>
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
             <input
               type="number"
@@ -157,26 +157,26 @@ const SpeakerPointsTracker = () => {
               placeholder="Points (20-30)"
               value={newPoints}
               onChange={(e) => setNewPoints(e.target.value)}
-              className="px-4 py-2 bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)] rounded-lg text-[var(--text-accent-crimson)] placeholder-slate-500 focus:outline-none focus:border-yellow-500/50"
+              className="px-4 py-2 bg-[var(--bg-accent-crimson)]/50 border border-hairline rounded-lg text-accent-crimson placeholder-slate-500 focus:outline-none focus:border-hairline"
             />
             <input
               type="text"
               placeholder="Round (optional)"
               value={newRound}
               onChange={(e) => setNewRound(e.target.value)}
-              className="px-4 py-2 bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)] rounded-lg text-[var(--text-accent-crimson)] placeholder-slate-500 focus:outline-none focus:border-yellow-500/50"
+              className="px-4 py-2 bg-[var(--bg-accent-crimson)]/50 border border-hairline rounded-lg text-accent-crimson placeholder-slate-500 focus:outline-none focus:border-hairline"
             />
             <input
               type="text"
               placeholder="Tournament (optional)"
               value={newTournament}
               onChange={(e) => setNewTournament(e.target.value)}
-              className="px-4 py-2 bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)] rounded-lg text-[var(--text-accent-crimson)] placeholder-slate-500 focus:outline-none focus:border-yellow-500/50"
+              className="px-4 py-2 bg-[var(--bg-accent-crimson)]/50 border border-hairline rounded-lg text-accent-crimson placeholder-slate-500 focus:outline-none focus:border-hairline"
             />
             <button
               onClick={addEntry}
               disabled={!newPoints || parseFloat(newPoints) < 20 || parseFloat(newPoints) > 30}
-              className="flex items-center justify-center gap-2 px-4 py-2 bg-yellow-600 hover:bg-yellow-500 disabled:bg-[var(--input-bg)] disabled:cursor-not-allowed text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+              className="flex items-center justify-center gap-2 px-4 py-2 bg-surface-offset hover:bg-surface-offset disabled:bg-surface-parchment disabled:cursor-not-allowed text-accent-crimson rounded-lg transition-colors"
             >
               <Plus className="w-4 h-4" />
               Add
@@ -185,11 +185,11 @@ const SpeakerPointsTracker = () => {
         </div>
 
         {/* Entries List */}
-        <div className="bg-[var(--card-bg)]/50 border border-[var(--border)]/50 rounded-xl p-4">
-          <h3 className="text-[var(--text-accent-crimson)] font-medium mb-4">History</h3>
+        <div className="bg-[var(--card-bg)]/50 border border-hairline/50 rounded-xl p-4">
+          <h3 className="text-accent-crimson font-medium mb-4">History</h3>
           
           {entries.length === 0 ? (
-            <div className="text-center py-12 text-[var(--text-muted)]">
+            <div className="text-center py-12 text-ink-muted">
               <Award className="w-12 h-12 mx-auto mb-3 opacity-50" />
               <p>No speaker points recorded yet</p>
               <p className="text-sm">Add your first entry above</p>
@@ -205,25 +205,25 @@ const SpeakerPointsTracker = () => {
                 >
                   <div className="flex items-center gap-4">
                     <div className={`text-2xl font-bold ${
-                      entry.points >= 29 ? 'text-green-400' :
-                      entry.points >= 27 ? 'text-yellow-400' :
-                      entry.points >= 25 ? 'text-[var(--text-secondary)]' :
-                      'text-red-400'
+                      entry.points >= 29 ? 'text-ink' :
+                      entry.points >= 27 ? 'text-ink' :
+                      entry.points >= 25 ? 'text-ink-muted' :
+                      'text-accent-crimson'
                     }`}>
                       {entry.points}
                     </div>
                     <div>
-                      <div className="text-[var(--text-accent-crimson)]">{entry.round}</div>
-                      <div className="text-[var(--text-muted)] text-sm">{entry.tournament}</div>
+                      <div className="text-accent-crimson">{entry.round}</div>
+                      <div className="text-ink-muted text-sm">{entry.tournament}</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-[var(--text-muted)] text-sm">
+                    <span className="text-ink-muted text-sm">
                       {new Date(entry.date).toLocaleDateString()}
                     </span>
                     <button
                       onClick={() => deleteEntry(entry.id)}
-                      className="p-1.5 text-[var(--text-muted)] hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
+                      className="p-1.5 text-ink-muted hover:text-accent-crimson opacity-0 group-hover:opacity-100 transition-all"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -240,19 +240,19 @@ const SpeakerPointsTracker = () => {
 
 const StatCard = ({ label, value, icon, color }) => {
   const colors = {
-    yellow: 'from-yellow-500/20 to-orange-500/20 text-yellow-400',
-    green: 'from-green-500/20 to-emerald-500/20 text-green-400',
-    red: 'from-red-500/20 to-rose-500/20 text-red-400',
-    blue: 'from-blue-500/20 to-cyan-500/20 text-blue-400'
+    yellow: 'from-yellow-500/20 to-orange-500/20 text-ink',
+    green: 'from-green-500/20 to-emerald-500/20 text-ink',
+    red: 'from-red-500/20 to-rose-500/20 text-accent-crimson',
+    blue: 'from-blue-500/20 to-cyan-500/20 text-ink'
   };
 
   return (
     <div className={` ${colors[color]} p-4 rounded-xl`}>
       <div className="flex items-center justify-between mb-2">
-        <span className="text-[var(--text-muted)] text-sm">{label}</span>
+        <span className="text-ink-muted text-sm">{label}</span>
         {icon}
       </div>
-      <div className="text-2xl font-bold text-[var(--text-accent-crimson)]">{value}</div>
+      <div className="text-2xl font-bold text-accent-crimson">{value}</div>
     </div>
   );
 };

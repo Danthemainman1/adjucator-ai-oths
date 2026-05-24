@@ -70,11 +70,11 @@ const ArgumentValidator = () => {
 
   const getColorClasses = (color) => {
     const colors = {
-      green: { bg: 'bg-green-500/20', border: 'border-green-500/50', text: 'text-green-400', bar: 'bg-green-500' },
-      blue: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-blue-400', bar: 'bg-accent-crimson' },
-      yellow: { bg: 'bg-yellow-500/20', border: 'border-yellow-500/50', text: 'text-yellow-400', bar: 'bg-yellow-500' },
-      red: { bg: 'bg-red-500/20', border: 'border-red-500/50', text: 'text-red-400', bar: 'bg-red-500' },
-      slate: { bg: 'bg-surface-offset0/20', border: 'border-slate-500/50', text: 'text-[var(--text-muted)]', bar: 'bg-surface-offset0' }
+      green: { bg: 'bg-surface-offset', border: 'border-hairline', text: 'text-ink', bar: 'bg-surface-offset' },
+      blue: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-ink', bar: 'bg-accent-crimson' },
+      yellow: { bg: 'bg-surface-offset', border: 'border-hairline', text: 'text-ink', bar: 'bg-surface-offset' },
+      red: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-accent-crimson', bar: 'bg-accent-crimson' },
+      slate: { bg: 'bg-surface-offset0/20', border: 'border-hairline', text: 'text-ink-muted', bar: 'bg-surface-offset0' }
     };
     return colors[color] || colors.slate;
   };
@@ -88,17 +88,17 @@ const ArgumentValidator = () => {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <div className="p-2 /20 to-purple-500/20 rounded-lg">
-              <Shield className="w-6 h-6 text-indigo-400" />
+              <Shield className="w-6 h-6 text-ink" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)]">Argument Validator</h1>
-              <p className="text-[var(--text-muted)] text-sm">Check your argument structure</p>
+              <h1 className="text-2xl font-bold text-accent-crimson">Argument Validator</h1>
+              <p className="text-ink-muted text-sm">Check your argument structure</p>
             </div>
           </div>
           {analyzed && (
             <button
               onClick={reset}
-              className="flex items-center gap-2 px-3 py-2 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
+              className="flex items-center gap-2 px-3 py-2 text-ink-muted hover:text-accent-crimson transition-colors"
             >
               <RotateCcw className="w-4 h-4" />
               Reset
@@ -107,22 +107,22 @@ const ArgumentValidator = () => {
         </div>
 
         {/* Input Area */}
-        <div className="bg-[var(--card-bg)]/50 border border-[var(--border)]/50 rounded-xl p-4 mb-6">
-          <label className="text-[var(--text-accent-crimson)] font-medium mb-2 block">Your Argument</label>
+        <div className="bg-[var(--card-bg)]/50 border border-hairline/50 rounded-xl p-4 mb-6">
+          <label className="text-accent-crimson font-medium mb-2 block">Your Argument</label>
           <textarea
             value={argument}
             onChange={(e) => setArgument(e.target.value)}
             placeholder="Enter your argument here...
 
 Example: Climate change legislation is necessary because rising global temperatures threaten food security. According to NASA, average temperatures have risen 1.1°C since 1880. Without action, we risk widespread famine affecting millions."
-            className="w-full h-40 bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)] rounded-lg p-4 text-[var(--text-accent-crimson)] placeholder-slate-600 focus:outline-none focus:border-indigo-500/50 resize-none"
+            className="w-full h-40 bg-[var(--bg-accent-crimson)]/50 border border-hairline rounded-lg p-4 text-accent-crimson placeholder-slate-600 focus:outline-none focus:border-hairline resize-none"
             disabled={analyzed}
           />
           {!analyzed && (
             <button
               onClick={analyze}
               disabled={!argument.trim()}
-              className="mt-4 w-full py-3 bg-accent-crimson hover:bg-accent-crimson disabled:bg-[var(--input-bg)] disabled:cursor-not-allowed text-[var(--text-accent-crimson)] rounded-lg font-medium transition-colors"
+              className="mt-4 w-full py-3 bg-accent-crimson hover:bg-accent-crimson disabled:bg-surface-parchment disabled:cursor-not-allowed text-accent-crimson rounded-lg font-medium transition-colors"
             >
               Analyze Argument
             </button>
@@ -139,7 +139,7 @@ Example: Climate change legislation is necessary because rising global temperatu
             {/* Strength Indicator */}
             <div className={`p-4 rounded-xl ${strengthColors.bg} border ${strengthColors.border}`}>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[var(--text-accent-crimson)] font-medium">Argument Strength</span>
+                <span className="text-accent-crimson font-medium">Argument Strength</span>
                 <span className={`font-bold ${strengthColors.text}`}>{strength.label}</span>
               </div>
               <div className="h-3 bg-[var(--bg-accent-crimson)]/50 rounded-full overflow-hidden">
@@ -150,15 +150,15 @@ Example: Climate change legislation is necessary because rising global temperatu
                   className={`h-full ${strengthColors.bar} rounded-full`}
                 />
               </div>
-              <div className="text-right text-sm text-[var(--text-muted)] mt-1">
+              <div className="text-right text-sm text-ink-muted mt-1">
                 {Math.round(strength.score)}%
               </div>
             </div>
 
             {/* Criteria Checklist */}
-            <div className="bg-[var(--card-bg)]/50 border border-[var(--border)]/50 rounded-xl p-4">
-              <h3 className="text-[var(--text-accent-crimson)] font-medium mb-4">Evaluate Each Element</h3>
-              <p className="text-[var(--text-muted)] text-sm mb-4">Click each item to cycle through: ✓ Yes → ◐ Partial → ✗ No</p>
+            <div className="bg-[var(--card-bg)]/50 border border-hairline/50 rounded-xl p-4">
+              <h3 className="text-accent-crimson font-medium mb-4">Evaluate Each Element</h3>
+              <p className="text-ink-muted text-sm mb-4">Click each item to cycle through: ✓ Yes → ◐ Partial → ✗ No</p>
               
               <div className="space-y-3">
                 {CRITERIA.map((criterion) => {
@@ -170,32 +170,32 @@ Example: Climate change legislation is necessary because rising global temperatu
                       key={criterion.id}
                       onClick={() => toggleCheck(criterion.id)}
                       className={`w-full p-4 rounded-lg text-left transition-all ${
-                        value === 'yes' ? 'bg-green-500/20 border border-green-500/50' :
-                        value === 'partial' ? 'bg-yellow-500/20 border border-yellow-500/50' :
-                        value === 'no' ? 'bg-red-500/20 border border-red-500/50' :
-                        'bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)] hover:border-[var(--border)]'
+                        value === 'yes' ? 'bg-surface-offset border border-hairline' :
+                        value === 'partial' ? 'bg-surface-offset border border-hairline' :
+                        value === 'no' ? 'bg-accent-crimson/20 border border-accent-crimson/50' :
+                        'bg-[var(--bg-accent-crimson)]/50 border border-hairline hover:border-hairline'
                       }`}
                     >
                       <div className="flex items-start gap-3">
                         <div className={`p-2 rounded-lg ${
-                          value === 'yes' ? 'bg-green-500/20' :
-                          value === 'partial' ? 'bg-yellow-500/20' :
-                          value === 'no' ? 'bg-red-500/20' :
+                          value === 'yes' ? 'bg-surface-offset' :
+                          value === 'partial' ? 'bg-surface-offset' :
+                          value === 'no' ? 'bg-accent-crimson/20' :
                           'bg-[var(--card-bg)]'
                         }`}>
-                          {value === 'yes' ? <CheckCircle className="w-5 h-5 text-green-400" /> :
-                           value === 'partial' ? <AlertCircle className="w-5 h-5 text-yellow-400" /> :
-                           value === 'no' ? <XCircle className="w-5 h-5 text-red-400" /> :
-                           <Icon className="w-5 h-5 text-[var(--text-muted)]" />}
+                          {value === 'yes' ? <CheckCircle className="w-5 h-5 text-ink" /> :
+                           value === 'partial' ? <AlertCircle className="w-5 h-5 text-ink" /> :
+                           value === 'no' ? <XCircle className="w-5 h-5 text-accent-crimson" /> :
+                           <Icon className="w-5 h-5 text-ink-muted" />}
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center justify-between">
-                            <span className="text-[var(--text-accent-crimson)] font-medium">{criterion.label}</span>
+                            <span className="text-accent-crimson font-medium">{criterion.label}</span>
                             <span className={`text-sm ${
-                              value === 'yes' ? 'text-green-400' :
-                              value === 'partial' ? 'text-yellow-400' :
-                              value === 'no' ? 'text-red-400' :
-                              'text-[var(--text-muted)]'
+                              value === 'yes' ? 'text-ink' :
+                              value === 'partial' ? 'text-ink' :
+                              value === 'no' ? 'text-accent-crimson' :
+                              'text-ink-muted'
                             }`}>
                               {value === 'yes' ? 'Yes' :
                                value === 'partial' ? 'Partial' :
@@ -203,7 +203,7 @@ Example: Climate change legislation is necessary because rising global temperatu
                                'Click to evaluate'}
                             </span>
                           </div>
-                          <p className="text-[var(--text-muted)] text-sm mt-1">{criterion.description}</p>
+                          <p className="text-ink-muted text-sm mt-1">{criterion.description}</p>
                         </div>
                       </div>
                     </button>
@@ -217,10 +217,10 @@ Example: Climate change legislation is necessary because rising global temperatu
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="bg-[var(--card-bg)]/50 border border-[var(--border)]/50 rounded-xl p-4"
+                className="bg-[var(--card-bg)]/50 border border-hairline/50 rounded-xl p-4"
               >
-                <h3 className="text-[var(--text-accent-crimson)] font-medium mb-3">💡 Improvement Tips</h3>
-                <ul className="space-y-2 text-[var(--text-secondary)] text-sm">
+                <h3 className="text-accent-crimson font-medium mb-3">💡 Improvement Tips</h3>
+                <ul className="space-y-2 text-ink-muted text-sm">
                   {checks.claim !== 'yes' && (
                     <li>• Make your claim more specific and debatable</li>
                   )}

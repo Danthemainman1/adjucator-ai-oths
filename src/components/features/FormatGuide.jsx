@@ -346,15 +346,15 @@ const FORMATS = {
 
 const getColorClasses = (color) => {
   const colors = {
-    blue: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-blue-400', badge: 'bg-accent-crimson' },
-    green: { bg: 'bg-green-500/20', border: 'border-green-500/50', text: 'text-green-400', badge: 'bg-green-500' },
-    purple: { bg: 'bg-purple-500/20', border: 'border-purple-500/50', text: 'text-purple-400', badge: 'bg-purple-500' },
-    amber: { bg: 'bg-amber-500/20', border: 'border-amber-500/50', text: 'text-amber-400', badge: 'bg-amber-500' },
-    red: { bg: 'bg-red-500/20', border: 'border-red-500/50', text: 'text-red-400', badge: 'bg-red-500' },
-    indigo: { bg: 'bg-accent-crimson/20', border: 'border-indigo-500/50', text: 'text-indigo-400', badge: 'bg-accent-crimson' },
-    cyan: { bg: 'bg-cyan-500/20', border: 'border-cyan-500/50', text: 'text-cyan-400', badge: 'bg-cyan-500' },
+    blue: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-ink', badge: 'bg-accent-crimson' },
+    green: { bg: 'bg-surface-offset', border: 'border-hairline', text: 'text-ink', badge: 'bg-surface-offset' },
+    purple: { bg: 'bg-surface-offset', border: 'border-hairline', text: 'text-ink', badge: 'bg-surface-offset' },
+    amber: { bg: 'bg-surface-offset', border: 'border-hairline', text: 'text-ink', badge: 'bg-surface-offset' },
+    red: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-accent-crimson', badge: 'bg-accent-crimson' },
+    indigo: { bg: 'bg-accent-crimson/20', border: 'border-hairline', text: 'text-ink', badge: 'bg-accent-crimson' },
+    cyan: { bg: 'bg-surface-offset', border: 'border-hairline', text: 'text-ink', badge: 'bg-surface-offset' },
     teal: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-teal-400', badge: 'bg-accent-crimson' },
-    emerald: { bg: 'bg-emerald-500/20', border: 'border-emerald-500/50', text: 'text-emerald-400', badge: 'bg-emerald-500' },
+    emerald: { bg: 'bg-surface-offset', border: 'border-hairline', text: 'text-ink', badge: 'bg-surface-offset' },
     sky: { bg: 'bg-sky-500/20', border: 'border-sky-500/50', text: 'text-sky-400', badge: 'bg-sky-500' }
   };
   return colors[color] || colors.blue;
@@ -373,11 +373,11 @@ const FormatGuide = () => {
         {/* Header */}
         <div className="flex items-center gap-3 mb-6">
           <div className="p-2 /20 to-blue-500/20 rounded-lg">
-            <Book className="w-6 h-6 text-cyan-400" />
+            <Book className="w-6 h-6 text-ink" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)]">Format Guide</h1>
-            <p className="text-[var(--text-muted)] text-sm">Quick reference for debate format rules</p>
+            <h1 className="text-2xl font-bold text-accent-crimson">Format Guide</h1>
+            <p className="text-ink-muted text-sm">Quick reference for debate format rules</p>
           </div>
         </div>
 
@@ -392,7 +392,7 @@ const FormatGuide = () => {
                 className={`px-4 py-2 rounded-lg font-medium transition-all ${
                   activeFormat === f.id
                     ? `${fColors.bg} ${fColors.border} border ${fColors.text}`
-                    : 'bg-[var(--card-bg)]/50 border border-[var(--border)]/50 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)]'
+                    : 'bg-[var(--card-bg)]/50 border border-hairline/50 text-ink-muted hover:text-accent-crimson'
                 }`}
               >
                 {f.shortName}
@@ -405,23 +405,23 @@ const FormatGuide = () => {
         <div className={`bg-[var(--card-bg)]/50 border ${colors.border} rounded-xl overflow-hidden`}>
           {/* Header */}
           <div className={`p-6 ${colors.bg}`}>
-            <h2 className="text-2xl font-bold text-[var(--text-accent-crimson)] mb-2">{format.name}</h2>
-            <p className="text-[var(--text-secondary)] mb-4">{format.description}</p>
+            <h2 className="text-2xl font-bold text-accent-crimson mb-2">{format.name}</h2>
+            <p className="text-ink-muted mb-4">{format.description}</p>
             <div className="flex flex-wrap gap-4 text-sm">
               <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 text-[var(--text-muted)]" />
-                <span className="text-[var(--text-accent-crimson)]">{format.participants}</span>
+                <Users className="w-4 h-4 text-ink-muted" />
+                <span className="text-accent-crimson">{format.participants}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-[var(--text-muted)]" />
-                <span className="text-[var(--text-accent-crimson)]">Prep: {format.prepTime}</span>
+                <Clock className="w-4 h-4 text-ink-muted" />
+                <span className="text-accent-crimson">Prep: {format.prepTime}</span>
               </div>
             </div>
           </div>
 
           {/* Overview */}
-          <div className="p-6 border-b border-[var(--border)]/50">
-            <p className="text-[var(--text-secondary)] leading-relaxed">{format.overview}</p>
+          <div className="p-6 border-b border-hairline/50">
+            <p className="text-ink-muted leading-relaxed">{format.overview}</p>
           </div>
 
           {/* Collapsible Sections */}
@@ -435,17 +435,17 @@ const FormatGuide = () => {
             <div className="space-y-2">
               {format.structure.map((item, i) => (
                 <div key={i} className="flex items-start gap-4 p-3 bg-[var(--bg-accent-crimson)]/50 rounded-lg">
-                  <div className="w-8 h-8 rounded-full bg-[var(--card-bg)] flex items-center justify-center text-[var(--text-muted)] text-sm font-medium shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-[var(--card-bg)] flex items-center justify-center text-ink-muted text-sm font-medium shrink-0">
                     {i + 1}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-[var(--text-accent-crimson)] font-medium">{item.speech}</span>
+                      <span className="text-accent-crimson font-medium">{item.speech}</span>
                       <span className={`px-2 py-0.5 ${colors.bg} ${colors.text} rounded text-xs font-mono`}>
                         {item.time}
                       </span>
                     </div>
-                    <p className="text-[var(--text-muted)] text-sm mt-1">{item.description}</p>
+                    <p className="text-ink-muted text-sm mt-1">{item.description}</p>
                   </div>
                 </div>
               ))}
@@ -463,7 +463,7 @@ const FormatGuide = () => {
               {format.keyTerms.map((item, i) => (
                 <div key={i} className="p-3 bg-[var(--bg-accent-crimson)]/50 rounded-lg">
                   <span className={`font-semibold ${colors.text}`}>{item.term}</span>
-                  <p className="text-[var(--text-muted)] text-sm mt-1">{item.definition}</p>
+                  <p className="text-ink-muted text-sm mt-1">{item.definition}</p>
                 </div>
               ))}
             </div>
@@ -480,7 +480,7 @@ const FormatGuide = () => {
               {format.tips.map((tip, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <CheckCircle className={`w-4 h-4 ${colors.text} shrink-0 mt-0.5`} />
-                  <span className="text-[var(--text-secondary)]">{tip}</span>
+                  <span className="text-ink-muted">{tip}</span>
                 </li>
               ))}
             </ul>
@@ -492,20 +492,20 @@ const FormatGuide = () => {
 };
 
 const Section = ({ title, icon, isExpanded, onToggle, colors, children }) => (
-  <div className="border-b border-[var(--border)]/50 last:border-b-0">
+  <div className="border-b border-hairline/50 last:border-b-0">
     <button
       onClick={onToggle}
       className="w-full p-4 flex items-center justify-between text-left hover:bg-[var(--card-bg)]/30 transition-colors"
     >
       <div className="flex items-center gap-2">
         <span className={colors.text}>{icon}</span>
-        <span className="text-[var(--text-accent-crimson)] font-medium">{title}</span>
+        <span className="text-accent-crimson font-medium">{title}</span>
       </div>
       <motion.div
         animate={{ rotate: isExpanded ? 180 : 0 }}
         transition={{ duration: 0.2 }}
       >
-        <ChevronDown className="w-5 h-5 text-[var(--text-muted)]" />
+        <ChevronDown className="w-5 h-5 text-ink-muted" />
       </motion.div>
     </button>
     <AnimatePresence>

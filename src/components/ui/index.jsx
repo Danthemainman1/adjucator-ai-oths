@@ -13,16 +13,16 @@ export const Button = React.forwardRef(({
 }, ref) => {
   const variants = {
     // Teal-Gold (Primary)
-    primary: 'bg-teal text-[var(--text-accent-crimson)] border border-teal-dark hover:bg-teal-dark shadow-sm hover:shadow-gold/20',
+    primary: 'bg-teal text-accent-crimson border border-teal-dark hover:bg-teal-dark shadow-sm hover:shadow-gold/20',
     
     // Emerald-Gold (Success/Alternative)
-    success: 'bg-emerald text-[var(--text-accent-crimson)] border border-emerald-dark hover:bg-emerald-dark shadow-sm',
+    success: 'bg-emerald text-accent-crimson border border-emerald-dark hover:bg-emerald-dark shadow-sm',
     
     // Red-Gold (Danger/Action)
-    danger: 'bg-red text-[var(--text-accent-crimson)] border border-red-dark hover:bg-red-dark shadow-sm',
+    danger: 'bg-red text-accent-crimson border border-red-dark hover:bg-red-dark shadow-sm',
     
     // Gold (Accent)
-    gold: 'bg-base-white text-gold-dim border border-gold hover:bg-gold hover:text-[var(--text-accent-crimson)]',
+    gold: 'bg-base-white text-gold-dim border border-gold hover:bg-gold hover:text-accent-crimson',
     
     // Ghost
     ghost: 'bg-transparent text-teal-dark hover:bg-gold-light/20 hover:text-gold-dim',
@@ -133,7 +133,7 @@ export const Input = React.forwardRef(({
         className={cn(
           'w-full bg-base-white border border-gold/30 text-teal-dark px-4 py-3',
           'outline-none transition-all duration-300',
-          'placeholder:text-[var(--text-secondary)]',
+          'placeholder:text-ink-muted',
           'focus:border-gold focus:ring-1 focus:ring-gold/20',
           error 
             ? 'border-red text-red focus:border-red focus:ring-red/20' 
@@ -171,10 +171,10 @@ export const Textarea = React.forwardRef(({
         className={cn(
           'w-full bg-surface-parchment border border-greige text-anthracite px-4 py-3 rounded-[2px]',
           'outline-none transition-all duration-300 resize-y min-h-[100px]',
-          'placeholder:text-stone-300',
+          'placeholder:text-ink-muted',
           'focus:border-slate-blue focus:ring-0 focus:bg-bone',
           error 
-            ? 'border-oxblood/40 focus:border-oxblood bg-red-50/10' 
+            ? 'border-oxblood/40 focus:border-oxblood bg-accent-crimson/10' 
             : 'hover:border-taupe',
           className
         )}
@@ -247,7 +247,7 @@ export const Badge = ({ className, variant = 'primary', children, ...props }) =>
     secondary: 'bg-bone text-taupe border-greige',
     success: 'bg-sage/20 text-verdigris border-sage/30',
     warning: 'bg-champagne text-ochre border-ochre/20',
-    danger: 'bg-red-50 text-oxblood border-red-100',
+    danger: 'bg-accent-crimson text-oxblood border-accent-crimson',
     purple: 'bg-mauve-taupe/10 text-mauve-taupe border-mauve-taupe/20'
   }
 
@@ -271,11 +271,11 @@ export const Progress = ({ value = 0, max = 100, className, showLabel = false, c
   
   const colors = {
     primary: 'bg-accent-crimson',
-    cyan: 'bg-cyan-600', // Keeping for legacy support if needed
-    purple: 'bg-purple-600',
-    emerald: 'bg-emerald-600',
-    amber: 'bg-amber-600',
-    red: 'bg-red-600',
+    cyan: 'bg-surface-offset', // Keeping for legacy support if needed
+    purple: 'bg-surface-offset',
+    emerald: 'bg-surface-offset',
+    amber: 'bg-surface-offset',
+    red: 'bg-accent-crimson',
     gradient: 'bg-accent-crimson'
   }
 
@@ -327,7 +327,7 @@ export const Tooltip = ({ children, content, side = 'top' }) => {
       <div
         className={cn(
           'absolute z-50 px-3 py-1.5 text-xs font-medium whitespace-nowrap',
-          'bg-[var(--bg-accent-crimson)] text-[var(--text-accent-crimson)] rounded-sm shadow-md',
+          'bg-[var(--bg-accent-crimson)] text-accent-crimson rounded-sm shadow-md',
           'invisible opacity-0 group-hover:visible group-hover:opacity-100',
           'transition-all duration-200',
           positions[side]
@@ -375,7 +375,7 @@ export const Modal = ({ isOpen, onClose, title, children, size = 'md' }) => {
             <h2 className="text-2xl font-serif font-bold text-ink-black">{title}</h2>
             <button
               onClick={onClose}
-              className="p-2 text-[var(--text-muted)] hover:text-ink-black hover:bg-surface-offset rounded-sm transition-colors"
+              className="p-2 text-ink-muted hover:text-ink-black hover:bg-surface-offset rounded-sm transition-colors"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -405,7 +405,7 @@ export const Tabs = ({ tabs, activeTab, onChange, className }) => {
             'px-1 py-3 text-sm font-semibold tracking-wide uppercase transition-all duration-200 border-b-2',
             activeTab === tab.id
               ? 'border-primary text-accent-crimson'
-              : 'border-transparent text-[var(--text-muted)] hover:text-ink-black hover:border-hairline'
+              : 'border-transparent text-ink-muted hover:text-ink-black hover:border-hairline'
           )}
         >
           {tab.label}
@@ -421,12 +421,12 @@ export const EmptyState = ({ icon: Icon, title, description, action }) => {
     <div className="flex flex-col items-center justify-center py-16 text-center border-2 border-dashed border-hairline rounded-sm bg-surface-offset/50">
       {Icon && (
         <div className="w-16 h-16 bg-surface-parchment border border-hairline rounded-full flex items-center justify-center mb-4 shadow-sm">
-          <Icon className="w-6 h-6 text-[var(--text-muted)]" />
+          <Icon className="w-6 h-6 text-ink-muted" />
         </div>
       )}
       <h3 className="text-lg font-serif font-semibold text-ink-black mb-2">{title}</h3>
       {description && (
-        <p className="text-sm text-[var(--text-muted)] max-w-sm mb-6">{description}</p>
+        <p className="text-sm text-ink-muted max-w-sm mb-6">{description}</p>
       )}
       {action}
     </div>

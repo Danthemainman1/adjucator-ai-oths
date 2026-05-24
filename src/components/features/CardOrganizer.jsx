@@ -22,11 +22,11 @@ const CATEGORIES = [
 
 const getColorClasses = (color) => {
   const colors = {
-    emerald: { bg: 'bg-emerald-500/20', border: 'border-emerald-500/50', text: 'text-emerald-400', badge: 'bg-emerald-500' },
-    red: { bg: 'bg-red-500/20', border: 'border-red-500/50', text: 'text-red-400', badge: 'bg-red-500' },
-    blue: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-blue-400', badge: 'bg-accent-crimson' },
-    purple: { bg: 'bg-purple-500/20', border: 'border-purple-500/50', text: 'text-purple-400', badge: 'bg-purple-500' },
-    slate: { bg: 'bg-surface-offset0/20', border: 'border-slate-500/50', text: 'text-[var(--text-muted)]', badge: 'bg-surface-offset0' }
+    emerald: { bg: 'bg-surface-offset', border: 'border-hairline', text: 'text-ink', badge: 'bg-surface-offset' },
+    red: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-accent-crimson', badge: 'bg-accent-crimson' },
+    blue: { bg: 'bg-accent-crimson/20', border: 'border-accent-crimson/50', text: 'text-ink', badge: 'bg-accent-crimson' },
+    purple: { bg: 'bg-surface-offset', border: 'border-hairline', text: 'text-ink', badge: 'bg-surface-offset' },
+    slate: { bg: 'bg-surface-offset0/20', border: 'border-hairline', text: 'text-ink-muted', badge: 'bg-surface-offset0' }
   };
   return colors[color] || colors.slate;
 };
@@ -99,11 +99,11 @@ const CardOrganizer = () => {
               <Layers className="w-6 h-6 text-violet-400" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)]">Card Organizer</h1>
-              <p className="text-[var(--text-muted)] text-sm">Organize debate arguments by category</p>
+              <h1 className="text-2xl font-bold text-accent-crimson">Card Organizer</h1>
+              <p className="text-ink-muted text-sm">Organize debate arguments by category</p>
             </div>
           </div>
-          <div className="text-[var(--text-muted)] text-sm">
+          <div className="text-ink-muted text-sm">
             {cards.length} card{cards.length !== 1 ? 's' : ''} total
           </div>
         </div>
@@ -120,7 +120,7 @@ const CardOrganizer = () => {
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
                   activeCategory === category.id
                     ? `${catColors.bg} ${catColors.border} border ${catColors.text}`
-                    : 'bg-[var(--card-bg)]/50 border border-[var(--border)]/50 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:border-[var(--border)]'
+                    : 'bg-[var(--card-bg)]/50 border border-hairline/50 text-ink-muted hover:text-accent-crimson hover:border-hairline'
                 }`}
               >
                 <span className={`w-2 h-2 rounded-full ${catColors.badge}`} />
@@ -152,21 +152,21 @@ const CardOrganizer = () => {
                 value={newCardText}
                 onChange={(e) => setNewCardText(e.target.value)}
                 placeholder="Enter argument, evidence, or note..."
-                className="w-full bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)] rounded-lg p-3 text-[var(--text-accent-crimson)] placeholder-slate-500 focus:outline-none focus:border-[var(--border)] resize-none"
+                className="w-full bg-[var(--bg-accent-crimson)]/50 border border-hairline rounded-lg p-3 text-accent-crimson placeholder-slate-500 focus:outline-none focus:border-hairline resize-none"
                 rows={3}
                 autoFocus
               />
               <div className="flex justify-end gap-2 mt-3">
                 <button
                   onClick={() => { setShowAddForm(false); setNewCardText(''); }}
-                  className="px-3 py-1.5 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
+                  className="px-3 py-1.5 text-ink-muted hover:text-accent-crimson transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={addCard}
                   disabled={!newCardText.trim()}
-                  className={`px-4 py-1.5 ${colors.badge} text-[var(--text-accent-crimson)] rounded-lg disabled:opacity-50 disabled:cursor-not-allowed`}
+                  className={`px-4 py-1.5 ${colors.badge} text-accent-crimson rounded-lg disabled:opacity-50 disabled:cursor-not-allowed`}
                 >
                   Add Card
                 </button>
@@ -176,7 +176,7 @@ const CardOrganizer = () => {
 
           {/* Cards List */}
           {activeCards.length === 0 ? (
-            <div className="text-center py-16 text-[var(--text-muted)]">
+            <div className="text-center py-16 text-ink-muted">
               <FolderOpen className="w-12 h-12 mx-auto mb-3 opacity-50" />
               <p>No cards in {activeCategoryData?.name}</p>
               <p className="text-sm">Add a card to get started</p>
@@ -226,27 +226,27 @@ const CardItem = ({ card, colors, isEditing, onEdit, onSave, onCancel, onDelete,
   return (
     <motion.div
       layout
-      className={`group p-4 bg-[var(--bg-accent-crimson)]/50 border border-[var(--border)]/50 rounded-lg hover:border-[var(--border)] transition-colors`}
+      className={`group p-4 bg-[var(--bg-accent-crimson)]/50 border border-hairline/50 rounded-lg hover:border-hairline transition-colors`}
     >
       {isEditing ? (
         <div>
           <textarea
             value={editText}
             onChange={(e) => setEditText(e.target.value)}
-            className="w-full bg-[var(--card-bg)] border border-[var(--border)] rounded-lg p-3 text-[var(--text-accent-crimson)] focus:outline-none resize-none"
+            className="w-full bg-[var(--card-bg)] border border-hairline rounded-lg p-3 text-accent-crimson focus:outline-none resize-none"
             rows={3}
             autoFocus
           />
           <div className="flex justify-end gap-2 mt-2">
             <button
               onClick={onCancel}
-              className="p-1.5 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)]"
+              className="p-1.5 text-ink-muted hover:text-accent-crimson"
             >
               <X className="w-4 h-4" />
             </button>
             <button
               onClick={() => onSave(editText)}
-              className="p-1.5 text-emerald-400 hover:text-emerald-300"
+              className="p-1.5 text-ink hover:text-ink"
             >
               <Check className="w-4 h-4" />
             </button>
@@ -257,19 +257,19 @@ const CardItem = ({ card, colors, isEditing, onEdit, onSave, onCancel, onDelete,
           <div className="text-ink-muted mt-1">
             <GripVertical className="w-4 h-4" />
           </div>
-          <p className="flex-1 text-[var(--text-accent-crimson)] whitespace-pre-wrap">{card.text}</p>
+          <p className="flex-1 text-accent-crimson whitespace-pre-wrap">{card.text}</p>
           <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
             {/* Move to category */}
             <div className="relative">
               <button
                 onClick={() => setShowMoveMenu(!showMoveMenu)}
-                className="p-1.5 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
+                className="p-1.5 text-ink-muted hover:text-accent-crimson transition-colors"
                 title="Move to category"
               >
                 <Tag className="w-4 h-4" />
               </button>
               {showMoveMenu && (
-                <div className="absolute right-0 top-8 bg-[var(--card-bg)] border border-[var(--border)] rounded-lg shadow-xl z-10 py-1 min-w-[150px]">
+                <div className="absolute right-0 top-8 bg-[var(--card-bg)] border border-hairline rounded-lg shadow-xl z-10 py-1 min-w-[150px]">
                   {categories
                     .filter(c => c.id !== currentCategory)
                     .map(cat => {
@@ -281,7 +281,7 @@ const CardItem = ({ card, colors, isEditing, onEdit, onSave, onCancel, onDelete,
                             onMove(cat.id);
                             setShowMoveMenu(false);
                           }}
-                          className="w-full px-3 py-2 text-left text-sm text-[var(--text-secondary)] hover:bg-[var(--input-bg)] flex items-center gap-2"
+                          className="w-full px-3 py-2 text-left text-sm text-ink-muted hover:bg-surface-parchment flex items-center gap-2"
                         >
                           <span className={`w-2 h-2 rounded-full ${catColors.badge}`} />
                           {cat.name}
@@ -293,14 +293,14 @@ const CardItem = ({ card, colors, isEditing, onEdit, onSave, onCancel, onDelete,
             </div>
             <button
               onClick={onEdit}
-              className="p-1.5 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
+              className="p-1.5 text-ink-muted hover:text-accent-crimson transition-colors"
               title="Edit"
             >
               <Edit3 className="w-4 h-4" />
             </button>
             <button
               onClick={onDelete}
-              className="p-1.5 text-[var(--text-muted)] hover:text-red-400 transition-colors"
+              className="p-1.5 text-ink-muted hover:text-accent-crimson transition-colors"
               title="Delete"
             >
               <Trash2 className="w-4 h-4" />

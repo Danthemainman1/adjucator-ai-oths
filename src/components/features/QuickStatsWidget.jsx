@@ -122,7 +122,7 @@ const ProgressBar = ({ value, max = 100, color = 'cyan', size = 'md', showLabel 
 
   return (
     <div className="w-full">
-      <div className={`w-full bg-[var(--input-bg)]/50 rounded-full overflow-hidden ${sizeClasses[size]}`}>
+      <div className={`w-full bg-surface-parchment/50 rounded-full overflow-hidden ${sizeClasses[size]}`}>
         <motion.div
           initial={animated ? { width: 0 } : { width: `${percentage}%` }}
           animate={{ width: `${percentage}%` }}
@@ -131,7 +131,7 @@ const ProgressBar = ({ value, max = 100, color = 'cyan', size = 'md', showLabel 
         />
       </div>
       {showLabel && (
-        <div className="flex justify-between mt-1 text-xs text-[var(--text-muted)]">
+        <div className="flex justify-between mt-1 text-xs text-ink-muted">
           <span>{value}</span>
           <span>{max}</span>
         </div>
@@ -143,13 +143,13 @@ const ProgressBar = ({ value, max = 100, color = 'cyan', size = 'md', showLabel 
 // Badge component
 const StatBadge = ({ label, value, trend, color = 'slate' }) => {
   const colorClasses = {
-    green: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
-    red: 'bg-red-500/20 text-red-400 border-red-500/30',
-    cyan: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
-    purple: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-    orange: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
-    gold: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-    slate: 'bg-surface-offset0/20 text-[var(--text-muted)] border-slate-500/30'
+    green: 'bg-surface-offset text-ink border-hairline',
+    red: 'bg-accent-crimson/20 text-accent-crimson border-accent-crimson/30',
+    cyan: 'bg-surface-offset text-ink border-hairline',
+    purple: 'bg-surface-offset text-ink border-hairline',
+    orange: 'bg-accent-crimson/20 text-accent-crimson border-accent-crimson/30',
+    gold: 'bg-surface-offset text-ink border-hairline',
+    slate: 'bg-surface-offset0/20 text-ink-muted border-hairline'
   };
 
   return (
@@ -157,7 +157,7 @@ const StatBadge = ({ label, value, trend, color = 'slate' }) => {
       <span>{label}</span>
       <span className="font-bold">{value}</span>
       {trend && (
-        <span className={trend === 'up' ? 'text-emerald-400' : trend === 'down' ? 'text-red-400' : 'text-[var(--text-muted)]'}>
+        <span className={trend === 'up' ? 'text-ink' : trend === 'down' ? 'text-accent-crimson' : 'text-ink-muted'}>
           {trend === 'up' ? <ArrowUp className="w-3 h-3" /> : trend === 'down' ? <ArrowDown className="w-3 h-3" /> : <Minus className="w-3 h-3" />}
         </span>
       )}
@@ -173,12 +173,12 @@ const WinLossCard = ({ stats }) => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-5"
+      className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl p-5"
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
+        <h3 className="font-semibold text-accent-crimson flex items-center gap-2">
           <div className="p-2  rounded-lg">
-            <BarChart3 className="w-4 h-4 text-[var(--text-accent-crimson)]" />
+            <BarChart3 className="w-4 h-4 text-accent-crimson" />
           </div>
           Win/Loss Record
         </h3>
@@ -193,54 +193,54 @@ const WinLossCard = ({ stats }) => {
       {/* Main Stats */}
       <div className="grid grid-cols-3 gap-4 mb-4">
         <div className="text-center">
-          <div className="text-3xl font-bold text-emerald-400">
+          <div className="text-3xl font-bold text-ink">
             <AnimatedNumber value={wins} />
           </div>
-          <div className="text-xs text-[var(--text-muted)] uppercase tracking-wide">Wins</div>
+          <div className="text-xs text-ink-muted uppercase tracking-wide">Wins</div>
         </div>
         <div className="text-center">
-          <div className="text-3xl font-bold text-red-400">
+          <div className="text-3xl font-bold text-accent-crimson">
             <AnimatedNumber value={losses} />
           </div>
-          <div className="text-xs text-[var(--text-muted)] uppercase tracking-wide">Losses</div>
+          <div className="text-xs text-ink-muted uppercase tracking-wide">Losses</div>
         </div>
         <div className="text-center">
-          <div className="text-3xl font-bold text-[var(--text-muted)]">
+          <div className="text-3xl font-bold text-ink-muted">
             <AnimatedNumber value={ties} />
           </div>
-          <div className="text-xs text-[var(--text-muted)] uppercase tracking-wide">Ties</div>
+          <div className="text-xs text-ink-muted uppercase tracking-wide">Ties</div>
         </div>
       </div>
 
       {/* Win Rate Progress */}
       <div className="mb-4">
         <div className="flex justify-between text-sm mb-1">
-          <span className="text-[var(--text-muted)]">Overall Win Rate</span>
-          <span className="text-[var(--text-accent-crimson)] font-medium">{winRate}%</span>
+          <span className="text-ink-muted">Overall Win Rate</span>
+          <span className="text-accent-crimson font-medium">{winRate}%</span>
         </div>
         <ProgressBar value={winRate} max={100} color="cyan" size="md" showLabel={false} />
       </div>
 
       {/* Streak & Improvement */}
-      <div className="flex items-center justify-between pt-3 border-t border-[var(--border)]">
+      <div className="flex items-center justify-between pt-3 border-t border-hairline">
         <div className="flex items-center gap-2">
-          <Flame className="w-4 h-4 text-orange-400" />
-          <span className="text-sm text-[var(--text-muted)]">Current Streak:</span>
-          <span className="text-[var(--text-accent-crimson)] font-semibold">{winStreak}W</span>
+          <Flame className="w-4 h-4 text-accent-crimson" />
+          <span className="text-sm text-ink-muted">Current Streak:</span>
+          <span className="text-accent-crimson font-semibold">{winStreak}W</span>
         </div>
         <div className="flex items-center gap-1 text-sm">
           {improvement > 0 ? (
             <>
-              <TrendingUp className="w-4 h-4 text-emerald-400" />
-              <span className="text-emerald-400">+{improvement}%</span>
+              <TrendingUp className="w-4 h-4 text-ink" />
+              <span className="text-ink">+{improvement}%</span>
             </>
           ) : improvement < 0 ? (
             <>
-              <TrendingDown className="w-4 h-4 text-red-400" />
-              <span className="text-red-400">{improvement}%</span>
+              <TrendingDown className="w-4 h-4 text-accent-crimson" />
+              <span className="text-accent-crimson">{improvement}%</span>
             </>
           ) : (
-            <span className="text-[var(--text-muted)]">No change</span>
+            <span className="text-ink-muted">No change</span>
           )}
         </div>
       </div>
@@ -255,11 +255,11 @@ const SideStatsCard = ({ bySide }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
-      className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-5"
+      className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl p-5"
     >
-      <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2 mb-4">
+      <h3 className="font-semibold text-accent-crimson flex items-center gap-2 mb-4">
         <div className="p-2  rounded-lg">
-          <PieChart className="w-4 h-4 text-[var(--text-accent-crimson)]" />
+          <PieChart className="w-4 h-4 text-accent-crimson" />
         </div>
         Performance by Side
       </h3>
@@ -268,13 +268,13 @@ const SideStatsCard = ({ bySide }) => {
       <div className="mb-4">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-cyan-500" />
-            <span className="text-[var(--text-accent-crimson)] font-medium">Affirmative</span>
+            <div className="w-3 h-3 rounded-full bg-surface-offset" />
+            <span className="text-accent-crimson font-medium">Affirmative</span>
           </div>
-          <span className="text-cyan-400 font-semibold">{bySide.aff.winRate}%</span>
+          <span className="text-ink font-semibold">{bySide.aff.winRate}%</span>
         </div>
         <ProgressBar value={bySide.aff.winRate} max={100} color="cyan" size="sm" showLabel={false} />
-        <div className="flex justify-between text-xs text-[var(--text-muted)] mt-1">
+        <div className="flex justify-between text-xs text-ink-muted mt-1">
           <span>{bySide.aff.wins}W - {bySide.aff.losses}L</span>
           <span>{bySide.aff.wins + bySide.aff.losses} rounds</span>
         </div>
@@ -284,13 +284,13 @@ const SideStatsCard = ({ bySide }) => {
       <div>
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-orange-500" />
-            <span className="text-[var(--text-accent-crimson)] font-medium">Negative</span>
+            <div className="w-3 h-3 rounded-full bg-accent-crimson" />
+            <span className="text-accent-crimson font-medium">Negative</span>
           </div>
-          <span className="text-orange-400 font-semibold">{bySide.neg.winRate}%</span>
+          <span className="text-accent-crimson font-semibold">{bySide.neg.winRate}%</span>
         </div>
         <ProgressBar value={bySide.neg.winRate} max={100} color="orange" size="sm" showLabel={false} />
-        <div className="flex justify-between text-xs text-[var(--text-muted)] mt-1">
+        <div className="flex justify-between text-xs text-ink-muted mt-1">
           <span>{bySide.neg.wins}W - {bySide.neg.losses}L</span>
           <span>{bySide.neg.wins + bySide.neg.losses} rounds</span>
         </div>
@@ -309,12 +309,12 @@ const SpeakerPointsCard = ({ speakerPoints }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
-      className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-5"
+      className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl p-5"
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
+        <h3 className="font-semibold text-accent-crimson flex items-center gap-2">
           <div className="p-2  rounded-lg">
-            <Star className="w-4 h-4 text-[var(--text-accent-crimson)]" />
+            <Star className="w-4 h-4 text-accent-crimson" />
           </div>
           Speaker Points
         </h3>
@@ -327,46 +327,46 @@ const SpeakerPointsCard = ({ speakerPoints }) => {
 
       {/* Average Display */}
       <div className="text-center mb-4">
-        <div className="text-5xl font-bold text-[var(--text-accent-crimson)] mb-1">
+        <div className="text-5xl font-bold text-accent-crimson mb-1">
           <AnimatedNumber value={average} decimals={1} />
         </div>
-        <div className="text-sm text-[var(--text-muted)]">Average Speaker Points</div>
+        <div className="text-sm text-ink-muted">Average Speaker Points</div>
       </div>
 
       {/* Progress to 30 */}
       <div className="mb-4">
         <ProgressBar value={average} max={maxSp} color="gold" size="lg" showLabel={false} />
         <div className="flex justify-between text-xs mt-1">
-          <span className="text-[var(--text-muted)]">26</span>
-          <span className="text-[var(--text-muted)]">27</span>
-          <span className="text-[var(--text-muted)]">28</span>
-          <span className="text-[var(--text-muted)]">29</span>
-          <span className="text-amber-400 font-semibold">30</span>
+          <span className="text-ink-muted">26</span>
+          <span className="text-ink-muted">27</span>
+          <span className="text-ink-muted">28</span>
+          <span className="text-ink-muted">29</span>
+          <span className="text-ink font-semibold">30</span>
         </div>
       </div>
 
       {/* High/Low */}
-      <div className="flex items-center justify-between pt-3 border-t border-[var(--border)]">
+      <div className="flex items-center justify-between pt-3 border-t border-hairline">
         <div className="text-center">
-          <div className="text-lg font-bold text-emerald-400">{highest}</div>
-          <div className="text-xs text-[var(--text-muted)]">Personal Best</div>
+          <div className="text-lg font-bold text-ink">{highest}</div>
+          <div className="text-xs text-ink-muted">Personal Best</div>
         </div>
         <div className="text-center">
-          <div className="text-lg font-bold text-[var(--text-muted)]">{lowest}</div>
-          <div className="text-xs text-[var(--text-muted)]">Season Low</div>
+          <div className="text-lg font-bold text-ink-muted">{lowest}</div>
+          <div className="text-xs text-ink-muted">Season Low</div>
         </div>
         <div className="flex items-center gap-1">
           {trend === 'up' ? (
-            <TrendingUp className="w-5 h-5 text-emerald-400" />
+            <TrendingUp className="w-5 h-5 text-ink" />
           ) : trend === 'down' ? (
-            <TrendingDown className="w-5 h-5 text-red-400" />
+            <TrendingDown className="w-5 h-5 text-accent-crimson" />
           ) : (
-            <Activity className="w-5 h-5 text-[var(--text-muted)]" />
+            <Activity className="w-5 h-5 text-ink-muted" />
           )}
           <span className={`text-sm font-medium ${
-            trend === 'up' ? 'text-emerald-400' : 
-            trend === 'down' ? 'text-red-400' : 
-            'text-[var(--text-muted)]'
+            trend === 'up' ? 'text-ink' : 
+            trend === 'down' ? 'text-accent-crimson' : 
+            'text-ink-muted'
           }`}>
             {trend === 'up' ? 'Improving' : trend === 'down' ? 'Declining' : 'Stable'}
           </span>
@@ -374,8 +374,8 @@ const SpeakerPointsCard = ({ speakerPoints }) => {
       </div>
 
       {/* Recent Trend */}
-      <div className="mt-4 pt-3 border-t border-[var(--border)]">
-        <div className="text-xs text-[var(--text-muted)] mb-2">Recent Rounds</div>
+      <div className="mt-4 pt-3 border-t border-hairline">
+        <div className="text-xs text-ink-muted mb-2">Recent Rounds</div>
         <div className="flex items-end justify-between h-12 gap-1">
           {recent.map((sp, idx) => {
             const height = ((sp - 26) / 4) * 100; // Normalize to 26-30 range
@@ -386,9 +386,9 @@ const SpeakerPointsCard = ({ speakerPoints }) => {
                 animate={{ height: `${height}%` }}
                 transition={{ delay: idx * 0.1, duration: 0.5 }}
                 className={`flex-1 rounded-t ${
-                  sp >= 29 ? 'bg-emerald-500' :
-                  sp >= 28 ? 'bg-cyan-500' :
-                  sp >= 27 ? 'bg-amber-500' :
+                  sp >= 29 ? 'bg-surface-offset' :
+                  sp >= 28 ? 'bg-surface-offset' :
+                  sp >= 27 ? 'bg-surface-offset' :
                   'bg-surface-offset0'
                 }`}
                 title={`${sp} pts`}
@@ -405,19 +405,19 @@ const SpeakerPointsCard = ({ speakerPoints }) => {
 const TournamentResultsCard = ({ tournaments }) => {
   const getPlaceColor = (place, total) => {
     const percentile = (place / total) * 100;
-    if (place === 1) return 'text-yellow-400';
-    if (place === 2) return 'text-[var(--text-secondary)]';
-    if (place === 3) return 'text-orange-400';
-    if (percentile <= 25) return 'text-emerald-400';
-    if (percentile <= 50) return 'text-cyan-400';
-    return 'text-[var(--text-muted)]';
+    if (place === 1) return 'text-ink';
+    if (place === 2) return 'text-ink-muted';
+    if (place === 3) return 'text-accent-crimson';
+    if (percentile <= 25) return 'text-ink';
+    if (percentile <= 50) return 'text-ink';
+    return 'text-ink-muted';
   };
 
   const getPlaceIcon = (place) => {
-    if (place === 1) return <Crown className="w-4 h-4 text-yellow-400" />;
-    if (place === 2) return <Medal className="w-4 h-4 text-[var(--text-secondary)]" />;
-    if (place === 3) return <Medal className="w-4 h-4 text-orange-400" />;
-    return <Award className="w-4 h-4 text-[var(--text-muted)]" />;
+    if (place === 1) return <Crown className="w-4 h-4 text-ink" />;
+    if (place === 2) return <Medal className="w-4 h-4 text-ink-muted" />;
+    if (place === 3) return <Medal className="w-4 h-4 text-accent-crimson" />;
+    return <Award className="w-4 h-4 text-ink-muted" />;
   };
 
   return (
@@ -425,16 +425,16 @@ const TournamentResultsCard = ({ tournaments }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3 }}
-      className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-5"
+      className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl p-5"
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
+        <h3 className="font-semibold text-accent-crimson flex items-center gap-2">
           <div className="p-2  rounded-lg">
-            <Trophy className="w-4 h-4 text-[var(--text-accent-crimson)]" />
+            <Trophy className="w-4 h-4 text-accent-crimson" />
           </div>
           Recent Tournaments
         </h3>
-        <button className="text-xs text-cyan-400 hover:text-cyan-300 transition-colors">
+        <button className="text-xs text-ink hover:text-ink transition-colors">
           View All
         </button>
       </div>
@@ -446,21 +446,21 @@ const TournamentResultsCard = ({ tournaments }) => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 * idx }}
-            className="flex items-center gap-3 p-3 bg-[var(--input-bg)]/30 rounded-lg hover:bg-[var(--input-bg)]/50 transition-colors"
+            className="flex items-center gap-3 p-3 bg-surface-parchment/30 rounded-lg hover:bg-surface-parchment/50 transition-colors"
           >
             <div className="flex-shrink-0">
               {getPlaceIcon(tournament.place)}
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <span className="text-[var(--text-accent-crimson)] font-medium text-sm truncate">
+                <span className="text-accent-crimson font-medium text-sm truncate">
                   {tournament.name}
                 </span>
                 {tournament.speakerAward && (
-                  <Star className="w-3 h-3 text-amber-400 flex-shrink-0" />
+                  <Star className="w-3 h-3 text-ink flex-shrink-0" />
                 )}
               </div>
-              <div className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
+              <div className="flex items-center gap-2 text-xs text-ink-muted">
                 <span>{new Date(tournament.date).toLocaleDateString()}</span>
                 <span>•</span>
                 <span>{tournament.record}</span>
@@ -470,7 +470,7 @@ const TournamentResultsCard = ({ tournaments }) => {
               <div className={`text-lg font-bold ${getPlaceColor(tournament.place, tournament.totalTeams)}`}>
                 #{tournament.place}
               </div>
-              <div className="text-xs text-[var(--text-muted)]">of {tournament.totalTeams}</div>
+              <div className="text-xs text-ink-muted">of {tournament.totalTeams}</div>
             </div>
           </motion.div>
         ))}
@@ -494,12 +494,12 @@ const UpcomingMatchesCard = ({ matches }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4 }}
-      className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-5"
+      className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl p-5"
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
+        <h3 className="font-semibold text-accent-crimson flex items-center gap-2">
           <div className="p-2  rounded-lg">
-            <Calendar className="w-4 h-4 text-[var(--text-accent-crimson)]" />
+            <Calendar className="w-4 h-4 text-accent-crimson" />
           </div>
           Upcoming Matches
         </h3>
@@ -515,20 +515,20 @@ const UpcomingMatchesCard = ({ matches }) => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 * idx }}
-              className="p-3 bg-[var(--input-bg)]/30 rounded-lg"
+              className="p-3 bg-surface-parchment/30 rounded-lg"
             >
               <div className="flex items-start justify-between mb-2">
                 <div>
-                  <div className="text-[var(--text-accent-crimson)] font-medium text-sm">{match.tournament}</div>
-                  <div className="flex items-center gap-2 text-xs text-[var(--text-muted)] mt-1">
+                  <div className="text-accent-crimson font-medium text-sm">{match.tournament}</div>
+                  <div className="flex items-center gap-2 text-xs text-ink-muted mt-1">
                     <MapPin className="w-3 h-3" />
                     {match.location}
                   </div>
                 </div>
                 <div className={`px-2 py-1 rounded text-xs font-medium ${
                   match.registered 
-                    ? 'bg-emerald-500/20 text-emerald-400' 
-                    : 'bg-amber-500/20 text-amber-400'
+                    ? 'bg-surface-offset text-ink' 
+                    : 'bg-surface-offset text-ink'
                 }`}>
                   {match.registered ? 'Registered' : 'Not Registered'}
                 </div>
@@ -536,10 +536,10 @@ const UpcomingMatchesCard = ({ matches }) => {
               
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 bg-slate-600/50 text-[var(--text-secondary)] text-xs rounded">
+                  <span className="px-2 py-0.5 bg-surface-offset text-ink-muted text-xs rounded">
                     {match.format}
                   </span>
-                  <span className="text-xs text-[var(--text-muted)]">
+                  <span className="text-xs text-ink-muted">
                     {new Date(match.date).toLocaleDateString('en-US', { 
                       weekday: 'short', 
                       month: 'short', 
@@ -548,9 +548,9 @@ const UpcomingMatchesCard = ({ matches }) => {
                   </span>
                 </div>
                 <div className={`flex items-center gap-1 text-xs font-medium ${
-                  daysUntil <= 3 ? 'text-red-400' :
-                  daysUntil <= 7 ? 'text-amber-400' :
-                  'text-[var(--text-muted)]'
+                  daysUntil <= 3 ? 'text-accent-crimson' :
+                  daysUntil <= 7 ? 'text-ink' :
+                  'text-ink-muted'
                 }`}>
                   <Clock className="w-3 h-3" />
                   {daysUntil === 0 ? 'Today' :
@@ -577,10 +577,10 @@ const AchievementsCard = ({ achievements }) => {
   };
 
   const colorMap = {
-    gold: 'from-yellow-400 to-amber-500 text-yellow-400',
-    purple: 'from-purple-500 to-indigo-500 text-purple-400',
-    orange: 'from-orange-500 to-red-500 text-orange-400',
-    cyan: 'from-cyan-500 to-blue-500 text-cyan-400'
+    gold: 'from-yellow-400 to-amber-500 text-ink',
+    purple: 'from-purple-500 to-indigo-500 text-ink',
+    orange: 'from-orange-500 to-red-500 text-accent-crimson',
+    cyan: 'from-cyan-500 to-blue-500 text-ink'
   };
 
   return (
@@ -588,12 +588,12 @@ const AchievementsCard = ({ achievements }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.5 }}
-      className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-5"
+      className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl p-5"
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
+        <h3 className="font-semibold text-accent-crimson flex items-center gap-2">
           <div className="p-2  rounded-lg">
-            <Sparkles className="w-4 h-4 text-[var(--text-accent-crimson)]" />
+            <Sparkles className="w-4 h-4 text-accent-crimson" />
           </div>
           Achievements
         </h3>
@@ -610,13 +610,13 @@ const AchievementsCard = ({ achievements }) => {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.1 * idx }}
-              className="flex items-center gap-3 p-3 bg-[var(--input-bg)]/30 rounded-lg"
+              className="flex items-center gap-3 p-3 bg-surface-parchment/30 rounded-lg"
             >
               <div className={`p-2 rounded-lg  ${colorClass.split(' ')[0]} ${colorClass.split(' ')[1]}`}>
-                <Icon className="w-4 h-4 text-[var(--text-accent-crimson)]" />
+                <Icon className="w-4 h-4 text-accent-crimson" />
               </div>
               <div>
-                <div className="text-[var(--text-accent-crimson)] text-sm font-medium">{achievement.name}</div>
+                <div className="text-accent-crimson text-sm font-medium">{achievement.name}</div>
                 <div className={`text-lg font-bold ${colorClass.split(' ')[2]}`}>×{achievement.count}</div>
               </div>
             </motion.div>
@@ -634,12 +634,12 @@ const HeadToHeadCard = ({ records }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.6 }}
-      className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-5"
+      className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl p-5"
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
+        <h3 className="font-semibold text-accent-crimson flex items-center gap-2">
           <div className="p-2  rounded-lg">
-            <Users className="w-4 h-4 text-[var(--text-accent-crimson)]" />
+            <Users className="w-4 h-4 text-accent-crimson" />
           </div>
           Head-to-Head Records
         </h3>
@@ -659,26 +659,26 @@ const HeadToHeadCard = ({ records }) => {
               className="space-y-2"
             >
               <div className="flex items-center justify-between">
-                <span className="text-[var(--text-accent-crimson)] text-sm font-medium">{record.opponent}</span>
+                <span className="text-accent-crimson text-sm font-medium">{record.opponent}</span>
                 <div className="flex items-center gap-2">
-                  <span className="text-emerald-400 font-semibold">{record.wins}W</span>
-                  <span className="text-[var(--text-muted)]">-</span>
-                  <span className="text-red-400 font-semibold">{record.losses}L</span>
+                  <span className="text-ink font-semibold">{record.wins}W</span>
+                  <span className="text-ink-muted">-</span>
+                  <span className="text-accent-crimson font-semibold">{record.losses}L</span>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <div className="flex-1 h-2 bg-[var(--input-bg)] rounded-full overflow-hidden">
+                <div className="flex-1 h-2 bg-surface-parchment rounded-full overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${winRate}%` }}
                     transition={{ duration: 0.5, delay: 0.2 * idx }}
                     className={`h-full rounded-full ${
-                      winRate >= 50 ? 'bg-emerald-500' : 'bg-red-500'
+                      winRate >= 50 ? 'bg-surface-offset' : 'bg-accent-crimson'
                     }`}
                   />
                 </div>
                 <span className={`text-xs font-medium ${
-                  winRate >= 50 ? 'text-emerald-400' : 'text-red-400'
+                  winRate >= 50 ? 'text-ink' : 'text-accent-crimson'
                 }`}>
                   {winRate.toFixed(0)}%
                 </span>
@@ -701,12 +701,12 @@ const FormatStatsCard = ({ byFormat }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.7 }}
-      className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-5"
+      className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl p-5"
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-[var(--text-accent-crimson)] flex items-center gap-2">
+        <h3 className="font-semibold text-accent-crimson flex items-center gap-2">
           <div className="p-2  rounded-lg">
-            <Target className="w-4 h-4 text-[var(--text-accent-crimson)]" />
+            <Target className="w-4 h-4 text-accent-crimson" />
           </div>
           Performance by Format
         </h3>
@@ -716,8 +716,8 @@ const FormatStatsCard = ({ byFormat }) => {
         {formats.map(([format, stats], idx) => (
           <div key={format}>
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[var(--text-accent-crimson)] text-sm">{format}</span>
-              <span className="text-xs text-[var(--text-muted)]">
+              <span className="text-accent-crimson text-sm">{format}</span>
+              <span className="text-xs text-ink-muted">
                 {stats.wins}W - {stats.losses}L
               </span>
             </div>
@@ -740,18 +740,18 @@ const EmptyStatsCard = ({ title, icon: Icon, message, actionText, onAction }) =>
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
-    className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-5"
+    className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl p-5"
   >
     <div className="text-center py-6">
-      <div className="p-3 bg-[var(--input-bg)]/50 rounded-full w-fit mx-auto mb-3">
-        <Icon className="w-6 h-6 text-[var(--text-muted)]" />
+      <div className="p-3 bg-surface-parchment/50 rounded-full w-fit mx-auto mb-3">
+        <Icon className="w-6 h-6 text-ink-muted" />
       </div>
-      <h3 className="text-[var(--text-accent-crimson)] font-medium mb-1">{title}</h3>
-      <p className="text-[var(--text-muted)] text-sm mb-4">{message}</p>
+      <h3 className="text-accent-crimson font-medium mb-1">{title}</h3>
+      <p className="text-ink-muted text-sm mb-4">{message}</p>
       {actionText && onAction && (
         <button
           onClick={onAction}
-          className="text-cyan-400 text-sm hover:text-cyan-300 transition-colors"
+          className="text-ink text-sm hover:text-ink transition-colors"
         >
           {actionText}
         </button>
@@ -794,8 +794,8 @@ const QuickStatsWidget = ({ compact = false }) => {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
-          <RefreshCw className="w-8 h-8 text-cyan-400 animate-spin mx-auto mb-2" />
-          <p className="text-[var(--text-muted)]">Loading stats...</p>
+          <RefreshCw className="w-8 h-8 text-ink animate-spin mx-auto mb-2" />
+          <p className="text-ink-muted">Loading stats...</p>
         </div>
       </div>
     );
@@ -805,7 +805,7 @@ const QuickStatsWidget = ({ compact = false }) => {
     return (
       <div className="text-center py-12">
         <AlertCircle className="w-12 h-12 text-ink-muted mx-auto mb-3" />
-        <p className="text-[var(--text-muted)]">Unable to load statistics</p>
+        <p className="text-ink-muted">Unable to load statistics</p>
       </div>
     );
   }
@@ -817,13 +817,13 @@ const QuickStatsWidget = ({ compact = false }) => {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
+            <h1 className="text-2xl font-bold text-accent-crimson flex items-center gap-3">
               <div className="p-2  rounded-xl">
-                <Activity className="w-6 h-6 text-[var(--text-accent-crimson)]" />
+                <Activity className="w-6 h-6 text-accent-crimson" />
               </div>
               Quick Stats
             </h1>
-            <p className="text-[var(--text-muted)] mt-1">
+            <p className="text-ink-muted mt-1">
               Your performance at a glance
             </p>
           </div>
@@ -833,32 +833,32 @@ const QuickStatsWidget = ({ compact = false }) => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="/80 to-slate-900/80 border border-[var(--border)] rounded-2xl p-8 text-center"
+          className="/80 to-slate-900/80 border border-hairline rounded-2xl p-8 text-center"
         >
           <div className="p-4 /20 to-blue-600/20 rounded-full w-fit mx-auto mb-4">
-            <BarChart3 className="w-10 h-10 text-cyan-400" />
+            <BarChart3 className="w-10 h-10 text-ink" />
           </div>
-          <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] mb-2">Welcome to Your Stats Dashboard</h2>
-          <p className="text-[var(--text-muted)] max-w-md mx-auto mb-6">
+          <h2 className="text-xl font-bold text-accent-crimson mb-2">Welcome to Your Stats Dashboard</h2>
+          <p className="text-ink-muted max-w-md mx-auto mb-6">
             Start logging your debate rounds to see detailed statistics, win rates, 
             speaker points, and track your improvement over time.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <div className="px-4 py-2 bg-[var(--input-bg)]/50 rounded-lg">
-              <Trophy className="w-5 h-5 text-amber-400 mx-auto mb-1" />
-              <span className="text-xs text-[var(--text-muted)]">Tournament Results</span>
+            <div className="px-4 py-2 bg-surface-parchment/50 rounded-lg">
+              <Trophy className="w-5 h-5 text-ink mx-auto mb-1" />
+              <span className="text-xs text-ink-muted">Tournament Results</span>
             </div>
-            <div className="px-4 py-2 bg-[var(--input-bg)]/50 rounded-lg">
-              <Star className="w-5 h-5 text-purple-400 mx-auto mb-1" />
-              <span className="text-xs text-[var(--text-muted)]">Speaker Points</span>
+            <div className="px-4 py-2 bg-surface-parchment/50 rounded-lg">
+              <Star className="w-5 h-5 text-ink mx-auto mb-1" />
+              <span className="text-xs text-ink-muted">Speaker Points</span>
             </div>
-            <div className="px-4 py-2 bg-[var(--input-bg)]/50 rounded-lg">
-              <TrendingUp className="w-5 h-5 text-emerald-400 mx-auto mb-1" />
-              <span className="text-xs text-[var(--text-muted)]">Win Rate Trends</span>
+            <div className="px-4 py-2 bg-surface-parchment/50 rounded-lg">
+              <TrendingUp className="w-5 h-5 text-ink mx-auto mb-1" />
+              <span className="text-xs text-ink-muted">Win Rate Trends</span>
             </div>
-            <div className="px-4 py-2 bg-[var(--input-bg)]/50 rounded-lg">
-              <Users className="w-5 h-5 text-cyan-400 mx-auto mb-1" />
-              <span className="text-xs text-[var(--text-muted)]">Head-to-Head</span>
+            <div className="px-4 py-2 bg-surface-parchment/50 rounded-lg">
+              <Users className="w-5 h-5 text-ink mx-auto mb-1" />
+              <span className="text-xs text-ink-muted">Head-to-Head</span>
             </div>
           </div>
         </motion.div>
@@ -890,13 +890,13 @@ const QuickStatsWidget = ({ compact = false }) => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
+          <h1 className="text-2xl font-bold text-accent-crimson flex items-center gap-3">
             <div className="p-2  rounded-xl">
-              <Activity className="w-6 h-6 text-[var(--text-accent-crimson)]" />
+              <Activity className="w-6 h-6 text-accent-crimson" />
             </div>
             Quick Stats
           </h1>
-          <p className="text-[var(--text-muted)] mt-1">
+          <p className="text-ink-muted mt-1">
             Your performance at a glance
           </p>
         </div>
@@ -905,7 +905,7 @@ const QuickStatsWidget = ({ compact = false }) => {
           <select
             value={selectedPeriod}
             onChange={(e) => setSelectedPeriod(e.target.value)}
-            className="bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] text-sm px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+            className="bg-surface-parchment/50 border border-hairline text-accent-crimson text-sm px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-hairline"
           >
             <option value="week">This Week</option>
             <option value="month">This Month</option>
@@ -914,7 +914,7 @@ const QuickStatsWidget = ({ compact = false }) => {
           </select>
           <button
             onClick={refreshStats}
-            className="p-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+            className="p-2 bg-surface-parchment hover:bg-surface-offset text-accent-crimson rounded-lg transition-colors"
           >
             <RefreshCw className="w-4 h-4" />
           </button>

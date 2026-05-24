@@ -43,7 +43,7 @@ const Layout = ({ children, activeTab, setActiveTab, showSettings, setShowSettin
                         className="w-8 h-8 rounded-lg flex items-center justify-center shadow-lg"
                         style={{ background: `linear-gradient(135deg, var(--primary), var(--accent))` }}
                     >
-                        <Gavel className="w-5 h-5 text-[var(--text-accent-crimson)]" />
+                        <Gavel className="w-5 h-5 text-accent-crimson" />
                     </div>
                     <span className="text-xl font-bold" style={{ color: 'var(--text-accent-crimson)' }}>
                         Adjudicator
@@ -102,7 +102,7 @@ const Layout = ({ children, activeTab, setActiveTab, showSettings, setShowSettin
                         className="w-8 h-8 rounded-lg flex items-center justify-center"
                         style={{ background: `linear-gradient(135deg, var(--primary), var(--accent))` }}
                     >
-                        <Gavel className="w-5 h-5 text-[var(--text-accent-crimson)]" />
+                        <Gavel className="w-5 h-5 text-accent-crimson" />
                     </div>
                     <span className="font-bold text-lg" style={{ color: 'var(--text-accent-crimson)' }}>Adjudicator</span>
                 </div>

@@ -16,11 +16,11 @@ export const Avatar = ({ avatar, size = 'md', className, showName = false, onCli
   if (!avatar) {
     return (
       <div className={cn(
-        'rounded-full bg-[var(--input-bg)] flex items-center justify-center',
+        'rounded-full bg-surface-parchment flex items-center justify-center',
         sizes[size],
         className
       )}>
-        <span className="text-[var(--text-muted)]">?</span>
+        <span className="text-ink-muted">?</span>
       </div>
     );
   }
@@ -31,14 +31,14 @@ export const Avatar = ({ avatar, size = 'md', className, showName = false, onCli
         'rounded-full flex items-center justify-center transition-all duration-200',
         ` ${avatar.gradient}`,
         sizes[size],
-        selected && 'ring-4 ring-cyan-500 ring-offset-2 ring-offset-slate-900',
+        selected && 'ring-4 ring-hairline ring-offset-2 ring-offset-slate-900',
         onClick && 'hover:scale-110 hover:shadow-lg',
         className
       )}>
         <span className="drop-shadow-md">{avatar.emoji}</span>
       </div>
       {showName && (
-        <span className="text-xs text-[var(--text-muted)] text-center">{avatar.name}</span>
+        <span className="text-xs text-ink-muted text-center">{avatar.name}</span>
       )}
     </div>
   );
@@ -83,32 +83,32 @@ const AvatarSelector = ({ isOpen, onClose, onSelect, currentAvatarId }) => {
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-2xl bg-[var(--bg-accent-crimson)] border border-[var(--border)] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-2xl bg-[var(--bg-accent-crimson)] border border-hairline rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
-        <div className="p-6 border-b border-[var(--border)] flex items-center justify-between">
+        <div className="p-6 border-b border-hairline flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-bold text-[var(--text-accent-crimson)]">Choose Your Avatar</h2>
-            <p className="text-sm text-[var(--text-muted)] mt-1">Select a profile picture that represents you</p>
+            <h2 className="text-xl font-bold text-accent-crimson">Choose Your Avatar</h2>
+            <p className="text-sm text-ink-muted mt-1">Select a profile picture that represents you</p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
+            className="p-2 rounded-lg hover:bg-[var(--card-bg)] text-ink-muted hover:text-accent-crimson transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Category Navigation */}
-        <div className="px-6 py-4 border-b border-[var(--border)] flex items-center justify-between">
+        <div className="px-6 py-4 border-b border-hairline flex items-center justify-between">
           <button
             onClick={handlePrevCategory}
-            className="p-2 rounded-lg hover:bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
+            className="p-2 rounded-lg hover:bg-[var(--card-bg)] text-ink-muted hover:text-accent-crimson transition-colors"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           
           <div className="flex-1 text-center">
-            <span className="text-lg font-semibold text-[var(--text-accent-crimson)]">{selectedCategory}</span>
+            <span className="text-lg font-semibold text-accent-crimson">{selectedCategory}</span>
             <div className="flex justify-center gap-1 mt-2">
               {categories.map((cat, idx) => (
                 <button
@@ -116,7 +116,7 @@ const AvatarSelector = ({ isOpen, onClose, onSelect, currentAvatarId }) => {
                   onClick={() => setSelectedCategory(cat)}
                   className={cn(
                     'w-2 h-2 rounded-full transition-all',
-                    cat === selectedCategory ? 'bg-cyan-500 w-4' : 'bg-slate-600 hover:bg-surface-offset0'
+                    cat === selectedCategory ? 'bg-surface-offset w-4' : 'bg-surface-offset hover:bg-surface-offset0'
                   )}
                 />
               ))}
@@ -125,7 +125,7 @@ const AvatarSelector = ({ isOpen, onClose, onSelect, currentAvatarId }) => {
 
           <button
             onClick={handleNextCategory}
-            className="p-2 rounded-lg hover:bg-[var(--card-bg)] text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
+            className="p-2 rounded-lg hover:bg-[var(--card-bg)] text-ink-muted hover:text-accent-crimson transition-colors"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
@@ -148,32 +148,32 @@ const AvatarSelector = ({ isOpen, onClose, onSelect, currentAvatarId }) => {
         </div>
 
         {/* Preview & Confirm */}
-        <div className="p-6 border-t border-[var(--border)] bg-[var(--bg-accent-crimson)]/50 flex items-center justify-between">
+        <div className="p-6 border-t border-hairline bg-[var(--bg-accent-crimson)]/50 flex items-center justify-between">
           <div className="flex items-center gap-4">
             {selectedAvatar ? (
               <>
                 <Avatar avatar={selectedAvatar} size="lg" />
                 <div>
-                  <p className="text-[var(--text-accent-crimson)] font-medium">{selectedAvatar.name}</p>
-                  <p className="text-sm text-[var(--text-muted)]">{selectedAvatar.category}</p>
+                  <p className="text-accent-crimson font-medium">{selectedAvatar.name}</p>
+                  <p className="text-sm text-ink-muted">{selectedAvatar.category}</p>
                 </div>
               </>
             ) : (
-              <p className="text-[var(--text-muted)]">Select an avatar to preview</p>
+              <p className="text-ink-muted">Select an avatar to preview</p>
             )}
           </div>
 
           <div className="flex gap-3">
             <button
               onClick={onClose}
-              className="px-4 py-2 rounded-xl bg-[var(--card-bg)] text-[var(--text-secondary)] hover:bg-[var(--input-bg)] transition-colors"
+              className="px-4 py-2 rounded-xl bg-[var(--card-bg)] text-ink-muted hover:bg-surface-parchment transition-colors"
             >
               Cancel
             </button>
             <button
               onClick={handleSelect}
               disabled={!selectedAvatar}
-              className="px-6 py-2 rounded-xl  text-[var(--text-accent-crimson)] font-medium hover:shadow-lg hover:shadow-cyan-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="px-6 py-2 rounded-xl  text-accent-crimson font-medium hover:shadow-lg hover:shadow-cyan-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               <Check className="w-4 h-4" />
               Select Avatar
@@ -210,18 +210,18 @@ export const AvatarOnboarding = ({ onComplete, userName }) => {
       <div className="relative z-10 w-full max-w-3xl">
         {/* Welcome Message */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-[var(--text-accent-crimson)] mb-2">
+          <h1 className="text-3xl font-bold text-accent-crimson mb-2">
             Welcome{userName ? `, ${userName}` : ''}! 🎉
           </h1>
-          <p className="text-[var(--text-muted)] text-lg">
+          <p className="text-ink-muted text-lg">
             Let's personalize your profile with an avatar
           </p>
         </div>
 
         {/* Avatar Selection Card */}
-        <div className="bg-[var(--bg-accent-crimson)]/50  border border-[var(--border)] rounded-2xl overflow-hidden">
+        <div className="bg-[var(--bg-accent-crimson)]/50  border border-hairline rounded-2xl overflow-hidden">
           {/* Category Tabs */}
-          <div className="p-4 border-b border-[var(--border)] overflow-x-auto">
+          <div className="p-4 border-b border-hairline overflow-x-auto">
             <div className="flex gap-2 min-w-max">
               {categories.map((cat) => (
                 <button
@@ -230,8 +230,8 @@ export const AvatarOnboarding = ({ onComplete, userName }) => {
                   className={cn(
                     'px-4 py-2 rounded-xl text-sm font-medium transition-all whitespace-nowrap',
                     cat === selectedCategory
-                      ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'
-                      : 'bg-[var(--card-bg)]/50 text-[var(--text-muted)] border border-[var(--border)]/50 hover:bg-[var(--card-bg)] hover:text-[var(--text-accent-crimson)]'
+                      ? 'bg-surface-offset text-ink border border-hairline'
+                      : 'bg-[var(--card-bg)]/50 text-ink-muted border border-hairline/50 hover:bg-[var(--card-bg)] hover:text-accent-crimson'
                   )}
                 >
                   {cat}
@@ -257,22 +257,22 @@ export const AvatarOnboarding = ({ onComplete, userName }) => {
           </div>
 
           {/* Selection Preview */}
-          <div className="p-6 border-t border-[var(--border)] bg-[var(--bg-accent-crimson)]/80 flex items-center justify-between">
+          <div className="p-6 border-t border-hairline bg-[var(--bg-accent-crimson)]/80 flex items-center justify-between">
             <div className="flex items-center gap-4">
               {selectedAvatar ? (
                 <>
                   <Avatar avatar={selectedAvatar} size="lg" className="shadow-xl" />
                   <div>
-                    <p className="text-[var(--text-accent-crimson)] font-semibold text-lg">{selectedAvatar.name}</p>
-                    <p className="text-sm text-[var(--text-muted)]">{selectedAvatar.category}</p>
+                    <p className="text-accent-crimson font-semibold text-lg">{selectedAvatar.name}</p>
+                    <p className="text-sm text-ink-muted">{selectedAvatar.category}</p>
                   </div>
                 </>
               ) : (
                 <div className="flex items-center gap-3">
-                  <div className="w-16 h-16 rounded-full bg-[var(--card-bg)] border-2 border-dashed border-[var(--border)] flex items-center justify-center">
-                    <span className="text-[var(--text-muted)] text-2xl">?</span>
+                  <div className="w-16 h-16 rounded-full bg-[var(--card-bg)] border-2 border-dashed border-hairline flex items-center justify-center">
+                    <span className="text-ink-muted text-2xl">?</span>
                   </div>
-                  <p className="text-[var(--text-muted)]">Choose an avatar to continue</p>
+                  <p className="text-ink-muted">Choose an avatar to continue</p>
                 </div>
               )}
             </div>
@@ -280,7 +280,7 @@ export const AvatarOnboarding = ({ onComplete, userName }) => {
             <button
               onClick={handleComplete}
               disabled={!selectedAvatar}
-              className="px-8 py-3 rounded-xl  text-[var(--text-accent-crimson)] font-semibold text-lg hover:shadow-xl hover:shadow-cyan-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="px-8 py-3 rounded-xl  text-accent-crimson font-semibold text-lg hover:shadow-xl hover:shadow-cyan-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               Continue
               <ChevronRight className="w-5 h-5" />
@@ -292,7 +292,7 @@ export const AvatarOnboarding = ({ onComplete, userName }) => {
         <div className="text-center mt-6">
           <button
             onClick={() => onComplete(null)}
-            className="text-[var(--text-muted)] hover:text-[var(--text-muted)] text-sm transition-colors underline underline-offset-2"
+            className="text-ink-muted hover:text-ink-muted text-sm transition-colors underline underline-offset-2"
           >
             Skip for now
           </button>

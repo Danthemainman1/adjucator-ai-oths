@@ -112,9 +112,9 @@ const DebateClock = () => {
   const isCritical = timeLeft <= 10;
 
   const getColor = () => {
-    if (isCritical) return { ring: 'stroke-red-500', text: 'text-red-400', bg: 'bg-red-500/20' };
-    if (isWarning) return { ring: 'stroke-yellow-500', text: 'text-yellow-400', bg: 'bg-yellow-500/20' };
-    return { ring: 'stroke-blue-500', text: 'text-blue-400', bg: 'bg-accent-crimson/20' };
+    if (isCritical) return { ring: 'stroke-accent-crimson', text: 'text-accent-crimson', bg: 'bg-accent-crimson/20' };
+    if (isWarning) return { ring: 'stroke-ink', text: 'text-ink', bg: 'bg-surface-offset' };
+    return { ring: 'stroke-ink', text: 'text-ink', bg: 'bg-accent-crimson/20' };
   };
 
   const colors = getColor();
@@ -126,20 +126,20 @@ const DebateClock = () => {
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-3">
             <div className="p-2 /20 to-cyan-500/20 rounded-lg">
-              <Clock className="w-6 h-6 text-blue-400" />
+              <Clock className="w-6 h-6 text-ink" />
             </div>
-            <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)]">Debate Clock</h1>
+            <h1 className="text-2xl font-bold text-accent-crimson">Debate Clock</h1>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setSoundEnabled(!soundEnabled)}
-              className="p-2 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
+              className="p-2 text-ink-muted hover:text-accent-crimson transition-colors"
             >
               {soundEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
             </button>
             <button
               onClick={() => setShowSettings(!showSettings)}
-              className={`p-2 transition-colors ${showSettings ? 'text-blue-400' : 'text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)]'}`}
+              className={`p-2 transition-colors ${showSettings ? 'text-ink' : 'text-ink-muted hover:text-accent-crimson'}`}
             >
               <Settings className="w-5 h-5" />
             </button>
@@ -185,7 +185,7 @@ const DebateClock = () => {
             >
               {formatTime(timeLeft)}
             </motion.div>
-            <div className="text-[var(--text-muted)] text-sm mt-2">
+            <div className="text-ink-muted text-sm mt-2">
               {isRunning ? 'Running' : timeLeft === 0 ? 'Time!' : 'Paused'}
             </div>
           </div>
@@ -195,7 +195,7 @@ const DebateClock = () => {
         <div className="flex items-center justify-center gap-4 mb-8">
           <button
             onClick={resetTimer}
-            className="p-4 bg-[var(--card-bg)] hover:bg-[var(--input-bg)] text-[var(--text-secondary)] rounded-full transition-colors"
+            className="p-4 bg-[var(--card-bg)] hover:bg-surface-parchment text-ink-muted rounded-full transition-colors"
           >
             <RotateCcw className="w-6 h-6" />
           </button>
@@ -203,8 +203,8 @@ const DebateClock = () => {
             onClick={toggleTimer}
             className={`p-6 rounded-full transition-colors ${
               isRunning
-                ? 'bg-red-600 hover:bg-red-500 text-[var(--text-accent-crimson)]'
-                : 'bg-accent-crimson hover:bg-accent-crimson text-[var(--text-accent-crimson)]'
+                ? 'bg-accent-crimson hover:bg-accent-crimson text-accent-crimson'
+                : 'bg-accent-crimson hover:bg-accent-crimson text-accent-crimson'
             }`}
           >
             {isRunning ? <Pause className="w-8 h-8" /> : <Play className="w-8 h-8 ml-1" />}
@@ -213,14 +213,14 @@ const DebateClock = () => {
             <button
               onClick={() => adjustTime(30)}
               disabled={isRunning}
-              className="p-2 bg-[var(--card-bg)] hover:bg-[var(--input-bg)] disabled:opacity-50 disabled:cursor-not-allowed text-[var(--text-secondary)] rounded-lg transition-colors"
+              className="p-2 bg-[var(--card-bg)] hover:bg-surface-parchment disabled:opacity-50 disabled:cursor-not-allowed text-ink-muted rounded-lg transition-colors"
             >
               <Plus className="w-4 h-4" />
             </button>
             <button
               onClick={() => adjustTime(-30)}
               disabled={isRunning}
-              className="p-2 bg-[var(--card-bg)] hover:bg-[var(--input-bg)] disabled:opacity-50 disabled:cursor-not-allowed text-[var(--text-secondary)] rounded-lg transition-colors"
+              className="p-2 bg-[var(--card-bg)] hover:bg-surface-parchment disabled:opacity-50 disabled:cursor-not-allowed text-ink-muted rounded-lg transition-colors"
             >
               <Minus className="w-4 h-4" />
             </button>
@@ -232,9 +232,9 @@ const DebateClock = () => {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-[var(--card-bg)]/50 border border-[var(--border)]/50 rounded-xl p-4"
+            className="bg-[var(--card-bg)]/50 border border-hairline/50 rounded-xl p-4"
           >
-            <h3 className="text-[var(--text-accent-crimson)] font-medium mb-3">Quick Presets</h3>
+            <h3 className="text-accent-crimson font-medium mb-3">Quick Presets</h3>
             <div className="grid grid-cols-4 gap-2">
               {PRESETS.map(preset => (
                 <button
@@ -242,16 +242,16 @@ const DebateClock = () => {
                   onClick={() => setPreset(preset.seconds)}
                   className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                     totalSeconds === preset.seconds
-                      ? 'bg-accent-crimson text-[var(--text-accent-crimson)]'
-                      : 'bg-[var(--input-bg)] text-[var(--text-secondary)] hover:bg-slate-600'
+                      ? 'bg-accent-crimson text-accent-crimson'
+                      : 'bg-surface-parchment text-ink-muted hover:bg-surface-offset'
                   }`}
                 >
                   {preset.label}
                 </button>
               ))}
             </div>
-            <div className="mt-4 pt-4 border-t border-[var(--border)]">
-              <label className="text-[var(--text-muted)] text-sm mb-2 block">Custom Time (seconds)</label>
+            <div className="mt-4 pt-4 border-t border-hairline">
+              <label className="text-ink-muted text-sm mb-2 block">Custom Time (seconds)</label>
               <input
                 type="number"
                 min="10"
@@ -263,7 +263,7 @@ const DebateClock = () => {
                   if (!isRunning) setTimeLeft(val);
                 }}
                 disabled={isRunning}
-                className="w-full px-3 py-2 bg-[var(--bg-accent-crimson)] border border-[var(--border)] rounded-lg text-[var(--text-accent-crimson)] disabled:opacity-50"
+                className="w-full px-3 py-2 bg-[var(--bg-accent-crimson)] border border-hairline rounded-lg text-accent-crimson disabled:opacity-50"
               />
             </div>
           </motion.div>

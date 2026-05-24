@@ -421,13 +421,13 @@ const TeamBrowser = ({ setActiveTab }) => {
       <div className="min-h-[80vh] flex flex-col items-center justify-center text-center space-y-6 px-4">
         <div className="relative">
           <div className="absolute -inset-1  rounded-full blur opacity-30" />
-          <div className="relative w-24 h-24 bg-[var(--bg-accent-crimson)] rounded-full flex items-center justify-center border-2 border-[var(--border)]">
-            <Lock className="w-12 h-12 text-cyan-400" />
+          <div className="relative w-24 h-24 bg-[var(--bg-accent-crimson)] rounded-full flex items-center justify-center border-2 border-hairline">
+            <Lock className="w-12 h-12 text-ink" />
           </div>
         </div>
         <div className="space-y-2">
-          <h2 className="text-3xl font-bold text-[var(--text-accent-crimson)]">Authentication Required</h2>
-          <p className="text-[var(--text-muted)] max-w-md">
+          <h2 className="text-3xl font-bold text-accent-crimson">Authentication Required</h2>
+          <p className="text-ink-muted max-w-md">
             Please sign in to browse teams, create your own team, and collaborate with other debaters.
           </p>
         </div>
@@ -445,8 +445,8 @@ const TeamBrowser = ({ setActiveTab }) => {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="text-center space-y-4">
-          <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="text-[var(--text-muted)]">Loading teams...</p>
+          <div className="w-16 h-16 border-4 border-hairline border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="text-ink-muted">Loading teams...</p>
         </div>
       </div>
     );
@@ -457,13 +457,13 @@ const TeamBrowser = ({ setActiveTab }) => {
       {/* Notification */}
       {notification && (
         <div className={`fixed top-20 right-6 z-50 glass-card px-6 py-4 flex items-center gap-3 animate-in slide-in-from-top ${
-          notification.type === 'error' ? 'border-red-500/50' : 
-          notification.type === 'info' ? 'border-accent-crimson/50' : 'border-green-500/50'
+          notification.type === 'error' ? 'border-accent-crimson/50' : 
+          notification.type === 'info' ? 'border-accent-crimson/50' : 'border-hairline'
         }`}>
-          {notification.type === 'success' && <Check className="w-5 h-5 text-green-400" />}
-          {notification.type === 'error' && <AlertCircle className="w-5 h-5 text-red-400" />}
-          {notification.type === 'info' && <AlertCircle className="w-5 h-5 text-blue-400" />}
-          <span className="text-[var(--text-accent-crimson)]">{notification.message}</span>
+          {notification.type === 'success' && <Check className="w-5 h-5 text-ink" />}
+          {notification.type === 'error' && <AlertCircle className="w-5 h-5 text-accent-crimson" />}
+          {notification.type === 'info' && <AlertCircle className="w-5 h-5 text-ink" />}
+          <span className="text-accent-crimson">{notification.message}</span>
         </div>
       )}
 
@@ -471,11 +471,11 @@ const TeamBrowser = ({ setActiveTab }) => {
       <div className="glass-card space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
-              <Users className="w-8 h-8 text-cyan-400" />
+            <h1 className="text-3xl font-bold text-accent-crimson flex items-center gap-3">
+              <Users className="w-8 h-8 text-ink" />
               Team Browser
             </h1>
-            <p className="text-[var(--text-muted)] mt-2">
+            <p className="text-ink-muted mt-2">
               Find, join, or create teams to collaborate with other debaters
             </p>
           </div>
@@ -491,7 +491,7 @@ const TeamBrowser = ({ setActiveTab }) => {
         {/* Search and Filters */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)]" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-muted" />
             <input
               type="text"
               placeholder="Search teams..."
@@ -503,7 +503,7 @@ const TeamBrowser = ({ setActiveTab }) => {
           <button
             onClick={() => setShowFilters(!showFilters)}
             className={`px-4 py-2 rounded-lg transition-all flex items-center gap-2 ${
-              showFilters ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/50' : 'bg-[var(--card-bg)] text-[var(--text-secondary)] border-[var(--border)]'
+              showFilters ? 'bg-surface-offset text-ink border-hairline' : 'bg-[var(--card-bg)] text-ink-muted border-hairline'
             } border`}
           >
             <Filter className="w-4 h-4" />
@@ -513,15 +513,15 @@ const TeamBrowser = ({ setActiveTab }) => {
 
         {/* Filter Options */}
         {showFilters && (
-          <div className="flex flex-wrap gap-2 pt-2 border-t border-[var(--border)]">
+          <div className="flex flex-wrap gap-2 pt-2 border-t border-hairline">
             {['all', 'debate', 'interpretation', 'limited_prep'].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setFilterCategory(cat)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                   filterCategory === cat
-                    ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/50'
-                    : 'bg-[var(--card-bg)] text-[var(--text-muted)] border-[var(--border)] hover:border-[var(--border)]'
+                    ? 'bg-surface-offset text-ink border-hairline'
+                    : 'bg-[var(--card-bg)] text-ink-muted border-hairline hover:border-hairline'
                 } border`}
               >
                 {cat.charAt(0).toUpperCase() + cat.slice(1).replace('_', ' ')}
@@ -534,8 +534,8 @@ const TeamBrowser = ({ setActiveTab }) => {
       {/* My Teams */}
       {myTeams.length > 0 && (
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-2">
-            <Crown className="w-5 h-5 text-yellow-400" />
+          <h2 className="text-xl font-bold text-accent-crimson flex items-center gap-2">
+            <Crown className="w-5 h-5 text-ink" />
             My Teams ({myTeams.length})
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -561,16 +561,16 @@ const TeamBrowser = ({ setActiveTab }) => {
 
       {/* All Teams */}
       <div className="space-y-4">
-        <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-2">
-          <Users className="w-5 h-5 text-cyan-400" />
+        <h2 className="text-xl font-bold text-accent-crimson flex items-center gap-2">
+          <Users className="w-5 h-5 text-ink" />
           Browse Teams ({filteredTeams.length})
         </h2>
         
         {filteredTeams.length === 0 ? (
           <div className="glass-card text-center py-12">
             <Users className="w-16 h-16 text-ink-muted mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-[var(--text-accent-crimson)] mb-2">No teams found</h3>
-            <p className="text-[var(--text-muted)] mb-6">
+            <h3 className="text-xl font-semibold text-accent-crimson mb-2">No teams found</h3>
+            <p className="text-ink-muted mb-6">
               {searchQuery || filterCategory !== 'all' 
                 ? 'Try adjusting your search or filters'
                 : 'Be the first to create a team!'}
@@ -610,15 +610,15 @@ const TeamBrowser = ({ setActiveTab }) => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60  p-4 animate-in fade-in">
           <div className="glass-card w-full max-w-2xl max-h-[90vh] overflow-y-auto animate-in zoom-in-95">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
-                <Plus className="w-6 h-6 text-cyan-400" />
+              <h2 className="text-2xl font-bold text-accent-crimson flex items-center gap-3">
+                <Plus className="w-6 h-6 text-ink" />
                 Create New Team
               </h2>
               <button
                 onClick={() => setShowCreateModal(false)}
                 className="p-2 rounded-lg hover:bg-[var(--card-bg)] transition-colors"
               >
-                <X className="w-5 h-5 text-[var(--text-muted)]" />
+                <X className="w-5 h-5 text-ink-muted" />
               </button>
             </div>
 
@@ -626,7 +626,7 @@ const TeamBrowser = ({ setActiveTab }) => {
               {/* Basic Info */}
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
+                  <label className="block text-sm font-medium text-ink-muted mb-2">
                     Team Name *
                   </label>
                   <input
@@ -640,7 +640,7 @@ const TeamBrowser = ({ setActiveTab }) => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
+                  <label className="block text-sm font-medium text-ink-muted mb-2">
                     Description
                   </label>
                   <textarea
@@ -654,7 +654,7 @@ const TeamBrowser = ({ setActiveTab }) => {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
+                    <label className="block text-sm font-medium text-ink-muted mb-2">
                       Category
                     </label>
                     <select
@@ -669,7 +669,7 @@ const TeamBrowser = ({ setActiveTab }) => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
+                    <label className="block text-sm font-medium text-ink-muted mb-2">
                       Max Members
                     </label>
                     <input
@@ -689,9 +689,9 @@ const TeamBrowser = ({ setActiveTab }) => {
                     id="isPrivate"
                     checked={formData.isPrivate}
                     onChange={(e) => setFormData({ ...formData, isPrivate: e.target.checked })}
-                    className="w-4 h-4 rounded border-[var(--border)] bg-[var(--card-bg)] text-cyan-500"
+                    className="w-4 h-4 rounded border-hairline bg-[var(--card-bg)] text-ink"
                   />
-                  <label htmlFor="isPrivate" className="text-sm text-[var(--text-secondary)] flex items-center gap-2">
+                  <label htmlFor="isPrivate" className="text-sm text-ink-muted flex items-center gap-2">
                     {formData.isPrivate ? <Lock className="w-4 h-4" /> : <Unlock className="w-4 h-4" />}
                     Private Team (invite-only)
                   </label>
@@ -700,13 +700,13 @@ const TeamBrowser = ({ setActiveTab }) => {
 
               {/* Event Selection */}
               <div>
-                <label className="block text-sm font-medium text-[var(--text-secondary)] mb-3">
+                <label className="block text-sm font-medium text-ink-muted mb-3">
                   Select Events
                 </label>
                 <div className="space-y-4">
                   {Object.entries(SPEECH_EVENTS).map(([category, events]) => (
                     <div key={category}>
-                      <h4 className="text-xs font-semibold text-[var(--text-muted)] uppercase mb-2">
+                      <h4 className="text-xs font-semibold text-ink-muted uppercase mb-2">
                         {category.replace('_', ' ')}
                       </h4>
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -717,8 +717,8 @@ const TeamBrowser = ({ setActiveTab }) => {
                             onClick={() => toggleEventSelection(event.id)}
                             className={`p-3 rounded-lg border transition-all text-left ${
                               formData.events.includes(event.id)
-                                ? 'bg-cyan-500/20 border-cyan-500/50 text-cyan-400'
-                                : 'bg-[var(--card-bg)] border-[var(--border)] text-[var(--text-muted)] hover:border-[var(--border)]'
+                                ? 'bg-surface-offset border-hairline text-ink'
+                                : 'bg-[var(--card-bg)] border-hairline text-ink-muted hover:border-hairline'
                             }`}
                           >
                             <div className="flex items-center gap-2">
@@ -735,11 +735,11 @@ const TeamBrowser = ({ setActiveTab }) => {
               </div>
 
               {/* Actions */}
-              <div className="flex justify-end gap-3 pt-4 border-t border-[var(--border)]">
+              <div className="flex justify-end gap-3 pt-4 border-t border-hairline">
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="px-6 py-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
+                  className="px-6 py-2 rounded-lg text-ink-muted hover:text-accent-crimson transition-colors"
                 >
                   Cancel
                 </button>
@@ -756,13 +756,13 @@ const TeamBrowser = ({ setActiveTab }) => {
       {showChatModal && selectedTeam && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60  p-4 animate-in fade-in">
           <div className="glass-card w-full max-w-2xl h-[600px] flex flex-col animate-in zoom-in-95">
-            <div className="flex items-center justify-between mb-4 pb-4 border-b border-[var(--border)]">
+            <div className="flex items-center justify-between mb-4 pb-4 border-b border-hairline">
               <div>
-                <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-2">
-                  <MessageSquare className="w-5 h-5 text-cyan-400" />
+                <h2 className="text-xl font-bold text-accent-crimson flex items-center gap-2">
+                  <MessageSquare className="w-5 h-5 text-ink" />
                   {selectedTeam.name} Chat
                 </h2>
-                <p className="text-sm text-[var(--text-muted)]">{selectedTeam.members?.length || 0} members</p>
+                <p className="text-sm text-ink-muted">{selectedTeam.members?.length || 0} members</p>
               </div>
               <button
                 onClick={() => {
@@ -772,7 +772,7 @@ const TeamBrowser = ({ setActiveTab }) => {
                 }}
                 className="p-2 rounded-lg hover:bg-[var(--card-bg)] transition-colors"
               >
-                <X className="w-5 h-5 text-[var(--text-muted)]" />
+                <X className="w-5 h-5 text-ink-muted" />
               </button>
             </div>
 
@@ -781,7 +781,7 @@ const TeamBrowser = ({ setActiveTab }) => {
               {chatMessages.length === 0 ? (
                 <div className="text-center py-12">
                   <MessageSquare className="w-12 h-12 text-ink-muted mx-auto mb-3" />
-                  <p className="text-[var(--text-muted)]">No messages yet. Start the conversation!</p>
+                  <p className="text-ink-muted">No messages yet. Start the conversation!</p>
                 </div>
               ) : (
                 chatMessages.map((message) => (
@@ -792,8 +792,8 @@ const TeamBrowser = ({ setActiveTab }) => {
                     <div
                       className={`max-w-[70%] rounded-lg p-3 ${
                         message.userId === user.uid
-                          ? 'bg-cyan-500 text-[var(--text-accent-crimson)]'
-                          : 'bg-[var(--card-bg)] text-[var(--text-secondary)]'
+                          ? 'bg-surface-offset text-accent-crimson'
+                          : 'bg-[var(--card-bg)] text-ink-muted'
                       }`}
                     >
                       {message.userId !== user.uid && (
@@ -812,7 +812,7 @@ const TeamBrowser = ({ setActiveTab }) => {
             </div>
 
             {/* Message Input */}
-            <form onSubmit={handleSendMessage} className="flex gap-2 pt-4 border-t border-[var(--border)]">
+            <form onSubmit={handleSendMessage} className="flex gap-2 pt-4 border-t border-hairline">
               <input
                 type="text"
                 value={newMessage}
@@ -837,8 +837,8 @@ const TeamBrowser = ({ setActiveTab }) => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60  p-4 animate-in fade-in">
           <div className="glass-card w-full max-w-lg animate-in zoom-in-95">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-2">
-                <Settings className="w-5 h-5 text-cyan-400" />
+              <h2 className="text-xl font-bold text-accent-crimson flex items-center gap-2">
+                <Settings className="w-5 h-5 text-ink" />
                 Team Settings
               </h2>
               <button
@@ -848,13 +848,13 @@ const TeamBrowser = ({ setActiveTab }) => {
                 }}
                 className="p-2 rounded-lg hover:bg-[var(--card-bg)] transition-colors"
               >
-                <X className="w-5 h-5 text-[var(--text-muted)]" />
+                <X className="w-5 h-5 text-ink-muted" />
               </button>
             </div>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
+                <label className="block text-sm font-medium text-ink-muted mb-2">
                   Team Name
                 </label>
                 <input
@@ -866,7 +866,7 @@ const TeamBrowser = ({ setActiveTab }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
+                <label className="block text-sm font-medium text-ink-muted mb-2">
                   Description
                 </label>
                 <textarea
@@ -878,7 +878,7 @@ const TeamBrowser = ({ setActiveTab }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
+                <label className="block text-sm font-medium text-ink-muted mb-2">
                   Max Members
                 </label>
                 <input
@@ -897,21 +897,21 @@ const TeamBrowser = ({ setActiveTab }) => {
                   id="editPrivate"
                   defaultChecked={selectedTeam.isPrivate}
                   onChange={(e) => setSelectedTeam({ ...selectedTeam, isPrivate: e.target.checked })}
-                  className="w-4 h-4 rounded border-[var(--border)] bg-[var(--card-bg)] text-cyan-500"
+                  className="w-4 h-4 rounded border-hairline bg-[var(--card-bg)] text-ink"
                 />
-                <label htmlFor="editPrivate" className="text-sm text-[var(--text-secondary)] flex items-center gap-2">
+                <label htmlFor="editPrivate" className="text-sm text-ink-muted flex items-center gap-2">
                   {selectedTeam.isPrivate ? <Lock className="w-4 h-4" /> : <Unlock className="w-4 h-4" />}
                   Private Team (invite-only)
                 </label>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-[var(--border)]">
+              <div className="flex justify-end gap-3 pt-4 border-t border-hairline">
                 <button
                   onClick={() => {
                     setShowTeamSettings(false);
                     setSelectedTeam(null);
                   }}
-                  className="px-4 py-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
+                  className="px-4 py-2 rounded-lg text-ink-muted hover:text-accent-crimson transition-colors"
                 >
                   Cancel
                 </button>
@@ -936,9 +936,9 @@ const TeamBrowser = ({ setActiveTab }) => {
       {showJoinRequests && selectedTeam && selectedTeam.owner === user.uid && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60  p-4 animate-in fade-in">
           <div className="glass-card w-full max-w-lg max-h-[600px] flex flex-col animate-in zoom-in-95">
-            <div className="flex items-center justify-between mb-4 pb-4 border-b border-[var(--border)]">
-              <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-2">
-                <Bell className="w-5 h-5 text-cyan-400" />
+            <div className="flex items-center justify-between mb-4 pb-4 border-b border-hairline">
+              <h2 className="text-xl font-bold text-accent-crimson flex items-center gap-2">
+                <Bell className="w-5 h-5 text-ink" />
                 Join Requests
               </h2>
               <button
@@ -949,7 +949,7 @@ const TeamBrowser = ({ setActiveTab }) => {
                 }}
                 className="p-2 rounded-lg hover:bg-[var(--card-bg)] transition-colors"
               >
-                <X className="w-5 h-5 text-[var(--text-muted)]" />
+                <X className="w-5 h-5 text-ink-muted" />
               </button>
             </div>
 
@@ -957,7 +957,7 @@ const TeamBrowser = ({ setActiveTab }) => {
               {joinRequests.length === 0 ? (
                 <div className="text-center py-12">
                   <UserPlus className="w-12 h-12 text-ink-muted mx-auto mb-3" />
-                  <p className="text-[var(--text-muted)]">No pending join requests</p>
+                  <p className="text-ink-muted">No pending join requests</p>
                 </div>
               ) : (
                 joinRequests.map((request) => (
@@ -966,25 +966,25 @@ const TeamBrowser = ({ setActiveTab }) => {
                     className="glass-card p-4 flex items-center justify-between"
                   >
                     <div className="flex-1">
-                      <p className="font-semibold text-[var(--text-accent-crimson)]">
+                      <p className="font-semibold text-accent-crimson">
                         @{request.username || request.displayName}
                       </p>
-                      <p className="text-sm text-[var(--text-muted)]">{request.email}</p>
-                      <p className="text-xs text-[var(--text-muted)] mt-1">
+                      <p className="text-sm text-ink-muted">{request.email}</p>
+                      <p className="text-xs text-ink-muted mt-1">
                         {request.timestamp ? new Date(request.timestamp).toLocaleDateString() : 'Recently'}
                       </p>
                     </div>
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleApproveJoinRequest(request.id, request)}
-                        className="p-2 rounded-lg bg-green-500/10 text-green-400 hover:bg-green-500/20 border border-green-500/30 transition-all"
+                        className="p-2 rounded-lg bg-surface-offset text-ink hover:bg-surface-offset border border-hairline transition-all"
                         title="Approve"
                       >
                         <UserCheck className="w-5 h-5" />
                       </button>
                       <button
                         onClick={() => handleDenyJoinRequest(request.id)}
-                        className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/30 transition-all"
+                        className="p-2 rounded-lg bg-accent-crimson/10 text-accent-crimson hover:bg-accent-crimson/20 border border-accent-crimson/30 transition-all"
                         title="Deny"
                       >
                         <UserX className="w-5 h-5" />
@@ -1007,26 +1007,26 @@ const TeamCard = ({ team, user, onJoin, onLeave, onOpenChat, onOpenSettings, onO
   const isFull = team.members?.length >= team.maxMembers;
 
   return (
-    <div className="glass-card hover:border-cyan-500/30 transition-all space-y-4">
+    <div className="glass-card hover:border-hairline transition-all space-y-4">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="text-lg font-bold text-[var(--text-accent-crimson)]">{team.name}</h3>
-            {team.isPrivate && <Lock className="w-4 h-4 text-[var(--text-muted)]" />}
-            {isOwner && <Crown className="w-4 h-4 text-yellow-400" />}
+            <h3 className="text-lg font-bold text-accent-crimson">{team.name}</h3>
+            {team.isPrivate && <Lock className="w-4 h-4 text-ink-muted" />}
+            {isOwner && <Crown className="w-4 h-4 text-ink" />}
           </div>
-          <p className="text-sm text-[var(--text-muted)] line-clamp-2">{team.description || 'No description'}</p>
+          <p className="text-sm text-ink-muted line-clamp-2">{team.description || 'No description'}</p>
         </div>
       </div>
 
       {/* Stats */}
       <div className="flex items-center gap-4 text-sm">
-        <div className="flex items-center gap-1 text-[var(--text-muted)]">
+        <div className="flex items-center gap-1 text-ink-muted">
           <Users className="w-4 h-4" />
           <span>{team.members?.length || 0}/{team.maxMembers}</span>
         </div>
-        <div className="px-2 py-1 bg-[var(--card-bg)] rounded text-xs text-cyan-400 capitalize">
+        <div className="px-2 py-1 bg-[var(--card-bg)] rounded text-xs text-ink capitalize">
           {team.category}
         </div>
       </div>
@@ -1037,7 +1037,7 @@ const TeamCard = ({ team, user, onJoin, onLeave, onOpenChat, onOpenSettings, onO
           {team.events.map((eventId) => (
             <span
               key={eventId}
-              className="px-2 py-1 bg-[var(--card-bg)] rounded text-xs text-[var(--text-secondary)]"
+              className="px-2 py-1 bg-[var(--card-bg)] rounded text-xs text-ink-muted"
             >
               {eventId}
             </span>
@@ -1046,11 +1046,11 @@ const TeamCard = ({ team, user, onJoin, onLeave, onOpenChat, onOpenSettings, onO
       )}
 
       {/* Actions */}
-      <div className="pt-3 border-t border-[var(--border)] space-y-2">
+      <div className="pt-3 border-t border-hairline space-y-2">
         {isMember ? (
           <>
             <div className="flex items-center justify-between">
-              <span className="text-sm text-green-400 flex items-center gap-2">
+              <span className="text-sm text-ink flex items-center gap-2">
                 <Check className="w-4 h-4" />
                 Member
               </span>
@@ -1061,14 +1061,14 @@ const TeamCard = ({ team, user, onJoin, onLeave, onOpenChat, onOpenSettings, onO
                     className="p-1.5 rounded-lg hover:bg-[var(--card-bg)] transition-colors"
                     title="Join Requests"
                   >
-                    <Bell className="w-4 h-4 text-cyan-400" />
+                    <Bell className="w-4 h-4 text-ink" />
                   </button>
                   <button
                     onClick={() => onOpenSettings(team)}
                     className="p-1.5 rounded-lg hover:bg-[var(--card-bg)] transition-colors"
                     title="Team Settings"
                   >
-                    <Settings className="w-4 h-4 text-[var(--text-muted)]" />
+                    <Settings className="w-4 h-4 text-ink-muted" />
                   </button>
                 </div>
               )}
@@ -1076,7 +1076,7 @@ const TeamCard = ({ team, user, onJoin, onLeave, onOpenChat, onOpenSettings, onO
             <div className="flex gap-2">
               <button
                 onClick={() => onOpenChat(team)}
-                className="flex-1 py-2 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/20 transition-all flex items-center justify-center gap-2 text-sm font-medium"
+                className="flex-1 py-2 rounded-lg bg-surface-offset text-ink border border-hairline hover:bg-surface-offset transition-all flex items-center justify-center gap-2 text-sm font-medium"
               >
                 <MessageSquare className="w-4 h-4" />
                 Open Chat
@@ -1084,7 +1084,7 @@ const TeamCard = ({ team, user, onJoin, onLeave, onOpenChat, onOpenSettings, onO
               {!isOwner && (
                 <button
                   onClick={() => onLeave(team.id, team)}
-                  className="px-4 py-2 rounded-lg text-red-400 hover:bg-red-500/10 border border-red-500/30 transition-all text-sm font-medium"
+                  className="px-4 py-2 rounded-lg text-accent-crimson hover:bg-accent-crimson/10 border border-accent-crimson/30 transition-all text-sm font-medium"
                 >
                   Leave
                 </button>
@@ -1097,8 +1097,8 @@ const TeamCard = ({ team, user, onJoin, onLeave, onOpenChat, onOpenSettings, onO
             disabled={isFull}
             className={`w-full py-2 rounded-lg font-medium transition-all flex items-center justify-center gap-2 ${
               isFull
-                ? 'bg-[var(--card-bg)] text-[var(--text-muted)] cursor-not-allowed'
-                : 'bg-cyan-500 hover:bg-cyan-600 text-[var(--text-accent-crimson)]'
+                ? 'bg-[var(--card-bg)] text-ink-muted cursor-not-allowed'
+                : 'bg-surface-offset hover:bg-surface-offset text-accent-crimson'
             }`}
           >
             <UserPlus className="w-4 h-4" />

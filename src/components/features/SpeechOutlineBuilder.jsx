@@ -584,22 +584,22 @@ const EvidenceTag = ({ evidence, onChange, onDelete }) => {
 
   return (
     <div
-      className="bg-[var(--input-bg)]/50 border border-[var(--border)] rounded-lg p-3 space-y-2"
+      className="bg-surface-parchment/50 border border-hairline rounded-lg p-3 space-y-2"
     >
       <div className="flex items-start gap-2">
-        <Tag className="w-4 h-4 text-cyan-400 mt-1 flex-shrink-0" />
+        <Tag className="w-4 h-4 text-ink mt-1 flex-shrink-0" />
         <div className="flex-1 min-w-0">
           <input
             type="text"
             value={evidence.tag}
             onChange={(e) => onChange({ ...evidence, tag: e.target.value })}
             placeholder="Evidence tag..."
-            className="w-full bg-transparent text-[var(--text-accent-crimson)] text-sm font-medium focus:outline-none"
+            className="w-full bg-transparent text-accent-crimson text-sm font-medium focus:outline-none"
           />
         </div>
         <button
           onClick={onDelete}
-          className="p-1 text-[var(--text-muted)] hover:text-red-400 transition-colors"
+          className="p-1 text-ink-muted hover:text-accent-crimson transition-colors"
         >
           <Trash2 className="w-3 h-3" />
         </button>
@@ -610,7 +610,7 @@ const EvidenceTag = ({ evidence, onChange, onDelete }) => {
         value={evidence.source}
         onChange={(e) => onChange({ ...evidence, source: e.target.value })}
         placeholder="Source (Author, Year)..."
-        className="w-full bg-[var(--card-bg)]/50 text-[var(--text-secondary)] text-xs px-2 py-1 rounded focus:outline-none focus:ring-1 focus:ring-cyan-500/50"
+        className="w-full bg-[var(--card-bg)]/50 text-ink-muted text-xs px-2 py-1 rounded focus:outline-none focus:ring-1 focus:ring-hairline"
       />
       
       {isEditing ? (
@@ -619,13 +619,13 @@ const EvidenceTag = ({ evidence, onChange, onDelete }) => {
           onChange={(e) => onChange({ ...evidence, notes: e.target.value })}
           onBlur={() => setIsEditing(false)}
           placeholder="Notes about this evidence..."
-          className="w-full bg-[var(--card-bg)]/50 text-[var(--text-muted)] text-xs px-2 py-1 rounded focus:outline-none focus:ring-1 focus:ring-cyan-500/50 min-h-[60px]"
+          className="w-full bg-[var(--card-bg)]/50 text-ink-muted text-xs px-2 py-1 rounded focus:outline-none focus:ring-1 focus:ring-hairline min-h-[60px]"
           autoFocus
         />
       ) : (
         <div
           onClick={() => setIsEditing(true)}
-          className="text-xs text-[var(--text-muted)] cursor-pointer hover:text-[var(--text-muted)]"
+          className="text-xs text-ink-muted cursor-pointer hover:text-ink-muted"
         >
           {evidence.notes || '+ Add notes...'}
         </div>
@@ -667,18 +667,18 @@ const SubPoint = ({ subPoint, onChange, onDelete, index }) => {
 
   return (
     <div
-      className="ml-6 border-l-2 border-[var(--border)] pl-4"
+      className="ml-6 border-l-2 border-hairline pl-4"
     >
       <div className="bg-[var(--card-bg)]/30 rounded-lg p-3 space-y-3">
         <div className="flex items-center gap-2">
-          <GripVertical className="w-4 h-4 text-[var(--text-muted)] cursor-grab" />
+          <GripVertical className="w-4 h-4 text-ink-muted cursor-grab" />
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="p-1 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
+            className="p-1 text-ink-muted hover:text-accent-crimson transition-colors"
           >
             {isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
           </button>
-          <span className="text-cyan-400 text-sm font-medium">
+          <span className="text-ink text-sm font-medium">
             {String.fromCharCode(65 + index)}.
           </span>
           <input
@@ -686,21 +686,21 @@ const SubPoint = ({ subPoint, onChange, onDelete, index }) => {
             value={subPoint.title}
             onChange={(e) => onChange({ ...subPoint, title: e.target.value })}
             placeholder="Sub-point title..."
-            className="flex-1 bg-transparent text-[var(--text-accent-crimson)] font-medium focus:outline-none"
+            className="flex-1 bg-transparent text-accent-crimson font-medium focus:outline-none"
           />
-          <div className="flex items-center gap-1 text-xs text-[var(--text-muted)]">
+          <div className="flex items-center gap-1 text-xs text-ink-muted">
             <Clock className="w-3 h-3" />
             <input
               type="number"
               value={subPoint.timeAllocation}
               onChange={(e) => onChange({ ...subPoint, timeAllocation: parseInt(e.target.value) || 0 })}
-              className="w-12 bg-[var(--input-bg)]/50 text-center rounded px-1 py-0.5 focus:outline-none focus:ring-1 focus:ring-cyan-500/50"
+              className="w-12 bg-surface-parchment/50 text-center rounded px-1 py-0.5 focus:outline-none focus:ring-1 focus:ring-hairline"
             />
             <span>sec</span>
           </div>
           <button
             onClick={onDelete}
-            className="p-1 text-[var(--text-muted)] hover:text-red-400 transition-colors"
+            className="p-1 text-ink-muted hover:text-accent-crimson transition-colors"
           >
             <Trash2 className="w-4 h-4" />
           </button>
@@ -716,16 +716,16 @@ const SubPoint = ({ subPoint, onChange, onDelete, index }) => {
                 value={subPoint.notes}
                 onChange={(e) => onChange({ ...subPoint, notes: e.target.value })}
                 placeholder="Notes for this sub-point..."
-                className="w-full bg-[var(--input-bg)]/30 text-[var(--text-secondary)] text-sm px-3 py-2 rounded-lg focus:outline-none focus:ring-1 focus:ring-cyan-500/50 min-h-[60px]"
+                className="w-full bg-surface-parchment/30 text-ink-muted text-sm px-3 py-2 rounded-lg focus:outline-none focus:ring-1 focus:ring-hairline min-h-[60px]"
               />
 
               {/* Evidence Tags */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-[var(--text-muted)] uppercase tracking-wide">Evidence</span>
+                  <span className="text-xs text-ink-muted uppercase tracking-wide">Evidence</span>
                   <button
                     onClick={addEvidence}
-                    className="flex items-center gap-1 text-xs text-cyan-400 hover:text-cyan-300 transition-colors"
+                    className="flex items-center gap-1 text-xs text-ink hover:text-ink transition-colors"
                   >
                     <Plus className="w-3 h-3" />
                     Add Evidence
@@ -796,19 +796,19 @@ const Contention = ({ contention, onChange, onDelete, index }) => {
 
   return (
     <div
-      className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl overflow-hidden"
+      className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl overflow-hidden"
     >
       {/* Contention Header */}
       <div className="p-4 bg-[var(--card-bg)]/80">
         <div className="flex items-center gap-3">
-          <GripVertical className="w-5 h-5 text-[var(--text-muted)] cursor-grab" />
+          <GripVertical className="w-5 h-5 text-ink-muted cursor-grab" />
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="p-1 text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] transition-colors"
+            className="p-1 text-ink-muted hover:text-accent-crimson transition-colors"
           >
             {isCollapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
           </button>
-          <span className="text-purple-400 font-bold text-lg">
+          <span className="text-ink font-bold text-lg">
             {index + 1}.
           </span>
           <input
@@ -816,14 +816,14 @@ const Contention = ({ contention, onChange, onDelete, index }) => {
             value={contention.title}
             onChange={(e) => onChange({ ...contention, title: e.target.value })}
             placeholder="Contention title..."
-            className="flex-1 bg-transparent text-[var(--text-accent-crimson)] text-lg font-semibold focus:outline-none"
+            className="flex-1 bg-transparent text-accent-crimson text-lg font-semibold focus:outline-none"
           />
           
           {/* Time Allocation */}
           <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg ${
-            timeStatus === 'over' ? 'bg-red-500/20 text-red-400' :
-            timeStatus === 'under' ? 'bg-yellow-500/20 text-yellow-400' :
-            'bg-green-500/20 text-green-400'
+            timeStatus === 'over' ? 'bg-accent-crimson/20 text-accent-crimson' :
+            timeStatus === 'under' ? 'bg-surface-offset text-ink' :
+            'bg-surface-offset text-ink'
           }`}>
             <Clock className="w-4 h-4" />
             <input
@@ -839,7 +839,7 @@ const Contention = ({ contention, onChange, onDelete, index }) => {
           
           <button
             onClick={onDelete}
-            className="p-2 text-[var(--text-muted)] hover:text-red-400 transition-colors"
+            className="p-2 text-ink-muted hover:text-accent-crimson transition-colors"
           >
             <Trash2 className="w-5 h-5" />
           </button>
@@ -847,7 +847,7 @@ const Contention = ({ contention, onChange, onDelete, index }) => {
 
         {/* Time breakdown */}
         {contention.subPoints.length > 0 && (
-          <div className="mt-2 ml-12 text-xs text-[var(--text-muted)]">
+          <div className="mt-2 ml-12 text-xs text-ink-muted">
             Sub-points total: {formatTime(totalSubPointTime)} / {formatTime(contention.timeAllocation)} allocated
           </div>
         )}
@@ -861,12 +861,12 @@ const Contention = ({ contention, onChange, onDelete, index }) => {
           >
             {/* Notes */}
             <div className="flex items-start gap-2">
-              <StickyNote className="w-4 h-4 text-[var(--text-muted)] mt-2" />
+              <StickyNote className="w-4 h-4 text-ink-muted mt-2" />
               <textarea
                 value={contention.notes}
                 onChange={(e) => onChange({ ...contention, notes: e.target.value })}
                 placeholder="Notes for this contention..."
-                className="flex-1 bg-[var(--input-bg)]/30 text-[var(--text-secondary)] px-3 py-2 rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500/50 min-h-[60px]"
+                className="flex-1 bg-surface-parchment/30 text-ink-muted px-3 py-2 rounded-lg focus:outline-none focus:ring-1 focus:ring-hairline min-h-[60px]"
               />
             </div>
 
@@ -892,7 +892,7 @@ const Contention = ({ contention, onChange, onDelete, index }) => {
 
               <button
                 onClick={addSubPoint}
-                className="ml-6 flex items-center gap-2 text-sm text-[var(--text-muted)] hover:text-cyan-400 transition-colors"
+                className="ml-6 flex items-center gap-2 text-sm text-ink-muted hover:text-ink transition-colors"
               >
                 <Plus className="w-4 h-4" />
                 Add Sub-Point
@@ -1184,13 +1184,13 @@ const SpeechOutlineBuilder = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
+          <h1 className="text-2xl font-bold text-accent-crimson flex items-center gap-3">
             <div className="p-2  rounded-xl">
-              <FileText className="w-6 h-6 text-[var(--text-accent-crimson)]" />
+              <FileText className="w-6 h-6 text-accent-crimson" />
             </div>
             Speech Outline Builder
           </h1>
-          <p className="text-[var(--text-muted)] mt-1">
+          <p className="text-ink-muted mt-1">
             Create structured speech outlines with drag-and-drop organization
           </p>
         </div>
@@ -1198,14 +1198,14 @@ const SpeechOutlineBuilder = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setShowTemplates(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-surface-parchment hover:bg-surface-offset text-accent-crimson rounded-lg transition-colors"
           >
             <Layout className="w-4 h-4" />
             Templates
           </button>
           <button
             onClick={() => setShowSavedOutlines(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-surface-parchment hover:bg-surface-offset text-accent-crimson rounded-lg transition-colors"
           >
             <FolderOpen className="w-4 h-4" />
             Saved
@@ -1222,19 +1222,19 @@ const SpeechOutlineBuilder = () => {
           >
             <div
               onClick={(e) => e.stopPropagation()}
-              className="bg-[var(--card-bg)] border border-[var(--border)] rounded-2xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+              className="bg-[var(--card-bg)] border border-hairline rounded-2xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
             >
-              <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] mb-4">Choose a Template</h2>
+              <h2 className="text-xl font-bold text-accent-crimson mb-4">Choose a Template</h2>
               <div className="grid grid-cols-2 gap-4">
                 {Object.entries(OUTLINE_TEMPLATES).map(([key, template]) => (
                   <button
                     key={key}
                     onClick={() => loadTemplate(key)}
-                    className="p-4 bg-[var(--input-bg)]/50 hover:bg-[var(--input-bg)] border border-[var(--border)] hover:border-purple-500 rounded-xl text-left transition-all"
+                    className="p-4 bg-surface-parchment/50 hover:bg-surface-parchment border border-hairline hover:border-hairline rounded-xl text-left transition-all"
                   >
-                    <div className="font-semibold text-[var(--text-accent-crimson)]">{template.name}</div>
-                    <div className="text-sm text-[var(--text-muted)] mt-1">{template.format}</div>
-                    <div className="text-xs text-[var(--text-muted)] mt-2">
+                    <div className="font-semibold text-accent-crimson">{template.name}</div>
+                    <div className="text-sm text-ink-muted mt-1">{template.format}</div>
+                    <div className="text-xs text-ink-muted mt-2">
                       {formatTime(template.totalTime)} • {template.sections.length} sections
                     </div>
                   </button>
@@ -1254,21 +1254,21 @@ const SpeechOutlineBuilder = () => {
           >
             <div
               onClick={(e) => e.stopPropagation()}
-              className="bg-[var(--card-bg)] border border-[var(--border)] rounded-2xl p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto"
+              className="bg-[var(--card-bg)] border border-hairline rounded-2xl p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto"
             >
-              <h2 className="text-xl font-bold text-[var(--text-accent-crimson)] mb-4">Saved Outlines</h2>
+              <h2 className="text-xl font-bold text-accent-crimson mb-4">Saved Outlines</h2>
               {savedOutlines.length === 0 ? (
-                <p className="text-[var(--text-muted)] text-center py-8">No saved outlines yet</p>
+                <p className="text-ink-muted text-center py-8">No saved outlines yet</p>
               ) : (
                 <div className="space-y-2">
                   {savedOutlines.map((saved) => (
                     <button
                       key={saved.id}
                       onClick={() => loadSavedOutline(saved)}
-                      className="w-full p-3 bg-[var(--input-bg)]/50 hover:bg-[var(--input-bg)] border border-[var(--border)] rounded-lg text-left transition-colors"
+                      className="w-full p-3 bg-surface-parchment/50 hover:bg-surface-parchment border border-hairline rounded-lg text-left transition-colors"
                     >
-                      <div className="font-medium text-[var(--text-accent-crimson)]">{saved.name}</div>
-                      <div className="text-xs text-[var(--text-muted)] mt-1">
+                      <div className="font-medium text-accent-crimson">{saved.name}</div>
+                      <div className="text-xs text-ink-muted mt-1">
                         {saved.format} • Updated {new Date(saved.updatedAt).toLocaleDateString()}
                       </div>
                     </button>
@@ -1281,23 +1281,23 @@ const SpeechOutlineBuilder = () => {
       </AnimatePresence>
 
       {/* Outline Metadata */}
-      <div className="bg-[var(--card-bg)]/50 border border-[var(--border)] rounded-xl p-6">
+      <div className="bg-[var(--card-bg)]/50 border border-hairline rounded-xl p-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="md:col-span-2">
-            <label className="block text-sm text-[var(--text-muted)] mb-1">Outline Name</label>
+            <label className="block text-sm text-ink-muted mb-1">Outline Name</label>
             <input
               type="text"
               value={outline.name}
               onChange={(e) => setOutline(prev => ({ ...prev, name: e.target.value }))}
-              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+              className="w-full bg-surface-parchment/50 border border-hairline text-accent-crimson px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-hairline"
             />
           </div>
           <div>
-            <label className="block text-sm text-[var(--text-muted)] mb-1">Format</label>
+            <label className="block text-sm text-ink-muted mb-1">Format</label>
             <select
               value={outline.format}
               onChange={(e) => setOutline(prev => ({ ...prev, format: e.target.value }))}
-              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+              className="w-full bg-surface-parchment/50 border border-hairline text-accent-crimson px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-hairline"
             >
               <option value="Custom">Custom</option>
               <option value="Policy">Policy</option>
@@ -1307,38 +1307,38 @@ const SpeechOutlineBuilder = () => {
             </select>
           </div>
           <div>
-            <label className="block text-sm text-[var(--text-muted)] mb-1">Total Time (seconds)</label>
+            <label className="block text-sm text-ink-muted mb-1">Total Time (seconds)</label>
             <input
               type="number"
               value={outline.totalTime}
               onChange={(e) => setOutline(prev => ({ ...prev, totalTime: parseInt(e.target.value) || 0 }))}
-              className="w-full bg-[var(--input-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+              className="w-full bg-surface-parchment/50 border border-hairline text-accent-crimson px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-hairline"
             />
           </div>
         </div>
 
         {/* Stats */}
-        <div className="flex items-center gap-6 mt-4 pt-4 border-t border-[var(--border)]">
+        <div className="flex items-center gap-6 mt-4 pt-4 border-t border-hairline">
           <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg ${
-            timeStatus === 'over' ? 'bg-red-500/20 text-red-400' :
-            timeStatus === 'under' ? 'bg-yellow-500/20 text-yellow-400' :
-            'bg-green-500/20 text-green-400'
+            timeStatus === 'over' ? 'bg-accent-crimson/20 text-accent-crimson' :
+            timeStatus === 'under' ? 'bg-surface-offset text-ink' :
+            'bg-surface-offset text-ink'
           }`}>
             <Clock className="w-4 h-4" />
             <span className="font-medium">{formatTime(totalAllocatedTime)}</span>
             <span className="text-sm opacity-75">/ {formatTime(outline.totalTime)}</span>
           </div>
-          <div className="flex items-center gap-2 text-[var(--text-muted)]">
+          <div className="flex items-center gap-2 text-ink-muted">
             <Layers className="w-4 h-4" />
             <span>{outline.sections.length} contentions</span>
           </div>
-          <div className="flex items-center gap-2 text-[var(--text-muted)]">
+          <div className="flex items-center gap-2 text-ink-muted">
             <BookOpen className="w-4 h-4" />
             <span>{totalEvidenceCount} evidence cards</span>
           </div>
           <button
             onClick={suggestTimeAllocation}
-            className="flex items-center gap-2 text-sm text-purple-400 hover:text-purple-300 transition-colors ml-auto"
+            className="flex items-center gap-2 text-sm text-ink hover:text-ink transition-colors ml-auto"
           >
             <Wand2 className="w-4 h-4" />
             Auto-allocate time
@@ -1350,41 +1350,41 @@ const SpeechOutlineBuilder = () => {
       <div className="flex items-center gap-2 flex-wrap">
         <button
           onClick={addContention}
-          className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-500 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-surface-offset hover:bg-surface-offset text-accent-crimson rounded-lg transition-colors"
         >
           <Plus className="w-4 h-4" />
           Add Contention
         </button>
         <button
           onClick={saveOutline}
-          className="flex items-center gap-2 px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-surface-parchment hover:bg-surface-offset text-accent-crimson rounded-lg transition-colors"
         >
           <Save className="w-4 h-4" />
           Save
         </button>
-        <div className="h-6 w-px bg-[var(--input-bg)]" />
+        <div className="h-6 w-px bg-surface-parchment" />
         <button
           onClick={exportToMarkdown}
-          className="flex items-center gap-2 px-3 py-2 bg-[var(--input-bg)]/50 hover:bg-[var(--input-bg)] text-[var(--text-secondary)] rounded-lg transition-colors text-sm"
+          className="flex items-center gap-2 px-3 py-2 bg-surface-parchment/50 hover:bg-surface-parchment text-ink-muted rounded-lg transition-colors text-sm"
         >
           <FileDown className="w-4 h-4" />
           Markdown
         </button>
         <button
           onClick={exportToHTML}
-          className="flex items-center gap-2 px-3 py-2 bg-[var(--input-bg)]/50 hover:bg-[var(--input-bg)] text-[var(--text-secondary)] rounded-lg transition-colors text-sm"
+          className="flex items-center gap-2 px-3 py-2 bg-surface-parchment/50 hover:bg-surface-parchment text-ink-muted rounded-lg transition-colors text-sm"
         >
           <Printer className="w-4 h-4" />
           HTML
         </button>
         <button
           onClick={exportToJSON}
-          className="flex items-center gap-2 px-3 py-2 bg-[var(--input-bg)]/50 hover:bg-[var(--input-bg)] text-[var(--text-secondary)] rounded-lg transition-colors text-sm"
+          className="flex items-center gap-2 px-3 py-2 bg-surface-parchment/50 hover:bg-surface-parchment text-ink-muted rounded-lg transition-colors text-sm"
         >
           <Download className="w-4 h-4" />
           JSON
         </button>
-        <label className="flex items-center gap-2 px-3 py-2 bg-[var(--input-bg)]/50 hover:bg-[var(--input-bg)] text-[var(--text-secondary)] rounded-lg transition-colors text-sm cursor-pointer">
+        <label className="flex items-center gap-2 px-3 py-2 bg-surface-parchment/50 hover:bg-surface-parchment text-ink-muted rounded-lg transition-colors text-sm cursor-pointer">
           <Upload className="w-4 h-4" />
           Import
           <input
@@ -1396,7 +1396,7 @@ const SpeechOutlineBuilder = () => {
         </label>
         <button
           onClick={() => loadTemplate('blank')}
-          className="flex items-center gap-2 px-3 py-2 bg-[var(--input-bg)]/50 hover:bg-[var(--input-bg)] text-[var(--text-secondary)] rounded-lg transition-colors text-sm ml-auto"
+          className="flex items-center gap-2 px-3 py-2 bg-surface-parchment/50 hover:bg-surface-parchment text-ink-muted rounded-lg transition-colors text-sm ml-auto"
         >
           <RotateCcw className="w-4 h-4" />
           Reset
@@ -1408,18 +1408,18 @@ const SpeechOutlineBuilder = () => {
         {outline.sections.length === 0 ? (
           <div className="text-center py-16">
             <FileText className="w-16 h-16 text-ink-muted mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-[var(--text-muted)]">No contentions yet</h3>
-            <p className="text-[var(--text-muted)] mt-1">Start by choosing a template or adding your first contention</p>
+            <h3 className="text-lg font-medium text-ink-muted">No contentions yet</h3>
+            <p className="text-ink-muted mt-1">Start by choosing a template or adding your first contention</p>
             <div className="flex items-center justify-center gap-3 mt-4">
               <button
                 onClick={() => setShowTemplates(true)}
-                className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+                className="px-4 py-2 bg-surface-offset hover:bg-surface-offset text-accent-crimson rounded-lg transition-colors"
               >
                 Choose Template
               </button>
               <button
                 onClick={addContention}
-                className="px-4 py-2 bg-[var(--input-bg)] hover:bg-slate-600 text-[var(--text-accent-crimson)] rounded-lg transition-colors"
+                className="px-4 py-2 bg-surface-parchment hover:bg-surface-offset text-accent-crimson rounded-lg transition-colors"
               >
                 Start from Scratch
               </button>

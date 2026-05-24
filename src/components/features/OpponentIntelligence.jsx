@@ -60,24 +60,24 @@ const THREAT_LEVELS = {
   high: {
     label: 'High Threat',
     color: 'red',
-    bgClass: 'bg-red-500/10 border-red-500/30',
-    textClass: 'text-red-400',
+    bgClass: 'bg-accent-crimson/10 border-accent-crimson/30',
+    textClass: 'text-accent-crimson',
     icon: AlertTriangle,
     glow: 'shadow-red-500/20'
   },
   medium: {
     label: 'Medium Threat',
     color: 'amber',
-    bgClass: 'bg-amber-500/10 border-amber-500/30',
-    textClass: 'text-amber-400',
+    bgClass: 'bg-surface-offset border-hairline',
+    textClass: 'text-ink',
     icon: AlertCircle,
     glow: 'shadow-amber-500/20'
   },
   low: {
     label: 'Low Threat',
     color: 'emerald',
-    bgClass: 'bg-emerald-500/10 border-emerald-500/30',
-    textClass: 'text-emerald-400',
+    bgClass: 'bg-surface-offset border-hairline',
+    textClass: 'text-ink',
     icon: CheckCircle2,
     glow: 'shadow-emerald-500/20'
   }
@@ -94,32 +94,32 @@ const EmptyOpponents = ({ onAdd }) => (
       <motion.div
         animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.1, 0.3] }}
         transition={{ duration: 3, repeat: Infinity }}
-        className="absolute inset-0 w-32 h-32 rounded-full bg-red-500/20 blur-xl"
+        className="absolute inset-0 w-32 h-32 rounded-full bg-accent-crimson/20 blur-xl"
       />
       <motion.div
         animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.05, 0.2] }}
         transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
-        className="absolute inset-0 w-32 h-32 rounded-full bg-amber-500/20 blur-xl"
+        className="absolute inset-0 w-32 h-32 rounded-full bg-surface-offset blur-xl"
       />
       
       <motion.div
         animate={{ rotate: [0, 5, 0, -5, 0] }}
         transition={{ duration: 5, repeat: Infinity }}
-        className="relative p-6 rounded-3xl /80 to-slate-900/80 border border-[var(--border)]/50  shadow-2xl"
+        className="relative p-6 rounded-3xl /80 to-slate-900/80 border border-hairline/50  shadow-2xl"
       >
-        <Target className="w-16 h-16 text-red-400" />
+        <Target className="w-16 h-16 text-accent-crimson" />
         <motion.div
           animate={{ scale: [1, 1.2, 1] }}
           transition={{ duration: 2, repeat: Infinity }}
           className="absolute -top-2 -right-2"
         >
-          <Eye className="w-6 h-6 text-amber-400" />
+          <Eye className="w-6 h-6 text-ink" />
         </motion.div>
       </motion.div>
     </div>
     
-    <h3 className="text-2xl font-bold text-[var(--text-accent-crimson)] mb-3">Know Your Competition</h3>
-    <p className="text-[var(--text-muted)] max-w-md mx-auto mb-8 leading-relaxed">
+    <h3 className="text-2xl font-bold text-accent-crimson mb-3">Know Your Competition</h3>
+    <p className="text-ink-muted max-w-md mx-auto mb-8 leading-relaxed">
       Track opponents, analyze their strategies, and prepare winning counter-arguments. 
       Intelligence wins debates.
     </p>
@@ -128,7 +128,7 @@ const EmptyOpponents = ({ onAdd }) => (
       whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(239, 68, 68, 0.3)' }}
       whileTap={{ scale: 0.98 }}
       onClick={onAdd}
-      className="px-8 py-4 rounded-2xl  text-[var(--text-accent-crimson)] font-semibold text-lg shadow-lg shadow-red-500/25 inline-flex items-center gap-3"
+      className="px-8 py-4 rounded-2xl  text-accent-crimson font-semibold text-lg shadow-lg shadow-red-500/25 inline-flex items-center gap-3"
     >
       <Plus className="w-5 h-5" />
       Add First Opponent
@@ -194,7 +194,7 @@ const WinRateRing = ({ winRate, size = 60 }) => {
         />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className={`text-sm font-bold ${winRate >= 50 ? 'text-red-400' : 'text-emerald-400'}`}>
+        <span className={`text-sm font-bold ${winRate >= 50 ? 'text-accent-crimson' : 'text-ink'}`}>
           {winRate}%
         </span>
       </div>
@@ -215,7 +215,7 @@ const OpponentCard = ({ opponent, onClick, isSelected }) => {
       whileHover={{ scale: 1.02, y: -4 }}
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
-      className={`relative group cursor-pointer ${isSelected ? 'ring-2 ring-cyan-500' : ''}`}
+      className={`relative group cursor-pointer ${isSelected ? 'ring-2 ring-hairline' : ''}`}
     >
       {/* Glow effect */}
       <div className={`absolute -inset-1  ${
@@ -224,7 +224,7 @@ const OpponentCard = ({ opponent, onClick, isSelected }) => {
         'from-emerald-500/20 to-teal-500/20'
       } rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500`} />
       
-      <div className="relative p-5 rounded-2xl border border-[var(--border)]/60 /80 to-slate-950/80  hover:border-[var(--border)]/60 transition-all overflow-hidden">
+      <div className="relative p-5 rounded-2xl border border-hairline/60 /80 to-slate-950/80  hover:border-hairline/60 transition-all overflow-hidden">
         {/* Background decoration */}
         <div className="absolute top-0 right-0 w-24 h-24  from-white/5 to-transparent rounded-full -translate-y-1/2 translate-x-1/2" />
         
@@ -235,40 +235,40 @@ const OpponentCard = ({ opponent, onClick, isSelected }) => {
               opponent.threatLevel === 'high' ? 'from-red-500/30 to-orange-600/30' :
               opponent.threatLevel === 'medium' ? 'from-amber-500/30 to-yellow-600/30' :
               'from-emerald-500/30 to-teal-600/30'
-            } flex items-center justify-center text-2xl font-bold text-[var(--text-accent-crimson)] border ${threatConfig.bgClass}`}>
+            } flex items-center justify-center text-2xl font-bold text-accent-crimson border ${threatConfig.bgClass}`}>
               {opponent.name?.[0]?.toUpperCase() || '?'}
             </div>
             <motion.div
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
               className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full ${
-                opponent.threatLevel === 'high' ? 'bg-red-500' :
-                opponent.threatLevel === 'medium' ? 'bg-amber-500' :
-                'bg-emerald-500'
-              } border-2 border-slate-900`}
+                opponent.threatLevel === 'high' ? 'bg-accent-crimson' :
+                opponent.threatLevel === 'medium' ? 'bg-surface-offset' :
+                'bg-surface-offset'
+              } border-2 border-hairline`}
             />
           </div>
 
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
               <div>
-                <h3 className="text-[var(--text-accent-crimson)] font-semibold text-lg truncate group-hover:text-cyan-400 transition-colors">
+                <h3 className="text-accent-crimson font-semibold text-lg truncate group-hover:text-ink transition-colors">
                   {opponent.name}
                 </h3>
-                <p className="text-[var(--text-muted)] text-sm">{opponent.school || 'Unknown School'}</p>
+                <p className="text-ink-muted text-sm">{opponent.school || 'Unknown School'}</p>
               </div>
               <ThreatBadge level={opponent.threatLevel} size="sm" />
             </div>
 
             {/* Stats Row */}
             <div className="flex items-center gap-4 mt-3">
-              <div className="flex items-center gap-1.5 text-[var(--text-muted)] text-sm">
+              <div className="flex items-center gap-1.5 text-ink-muted text-sm">
                 <Sword className="w-4 h-4" />
                 <span>{opponent.debates?.total || 0} debates</span>
               </div>
               <div className="flex items-center gap-1.5 text-sm">
-                <Trophy className={winRate >= 50 ? 'w-4 h-4 text-red-400' : 'w-4 h-4 text-emerald-400'} />
-                <span className={winRate >= 50 ? 'text-red-400' : 'text-emerald-400'}>
+                <Trophy className={winRate >= 50 ? 'w-4 h-4 text-accent-crimson' : 'w-4 h-4 text-ink'} />
+                <span className={winRate >= 50 ? 'text-accent-crimson' : 'text-ink'}>
                   {opponent.debates?.wins || 0}W - {opponent.debates?.losses || 0}L
                 </span>
               </div>
@@ -278,12 +278,12 @@ const OpponentCard = ({ opponent, onClick, isSelected }) => {
             {(opponent.strengths?.length > 0 || opponent.weaknesses?.length > 0) && (
               <div className="flex flex-wrap gap-2 mt-3">
                 {opponent.strengths?.slice(0, 2).map((s, i) => (
-                  <span key={i} className="px-2 py-0.5 rounded-full text-xs bg-red-500/10 text-red-400 border border-red-500/20">
+                  <span key={i} className="px-2 py-0.5 rounded-full text-xs bg-accent-crimson/10 text-accent-crimson border border-accent-crimson/20">
                     💪 {s}
                   </span>
                 ))}
                 {opponent.weaknesses?.slice(0, 2).map((w, i) => (
-                  <span key={i} className="px-2 py-0.5 rounded-full text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  <span key={i} className="px-2 py-0.5 rounded-full text-xs bg-surface-offset text-ink border border-hairline">
                     🎯 {w}
                   </span>
                 ))}
@@ -297,7 +297,7 @@ const OpponentCard = ({ opponent, onClick, isSelected }) => {
           </div>
         </div>
 
-        <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-muted group-hover:text-[var(--text-muted)] group-hover:translate-x-1 transition-all" />
+        <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-muted group-hover:text-ink-muted group-hover:translate-x-1 transition-all" />
       </div>
     </motion.div>
   );
@@ -326,10 +326,10 @@ const OpponentDetailPanel = ({ opponent, onClose, onGenerateStrategy }) => {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 20 }}
-      className="h-full overflow-hidden rounded-2xl border border-[var(--border)]/60 /95 to-slate-950/95 "
+      className="h-full overflow-hidden rounded-2xl border border-hairline/60 /95 to-slate-950/95 "
     >
       {/* Header */}
-      <div className="relative p-6 border-b border-[var(--border)] overflow-hidden">
+      <div className="relative p-6 border-b border-hairline overflow-hidden">
         <div className={`absolute inset-0  ${
           opponent.threatLevel === 'high' ? 'from-red-500/10 via-transparent to-orange-500/5' :
           opponent.threatLevel === 'medium' ? 'from-amber-500/10 via-transparent to-yellow-500/5' :
@@ -342,12 +342,12 @@ const OpponentDetailPanel = ({ opponent, onClose, onGenerateStrategy }) => {
               opponent.threatLevel === 'high' ? 'from-red-500/30 to-orange-600/30' :
               opponent.threatLevel === 'medium' ? 'from-amber-500/30 to-yellow-600/30' :
               'from-emerald-500/30 to-teal-600/30'
-            } flex items-center justify-center text-3xl font-bold text-[var(--text-accent-crimson)] border ${threatConfig.bgClass}`}>
+            } flex items-center justify-center text-3xl font-bold text-accent-crimson border ${threatConfig.bgClass}`}>
               {opponent.name?.[0]?.toUpperCase() || '?'}
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-[var(--text-accent-crimson)]">{opponent.name}</h2>
-              <p className="text-[var(--text-muted)]">{opponent.school || 'Unknown School'}</p>
+              <h2 className="text-2xl font-bold text-accent-crimson">{opponent.name}</h2>
+              <p className="text-ink-muted">{opponent.school || 'Unknown School'}</p>
               <ThreatBadge level={opponent.threatLevel} size="md" />
             </div>
           </div>
@@ -356,7 +356,7 @@ const OpponentDetailPanel = ({ opponent, onClose, onGenerateStrategy }) => {
             whileHover={{ scale: 1.1, rotate: 90 }}
             whileTap={{ scale: 0.9 }}
             onClick={onClose}
-            className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+            className="p-2 rounded-xl text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
           >
             <X className="w-5 h-5" />
           </motion.button>
@@ -364,7 +364,7 @@ const OpponentDetailPanel = ({ opponent, onClose, onGenerateStrategy }) => {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 p-4 border-b border-[var(--border)]/50">
+      <div className="flex items-center gap-2 p-4 border-b border-hairline/50">
         {[
           { id: 'overview', label: 'Overview', icon: BarChart3 },
           { id: 'history', label: 'History', icon: Clock },
@@ -377,8 +377,8 @@ const OpponentDetailPanel = ({ opponent, onClose, onGenerateStrategy }) => {
             onClick={() => setActiveTab(tab.id)}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
               activeTab === tab.id
-                ? 'bg-[var(--card-bg)] text-[var(--text-accent-crimson)]'
-                : 'text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)]/50'
+                ? 'bg-[var(--card-bg)] text-accent-crimson'
+                : 'text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)]/50'
             }`}
           >
             <tab.icon className="w-4 h-4" />
@@ -393,24 +393,24 @@ const OpponentDetailPanel = ({ opponent, onClose, onGenerateStrategy }) => {
           <>
             {/* Stats Grid */}
             <div className="grid grid-cols-3 gap-4">
-              <div className="p-4 rounded-xl bg-[var(--card-bg)]/30 border border-[var(--border)]/50 text-center">
-                <p className="text-3xl font-bold text-[var(--text-accent-crimson)]">{opponent.debates?.total || 0}</p>
-                <p className="text-[var(--text-muted)] text-sm">Total Debates</p>
+              <div className="p-4 rounded-xl bg-[var(--card-bg)]/30 border border-hairline/50 text-center">
+                <p className="text-3xl font-bold text-accent-crimson">{opponent.debates?.total || 0}</p>
+                <p className="text-ink-muted text-sm">Total Debates</p>
               </div>
-              <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-center">
-                <p className="text-3xl font-bold text-red-400">{opponent.debates?.wins || 0}</p>
-                <p className="text-[var(--text-muted)] text-sm">Your Losses</p>
+              <div className="p-4 rounded-xl bg-accent-crimson/10 border border-accent-crimson/20 text-center">
+                <p className="text-3xl font-bold text-accent-crimson">{opponent.debates?.wins || 0}</p>
+                <p className="text-ink-muted text-sm">Your Losses</p>
               </div>
-              <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center">
-                <p className="text-3xl font-bold text-emerald-400">{opponent.debates?.losses || 0}</p>
-                <p className="text-[var(--text-muted)] text-sm">Your Wins</p>
+              <div className="p-4 rounded-xl bg-surface-offset border border-hairline text-center">
+                <p className="text-3xl font-bold text-ink">{opponent.debates?.losses || 0}</p>
+                <p className="text-ink-muted text-sm">Your Wins</p>
               </div>
             </div>
 
             {/* Strengths */}
             <div>
-              <h3 className="text-[var(--text-accent-crimson)] font-semibold mb-3 flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-red-400" />
+              <h3 className="text-accent-crimson font-semibold mb-3 flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-accent-crimson" />
                 Opponent Strengths
               </h3>
               <div className="space-y-2">
@@ -421,22 +421,22 @@ const OpponentDetailPanel = ({ opponent, onClose, onGenerateStrategy }) => {
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.1 }}
-                      className="flex items-center gap-3 p-3 rounded-xl bg-red-500/5 border border-red-500/20"
+                      className="flex items-center gap-3 p-3 rounded-xl bg-accent-crimson/5 border border-accent-crimson/20"
                     >
-                      <div className="w-2 h-2 rounded-full bg-red-500" />
-                      <span className="text-[var(--text-secondary)]">{strength}</span>
+                      <div className="w-2 h-2 rounded-full bg-accent-crimson" />
+                      <span className="text-ink-muted">{strength}</span>
                     </motion.div>
                   ))
                 ) : (
-                  <p className="text-[var(--text-muted)] italic">No strengths recorded yet</p>
+                  <p className="text-ink-muted italic">No strengths recorded yet</p>
                 )}
               </div>
             </div>
 
             {/* Weaknesses */}
             <div>
-              <h3 className="text-[var(--text-accent-crimson)] font-semibold mb-3 flex items-center gap-2">
-                <Target className="w-5 h-5 text-emerald-400" />
+              <h3 className="text-accent-crimson font-semibold mb-3 flex items-center gap-2">
+                <Target className="w-5 h-5 text-ink" />
                 Opponent Weaknesses
               </h3>
               <div className="space-y-2">
@@ -447,14 +447,14 @@ const OpponentDetailPanel = ({ opponent, onClose, onGenerateStrategy }) => {
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.1 }}
-                      className="flex items-center gap-3 p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/20"
+                      className="flex items-center gap-3 p-3 rounded-xl bg-surface-offset border border-hairline"
                     >
-                      <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                      <span className="text-[var(--text-secondary)]">{weakness}</span>
+                      <div className="w-2 h-2 rounded-full bg-surface-offset" />
+                      <span className="text-ink-muted">{weakness}</span>
                     </motion.div>
                   ))
                 ) : (
-                  <p className="text-[var(--text-muted)] italic">No weaknesses recorded yet</p>
+                  <p className="text-ink-muted italic">No weaknesses recorded yet</p>
                 )}
               </div>
             </div>
@@ -462,13 +462,13 @@ const OpponentDetailPanel = ({ opponent, onClose, onGenerateStrategy }) => {
             {/* Common Arguments */}
             {opponent.commonArguments?.length > 0 && (
               <div>
-                <h3 className="text-[var(--text-accent-crimson)] font-semibold mb-3 flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-cyan-400" />
+                <h3 className="text-accent-crimson font-semibold mb-3 flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-ink" />
                   Common Arguments
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {opponent.commonArguments.map((arg, i) => (
-                    <span key={i} className="px-3 py-1.5 rounded-full text-sm bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                    <span key={i} className="px-3 py-1.5 rounded-full text-sm bg-surface-offset text-ink border border-hairline">
                       {arg}
                     </span>
                   ))}
@@ -487,26 +487,26 @@ const OpponentDetailPanel = ({ opponent, onClose, onGenerateStrategy }) => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  className="flex items-center gap-4 p-4 rounded-xl bg-[var(--card-bg)]/30 border border-[var(--border)]/50"
+                  className="flex items-center gap-4 p-4 rounded-xl bg-[var(--card-bg)]/30 border border-hairline/50"
                 >
                   <div className={`w-2 h-12 rounded-full ${
-                    debate.result === 'win' ? 'bg-emerald-500' : 'bg-red-500'
+                    debate.result === 'win' ? 'bg-surface-offset' : 'bg-accent-crimson'
                   }`} />
                   <div className="flex-1">
-                    <p className="text-[var(--text-accent-crimson)] font-medium">{debate.tournament}</p>
-                    <p className="text-[var(--text-muted)] text-sm">{debate.round} • {debate.date}</p>
+                    <p className="text-accent-crimson font-medium">{debate.tournament}</p>
+                    <p className="text-ink-muted text-sm">{debate.round} • {debate.date}</p>
                   </div>
                   <span className={`px-3 py-1 rounded-lg text-sm font-medium ${
                     debate.result === 'win'
-                      ? 'bg-emerald-500/10 text-emerald-400'
-                      : 'bg-red-500/10 text-red-400'
+                      ? 'bg-surface-offset text-ink'
+                      : 'bg-accent-crimson/10 text-accent-crimson'
                   }`}>
                     {debate.result === 'win' ? 'Won' : 'Lost'}
                   </span>
                 </motion.div>
               ))
             ) : (
-              <p className="text-[var(--text-muted)] text-center py-8">No debate history recorded</p>
+              <p className="text-ink-muted text-center py-8">No debate history recorded</p>
             )}
           </div>
         )}
@@ -518,7 +518,7 @@ const OpponentDetailPanel = ({ opponent, onClose, onGenerateStrategy }) => {
               whileTap={{ scale: 0.98 }}
               onClick={handleGenerateStrategy}
               disabled={isGenerating}
-              className="w-full py-4 rounded-xl  text-[var(--text-accent-crimson)] font-semibold shadow-lg shadow-purple-500/25 flex items-center justify-center gap-3 disabled:opacity-50"
+              className="w-full py-4 rounded-xl  text-accent-crimson font-semibold shadow-lg shadow-purple-500/25 flex items-center justify-center gap-3 disabled:opacity-50"
             >
               {isGenerating ? (
                 <>
@@ -541,8 +541,8 @@ const OpponentDetailPanel = ({ opponent, onClose, onGenerateStrategy }) => {
 
             {opponent.counterStrategies?.length > 0 && (
               <div className="space-y-4">
-                <h3 className="text-[var(--text-accent-crimson)] font-semibold flex items-center gap-2">
-                  <Shield className="w-5 h-5 text-purple-400" />
+                <h3 className="text-accent-crimson font-semibold flex items-center gap-2">
+                  <Shield className="w-5 h-5 text-ink" />
                   Counter-Strategies
                 </h3>
                 {opponent.counterStrategies.map((strategy, i) => (
@@ -550,9 +550,9 @@ const OpponentDetailPanel = ({ opponent, onClose, onGenerateStrategy }) => {
                     key={i}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="p-4 rounded-xl bg-purple-500/5 border border-purple-500/20"
+                    className="p-4 rounded-xl bg-surface-offset border border-hairline"
                   >
-                    <p className="text-[var(--text-secondary)]">{strategy}</p>
+                    <p className="text-ink-muted">{strategy}</p>
                   </motion.div>
                 ))}
               </div>
@@ -601,15 +601,15 @@ const AddOpponentModal = ({ isOpen, onClose, onSave }) => {
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="w-full max-w-lg  border border-[var(--border)] rounded-3xl shadow-2xl max-h-[90vh] overflow-hidden"
+        className="w-full max-w-lg  border border-hairline rounded-3xl shadow-2xl max-h-[90vh] overflow-hidden"
       >
-        <div className="relative p-6 border-b border-[var(--border)] overflow-hidden">
+        <div className="relative p-6 border-b border-hairline overflow-hidden">
           <div className="absolute inset-0 /10 via-transparent to-amber-500/10" />
           <div className="relative flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-bold text-[var(--text-accent-crimson)] flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-red-500/10 border border-red-500/30">
-                  <Target className="w-5 h-5 text-red-400" />
+              <h2 className="text-2xl font-bold text-accent-crimson flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-accent-crimson/10 border border-accent-crimson/30">
+                  <Target className="w-5 h-5 text-accent-crimson" />
                 </div>
                 Add Opponent
               </h2>
@@ -618,7 +618,7 @@ const AddOpponentModal = ({ isOpen, onClose, onSave }) => {
               whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
               onClick={onClose}
-              className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+              className="p-2 rounded-xl text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
             >
               <X className="w-5 h-5" />
             </motion.button>
@@ -628,28 +628,28 @@ const AddOpponentModal = ({ isOpen, onClose, onSave }) => {
         <form onSubmit={handleSubmit} className="p-6 space-y-5 overflow-y-auto max-h-[calc(90vh-140px)]">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-[var(--text-muted)]">Name *</label>
+              <label className="block text-sm font-medium text-ink-muted">Name *</label>
               <input
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson focus:border-hairline focus:ring-2 focus:ring-hairline outline-none transition-all"
                 required
               />
             </div>
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-[var(--text-muted)]">School</label>
+              <label className="block text-sm font-medium text-ink-muted">School</label>
               <input
                 type="text"
                 value={formData.school}
                 onChange={(e) => setFormData({ ...formData, school: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson focus:border-hairline focus:ring-2 focus:ring-hairline outline-none transition-all"
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-[var(--text-muted)]">Threat Level</label>
+            <label className="block text-sm font-medium text-ink-muted">Threat Level</label>
             <div className="grid grid-cols-3 gap-3">
               {Object.entries(THREAT_LEVELS).map(([level, config]) => (
                 <motion.button
@@ -661,7 +661,7 @@ const AddOpponentModal = ({ isOpen, onClose, onSave }) => {
                   className={`p-3 rounded-xl border-2 transition-all text-center ${
                     formData.threatLevel === level
                       ? `${config.bgClass} border-current ${config.textClass}`
-                      : 'bg-[var(--card-bg)]/30 border-[var(--border)] text-[var(--text-muted)] hover:border-[var(--border)]'
+                      : 'bg-[var(--card-bg)]/30 border-hairline text-ink-muted hover:border-hairline'
                   }`}
                 >
                   <config.icon className={`w-6 h-6 mx-auto mb-1 ${formData.threatLevel === level ? config.textClass : ''}`} />
@@ -672,45 +672,45 @@ const AddOpponentModal = ({ isOpen, onClose, onSave }) => {
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-[var(--text-muted)]">Strengths (comma-separated)</label>
+            <label className="block text-sm font-medium text-ink-muted">Strengths (comma-separated)</label>
             <input
               type="text"
               value={formData.strengths}
               onChange={(e) => setFormData({ ...formData, strengths: e.target.value })}
               placeholder="e.g., Strong rebuttals, Fast speaking, Good evidence"
-              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson placeholder-slate-500 focus:border-hairline focus:ring-2 focus:ring-hairline outline-none transition-all"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-[var(--text-muted)]">Weaknesses (comma-separated)</label>
+            <label className="block text-sm font-medium text-ink-muted">Weaknesses (comma-separated)</label>
             <input
               type="text"
               value={formData.weaknesses}
               onChange={(e) => setFormData({ ...formData, weaknesses: e.target.value })}
               placeholder="e.g., Weak on CX, Poor time management"
-              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson placeholder-slate-500 focus:border-hairline focus:ring-2 focus:ring-hairline outline-none transition-all"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-[var(--text-muted)]">Notes</label>
+            <label className="block text-sm font-medium text-ink-muted">Notes</label>
             <textarea
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               placeholder="Any additional observations..."
               rows={3}
-              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all resize-none"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson placeholder-slate-500 focus:border-hairline focus:ring-2 focus:ring-hairline outline-none transition-all resize-none"
             />
           </div>
 
-          <div className="flex justify-end gap-3 pt-4 border-t border-[var(--border)]">
+          <div className="flex justify-end gap-3 pt-4 border-t border-hairline">
             <motion.button
               type="button"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={onClose}
-              className="px-6 py-3 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] hover:bg-[var(--card-bg)] transition-all"
+              className="px-6 py-3 rounded-xl text-ink-muted hover:text-accent-crimson hover:bg-[var(--card-bg)] transition-all"
             >
               Cancel
             </motion.button>
@@ -718,7 +718,7 @@ const AddOpponentModal = ({ isOpen, onClose, onSave }) => {
               type="submit"
               whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(239, 68, 68, 0.3)' }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-3 rounded-xl  text-[var(--text-accent-crimson)] font-semibold shadow-lg shadow-red-500/25"
+              className="px-8 py-3 rounded-xl  text-accent-crimson font-semibold shadow-lg shadow-red-500/25"
             >
               Add Opponent
             </motion.button>
@@ -761,19 +761,19 @@ const OpponentIntelligence = ({ apiKey }) => {
         {/* Header */}
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-[var(--text-accent-crimson)] tracking-tight flex items-center gap-3">
-              <div className="p-2.5 rounded-xl /20 to-orange-600/20 border border-red-500/30">
-                <Target className="w-7 h-7 text-red-400" />
+            <h1 className="text-3xl font-bold text-accent-crimson tracking-tight flex items-center gap-3">
+              <div className="p-2.5 rounded-xl /20 to-orange-600/20 border border-accent-crimson/30">
+                <Target className="w-7 h-7 text-accent-crimson" />
               </div>
               Opponent Intelligence
             </h1>
-            <p className="text-[var(--text-muted)] mt-2">Track, analyze, and prepare for your competition</p>
+            <p className="text-ink-muted mt-2">Track, analyze, and prepare for your competition</p>
           </div>
           <motion.button
             whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(239, 68, 68, 0.3)' }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setShowAddModal(true)}
-            className="px-5 py-2.5 rounded-xl  text-[var(--text-accent-crimson)] font-medium shadow-lg shadow-red-500/25 flex items-center gap-2"
+            className="px-5 py-2.5 rounded-xl  text-accent-crimson font-medium shadow-lg shadow-red-500/25 flex items-center gap-2"
           >
             <Plus className="w-5 h-5" />
             Add Opponent
@@ -783,30 +783,30 @@ const OpponentIntelligence = ({ apiKey }) => {
         {/* Search and Filter */}
         <div className="flex items-center gap-4">
           <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)]" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-muted" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search opponents..."
-              className="w-full pl-12 pr-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-[var(--border)] text-[var(--text-accent-crimson)] placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition-all"
+              className="w-full pl-12 pr-4 py-3 rounded-xl bg-[var(--card-bg)]/50 border border-hairline text-accent-crimson placeholder-slate-500 focus:border-hairline focus:ring-2 focus:ring-hairline outline-none transition-all"
             />
           </div>
           
-          <div className="flex items-center gap-2 p-1 bg-[var(--bg-accent-crimson)]/50 rounded-xl border border-[var(--border)]/50">
+          <div className="flex items-center gap-2 p-1 bg-[var(--bg-accent-crimson)]/50 rounded-xl border border-hairline/50">
             {[
               { id: 'all', label: 'All' },
-              { id: 'high', label: 'High', color: 'text-red-400' },
-              { id: 'medium', label: 'Medium', color: 'text-amber-400' },
-              { id: 'low', label: 'Low', color: 'text-emerald-400' }
+              { id: 'high', label: 'High', color: 'text-accent-crimson' },
+              { id: 'medium', label: 'Medium', color: 'text-ink' },
+              { id: 'low', label: 'Low', color: 'text-ink' }
             ].map(filter => (
               <button
                 key={filter.id}
                 onClick={() => setFilterThreat(filter.id)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                   filterThreat === filter.id
-                    ? 'bg-[var(--card-bg)] text-[var(--text-accent-crimson)]'
-                    : `text-[var(--text-muted)] hover:text-[var(--text-accent-crimson)] ${filter.color || ''}`
+                    ? 'bg-[var(--card-bg)] text-accent-crimson'
+                    : `text-ink-muted hover:text-accent-crimson ${filter.color || ''}`
                 }`}
               >
                 {filter.label}
@@ -819,7 +819,7 @@ const OpponentIntelligence = ({ apiKey }) => {
         {loading ? (
           <div className="grid md:grid-cols-2 gap-4">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className="p-6 rounded-2xl border border-[var(--border)]/60 bg-[var(--bg-accent-crimson)]/30 animate-pulse">
+              <div key={i} className="p-6 rounded-2xl border border-hairline/60 bg-[var(--bg-accent-crimson)]/30 animate-pulse">
                 <div className="flex items-start gap-4">
                   <div className="w-14 h-14 rounded-xl bg-[var(--card-bg)]" />
                   <div className="flex-1 space-y-3">
@@ -832,7 +832,7 @@ const OpponentIntelligence = ({ apiKey }) => {
             ))}
           </div>
         ) : filteredOpponents.length === 0 ? (
-          <div className="p-8 rounded-3xl border border-[var(--border)]/60 /50 to-slate-950/50">
+          <div className="p-8 rounded-3xl border border-hairline/60 /50 to-slate-950/50">
             <EmptyOpponents onAdd={() => setShowAddModal(true)} />
           </div>
         ) : (
