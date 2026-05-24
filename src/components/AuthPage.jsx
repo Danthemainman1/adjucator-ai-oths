@@ -11,7 +11,7 @@ const AuthPage = ({ onSkip }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { signIn, signUp, signInWithGoogle } = useAuth();
+  const { login, register, loginWithGoogle } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,9 +20,9 @@ const AuthPage = ({ onSkip }) => {
 
     try {
       if (isLogin) {
-        await signIn(email, password);
+        await login(email, password);
       } else {
-        await signUp(email, password, name);
+        await register(email, password, name);
       }
     } catch (err) {
       setError(err.message || 'Failed to authenticate');
@@ -35,7 +35,7 @@ const AuthPage = ({ onSkip }) => {
     setError('');
     setLoading(true);
     try {
-      await signInWithGoogle();
+      await loginWithGoogle();
     } catch (err) {
       setError(err.message || 'Failed to sign in with Google');
     } finally {
